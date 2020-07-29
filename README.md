@@ -1,2 +1,2 @@
-# xpdc
-aplikasi mirip jne dari rubickz punya
+# Certification
+Project sertifikat perusahaan dari bang rio

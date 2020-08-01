@@ -1,50 +1,50 @@
 (function($) {
-  showSuccessToast = function() {
-    'use strict';
+  showSuccessToast = function(notif_text = "") {
+    // 'use strict';
     resetToastPosition();
     $.toast({
       heading: 'Success',
-      text: 'And these were just the basic demos! Scroll down to check further details on how to customize the output.',
+      text: notif_text,
       showHideTransition: 'slide',
       icon: 'success',
       loaderBg: '#f96868',
-      position: 'top-right'
+      position: 'bottom-right'
     })
   };
-  showInfoToast = function() {
-    'use strict';
+  showInfoToast = function(notif_text = "") {
+    // 'use strict';
     resetToastPosition();
     $.toast({
       heading: 'Info',
-      text: 'And these were just the basic demos! Scroll down to check further details on how to customize the output.',
+      text: notif_text,
       showHideTransition: 'slide',
       icon: 'info',
       loaderBg: '#46c35f',
-      position: 'top-right'
+      position: 'bottom-right'
     })
   };
-  showWarningToast = function() {
-    'use strict';
+  showWarningToast = function(notif_text = "") {
+    // 'use strict';
     resetToastPosition();
     $.toast({
       heading: 'Warning',
-      text: 'And these were just the basic demos! Scroll down to check further details on how to customize the output.',
+      text: notif_text,
       showHideTransition: 'slide',
       icon: 'warning',
       loaderBg: '#57c7d4',
-      position: 'top-right'
+      position: 'bottom-right'
     })
   };
-  showDangerToast = function() {
-    'use strict';
+  showDangerToast = function(notif_text = "") {
+    // 'use strict';
     resetToastPosition();
     $.toast({
       heading: 'Danger',
-      text: 'And these were just the basic demos! Scroll down to check further details on how to customize the output.',
+      text: notif_text,
       showHideTransition: 'slide',
       icon: 'error',
       loaderBg: '#f2a654',
-      position: 'top-right'
+      position: 'bottom-right'
     })
   };
   showToastPosition = function(position) {

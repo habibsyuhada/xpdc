@@ -55,13 +55,13 @@
 						<nav id="main-menu-navigation" class="navigation-main">
 							<div class="nav-lavel">Navigation</div>
 							<div class="nav-item active">
-								<a href="<?php echo base_url() ?>home"><i class="ik ik-bar-chart-2"></i><span>Dashboard</span></a>
+								<a href="<?php echo base_url() ?>home"><i class="fas fa-home"></i><span>Dashboard</span></a>
 							</div>
 							<!-- <div class="nav-item">
 								<a href="pages/navbar.html"><i class="ik ik-menu"></i><span>Navigation</span></a>
 							</div> -->
 							<div class="nav-item has-sub">
-								<a href="javascript:void(0)"><i class="ik ik-layers"></i><span>Shipment</span></a>
+								<a href="javascript:void(0)"><i class="fas fa-pallet"></i><span>Shipment</span></a>
 								<div class="submenu-content">
 									<a href="<?php echo base_url() ?>shipment/shipment_list" class="menu-item">Shipment List</a>
 									<a href="<?php echo base_url() ?>shipment/shipment_create" class="menu-item">Create Shipment</a>

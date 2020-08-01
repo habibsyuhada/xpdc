@@ -38,23 +38,42 @@
             <h3>Shipment List</h3>
           </div>
           <div class="card-body">
-            <div class="table-responsive">
-              <table id="data_table" class="table text-center">
-                <thead>
-                  <tr class="bg-info">
-                    <th class="text-white font-weight-bold"><input type="checkbox" class="checkbox-20"></th>
-                    <th class="text-white font-weight-bold">Tracking Number</th>
-                    <th class="text-white font-weight-bold">Shipper Name</th>
-                    <th class="text-white font-weight-bold">Receiver Name</th>
-                    <th class="text-white font-weight-bold">Container</th>
-                    <th class="text-white font-weight-bold">Status</th>
-                    <th class="text-white font-weight-bold">Shipment Type</th>
-                    <th class="text-white font-weight-bold"></th>
-                  </tr>
-                </thead>
-                <tbody>
-                </tbody>
-              </table>
+            <div class="row">
+              <div class="col-md-12">
+                <table class="table data_table">
+                  <thead>
+                    <tr class="bg-info">
+                      <th class="text-white font-weight-bold"></th>
+                      <th class="text-white font-weight-bold">Tracking Numberaa</th>
+                      <th class="text-white font-weight-bold">Shipper Name</th>
+                      <th class="text-white font-weight-bold">Receiver Name</th>
+                      <th class="text-white font-weight-bold">Container</th>
+                      <th class="text-white font-weight-bold">Status</th>
+                      <th class="text-white font-weight-bold">Shipment Typeaa</th>
+                      <th class="text-white font-weight-bold"></th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <?php foreach ($shipment_list as $key => $value): ?>
+                    <tr>
+                      <td><input type="checkbox" class="checkbox-20"></td>
+                      <td><?php echo $value['tracking_no'] ?></td>
+                      <td><?php echo $value['shipper_name'] ?></td>
+                      <td><?php echo $value['receiver_name'] ?></td>
+                      <td></td>
+                      <td><?php echo $value['status'] ?></td>
+                      <td><?php echo $value['type_of_shipment'] ?></td>
+                      <td>
+                        <a href="#" class="btn btn-secondary" title="View"><i class="fas fa-eye m-0"></i></a>
+                        <a href="#" class="btn btn-warning" title="Print"><i class="fas fa-print m-0"></i></a>
+                        <a href="<?php echo base_url() ?>shipment/shipment_update/<?php echo $value['id'] ?>" class="btn btn-primary" title="Update"><i class="fas fa-edit m-0"></i></a>
+                        <a href="<?php echo base_url(); ?>shipment/shipment_delete_process/<?php echo $value['id'] ?>" onclick="return confirm('Are you sure to delete this? You cannot revert it later.')" class="btn btn-danger" title="Delete"><i class="fas fa-trash m-0"></i></a>
+                      </td>
+                    </tr>
+                    <?php endforeach; ?>
+                  </tbody>
+                </table>
+              </div>
             </div>
           </div>
         </div>

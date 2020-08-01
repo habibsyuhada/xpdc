@@ -6,5 +6,16 @@
 				
 			</div>
 		</div>
+		<script type="text/javascript">
+			<?php if($this->session->flashdata('success') == TRUE): ?>
+			showSuccessToast('<?php echo $this->session->flashdata('success'); ?>');
+      <?php endif; ?>
+      <?php if($this->session->flashdata('error') == TRUE): ?>
+			showDangerToast('<?php echo $this->session->flashdata('error'); ?>');
+			<?php endif; ?>
+			$('.data_table').DataTable({
+				"order": []
+			});
+		</script>
 	</body>	
 </html>		

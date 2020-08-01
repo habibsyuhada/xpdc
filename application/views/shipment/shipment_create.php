@@ -2,7 +2,7 @@
 	<div class="container-fluid">
     <form action="<?php echo base_url(); ?>shipment/shipment_create_process" method="POST" class="forms-sample">
       <div class="row clearfix">
-        <div class="col-md-12">
+        <div class="col-md-9">
           <div class="card">
             <div class="card-header">
               <h3>Shipper & Receiver Information</h3>
@@ -17,72 +17,68 @@
                 <div class="col-md-6">
                   <h6 class="font-weight-bold">Shipper Information</h6>
                   <div class="form-group">
-                    <label for="exampleInputUsername1">Shipper Name</label>
-                    <input type="text" class="form-control" name="shipper_name" placeholder="Shipper Name">
+                    <label>Shipper Name</label>
+                    <input type="text" class="form-control" name="shipper_name" placeholder="Shipper Name" required>
                   </div>
                   <div class="form-group">
-                    <label for="exampleInputUsername1">Address</label>
-                    <input type="text" class="form-control" name="shipper_address" placeholder="Address">
+                    <label>Address</label>
+                    <input type="text" class="form-control" name="shipper_address" placeholder="Address" required>
                   </div>
                   <div class="form-group">
-                    <label for="exampleInputUsername1">City</label>
-                    <input type="text" class="form-control" name="shipper_city" placeholder="City">
+                    <label>City</label>
+                    <input type="text" class="form-control" name="shipper_city" placeholder="City" required>
                   </div>
                   <div class="form-group">
-                    <label for="exampleInputUsername1">Country</label>
-                    <input type="text" class="form-control" name="shipper_country" placeholder="Country">
+                    <label>Country</label>
+                    <input type="text" class="form-control" name="shipper_country" placeholder="Country" required>
                   </div>
                   <div class="form-group">
-                    <label for="exampleInputUsername1">Postcode</label>
-                    <input type="text" class="form-control" name="shipper_postcode" placeholder="Postcode">
+                    <label>Postcode</label>
+                    <input type="text" class="form-control" name="shipper_postcode" placeholder="Postcode" required>
                   </div>
                   <div class="form-group">
-                    <label for="exampleInputUsername1">Shipper PIC</label>
-                    <input type="text" class="form-control" name="shipper_pic" placeholder="Shipper PIC">
+                    <label>Shipper PIC</label>
+                    <input type="text" class="form-control" name="shipper_pic" placeholder="Shipper PIC" required>
                   </div>
                   <div class="form-group">
-                    <label for="exampleInputUsername1">Phone Number</label>
-                    <input type="text" class="form-control" name="shipper_phone_number" placeholder="Phone Number">
+                    <label>Phone Number</label>
+                    <input type="text" class="form-control" name="shipper_phone_number" placeholder="Phone Number" required>
                   </div>
                 </div>
                 <div class="col-md-6">
                   <h6 class="font-weight-bold">Receiver Information</h6>
                   <div class="form-group">
-                    <label for="exampleInputUsername1">Receiver Name</label>
-                    <input type="text" class="form-control" name="receiver_name" placeholder="Receiver Name">
+                    <label>Receiver Name</label>
+                    <input type="text" class="form-control" name="receiver_name" placeholder="Receiver Name" required>
                   </div>
                   <div class="form-group">
-                    <label for="exampleInputUsername1">Address</label>
-                    <input type="text" class="form-control" name="receiver_address" placeholder="Address">
+                    <label>Address</label>
+                    <input type="text" class="form-control" name="receiver_address" placeholder="Address" required>
                   </div>
                   <div class="form-group">
-                    <label for="exampleInputUsername1">City</label>
-                    <input type="text" class="form-control" name="receiver_city" placeholder="City">
+                    <label>City</label>
+                    <input type="text" class="form-control" name="receiver_city" placeholder="City" required>
                   </div>
                   <div class="form-group">
-                    <label for="exampleInputUsername1">Country</label>
-                    <input type="text" class="form-control" name="receiver_country" placeholder="Country">
+                    <label>Country</label>
+                    <input type="text" class="form-control" name="receiver_country" placeholder="Country" required>
                   </div>
                   <div class="form-group">
-                    <label for="exampleInputUsername1">Postcode</label>
-                    <input type="text" class="form-control" name="receiver_postcode" placeholder="Postcode">
+                    <label>Postcode</label>
+                    <input type="text" class="form-control" name="receiver_postcode" placeholder="Postcode" required>
                   </div>
                   <div class="form-group">
-                    <label for="exampleInputUsername1">Receiver PIC</label>
-                    <input type="text" class="form-control" name="receiver_pic" placeholder="Receiver PIC">
+                    <label>Receiver PIC</label>
+                    <input type="text" class="form-control" name="receiver_pic" placeholder="Receiver PIC" required>
                   </div>
                   <div class="form-group">
-                    <label for="exampleInputUsername1">Phone Number</label>
-                    <input type="text" class="form-control" name="receiver_phone_number" placeholder="Phone Number">
+                    <label>Phone Number</label>
+                    <input type="text" class="form-control" name="receiver_phone_number" placeholder="Phone Number" required>
                   </div>
                 </div>
               </div>
             </div>
           </div>
-        </div>
-      </div>
-      <div class="row clearfix">
-        <div class="col-md-12">
           <div class="card">
             <div class="card-header">
               <h3>Shipment Information</h3>
@@ -96,12 +92,12 @@
               <div class="row clearfix">
                 <div class="col-md-6">
                   <div class="form-group">
-                    <label for="exampleInputUsername1">Shipment Date</label>
-                    <input type="date" class="form-control" name="shipment_date" placeholder="Shipment Date">
+                    <label>Shipment Date</label>
+                    <input type="date" class="form-control" name="shipment_date" placeholder="Shipment Date" required>
                   </div>
                   <div class="form-group">
-                    <label for="exampleInputUsername1">Type of Mode</label>
-                    <select class="form-control" name="type_of_mode">
+                    <label>Type of Mode</label>
+                    <select class="form-control" name="type_of_mode" required>
                       <option value="">-- Select One --</option>
                       <option value="Sea Transport">Sea Transport</option>
                       <option value="Land Shipping">Land Shipping</option>
@@ -109,27 +105,27 @@
                     </select>
                   </div>
                   <div class="form-group">
-                    <label for="exampleInputUsername1">Description of Goods</label>
-                    <input type="text" class="form-control" name="description_of_goods" placeholder="Description of Goods">
+                    <label>Description of Goods</label>
+                    <input type="text" class="form-control" name="description_of_goods" placeholder="Description of Goods" required>
                   </div>
                   <div class="form-group">
-                    <label for="exampleInputUsername1">Shipment Value</label>
-                    <input type="text" class="form-control" name="shipment_value" placeholder="Shipment Value">
+                    <label>Shipment Value</label>
+                    <input type="text" class="form-control" name="shipment_value" placeholder="Shipment Value" required>
                   </div>
                   <div class="form-group">
-                    <label for="exampleInputUsername1">Quantity</label>
-                    <input type="text" class="form-control" name="quantity" placeholder="Quantity">
+                    <label>Quantity</label>
+                    <input type="text" class="form-control" name="quantity" placeholder="Quantity" required>
                   </div>
                   <div class="form-group">
-                    <label for="exampleInputUsername1">Actual Weight (Kg)</label>
-                    <input type="text" class="form-control" name="actual_weight" placeholder="Actual Weight (Kg)">
+                    <label>Actual Weight (Kg)</label>
+                    <input type="text" class="form-control" name="actual_weight" placeholder="Actual Weight (Kg)" required>
                   </div>
                   <div class="form-group">
-                    <label for="exampleInputUsername1">Ref. No</label>
+                    <label>Ref. No</label>
                     <input type="text" class="form-control" name="ref_no" placeholder="Ref. No">
                   </div>
                   <div class="form-group">
-                    <label for="exampleInputUsername1">Main Agent</label>
+                    <label>Main Agent</label>
                     <select class="form-control" name="main_agent">
                       <option value="">-- Select One --</option>
                       <option value="Janio Technologies PTE LTD">Janio Technologies PTE LTD</option>
@@ -144,7 +140,7 @@
                     </select>
                   </div>
                   <div class="form-group">
-                    <label for="exampleInputUsername1">Secondary Agent</label>
+                    <label>Secondary Agent</label>
                     <select class="form-control" name="secondary_agent">
                       <option value="">-- Select One --</option>
                       <option value="Janio Technologies PTE LTD">Janio Technologies PTE LTD</option>
@@ -159,22 +155,22 @@
                     </select>
                   </div>
                   <div class="form-group">
-                    <label for="exampleInputUsername1">Pick Up Details</label>
+                    <label>Pick Up Details</label>
                     <textarea class="form-control" name="pickup_details" rows="4"></textarea>
                   </div>
                 </div>
                 <div class="col-md-6">
                   <div class="form-group">
-                    <label for="exampleInputUsername1">Type of Shipment</label>
-                    <select class="form-control" name="type_of_shipment">
+                    <label>Type of Shipment</label>
+                    <select class="form-control" name="type_of_shipment" required>
                       <option value="">-- Select One --</option>
                       <option value="Sea Transport">International Shipping</option>
                       <option value="Land Shipping">Domestic Shipping</option>
                     </select>
                   </div>
                   <div class="form-group">
-                    <label for="exampleInputUsername1">Incoterms</label>
-                    <select class="form-control" name="incoterms">
+                    <label>Incoterms</label>
+                    <select class="form-control" name="incoterms" required>
                       <option value="">-- Select One --</option>
                       <option value="EXW (ExWorks)">EXW (ExWorks)</option>
                       <option value="FCA (Free Carrier)">FCA (Free Carrier)</option>
@@ -194,12 +190,12 @@
                     </select>
                   </div>
                   <div class="form-group">
-                    <label for="exampleInputUsername1">HS Code</label>
+                    <label>HS Code</label>
                     <input type="text" class="form-control" name="hs_code" placeholder="HS Code">
                   </div>
                   <div class="form-group">
-                    <label for="exampleInputUsername1">Currency</label>
-                    <select class="form-control" name="currency">
+                    <label>Currency</label>
+                    <select class="form-control" name="currency" required>
                       <option value="">-- Select One --</option>
                       <option value="AED">AED</option>
                       <option value="AUD">AUD</option>
@@ -219,8 +215,8 @@
                     </select>
                   </div>
                   <div class="form-group">
-                    <label for="exampleInputUsername1">Type of Packages</label>
-                    <select class="form-control" name="type_of_packages">
+                    <label>Type of Packages</label>
+                    <select class="form-control" name="type_of_packages" required>
                       <option value="">-- Select One --</option>
                       <option value="Carton">Carton</option>
                       <option value="Pallet">Pallet</option>
@@ -228,33 +224,29 @@
                     </select>
                   </div>
                   <div class="form-group">
-                    <label for="exampleInputUsername1">Vol. Weight (Kg)</label>
-                    <input type="text" class="form-control" name="vol_weight" placeholder="Vol. Weight (Kg)">
+                    <label>Vol. Weight (Kg)</label>
+                    <input type="text" class="form-control" name="vol_weight" placeholder="Vol. Weight (Kg)" required>
                   </div>
                   <div class="form-group">
-                    <label for="exampleInputUsername1">Measurement (CBM)</label>
+                    <label>Measurement (CBM)</label>
                     <input type="text" class="form-control" name="measurement" placeholder="Measurement (CBM)">
                   </div>
                   <div class="form-group">
-                    <label for="exampleInputUsername1">Master AWB / Master BL</label>
+                    <label>Master AWB / Master BL</label>
                     <input type="text" class="form-control" name="master_awb" placeholder="Master AWB / Master BL">
                   </div>
                   <div class="form-group">
-                    <label for="exampleInputUsername1">House AWB / House BL</label>
+                    <label>House AWB / House BL</label>
                     <input type="text" class="form-control" name="house_awb" placeholder="House AWB / House BL">
                   </div>
                   <div class="form-group">
-                    <label for="exampleInputUsername1">Pickup Date & Time</label>
+                    <label>Pickup Date & Time</label>
                     <input type="datetime-local" class="form-control" name="pickup_datetime">
                   </div>
                 </div>
               </div>
             </div>
           </div>
-        </div>
-      </div>
-      <div class="row clearfix">
-        <div class="col-md-12">
           <div class="card">
             <div class="card-header">
               <h3>Packages</h3>
@@ -306,9 +298,112 @@
               </div>
             </div>
           </div>
-          <div class="text-right">
-            <button type="submit" class="btn btn-success"><i class="fas fa-check m-0"> Submit</i></button>
+        </div>
+        <div class="col-md-3">
+          <div class="card">
+            <div class="card-header">
+              <h3>Assigned Branch</h3>
+              <div class="card-header-right">
+                <ul class="list-unstyled card-option">
+                  <li><i class="ik ik-minus minimize-card"></i></li>
+                </ul>
+              </div>
+            </div>
+            <div class="card-body">
+              <b>Assigned Branch:</b>
+            </div>
           </div>
+          <div class="card">
+            <div class="card-header">
+              <h3>Assign shipment to</h3>
+              <div class="card-header-right">
+                <ul class="list-unstyled card-option">
+                  <li><i class="ik ik-minus minimize-card"></i></li>
+                </ul>
+              </div>
+            </div>
+            <div class="card-body">
+              <div class="form-group">
+                <label>Employee</label>
+                <select class="form-control" name="employee">
+                  <option value="">-- Select Employee --</option>
+                </select>
+              </div>
+              <div class="form-group">
+                <label>Client</label>
+                <select class="form-control" name="client">
+                  <option value="">-- Select Client --</option>
+                </select>
+              </div>
+              <div class="form-group">
+                <label>Agent</label>
+                <select class="form-control" name="agent">
+                  <option value="">-- Select Agent --</option>
+                </select>
+              </div>
+              <div class="form-group">
+                <label>Branch Manager</label>
+                <select class="form-control" name="branch_manager">
+                  <option value="">-- Select Branch Manager --</option>
+                </select>
+              </div>
+              <div class="form-group">
+                <label>Driver</label>
+                <select class="form-control" name="driver">
+                  <option value="">-- Select Driver --</option>
+                </select>
+              </div>
+            </div>
+          </div>
+          <div class="card">
+            <div class="card-header">
+              <h3>History</h3>
+              <div class="card-header-right">
+                <ul class="list-unstyled card-option">
+                  <li><i class="ik ik-minus minimize-card"></i></li>
+                </ul>
+              </div>
+            </div>
+            <div class="card-body">
+              <div class="form-group">
+                <label>Date</label>
+                <input type="date" class="form-control" name="history_date" value="<?php echo date("Y-m-d") ?>" required>
+              </div>
+              <div class="form-group">
+                <label>Time</label>
+                <input type="time" class="form-control" name="history_time" value="<?php echo date("H:i") ?>" required>
+              </div>
+              <div class="form-group">
+                <label>Location</label>
+                <input type="text" class="form-control" name="history_location" value="<?php echo date("Y-m-d") ?>" required>
+              </div>
+              <div class="form-group">
+                <label>Status</label>
+                <select class="form-control" name="history_status" required>
+                  <option value="">-- Select Branch Manager --</option>
+                  <option value="Booked">Booked</option>
+                  <option value="Booking Confirmed">Booking Confirmed</option>
+                  <option value="Picked up">Picked up</option>
+                  <option value="Pending Payment">Pending Payment</option>
+                  <option value="Departed">Departed</option>
+                  <option value="Arrived">Arrived</option>
+                  <option value="In Transit">In Transit</option>
+                  <option value="Returned">Returned</option>
+                  <option value="Clearance Event">Clearance Event</option>
+                  <option value="Clearance Complete">Clearance Complete</option>
+                  <option value="With Courier">With Courier</option>
+                  <option value="Delivered">Delivered</option>
+                  <option value="On Hold">On Hold</option>
+                  <option value="Cancelled">Cancelled</option>
+                </select>
+              </div>
+              <div class="form-group">
+                <label>Remarks</label>
+                <textarea class="form-control" rows="3" name="history_remarks" required></textarea>
+              </div>
+            </div>
+          </div>
+          <button type="submit" class="btn btn-success btn-block"><i class="fas fa-check m-0"> Submit</i></button>
         </div>
       </div>
     </form>

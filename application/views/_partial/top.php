@@ -63,8 +63,8 @@
 							<div class="nav-item has-sub">
 								<a href="javascript:void(0)"><i class="ik ik-layers"></i><span>Shipment</span></a>
 								<div class="submenu-content">
-									<a href="<?php echo base_url() ?>home" class="menu-item">Shipment List</a>
-									<a href="<?php echo base_url() ?>home" class="menu-item">Create Shipment</a>
+									<a href="<?php echo base_url() ?>shipment/shipment_list" class="menu-item">Shipment List</a>
+									<a href="<?php echo base_url() ?>shipment/shipment_create" class="menu-item">Create Shipment</a>
 								</div>
 							</div>
 						</nav>

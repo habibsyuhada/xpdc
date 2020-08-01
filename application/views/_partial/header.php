@@ -37,4 +37,11 @@
     <script src="<?php echo base_url(); ?>assets/plugins/moment/moment.js"></script>
     <script src="<?php echo base_url(); ?>assets/plugins/tempusdominus-bootstrap-4/build/js/tempusdominus-bootstrap-4.min.js"></script>
     <script src="<?php echo base_url(); ?>assets/dist/js/theme.min.js"></script>
+    <script src="<?php echo base_url(); ?>assets/js/datatables.js"></script>
+    <style>
+    .checkbox-20{
+      width: 20px;
+      height: 20px;
+    }
+    </style>
   </head>

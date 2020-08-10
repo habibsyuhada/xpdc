@@ -44,7 +44,7 @@
                   <thead>
                     <tr class="bg-info">
                       <th class="text-white font-weight-bold"></th>
-                      <th class="text-white font-weight-bold">Tracking Numberaa</th>
+                      <th class="text-white font-weight-bold">Tracking Number</th>
                       <th class="text-white font-weight-bold">Shipper Name</th>
                       <th class="text-white font-weight-bold">Receiver Name</th>
                       <th class="text-white font-weight-bold">Container</th>
@@ -59,7 +59,7 @@
                       <td><input type="checkbox" class="checkbox-20"></td>
                       <td><?php echo $value['tracking_no'] ?></td>
                       <td><?php echo $value['shipper_name'] ?></td>
-                      <td><?php echo $value['receiver_name'] ?></td>
+                      <td><?php echo $value['consignee_name'] ?></td>
                       <td></td>
                       <td><?php echo $value['status'] ?></td>
                       <td><?php echo $value['type_of_shipment'] ?></td>

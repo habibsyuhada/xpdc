@@ -12,9 +12,20 @@ class Shipment_mod extends CI_Model {
     return $insert_id;
   }
 
+  public function shipment_detail_create_process_db($data){
+		$this->db->insert('shipment_detail', $data);
+    $insert_id = $this->db->insert_id();
+    return $insert_id;
+  }
+
   public function shipment_update_process_db($data, $where){
 		$this->db->where($where);
 		$this->db->update('shipment',$data);
+	}
+
+  public function shipment_detail_update_process_db($data, $where){
+		$this->db->where($where);
+		$this->db->update('shipment_detail',$data);
 	}
 
   function shipment_list_db($where = null, $show_all = 0){
@@ -24,7 +35,10 @@ class Shipment_mod extends CI_Model {
     if($show_all != 1){
 			$this->db->where('status_delete', '1');
     }
-		$query = $this->db->get('shipment');
+    $this->db->select('*');
+    $this->db->from('shipment');
+    $this->db->join('shipment_detail', 'shipment.id = shipment_detail.id_shipment');
+		$query = $this->db->get();
 		return $query->result_array();
 	}
 

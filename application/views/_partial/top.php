@@ -41,10 +41,8 @@
 				<div class="sidebar-header">
 					<a class="header-brand" href="index.html">
 						<div class="logo-img">
-						   <!-- <img src="<?php echo base_url(); ?>assets/src/img/brand-white.svg" class="header-brand-img" alt="lavalite">  -->
+						   <img src="<?php echo base_url(); ?>assets/img/logo.png" class="header-brand-img" alt="lavalite"> 
 						</div>
-						<!-- <span class="text">ThemeKit</span> -->
-						<span class="text"></span>
 					</a>
 					<button type="button" class="nav-toggle"><i data-toggle="expanded" class="ik ik-toggle-right toggle-icon"></i></button>
 					<button id="sidebarClose" class="nav-close"><i class="ik ik-x"></i></button>

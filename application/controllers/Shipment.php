@@ -86,6 +86,16 @@ class Shipment extends CI_Controller {
 		);
 		$id_shipment = $this->shipment_mod->shipment_create_process_db($form_data);
 
+		$form_data = array(
+			'id_shipment' 			=> $id_shipment,
+			'date' 							=> $post['history_date'],
+			'time' 							=> $post['history_time'],
+			'location' 					=> $post['history_location'],
+			'status' 						=> $post['history_status'],
+			'remarks' 					=> $post['history_remarks'],
+		);
+		$this->shipment_mod->shipment_history_create_process_db($form_data);
+
 		foreach ($post['description'] as $key => $value) {
 			$form_data = array(
 				'id_shipment' 			=> $id_shipment,
@@ -100,6 +110,8 @@ class Shipment extends CI_Controller {
 			);
 			$this->shipment_mod->shipment_packages_create_process_db($form_data);
 		}
+		
+		$this->shipment_update_last_history($id_shipment);
 
 		$this->session->set_flashdata('success', 'Your Shipment data has been Created!');
 		redirect('shipment/shipment_list');
@@ -112,6 +124,7 @@ class Shipment extends CI_Controller {
 		unset($where);
 		$where['id_shipment'] 	= $id;
 		$packages_list 					= $this->shipment_mod->shipment_packages_list_db($where);
+		$history_list 					= $this->shipment_mod->shipment_history_list_db($where);
 
 		if(count($shipment_list) <= 0){
 			$this->session->set_flashdata('error', 'Shipment not Found!');
@@ -120,6 +133,7 @@ class Shipment extends CI_Controller {
 
 		$data['shipment'] 			= $shipment_list[0];
 		$data['packages_list'] 	= $packages_list;
+		$data['history_list'] 	= $history_list;
 		$data['t'] 							= 'g';
 		$data['subview'] 				= 'shipment/shipment_update';
 		$data['meta_title'] 		= 'Shipment List';
@@ -169,6 +183,31 @@ class Shipment extends CI_Controller {
 		$where['id'] = $post['id'];
 		$this->shipment_mod->shipment_update_process_db($form_data, $where);
 
+		foreach ($post['id_history'] as $key => $value) {
+			$form_data = array(
+				'date' 							=> $post['records_date'][$key],
+				'time' 							=> $post['records_time'][$key],
+				'location' 					=> $post['records_location'][$key],
+				'status' 						=> $post['records_status'][$key],
+				'remarks' 					=> $post['records_remarks'][$key],
+			);
+			$where['id'] = $post['id_history'][$key];
+			$this->shipment_mod->shipment_history_update_process_db($form_data, $where);
+		}
+
+		if(!in_array("", array($post['history_date'], $post['history_time'], $post['history_location'], $post['history_status']))){
+			// test_var(array($post['history_date'], $post['history_time'], $post['history_location'], $post['history_status']));
+			$form_data = array(
+				'id_shipment' 			=> $post['id'],
+				'date' 							=> $post['history_date'],
+				'time' 							=> $post['history_time'],
+				'location' 					=> $post['history_location'],
+				'status' 						=> $post['history_status'],
+				'remarks' 					=> $post['history_remarks'],
+			);
+			$this->shipment_mod->shipment_history_create_process_db($form_data);
+		}
+
 		foreach ($post['description'] as $key => $value) {
 			unset($where);
 			if($post['id_detail'][$key] == ""){
@@ -201,6 +240,8 @@ class Shipment extends CI_Controller {
 			}
 		}
 
+		$this->shipment_update_last_history($post['id']);
+
 		$this->session->set_flashdata('success', 'Your Shipment data has been Updated!');
 		redirect('shipment/shipment_update/'.$post['id']);
 	}
@@ -215,11 +256,39 @@ class Shipment extends CI_Controller {
 		redirect('shipment/shipment_list');
 	}
 
+	public function shipment_history_delete_process($id_shipment, $id){
+		$form_data = array(
+			'status_delete'	=> 0,
+		);
+		$where['id'] 					= $id;
+		$where['id_shipment'] = $id_shipment;
+		$this->shipment_mod->shipment_history_update_process_db($form_data, $where);
+
+		$this->shipment_update_last_history($id_shipment);
+	}
+
 	public function shipment_packages_delete_process($id){
 		$form_data = array(
 			'status_delete'	=> 0,
 		);
 		$where['id'] = $id;
 		$this->shipment_mod->shipment_packages_update_process_db($form_data, $where);
+	}
+
+	public function shipment_update_last_history($id){
+		$where['id_shipment'] 	= $id;
+		$history_list 					= $this->shipment_mod->shipment_history_list_db($where);
+		$history 								= $history_list[0];
+
+		$form_data = array(
+			'date' 				=> $history['date'],
+			'time' 				=> $history['time'],
+			'location' 		=> $history['location'],
+			'status' 			=> $history['status'],
+			'remarks' 		=> $history['remarks'],
+		);
+		unset($where);
+		$where['id'] = $id;
+		$this->shipment_mod->shipment_update_process_db($form_data, $where);
 	}
 }

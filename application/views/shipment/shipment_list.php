@@ -49,7 +49,7 @@
                       <th class="text-white font-weight-bold">Receiver Name</th>
                       <th class="text-white font-weight-bold">Container</th>
                       <th class="text-white font-weight-bold">Status</th>
-                      <th class="text-white font-weight-bold">Shipment Typeaa</th>
+                      <th class="text-white font-weight-bold">Shipment Type</th>
                       <th class="text-white font-weight-bold"></th>
                     </tr>
                   </thead>

@@ -48,6 +48,31 @@ class Shipment_mod extends CI_Model {
     }
 		$query = $this->db->get('shipment_packages');
 		return $query->result_array();
+  }
+  
+  public function shipment_history_create_process_db($data){
+		$this->db->insert('shipment_history', $data);
+    $insert_id = $this->db->insert_id();
+    return $insert_id;
+  }
+
+  public function shipment_history_update_process_db($data, $where){
+		$this->db->where($where);
+		$this->db->update('shipment_history',$data);
+	}
+
+  function shipment_history_list_db($where = null, $show_all = 0){
+		if(isset($where)){
+			$this->db->where($where);
+    }
+    if($show_all != 1){
+			$this->db->where('status_delete', '1');
+    }
+		$query = $this->db->order_by("date", "desc");
+    $query = $this->db->order_by("time", "desc"); 
+    // Produces: ORDER BY date DESC, time DESC
+		$query = $this->db->get('shipment_history');
+		return $query->result_array();
 	}
   
   public function shipment_generate_tracking_no_db($where = NULL){

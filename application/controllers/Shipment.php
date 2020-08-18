@@ -327,4 +327,28 @@ class Shipment extends CI_Controller
 		$where['id'] = $id;
 		$this->shipment_mod->shipment_update_process_db($form_data, $where);
 	}
+
+	public function shipment_tracking($id)
+	{
+		$where['id'] 						= $id;
+		$shipment_list 					= $this->shipment_mod->shipment_list_db($where);
+
+		unset($where);
+		echo $id;
+		$where['id_shipment'] 	= $id;
+		$history_list 					= $this->shipment_mod->shipment_history_list_db($where);
+				
+		$data['shipment'] 			= $shipment_list[0];
+		$data['history_list'] 	= $history_list;
+		$data['subview'] 				= 'shipment/shipment_track';
+		$data['meta_title'] 		= 'Shipment Track';
+		$this->load->view('index', $data);
+	}
+
+	function barcode_generator($tracking_no)
+	{
+		$this->load->library('zend');
+		$this->zend->load('Zend/Barcode');
+		Zend_Barcode::render('CODE128', 'image', array('text'=>$tracking_no, 'drawText' => false), array());
+	}
 }

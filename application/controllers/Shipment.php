@@ -351,4 +351,19 @@ class Shipment extends CI_Controller
 		$this->zend->load('Zend/Barcode');
 		Zend_Barcode::render('CODE128', 'image', array('text'=>$tracking_no, 'drawText' => false), array());
 	}
+
+	public function laporan_pdf()
+	{
+    $data = array(
+        "dataku" => array(
+            "nama" => "Petani Kode",
+            "url" => "http://petanikode.com"
+        )
+    );
+
+    $this->load->library('pdf');
+    $this->pdf->setPaper('A6', 'potrait');
+    $this->pdf->filename = "laporan-petanikode.pdf";
+    $this->pdf->load_view('shipment/shipment_pdf', $data);
+	}
 }

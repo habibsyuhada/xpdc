@@ -327,4 +327,19 @@ class Shipment extends CI_Controller
 		$where['id'] = $id;
 		$this->shipment_mod->shipment_update_process_db($form_data, $where);
 	}
+
+	public function laporan_pdf()
+	{
+    $data = array(
+        "dataku" => array(
+            "nama" => "Petani Kode",
+            "url" => "http://petanikode.com"
+        )
+    );
+
+    $this->load->library('pdf');
+    $this->pdf->setPaper('A4', 'potrait');
+    $this->pdf->filename = "laporan-petanikode.pdf";
+    $this->pdf->load_view('shipment/shipment_pdf', $data);
+	}
 }

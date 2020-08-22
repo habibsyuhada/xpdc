@@ -16,6 +16,10 @@
 			$('.data_table').DataTable({
 				"order": []
 			});
+			$('.file-upload-browse').on('click', function() {
+        var file = $(this).parent().parent().parent().find('.file-upload-default');
+        file.trigger('click');
+      });
 		</script>
 	</body>	
 </html>		

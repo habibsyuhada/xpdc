@@ -317,11 +317,11 @@ class Shipment extends CI_Controller
 		$history 								= $history_list[0];
 
 		$form_data = array(
-			'date' 				=> $history['date'],
-			'time' 				=> $history['time'],
-			'location' 		=> $history['location'],
+			// 'date' 				=> $history['date'],
+			// 'time' 				=> $history['time'],
+			// 'location' 		=> $history['location'],
 			'status' 			=> $history['status'],
-			'remarks' 		=> $history['remarks'],
+			// 'remarks' 		=> $history['remarks'],
 		);
 		unset($where);
 		$where['id'] = $id;
@@ -384,6 +384,19 @@ class Shipment extends CI_Controller
 		$this->shipment_update_last_history($shipment_list['id']);
 		$this->session->set_flashdata('success', 'Your Shipment History data has been Created!');
 		redirect('shipment/shipment_history_update');
+	}
+
+	public function shipment_import()
+	{
+		$data['subview'] 				= 'shipment/shipment_import';
+		$data['meta_title'] 		= 'Import Shipment';
+		$this->load->view('index', $data);
+	}
+
+	public function shipment_import_process()
+	{
+		$this->session->set_flashdata('success', 'Your Shipment data has been Imported!');
+		redirect('shipment/shipment_import');
 	}
 
 	function barcode_generator($tracking_no)

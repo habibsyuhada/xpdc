@@ -345,6 +345,47 @@ class Shipment extends CI_Controller
 		$this->load->view('index', $data);
 	}
 
+	public function shipment_tracking_label_pdf($id)
+	{
+		$where['id'] 				= $id;
+		$shipment_list 			= $this->shipment_mod->shipment_list_db($where);
+		$data['shipment'] 	= $shipment_list[0];
+
+    $this->load->library('pdf');
+    $this->pdf->setPaper('A6', 'potrait');
+    $this->pdf->filename = "laporan-petanikode.pdf";
+    $this->pdf->load_view('shipment/shipment_pdf', $data);
+	}
+
+	public function shipment_history_update()
+	{
+		$data['subview'] 				= 'shipment/shipment_history_update';
+		$data['meta_title'] 		= 'Shipment History Update';
+		$this->load->view('index', $data);
+	}
+
+	public function shipment_history_update_process()
+	{
+		$post = $this->input->post();
+
+		$where['tracking_no'] 	= $post['tracking_no'];
+		$shipment_list 					= $this->shipment_mod->shipment_list_db($where);
+		$shipment_list 					= $shipment_list[0];
+
+		$form_data = array(
+			'id_shipment' 	=> $shipment_list['id'],
+			'date' 					=> date("Y-m-d"),
+			'time' 					=> date("H:i:s"),
+			'location' 			=> $post['history_location'],
+			'status' 				=> $post['history_status'],
+			'remarks' 			=> $post['history_remarks'],
+		);
+		$this->shipment_mod->shipment_history_create_process_db($form_data);
+		$this->shipment_update_last_history($shipment_list['id']);
+		$this->session->set_flashdata('success', 'Your Shipment History data has been Created!');
+		redirect('shipment/shipment_history_update');
+	}
+
 	function barcode_generator($tracking_no)
 	{
 		$this->load->library('zend');
@@ -354,7 +395,8 @@ class Shipment extends CI_Controller
 
 	public function laporan_pdf()
 	{
-    $data = array(
+		// $this->load->view('shipment/shipment_pdf');
+		$data = array(
         "dataku" => array(
             "nama" => "Petani Kode",
             "url" => "http://petanikode.com"

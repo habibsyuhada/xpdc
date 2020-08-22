@@ -58,6 +58,9 @@
 							<!-- <div class="nav-item">
 								<a href="pages/navbar.html"><i class="ik ik-menu"></i><span>Navigation</span></a>
 							</div> -->
+							<div class="nav-item active">
+								<a href="<?php echo base_url() ?>shipment/shipment_history_update"><i class="fas fa-history"></i><span>Shipment History Update</span></a>
+							</div>
 							<div class="nav-item has-sub">
 								<a href="javascript:void(0)"><i class="fas fa-pallet"></i><span>Shipment</span></a>
 								<div class="submenu-content">

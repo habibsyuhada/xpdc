@@ -53,6 +53,9 @@
                 <li class="nav-item">
                   <a class="nav-link" id="shipping-info-tab" data-toggle="tab" href="#shipping-info" role="tab" aria-controls="shipping-info" aria-selected="false">Shipping Information</a>
                 </li>
+                <li class="nav-item">
+                  <a class="nav-link" id="assign-shipment-tab" data-toggle="tab" href="#assign-shipment" role="tab" aria-controls="assign-shipment" aria-selected="false">Assign Shipment</a>
+                </li>
               </ul>
               <div class="tab-content" id="myTabContent">
                 <div class="tab-pane fade show active" id="shipper-consignee" role="tabpanel" aria-labelledby="shipper-consignee-tab">
@@ -491,6 +494,56 @@
                       <div class="form-group">
                         <label>Permit No.</label>
                         <input type="text" class="form-control" name="permit_no" placeholder="Permit No." value="<?= $shipment['permit_no'] ?>" required>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="mt-2 row">
+                    <div class="text-left col-6">
+                      <span class="btn btn-danger previous-tab">Back</span>
+                    </div>
+                    <div class="text-right col-6">
+                      <span class="btn btn-info next-tab">Next</span>
+                    </div>
+                  </div>
+                </div>
+                <div class="tab-pane fade" id="assign-shipment" role="tabpanel" aria-labelledby="assign-shipment-tab">
+                  <br>
+                  <div class="row clearfix">
+                    <div class="col-md-12">
+                      <h6 class="font-weight-bold">Assign Shipment</h6>
+                    </div>
+                    <div class="col-md-6">
+                      <div class="form-group">
+                        <label>Employee</label>
+                        <select class="form-control" name="assign_employee" required>
+                          <option value="">-- Select One --</option>
+                        </select>
+                      </div>
+                      <div class="form-group">
+                        <label>Client</label>
+                        <select class="form-control" name="assign_client" required>
+                          <option value="">-- Select One --</option>
+                        </select>
+                      </div>
+                      <div class="form-group">
+                        <label>Agent</label>
+                        <select class="form-control" name="assign_agent" required>
+                          <option value="">-- Select One --</option>
+                        </select>
+                      </div>
+                    </div>
+                    <div class="col-md-6">
+                      <div class="form-group">
+                        <label>Branch Manager</label>
+                        <select class="form-control" name="assign_branch" required>
+                          <option value="">-- Select One --</option>
+                        </select>
+                      </div>
+                      <div class="form-group">
+                        <label>Driver</label>
+                        <select class="form-control" name="assign_driver" required>
+                          <option value="">-- Select One --</option>
+                        </select>
                       </div>
                     </div>
                   </div>

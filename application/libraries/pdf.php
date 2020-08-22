@@ -42,6 +42,8 @@ class Pdf extends Dompdf{
      */
     public function load_view($view, $data = array()){
         $html = $this->ci()->load->view($view, $data, TRUE);
+        $this->set_option('isHtml5ParserEnabled', true);
+        $this->set_option('isRemoteEnabled', true);   
         $this->load_html($html);
         // Render the PDF
         $this->render();

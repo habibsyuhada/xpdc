@@ -353,7 +353,7 @@ class Shipment extends CI_Controller
 
     $this->load->library('pdf');
     $this->pdf->setPaper('A6', 'potrait');
-    $this->pdf->filename = "laporan-petanikode.pdf";
+    $this->pdf->filename = "Label-".$data['shipment']['tracking_no'].".pdf";
     $this->pdf->load_view('shipment/shipment_pdf', $data);
 	}
 

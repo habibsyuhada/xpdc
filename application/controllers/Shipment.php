@@ -120,7 +120,7 @@ class Shipment extends CI_Controller
 			'cipl_no'								=> $post['cipl_no'],
 			'permit_no'								=> $post['permit_no']
 		);
-		$id_shipment = $this->shipment_mod->shipment_detail_create_process_db($form_data);
+		$this->shipment_mod->shipment_detail_create_process_db($form_data);
 
 		$form_data = array(
 			'id_shipment' 			=> $id_shipment,
@@ -393,8 +393,88 @@ class Shipment extends CI_Controller
 		$this->load->view('index', $data);
 	}
 
+	public function shipment_import_preview(){
+		$config['upload_path']          = 'file/shipment/';
+		$config['file_name']            = 'excel_'.date('YmsHis');
+		$config['allowed_types']        = 'xlsx';
+		$config['overwrite'] 						= TRUE;
+
+		$this->load->library('upload', $config);
+		$this->upload->initialize($config);
+
+		if ( ! $this->upload->do_upload('file')){
+			$this->session->set_flashdata('error', $this->upload->display_errors());
+			redirect("shipment/shipment_import");
+			return false;
+		}
+
+		include APPPATH.'third_party/PHPExcel/PHPExcel.php';
+		
+		$excelreader = new PHPExcel_Reader_Excel2007();
+		$loadexcel = $excelreader->load('file/shipment/'.$this->upload->data('file_name')); // Load file yang telah diupload ke folder excel
+		$sheet = $loadexcel->getActiveSheet()->toArray(null, true, true ,true);
+
+		$data['sheet']						= $sheet;
+		$data['meta_title'] 			= 'Import Preview';
+		$data['subview']    			= 'shipment/shipment_import_preview';
+		$this->load->view('index', $data);
+	}
+
 	public function shipment_import_process()
 	{
+		$post = $this->input->post();
+		$shipper_name = $post['shipper_name'];
+		foreach ($shipper_name as $key => $value) {
+			$tracking_no = $this->shipment_mod->shipment_generate_tracking_no_db();
+			$tracking_no = "XPDC" . $tracking_no;
+			$form_data = array(
+				'tracking_no' 							=> $tracking_no,
+				'shipper_name' 							=> $post['shipper_name'][$key],
+				'shipper_address' 					=> $post['shipper_address'][$key],
+				'shipper_city' 							=> $post['shipper_city'][$key],
+				'shipper_country' 					=> $post['shipper_country'][$key],
+				'shipper_postcode'					=> $post['shipper_postcode'][$key],
+				'shipper_contact_person' 		=> $post['shipper_contact_person'][$key],
+				'shipper_phone_number' 			=> $post['shipper_phone_number'][$key],
+				'shipper_email' 						=> $post['shipper_email'][$key],
+				'consignee_name' 						=> $post['consignee_name'][$key],
+				'consignee_address' 				=> $post['consignee_address'][$key],
+				'consignee_city' 						=> $post['consignee_city'][$key],
+				'consignee_country' 				=> $post['consignee_country'][$key],
+				'consignee_postcode' 				=> $post['consignee_postcode'][$key],
+				'consignee_contact_person' 	=> $post['consignee_contact_person'][$key],
+				'consignee_phone_number' 		=> $post['consignee_phone_number'][$key],
+				'consignee_email' 					=> $post['consignee_email'][$key],
+				'type_of_shipment' 					=> $post['type_of_shipment'][$key],
+				'type_of_mode' 							=> $post['type_of_mode'][$key],
+				'incoterms' 								=> $post['incoterms'][$key],
+				'sea' 											=> $post['sea'][$key],
+				'description_of_goods'			=> $post['description_of_goods'][$key],
+				'hscode'										=> $post['hscode'][$key],
+				'coo'												=> $post['coo'][$key],
+				'declared_value'						=> $post['declared_value'][$key],
+				'currency'									=> $post['currency'][$key],
+				'ref_no'										=> $post['ref_no'][$key],
+				'status'										=> "Booked",
+				'status_delete'							=> 1
+			);
+			$id_shipment = $this->shipment_mod->shipment_create_process_db($form_data);
+			
+			$form_data = array(
+				'id_shipment' 												=> $id_shipment,
+			);
+			$this->shipment_mod->shipment_detail_create_process_db($form_data);
+
+			$form_data = array(
+				'id_shipment' 		=> $id_shipment,
+				'date' 						=> date("Y-m-d"),
+				'time' 						=> date("H:i:s"),
+				'location' 				=> $post['shipper_country'][$key],
+				'status' 					=> "Booked",
+				'remarks' 				=> "",
+			);
+			$this->shipment_mod->shipment_history_create_process_db($form_data);
+		}
 		$this->session->set_flashdata('success', 'Your Shipment data has been Imported!');
 		redirect('shipment/shipment_import');
 	}

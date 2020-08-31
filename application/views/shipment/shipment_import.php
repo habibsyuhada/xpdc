@@ -7,7 +7,7 @@
             <h3><?php echo $meta_title ?></h3>
           </div>
           <div class="card-body">
-            <form action="<?php echo base_url(); ?>shipment/shipment_import_process" method="POST" class="forms-sample" >
+            <form action="<?php echo base_url(); ?>shipment/shipment_import_preview" method="POST" class="forms-sample" enctype="multipart/form-data">
               <div class="form-group row">
                 <label class="col-sm-2 col-form-label">File upload</label>
                 <label class="col-sm col-form-label"><a class="font-weight-bold text-primary" href="<?php echo base_url() ?>file/shipment-import-template.xlsx">shipment-import-template.xlsx<a></label>
@@ -15,7 +15,7 @@
               <div class="form-group row">
                 <label class="col-sm-2 col-form-label">File upload</label>
                 <div class="col-sm">
-                  <input type="file" name="img[]" class="file-upload-default">
+                  <input type="file" name="file" class="file-upload-default">
                   <div class="input-group col-xs-12">
                     <input type="text" class="form-control file-upload-info" disabled placeholder="Upload Image">
                     <span class="input-group-append">

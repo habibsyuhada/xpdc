@@ -69,6 +69,9 @@
 									<a href="<?php echo base_url() ?>shipment/shipment_import" class="menu-item">Import Shipment</a>
 								</div>
 							</div>
+							<div class="nav-item">
+								<a href="<?php echo base_url() ?>master_tracking/master_tracking_list"><i class="fas fa-box"></i><span>Master Tracking</span></a>
+							</div>
 						</nav>
 					</div>
 				</div>

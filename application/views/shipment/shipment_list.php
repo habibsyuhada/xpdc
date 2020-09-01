@@ -56,11 +56,11 @@
                   <tbody>
                     <?php foreach ($shipment_list as $key => $value): ?>
                     <tr>
-                      <td><input type="checkbox" class="checkbox-20"></td>
+                      <td><input type="checkbox" class="checkbox-20" value="<?php echo $value['id'] ?>" onclick="save_checkbox(this)"></td>
                       <td><?php echo $value['tracking_no'] ?></td>
                       <td><?php echo $value['shipper_name'] ?></td>
                       <td><?php echo $value['consignee_name'] ?></td>
-                      <td></td>
+                      <td><?php echo $value['master_tracking'] ?></td>
                       <td><?php echo $value['status'] ?></td>
                       <td><?php echo $value['type_of_shipment'] ?></td>
                       <td>
@@ -73,6 +73,23 @@
                     <?php endforeach; ?>
                   </tbody>
                 </table>
+                <form id="form_master_tracking" method="POST" action="<?php echo base_url(); ?>master_tracking/master_tracking_create">
+                <div class="row clearfix">
+                  <div class="col-md-6">
+                    <div class="form-group">
+                      <label>You tick <span class="text-info num_ticker">0</span> documents to Console.</label>
+                      <input type="text" class="form-control" name="master_tracking" placeholder="Master Tracking">
+                    </div>
+                    <div class="form-group">
+                      <input type="text" class="form-control" name="remarks" placeholder="Remarks">
+                    </div>
+                    <div class="form-group">
+                      <input type="hidden" class="form-control" name="id">
+                      <button type="submit" class="btn btn-success" onclick="return confirm('Apakah Anda Yakin?')">Submit</button>
+                    </div>
+                  </div>
+                </div>
+                </form>
               </div>
             </div>
           </div>
@@ -82,4 +99,17 @@
 	</div>
 </div>
 <script type="text/javascript">
+  var data_checkbox = [];
+  function save_checkbox(input) {
+    if($(input).prop("checked") == true){
+      data_checkbox.push($(input).val());
+    }
+    else{
+      data_checkbox.splice( $.inArray($(input).val(), data_checkbox), 1 );
+    }
+    $(".num_ticker").html(data_checkbox.length)
+  }
+  $('#form_master_tracking').submit(function() {
+    $("#form_master_tracking input[name=id]").val(data_checkbox.join(", "));
+  });
 </script>

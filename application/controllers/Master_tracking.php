@@ -66,7 +66,8 @@ class Master_tracking extends CI_Controller {
   
   public function master_tracking_detail($master_tracking){
     $where['master_tracking'] = $master_tracking;
-		$data['shipment_list'] 	  = $this->shipment_mod->shipment_list_db();
+		$data['shipment_list'] 	  = $this->shipment_mod->shipment_list_db($where);
+		$data['master_tracking'] 	= $master_tracking;
 		$data['subview'] 				  = 'master_tracking/master_tracking_detail';
 		$data['meta_title'] 		  = 'Shipment List';
 		$this->load->view('index', $data);

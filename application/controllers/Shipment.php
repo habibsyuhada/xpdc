@@ -23,7 +23,6 @@ class Shipment extends CI_Controller
 	{
 		parent::__construct();
 		$this->load->model('shipment_mod');
-		$this->load->helper('general');
 	}
 
 	public function index()

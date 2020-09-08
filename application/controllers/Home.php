@@ -32,7 +32,7 @@ class Home extends CI_Controller {
 		if(!$this->session->userdata('id')){
 			redirect('home/login');
 		}
-		$data['subview'] 			= 'home/index';
+		$data['subview'] 			= 'home/home';
 		$data['meta_title'] 	= 'Home';
 		$this->load->view('index', $data);
 	}

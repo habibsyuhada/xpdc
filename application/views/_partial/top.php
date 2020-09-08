@@ -4,8 +4,8 @@
 	<![endif]-->
 
 	<div class="wrapper">
-		<!-- <header class="header-top" header-theme="green"> -->
-		<header class="header-top" style="background: #008060">
+		<header class="header-top" header-theme="light">
+		<!-- <header class="header-top" style="background: #008060"> -->
 			<div class="container-fluid">
 				<div class="d-flex justify-content-between">
 					<div class="top-menu d-flex align-items-center">
@@ -21,7 +21,7 @@
 					</div>
 					<div class="top-menu d-flex align-items-center">
 						<div class="dropdown">
-							<a class="dropdown-toggle" href="#" id="userDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><img class="avatar" src="<?php echo base_url(); ?>assets/img/user.jpg" alt=""></a>
+							<a class="dropdown-toggle" href="#" id="userDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><img class="avatar" src="<?php echo base_url(); ?>assets/img/user.jpg" alt=""><span style="position: relative; bottom: 3px; left: 5px;"><b><?php echo $this->session->userdata('name') ?></b></span></a>
 							<div class="dropdown-menu dropdown-menu-right" aria-labelledby="userDropdown">
 								<!-- <a class="dropdown-item" href="profile.html"><i class="ik ik-user dropdown-icon"></i> Profile</a>
 								<a class="dropdown-item" href="#"><i class="ik ik-settings dropdown-icon"></i> Settings</a>

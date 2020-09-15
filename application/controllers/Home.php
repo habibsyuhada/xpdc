@@ -25,7 +25,7 @@ class Home extends CI_Controller {
 	}
 
 	public function index(){
-		redirect('home/home');
+		$this->load->view('home/landing_page');
 	}
 
 	public function home(){
@@ -38,6 +38,9 @@ class Home extends CI_Controller {
 	}
 
 	public function login(){
+		if($this->session->userdata('id')){
+			redirect('home/home');
+		}
 		$data['meta_title'] 	= 'Login';
 		$this->load->view('home/login');
 	}

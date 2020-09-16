@@ -16,6 +16,31 @@
       <div class="col-md-12">
         <div class="card">
           <div class="card-header">
+            <h3>Add New Tracking Number</h3>
+          </div>
+          <div class="card-body">
+            <div class="row">
+              <div class="col-md-12">
+                <div class="row clearfix">
+                  <div class="col-md-6">
+                    <div class="form-group">
+                      <input type="text" class="form-control" name="tracking_no" placeholder="Tracking Number">
+                    </div>
+                    <div class="form-group">
+                      <button type="button" class="btn btn-success">Submit</button>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="row clearfix">
+      <div class="col-md-12">
+        <div class="card">
+          <div class="card-header">
             <h3>Shipment List in <?php echo $master_tracking ?></h3>
           </div>
           <div class="card-body">
@@ -63,4 +88,7 @@
 	</div>
 </div>
 <script type="text/javascript">
+  function check_tracking_no() {
+    var tracking_no = $('input[name=tracking_no]').val();
+  }
 </script>

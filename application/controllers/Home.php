@@ -22,10 +22,41 @@ class Home extends CI_Controller {
 	public function __construct() {
 		parent::__construct();
 		$this->load->model('user_mod');
+		$this->load->model('shipment_mod');
 	}
 
 	public function index(){
-		$this->load->view('home/landing_page');
+		$data = array();
+		if($this->input->get('tracking_no')){
+			$tracking_no = $this->input->get('tracking_no');
+			$where['tracking_no'] 	= $tracking_no;
+			$shipment_list 					= $this->shipment_mod->shipment_list_db($where);
+			if(count($shipment_list) > 0){
+				unset($where);
+				$where['id_shipment'] 	= $shipment_list[0]['id'];
+				$history_list 					= $this->shipment_mod->shipment_history_list_db($where);
+				$data['shipment'] 			= $shipment_list[0];
+				$data['history_list'] 	= $history_list;
+			}
+	
+			$data['tracking_no'] 		= $tracking_no;
+		}
+
+		$this->load->view('home/landing_page', $data);
+	}
+
+	public function tracking_xpdc($id){
+		$where['id'] 						= $id;
+		$shipment_list 					= $this->shipment_mod->shipment_list_db($where);
+
+		unset($where);
+		echo $id;
+		$where['id_shipment'] 	= $id;
+		$history_list 					= $this->shipment_mod->shipment_history_list_db($where);
+				
+		$data['shipment'] 			= $shipment_list[0];
+		$data['history_list'] 	= $history_list;
+		$this->load->view('home/landing_page', $data);
 	}
 
 	public function home(){

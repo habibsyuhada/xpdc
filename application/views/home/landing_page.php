@@ -110,6 +110,12 @@
       border-color: #f9ca24;
       background-color: #f9ca24;
     }
+
+    @media screen and (max-width: 992px) {
+      .tracking_no {
+        display: none;
+      }
+    }
   </style>
   
 </head>
@@ -169,7 +175,7 @@
             
             <div class="navbar-btn d-none d-sm-inline-block">
               <ul>
-                <li><a class="solid" href="<?php echo base_url() ?>home/login">Login XPDC</a></li>
+                <li><a class="solid" href="<?php echo base_url() ?>home/login">MY XPDC</a></li>
               </ul>
             </div>
           </nav> <!-- navbar -->
@@ -203,6 +209,20 @@
                     <li><a class="main-btn rounded-two" href="#">DOWNLOAD</a></li>
                   </ul> -->
                 </div>
+                <div class="p-3 text-center tracking_no" style="background: rgba(255, 255, 255, 0.3);">
+                  <h4 class="mb-3 text-white">XPDC Tracking Number</h4>
+                  <h6 class="mb-3 text-white">Enter the Tracking No</h6>
+                  <form>
+                    <div class="form-row">
+                      <div class="form-group col-md">
+                        <input type="text" class="form-control" name="tracking_no" placeholder="Ex: 12345">
+                      </div>
+                      <div class="form-group col-md-auto">
+                        <button class="btn btn-warning btn-block">Track Result</button>
+                      </div>
+                    </div>
+                  </form>
+                </div>
               </div>
             </div> <!-- row -->
           </div> <!-- container -->
@@ -225,6 +245,20 @@
                     <li><a class="main-btn rounded-two" href="#">DOWNLOAD</a></li>
                   </ul> -->
                 </div> <!-- slider-content -->
+                <div class="p-3 text-center tracking_no" style="background: rgba(255, 255, 255, 0.3);">
+                  <h4 class="mb-3 text-white">XPDC Tracking Number</h4>
+                  <h6 class="mb-3 text-white">Enter the Tracking No</h6>
+                  <form>
+                    <div class="form-row">
+                      <div class="form-group col-md">
+                        <input type="text" class="form-control" name="tracking_no" placeholder="Ex: 12345">
+                      </div>
+                      <div class="form-group col-md-auto">
+                        <button class="btn btn-warning btn-block">Track Result</button>
+                      </div>
+                    </div>
+                  </form>
+                </div>
               </div>
             </div> <!-- row -->
           </div> <!-- container -->
@@ -247,37 +281,105 @@
 
   <!--====== SLIDER PART ENDS ======-->
     
-    <!--====== FEATRES TWO PART START ======-->
+  <!--====== ABOUT US START ======-->
 
-    <section id="about" class="features-area">
-      <div class="container">
-        <div class="row justify-content-center">
-          <div class="col-lg-10 col-md-10 col-sm-12">
-            <div class="single-features mt-40">
-              <div class="features-title-icon d-flex justify-content-between">
-                <h2 class="features-title">PT. XENA PRANADIPA DHIA CAKRA</h2>
-              </div>
-              <div class="features-content">
-                <div class="row align-items-center">
-                  <div class="col-lg-9 col-md-9 col-sm-12">
-                    <p class="text text-justify">PT. XENA PRANADIPA DHIA CAKRA (XPDC) is a dynamic provider of comprehensive logistics company with knowledge and professionalism since 2018 based in Indonesia. With many experiences in handling international and domestic airfreight and sea freight shipments, we offer a profound and personal approach to fulfill customer’s need in any size of business.Due to demand of the customers, the services of ours has expanded to land freight, customs clearance brokerage, warehousing & packaging also handcarry service that makes us become a one-stop logistics partner.
-                    <br><br>
-                    We diversified service offering includes unique logistic handling and services to meet our customer’s unique request. We present our customers a center of excellence they can partner with and benefit from full transparency and a sincere commitment to mutual success.
-                    </p>
-                  </div>
-                  <div class="col">
-                    <img src="<?php echo base_url() ?>assets/landing_page/images/logo-xpdc.png" alt="Logo" width="100%">
-                  </div>
+  <section id="about" class="features-area">
+    <div class="container">
+      <div class="row justify-content-center">
+        <div class="col-lg-10 col-md-10 col-sm-12">
+          <div class="single-features mt-40">
+            <div class="features-title-icon d-flex justify-content-between">
+              <h2 class="features-title">PT. XENA PRANADIPA DHIA CAKRA</h2>
+            </div>
+            <div class="features-content">
+              <div class="row align-items-center">
+                <div class="col-lg-9 col-md-9 col-sm-12">
+                  <p class="text text-justify">PT. XENA PRANADIPA DHIA CAKRA (XPDC) is a dynamic provider of comprehensive logistics company with knowledge and professionalism since 2018 based in Indonesia. With many experiences in handling international and domestic airfreight and sea freight shipments, we offer a profound and personal approach to fulfill customer’s need in any size of business.Due to demand of the customers, the services of ours has expanded to land freight, customs clearance brokerage, warehousing & packaging also handcarry service that makes us become a one-stop logistics partner.
+                  <br><br>
+                  We diversified service offering includes unique logistic handling and services to meet our customer’s unique request. We present our customers a center of excellence they can partner with and benefit from full transparency and a sincere commitment to mutual success.
+                  </p>
+                </div>
+                <div class="col">
+                  <img src="<?php echo base_url() ?>assets/landing_page/images/logo-xpdc.png" alt="Logo" width="100%">
                 </div>
               </div>
-            </div> <!-- single features -->
-          </div>
-        </div> <!-- row -->
-      </div> <!-- container -->
+            </div>
+          </div> <!-- single features -->
+        </div>
+      </div> <!-- row -->
+    </div> <!-- container -->
   </section>
 
-  <!--====== FEATRES TWO PART ENDS ======-->
-  
+  <!--====== ABOUT US ENDS ======-->
+  <?php if(isset($tracking_no)): ?>
+  <!--====== TRACKING NO START ======-->
+
+  <section id="tracking" class="features-area">
+    <div class="container">
+      <div class="row justify-content-center">
+        <div class="col-lg-10 col-md-10 col-sm-12">
+          <div class="single-features mt-40">
+            <div class="features-title-icon d-flex justify-content-between">
+              <h2 class="features-title mb-4">XPDC TRACKING NO. <?php echo $tracking_no ?></h2>
+            </div>
+            <div class="features-content">
+              <?php if(isset($shipment)): ?>
+              <div class="row justify-content-center">
+                <div class="col-auto">
+                  <img height="60px" src="<?php echo site_url(); ?>shipment/barcode_generator/<?php echo $shipment['tracking_no'] ?>">
+                  <br>
+                  <br>
+                  <h4 class="font-weight-bold text-center"><?php echo $shipment['tracking_no'] ?></h4>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-md-6">
+                  <p class="m-0 py-3 border-bottom"><b>SHIPPER ADDRESS</b></p>
+                  <p class="m-0 py-3"><b>Country : </b><?php echo $shipment['shipper_country'] ?></p>
+                </div>
+                <div class="col-md-6">
+                  <p class="m-0 py-3 border-bottom"><b>CONSIGNEE ADDRESS</b></p>
+                  <p class="m-0 py-3"><b>Country : </b><?php echo $shipment['consignee_country'] ?></p>
+                </div>
+              </div>
+              <div class="mb-4 alert alert-dark text-center" role="alert">
+                <b>SHIPMENT STATUS: <?php echo strtoupper($shipment['status']) ?></b>
+              </div>
+              <p class="mt-4 pt-4 border-bottom"><b>SHIPMENT HISTORY</b></p>
+              <table class="table data_table">
+                <thead>
+                  <tr class="bg-info">
+                    <th class="text-white font-weight-bold">Date</th>
+                    <th class="text-white font-weight-bold">Time</th>
+                    <th class="text-white font-weight-bold">Location</th>
+                    <th class="text-white font-weight-bold">Status</th>
+                    <th class="text-white font-weight-bold">Remarks</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <?php foreach ($history_list as $key => $value): ?>
+                  <tr>
+                    <td><?php echo $value['date'] ?></td>
+                    <td><?php echo $value['time'] ?></td>
+                    <td><?php echo $value['location'] ?></td>
+                    <td><?php echo $value['status'] ?></td>
+                    <td><?php echo $value['remarks'] ?></td>
+                  </tr>
+                  <?php endforeach; ?>
+                </tbody>
+              </table>
+              <?php else: ?>
+                <h5>Not Found</h5>
+              <?php endif; ?>
+            </div>
+          </div> <!-- single features -->
+        </div>
+      </div> <!-- row -->
+    </div> <!-- container -->
+  </section>
+
+  <!--====== TRACKING NO ENDS ======-->
+  <?php endif; ?>
   <!--====== FEATRES TWO PART START ======-->
 
   <section id="services" class="features-area bg-yellow">
@@ -609,7 +711,15 @@
 -->
 
   <!--====== PART ENDS ======-->
-  
+<script>
+  $(document).ready(function() {
+    <?php if(isset($tracking_no)): ?>
+    $('html, body').animate({
+      scrollTop: $('#tracking').offset().top,
+    },500,'linear');
+    <?php endif; ?>
+  })
+</script>
 </body>
 
 </html>

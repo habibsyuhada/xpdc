@@ -27,7 +27,7 @@
                       <input type="text" class="form-control" name="tracking_no" placeholder="Tracking Number">
                     </div>
                     <div class="form-group">
-                      <button type="button" class="btn btn-success">Submit</button>
+                      <button type="button" class="btn btn-success" onclick="submit_new_tracking_no()">Submit</button>
                     </div>
                   </div>
                 </div>
@@ -88,7 +88,30 @@
 	</div>
 </div>
 <script type="text/javascript">
-  function check_tracking_no() {
+  function submit_new_tracking_no() {
     var tracking_no = $('input[name=tracking_no]').val();
+    $.ajax({
+      url: '<?php echo base_url() ?>master_tracking/submit_new_tracking_no',
+      type: 'POST',
+      data:{
+        tracking_no: tracking_no,
+        master_tracking: '<?php echo $master_tracking ?>',
+      },
+      success: function (data) {
+        if(data.includes("Error")){
+          $('input[name=tracking_no]').addClass('is-invalid');
+          var invalid_elem = '<div class="invalid-feedback">'+data+'</div>';
+          $('.invalid-feedback').remove();
+          $(invalid_elem).insertAfter("input[name=tracking_no]");
+          showDangerToast(data);
+        }
+        else{
+          $('input[name=tracking_no]').removeClass('is-invalid');
+          $('.invalid-feedback').remove();
+          $('input[name=tracking_no]').val('');
+          showSuccessToast('Success! Your data has been submitted!');
+        }
+      }
+    }); 
   }
 </script>

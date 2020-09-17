@@ -72,4 +72,18 @@ class Master_tracking extends CI_Controller {
 		$data['meta_title'] 		  = 'Shipment List';
 		$this->load->view('index', $data);
 	}
+
+	public function submit_new_tracking_no(){
+		$where['tracking_no'] 				= $this->input->post('tracking_no');
+		$shipment_list 	  						= $this->shipment_mod->shipment_list_db($where);
+		if(count($shipment_list)<1){
+			echo "Error: Tracking Number Is Not Found!";
+			exit;
+		}
+		elseif($shipment_list[0]['master_tracking'] != ""){
+			echo "Error: Already in Container !".$shipment_list[0]['master_tracking'];
+			exit;
+		}
+		test_var($this->input->post());
+	}
 }

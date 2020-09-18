@@ -79,8 +79,12 @@
 									<a href="<?php echo base_url() ?>operation/delivered" class="menu-item">Delivered</a>
 								</div>
 							</div>
-							<div class="nav-item">
-								<a href="<?php echo base_url() ?>master_tracking/master_tracking_list"><i class="fas fa-box"></i><span>Master Tracking</span></a>
+							<div class="nav-item has-sub">
+								<a href="javascript:void(0)"><i class="fas fa-box"></i><span>Master Tracking</span></a>
+								<div class="submenu-content">
+									<a href="<?php echo base_url() ?>master_tracking/master_tracking_list" class="menu-item">Master Tracking List</a>
+									<a href="<?php echo base_url() ?>master_tracking/master_tracking_create" class="menu-item">Create Shipment</a>
+								</div>
 							</div>
 						</nav>
 					</div>

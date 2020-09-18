@@ -43,26 +43,43 @@ class Master_tracking extends CI_Controller {
 		$data['subview'] 				= 'master_tracking/master_tracking_list';
 		$data['meta_title'] 		= 'Master Tracking List';
 		$this->load->view('index', $data);
-  }
-
+	}
+	
 	public function master_tracking_create(){
-		$post = $this->input->post();
+		$data['subview'] 			= 'master_tracking/master_tracking_create';
+		$data['meta_title'] 	= 'Create Master Tracking';
+		$this->load->view('index', $data);
+	}
 
+	public function master_tracking_create_process(){
+		$post = $this->input->post();
 		$form_data = array(
 			'master_tracking' 	=> $post['master_tracking'],
 			'remarks' 					=> $post['remarks'],
 		);
 		$id_insert	= $this->master_tracking_mod->master_tracking_create_process_db($form_data);
+		$this->session->set_flashdata('success', 'Your Master Tracking data has been Created!');
+		redirect('master_tracking/master_tracking_list');
+	}
 
-		$form_data = array(
-			'master_tracking' 	=> $post['master_tracking'],
-		);
-		$where['id IN ('.$post['id'].')'] = NULL;
-		$this->shipment_mod->shipment_update_process_db($form_data, $where);
+	// public function master_tracking_create(){
+	// 	$post = $this->input->post();
 
-		$this->session->set_flashdata('success', 'Your Shipment data has been Updated!');
-		redirect('shipment/shipment_list');
-  }
+	// 	$form_data = array(
+	// 		'master_tracking' 	=> $post['master_tracking'],
+	// 		'remarks' 					=> $post['remarks'],
+	// 	);
+	// 	$id_insert	= $this->master_tracking_mod->master_tracking_create_process_db($form_data);
+
+	// 	$form_data = array(
+	// 		'master_tracking' 	=> $post['master_tracking'],
+	// 	);
+	// 	$where['id IN ('.$post['id'].')'] = NULL;
+	// 	$this->shipment_mod->shipment_update_process_db($form_data, $where);
+
+	// 	$this->session->set_flashdata('success', 'Your Shipment data has been Updated!');
+	// 	redirect('shipment/shipment_list');
+  // }
   
   public function master_tracking_detail($master_tracking){
     $where['master_tracking'] = $master_tracking;
@@ -84,6 +101,14 @@ class Master_tracking extends CI_Controller {
 			echo "Error: Already in Container !".$shipment_list[0]['master_tracking'];
 			exit;
 		}
-		test_var($this->input->post());
+		$shipment			 	  						= $shipment_list[0];
+		$form_data = array(
+			'master_tracking' 	=> $this->input->post('master_tracking'),
+		);
+		$where['id IN ('.$shipment['id'].')'] = NULL;
+		$this->shipment_mod->shipment_update_process_db($form_data, $where);
+		
+		echo json_encode($shipment);
+		// test_var($this->input->post());
 	}
 }

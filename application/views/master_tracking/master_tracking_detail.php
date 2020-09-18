@@ -106,9 +106,14 @@
           showDangerToast(data);
         }
         else{
+          data = JSON. parse(data);
           $('input[name=tracking_no]').removeClass('is-invalid');
           $('.invalid-feedback').remove();
           $('input[name=tracking_no]').val('');
+          console.log(data);
+          var action = '<a href="<?php echo base_url() ?>shipment/shipment_tracking/'+data.id+'" class="btn btn-secondary" title="View"><i class="fas fa-eye m-0"></i></a><a target="_blank" href="<?php echo base_url() ?>shipment/shipment_tracking_label_pdf/'+data.id+'" class="btn btn-warning" title="Print"><i class="fas fa-print m-0"></i></a><a href="<?php echo base_url() ?>shipment/shipment_update/'+data.id+'" class="btn btn-primary" title="Update"><i class="fas fa-edit m-0"></i></a><a href="<?php echo base_url(); ?>shipment/shipment_delete_process/'+data.id+'" onclick="return confirm(&#34;Are you sure to delete this? You cannot revert it later.&#34;)" class="btn btn-danger" title="Delete"><i class="fas fa-trash m-0"></i></a>';
+                        
+          $(".data_table").DataTable().row.add(['<input type="checkbox" class="checkbox-20" value="'+data.id+'" onclick="save_checkbox(this)">', data.tracking_no, data.shipper_name, data.consignee_name, data.master_tracking, data.status, data.type_of_shipment, action]).draw();
           showSuccessToast('Success! Your data has been submitted!');
         }
       }

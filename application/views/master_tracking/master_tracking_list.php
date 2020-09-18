@@ -24,7 +24,7 @@
                     <tr>
                       <td><input type="checkbox" class="checkbox-20"></td>
                       <td><?php echo $value['master_tracking'] ?></td>
-                      <td><?php echo count($shipment[$value['master_tracking']]) ?></td>
+                      <td><?php echo @count(@$shipment[$value['master_tracking']]) ?></td>
                       <td><?php echo $value['remarks'] ?></td>
                       <td>
                         <a href="<?php echo base_url() ?>master_tracking/master_tracking_detail/<?php echo $value['master_tracking'] ?>" class="btn btn-secondary" title="View"><i class="fas fa-eye m-0"></i></a>

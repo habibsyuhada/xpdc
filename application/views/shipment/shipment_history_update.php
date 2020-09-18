@@ -32,6 +32,7 @@
                   <option value="Booking Confirmed">Booking Confirmed</option>
                   <option value="Picked up">Picked up</option>
                   <option value="Pending Payment">Pending Payment</option>
+                  <option value="Service Center">Service Center</option>
                   <option value="Departed">Departed</option>
                   <option value="Arrived">Arrived</option>
                   <option value="In Transit">In Transit</option>

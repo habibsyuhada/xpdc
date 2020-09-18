@@ -4,21 +4,6 @@ defined('BASEPATH') or exit('No direct script access allowed');
 class Shipment extends CI_Controller
 {
 
-	/**
-	 * Index Page for this controller.
-	 *
-	 * Maps to the following URL
-	 * 		http://example.com/index.php/welcome
-	 *	- or -
-	 * 		http://example.com/index.php/welcome/index
-	 *	- or -
-	 * Since this controller is set as the default controller in
-	 * config/routes.php, it's displayed at http://example.com/
-	 *
-	 * So any other public methods not prefixed with an underscore will
-	 * map to /index.php/welcome/<method_name>
-	 * @see https://codeigniter.com/user_guide/general/urls.html
-	 */
 	public function __construct()
 	{
 		parent::__construct();
@@ -48,9 +33,16 @@ class Shipment extends CI_Controller
 	public function shipment_create_process()
 	{
 		$post = $this->input->post();
-		print_r($post);
 		$tracking_no = $this->shipment_mod->shipment_generate_tracking_no_db();
 		$tracking_no = "XPDC" . $tracking_no;
+
+		// if ($post['status_pickup'] == 'Dropoff') {
+		// 	$status = 'Pending Payment';
+		// } else if ($post['status_pickup'] == 'Picked Up') {
+		// 	$status = 'Booked';
+		// }
+		$status = 'Service Center';
+
 		$form_data = array(
 			'tracking_no' 				=> $tracking_no,
 			'shipper_name' 				=> $post['shipper_name'],
@@ -79,46 +71,32 @@ class Shipment extends CI_Controller
 			'declared_value'			=> $post['declared_value'],
 			'currency'					=> $post['currency'],
 			'ref_no'					=> $post['ref_no'],
-			'status'					=> "Booked",
+			'status'					=> $status,
 			'status_delete'				=> 1
 		);
 		$id_shipment = $this->shipment_mod->shipment_create_process_db($form_data);
 
-		$form_data = array(
-			'id_shipment' 							=> $id_shipment,
-			'pickup_name' 							=> $post['pickup_name'],
-			'pickup_address' 						=> $post['pickup_address'],
-			'pickup_city' 							=> $post['pickup_city'],
-			'pickup_country' 						=> $post['pickup_country'],
-			'pickup_postcode'						=> $post['pickup_postcode'],
-			'pickup_contact_person' 				=> $post['pickup_contact_person'],
-			'pickup_phone_number' 					=> $post['pickup_phone_number'],
-			'pickup_email' 							=> $post['pickup_email'],
-			'pickup_date' 							=> $post['pickup_date'],
-			'pickup_time' 							=> $post['pickup_time'],
-			'pickup_notes' 							=> $post['pickup_notes'],
-			'billing_account' 						=> $post['billing_account'],
-			'billing_name' 							=> $post['billing_name'],
-			'billing_address' 						=> $post['billing_address'],
-			'billing_city' 							=> $post['billing_city'],
-			'billing_country' 						=> $post['billing_country'],
-			'billing_postcode' 						=> $post['billing_postcode'],
-			'billing_contact_person' 				=> $post['billing_contact_person'],
-			'billing_phone_number' 					=> $post['billing_phone_number'],
-			'billing_email' 						=> $post['billing_email'],
-			'main_agent_mawb_mbl'					=> $post['main_agent_mawb_mbl'],
-			'main_agent_carrier'					=> $post['main_agent_carrier'],
-			'main_agent_voyage_flight_no'			=> $post['main_agent_voyage_flight_no'],
-			'secondary_agent_mawb_mbl'				=> $post['secondary_agent_mawb_mbl'],
-			'secondary_agent_carrier'				=> $post['secondary_agent_carrier'],
-			'secondary_agent_voyage_flight_no'		=> $post['secondary_agent_voyage_flight_no'],
-			'port_of_loading'						=> $post['port_of_loading'],
-			'port_of_discharge'						=> $post['port_of_discharge'],
-			'container_no'							=> $post['container_no'],
-			'seal_no'								=> $post['seal_no'],
-			'cipl_no'								=> $post['cipl_no'],
-			'permit_no'								=> $post['permit_no']
-		);
+		if ($post['status_pickup'] = 'Dropoff') {
+			$form_data = array(
+				'id_shipment' 						=> $id_shipment
+			);
+		} else if ($post['status_pickup'] == 'Picked Up') {
+			$form_data = array(
+				'id_shipment' 							=> $id_shipment,
+				'pickup_name' 							=> $post['pickup_name'],
+				'pickup_address' 						=> $post['pickup_address'],
+				'pickup_city' 							=> $post['pickup_city'],
+				'pickup_country' 						=> $post['pickup_country'],
+				'pickup_postcode'						=> $post['pickup_postcode'],
+				'pickup_contact_person' 				=> $post['pickup_contact_person'],
+				'pickup_phone_number' 					=> $post['pickup_phone_number'],
+				'pickup_email' 							=> $post['pickup_email'],
+				'pickup_date' 							=> $post['pickup_date'],
+				'pickup_time' 							=> $post['pickup_time'],
+				'pickup_notes' 							=> $post['pickup_notes'],
+			);
+		}
+
 		$this->shipment_mod->shipment_detail_create_process_db($form_data);
 
 		$form_data = array(
@@ -126,7 +104,7 @@ class Shipment extends CI_Controller
 			'date' 					=> date("Y-m-d"),
 			'time' 					=> date("H:i:s"),
 			'location' 				=> $post['shipper_country'],
-			'status' 				=> "Booked",
+			'status' 				=> $status,
 			'remarks' 				=> "",
 		);
 		$this->shipment_mod->shipment_history_create_process_db($form_data);
@@ -336,7 +314,7 @@ class Shipment extends CI_Controller
 		echo $id;
 		$where['id_shipment'] 	= $id;
 		$history_list 					= $this->shipment_mod->shipment_history_list_db($where);
-				
+
 		$data['shipment'] 			= $shipment_list[0];
 		$data['history_list'] 	= $history_list;
 		$data['subview'] 				= 'shipment/shipment_track';
@@ -350,10 +328,10 @@ class Shipment extends CI_Controller
 		$shipment_list 			= $this->shipment_mod->shipment_list_db($where);
 		$data['shipment'] 	= $shipment_list[0];
 
-    $this->load->library('pdf');
-    $this->pdf->setPaper('A6', 'potrait');
-    $this->pdf->filename = "Label-".$data['shipment']['tracking_no'].".pdf";
-    $this->pdf->load_view('shipment/shipment_pdf', $data);
+		$this->load->library('pdf');
+		$this->pdf->setPaper('A6', 'potrait');
+		$this->pdf->filename = "Label-" . $data['shipment']['tracking_no'] . ".pdf";
+		$this->pdf->load_view('shipment/shipment_pdf', $data);
 	}
 
 	public function shipment_history_update()
@@ -392,26 +370,27 @@ class Shipment extends CI_Controller
 		$this->load->view('index', $data);
 	}
 
-	public function shipment_import_preview(){
+	public function shipment_import_preview()
+	{
 		$config['upload_path']          = 'file/shipment/';
-		$config['file_name']            = 'excel_'.date('YmsHis');
+		$config['file_name']            = 'excel_' . date('YmsHis');
 		$config['allowed_types']        = 'xlsx';
 		$config['overwrite'] 						= TRUE;
 
 		$this->load->library('upload', $config);
 		$this->upload->initialize($config);
 
-		if ( ! $this->upload->do_upload('file')){
+		if (!$this->upload->do_upload('file')) {
 			$this->session->set_flashdata('error', $this->upload->display_errors());
 			redirect("shipment/shipment_import");
 			return false;
 		}
 
-		include APPPATH.'third_party/PHPExcel/PHPExcel.php';
-		
+		include APPPATH . 'third_party/PHPExcel/PHPExcel.php';
+
 		$excelreader = new PHPExcel_Reader_Excel2007();
-		$loadexcel = $excelreader->load('file/shipment/'.$this->upload->data('file_name')); // Load file yang telah diupload ke folder excel
-		$sheet = $loadexcel->getActiveSheet()->toArray(null, true, true ,true);
+		$loadexcel = $excelreader->load('file/shipment/' . $this->upload->data('file_name')); // Load file yang telah diupload ke folder excel
+		$sheet = $loadexcel->getActiveSheet()->toArray(null, true, true, true);
 
 		$data['sheet']						= $sheet;
 		$data['meta_title'] 			= 'Import Preview';
@@ -458,7 +437,7 @@ class Shipment extends CI_Controller
 				'status_delete'							=> 1
 			);
 			$id_shipment = $this->shipment_mod->shipment_create_process_db($form_data);
-			
+
 			$form_data = array(
 				'id_shipment' 												=> $id_shipment,
 			);
@@ -482,22 +461,22 @@ class Shipment extends CI_Controller
 	{
 		$this->load->library('zend');
 		$this->zend->load('Zend/Barcode');
-		Zend_Barcode::render('CODE128', 'image', array('text'=>$tracking_no, 'drawText' => false), array());
+		Zend_Barcode::render('CODE128', 'image', array('text' => $tracking_no, 'drawText' => false), array());
 	}
 
 	public function laporan_pdf()
 	{
 		// $this->load->view('shipment/shipment_pdf');
 		$data = array(
-        "dataku" => array(
-            "nama" => "Petani Kode",
-            "url" => "http://petanikode.com"
-        )
-    );
+			"dataku" => array(
+				"nama" => "Petani Kode",
+				"url" => "http://petanikode.com"
+			)
+		);
 
-    $this->load->library('pdf');
-    $this->pdf->setPaper('A6', 'potrait');
-    $this->pdf->filename = "laporan-petanikode.pdf";
-    $this->pdf->load_view('shipment/shipment_pdf', $data);
+		$this->load->library('pdf');
+		$this->pdf->setPaper('A6', 'potrait');
+		$this->pdf->filename = "laporan-petanikode.pdf";
+		$this->pdf->load_view('shipment/shipment_pdf', $data);
 	}
 }

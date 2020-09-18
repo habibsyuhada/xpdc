@@ -1,6 +1,6 @@
 <div class="main-content">
   <div class="container-fluid">
-    <form action="<?php echo base_url(); ?>shipment/shipment_create_process" method="POST" class="forms-sample" >
+    <form action="<?php echo base_url(); ?>shipment/shipment_create_process" method="POST" class="forms-sample">
       <div class="row clearfix">
         <div class="col-md-12">
           <div class="card">
@@ -285,48 +285,55 @@
                     <div class="col-md-12">
                       <h6 class="font-weight-bold">Pick Up Information</h6>
                       <div class="form-group">
+                        <label>Status Pickup</label>
+                        <select class="form-control" name="status_pickup">
+                          <option value="Dropoff">Dropoff</option>
+                          <option value="Picked Up">Picked Up</option>
+                        </select>
+                      </div>
+                      <div class="form-group">
                         <label>Name</label>
-                        <input type="text" class="form-control" name="pickup_name" placeholder="Name" required>
+                        <input type="text" class="form-control" name="pickup_name" placeholder="Name" readonly required>
                       </div>
                       <div class="form-group">
                         <label>Address</label>
-                        <input type="text" class="form-control" name="pickup_address" placeholder="Address" required>
+                        <input type="text" class="form-control" name="pickup_address" placeholder="Address" readonly required>
                       </div>
                       <div class="form-group">
                         <label>City</label>
-                        <input type="text" class="form-control" name="pickup_city" placeholder="City" required>
+                        <input type="text" class="form-control" name="pickup_city" placeholder="City" readonly required>
                       </div>
                       <div class="form-group">
                         <label>Country</label>
-                        <input type="text" class="form-control" name="pickup_country" placeholder="Country" required>
+                        <input type="text" class="form-control" name="pickup_country" placeholder="Country" readonly required>
                       </div>
                       <div class="form-group">
                         <label>Postcode</label>
-                        <input type="text" class="form-control" name="pickup_postcode" placeholder="Postcode" required>
+                        <input type="text" class="form-control" name="pickup_postcode" placeholder="Postcode" readonly required>
                       </div>
                       <div class="form-group">
                         <label>Contact Person</label>
-                        <input type="text" class="form-control" name="pickup_contact_person" placeholder="Contact Person" required>
+                        <input type="text" class="form-control" name="pickup_contact_person" placeholder="Contact Person" readonly required>
                       </div>
                       <div class="form-group">
                         <label>Phone Number</label>
-                        <input type="text" class="form-control" name="pickup_phone_number" placeholder="Phone" required>
+                        <input type="text" class="form-control" name="pickup_phone_number" placeholder="Phone" readonly required>
                       </div>
                       <div class="form-group">
                         <label>Email</label>
-                        <input type="email" class="form-control" name="pickup_email" placeholder="Email" required>
+                        <input type="email" class="form-control" name="pickup_email" placeholder="Email" readonly required>
                       </div>
                       <div class="form-group">
                         <label>Pick Up Date</label>
-                        <input type="date" class="form-control" name="pickup_date" placeholder="Pick Up Date" required>
+                        <input type="date" class="form-control" name="pickup_date" placeholder="Pick Up Date" readonly required>
                       </div>
                       <div class="form-group">
                         <label>Pick Up Time</label>
-                        <input type="time" class="form-control" name="pickup_time" placeholder="Pick Up Time" required>
+                        <input type="time" class="form-control" name="pickup_time" placeholder="Pick Up Time" readonly required>
                       </div>
                       <div class="form-group">
                         <label>Notes</label>
-                        <input type="text" class="form-control" name="pickup_notes" placeholder="Notes" required>
+                        <input type="text" class="form-control" name="pickup_notes" placeholder="Notes" readonly required>
                       </div>
                     </div>
                   </div>
@@ -335,7 +342,7 @@
                       <span class="btn btn-danger previous-tab">Back</span>
                     </div>
                     <div class="text-right col-6">
-                      <span class="btn btn-info next-tab">Next</span>
+                      <button type="submit" class="btn btn-success" onclick="return confirm('Apakah Anda Yakin?')">Submit</button>
                     </div>
                   </div>
                 </div>
@@ -537,12 +544,41 @@
   }
 </script>
 <script>
-    /**** JQuery *******/
-    $('.next-tab').click(function() {
-        $('.nav-tabs .active').parent().next('li').find('a').trigger('click');
-    });
+  $("select[name=status_pickup]").on("change", function() {
+    var value = $(this).val();
+    if (value == 'Dropoff') {
+      $("input[name=pickup_name]").attr("readonly", "readonly");
+      $("input[name=pickup_address]").attr("readonly", "readonly");
+      $("input[name=pickup_city]").attr("readonly", "readonly");
+      $("input[name=pickup_country]").attr("readonly", "readonly");
+      $("input[name=pickup_postcode]").attr("readonly", "readonly");
+      $("input[name=pickup_contact_person]").attr("readonly", "readonly");
+      $("input[name=pickup_phone_number]").attr("readonly", "readonly");
+      $("input[name=pickup_email]").attr("readonly", "readonly");
+      $("input[name=pickup_date]").attr("readonly", "readonly");
+      $("input[name=pickup_time]").attr("readonly", "readonly");
+      $("input[name=pickup_notes]").attr("readonly", "readonly");
+    } else if (value == 'Picked Up') {
+      $("input[name=pickup_name]").removeAttr('readonly');
+      $("input[name=pickup_address]").removeAttr('readonly');
+      $("input[name=pickup_city]").removeAttr('readonly');
+      $("input[name=pickup_country]").removeAttr('readonly');
+      $("input[name=pickup_postcode]").removeAttr('readonly');
+      $("input[name=pickup_contact_person]").removeAttr('readonly');
+      $("input[name=pickup_phone_number]").removeAttr('readonly');
+      $("input[name=pickup_email]").removeAttr('readonly');
+      $("input[name=pickup_date]").removeAttr('readonly');
+      $("input[name=pickup_time]").removeAttr('readonly');
+      $("input[name=pickup_notes]").removeAttr('readonly');
+    }
+  });
 
-    $('.previous-tab').click(function() {
-        $('.nav-tabs .active').parent().prev('li').find('a').trigger('click');
-    });
+  /**** JQuery *******/
+  $('.next-tab').click(function() {
+    $('.nav-tabs .active').parent().next('li').find('a').trigger('click');
+  });
+
+  $('.previous-tab').click(function() {
+    $('.nav-tabs .active').parent().prev('li').find('a').trigger('click');
+  });
 </script>

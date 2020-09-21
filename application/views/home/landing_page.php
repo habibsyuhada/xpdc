@@ -155,7 +155,7 @@
           <nav class="navbar navbar-expand-lg">
              
             <a class="navbar-brand" href="#">
-              <img src="<?php echo base_url() ?>assets/landing_page/images/logo.svg" alt="Logo">
+              <img src="<?php echo base_url() ?>assets/landing_page/images/logo-xpdc.png" alt="Logo">
             </a>
             
             <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarTwo" aria-controls="navbarTwo" aria-expanded="false" aria-label="Toggle navigation">
@@ -201,7 +201,7 @@
           <div class="container">
             <div class="row">
               <div class="col-lg-6">
-                <div class="slider-content">
+                <div class="slider-content pb-5">
                   <h1 class="title text-capitalize">XPDC</h1>
                   <p class="text text-capitalize">when delivered is just not enough. one-stop logistics solutions</p>
                   <!-- <ul class="slider-btn rounded-buttons">
@@ -237,7 +237,7 @@
           <div class="container">
             <div class="row">
               <div class="col-lg-6">
-                <div class="slider-content">
+                <div class="slider-content pb-5">
                   <h1 class="title">XPDC</h1>
                   <p class="text text-capitalize">a dynamic provider of comprehensive logistics company. serve with professionalism</p>
                   <!-- <ul class="slider-btn rounded-buttons">

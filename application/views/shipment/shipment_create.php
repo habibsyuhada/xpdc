@@ -48,7 +48,12 @@
                       </div>
                       <div class="form-group">
                         <label>Country</label>
-                        <input type="text" class="form-control" name="shipper_country" placeholder="Country" required>
+                        <select class="form-control select2" name="shipper_country" required>
+                          <option value="">- Select One -</option>
+                          <?php foreach ($country['data'] as $data) { ?>
+                            <option value="<?= $data['location'] ?>"><?= $data['location'] ?></option>
+                          <?php } ?>
+                        </select>
                       </div>
                       <div class="form-group">
                         <label>Postcode</label>
@@ -83,7 +88,12 @@
                       </div>
                       <div class="form-group">
                         <label>Country</label>
-                        <input type="text" class="form-control" name="consignee_country" placeholder="Country" required>
+                        <select class="form-control select2" name="consignee_country" required>
+                          <option value="">- Select One -</option>
+                          <?php foreach ($country['data'] as $data) { ?>
+                            <option value="<?= $data['location'] ?>"><?= $data['location'] ?></option>
+                          <?php } ?>
+                        </select>
                       </div>
                       <div class="form-group">
                         <label>Postcode</label>
@@ -158,7 +168,7 @@
                       </div>
                       <div class="form-group">
                         <label>Sea</label>
-                        <select class="form-control" name="sea" required>
+                        <select class="form-control" name="sea" required disabled>
                           <option value="">- Select Sea -</option>
                           <option value="LCL">LCL</option>
                           <option value="FCL">FCL</option>
@@ -192,7 +202,12 @@
                       </div>
                       <div class="form-group">
                         <label>COO (Country of Origin)</label>
-                        <input type="text" class="form-control" name="coo" placeholder="COO (Country of Origin)" required>
+                        <select class="form-control select2" name="coo" required>
+                          <option value="">- Select One -</option>
+                          <?php foreach ($country['data'] as $data) { ?>
+                            <option value="<?= $data['location'] ?>"><?= $data['location'] ?></option>
+                          <?php } ?>
+                        </select>
                       </div>
                     </div>
                     <div class="col-md-6">
@@ -253,10 +268,10 @@
                                 <option value="Others">Others</option>
                               </select>
                             </td>
-                            <td><input type="number" class="form-control" name="length[]"></td>
-                            <td><input type="number" class="form-control" name="width[]"></td>
-                            <td><input type="number" class="form-control" name="height[]"></td>
-                            <td><input type="number" class="form-control" name="weight[]"></td>
+                            <td><input type="number" class="form-control" name="length[]" value="0"></td>
+                            <td><input type="number" class="form-control" name="width[]" value="0"></td>
+                            <td><input type="number" class="form-control" name="height[]" value="0"></td>
+                            <td><input type="number" class="form-control" name="weight[]" value="0"></td>
                             <td><button type="button" class="btn btn-primary" onclick="addrow(this)"><i class="fas fa-plus m-0"></i></button></td>
                           </tr>
                         </tbody>
@@ -264,7 +279,7 @@
                     </div>
                     <br>
                     <div class="col-md-6">
-                      Vol. Weight :
+                      Vol. Weight : <span id="vol_weight"></span> M<sup>3</sup>
                     </div>
                     <div class="col-md-6">
                       Measurement :
@@ -290,6 +305,21 @@
                           <option value="Dropoff">Dropoff</option>
                           <option value="Picked Up">Picked Up</option>
                         </select>
+                      </div>
+                      <div id="address_info">
+                        <div class="card elevation-2">
+                          <div class="card-body">
+                            <div class="row">
+                              <div class="col-1">
+                                <i class="lni lni-32 p-2 lni-map-marker bg-dark text-white rounded-circle"></i>
+                              </div>
+                              <div class="col-8">
+                                <h4>Warna Jaya Business Park B2-07<br>
+                                Jl. Jendral Sudirman 29413 Batam ID</h4>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
                       </div>
                       <div class="form-group">
                         <label>Name</label>
@@ -342,7 +372,7 @@
                       <span class="btn btn-danger previous-tab">Back</span>
                     </div>
                     <div class="text-right col-6">
-                      <button type="submit" class="btn btn-success" onclick="return confirm('Apakah Anda Yakin?')">Submit</button>
+                      <span class="btn btn-info next-tab">Next</span>
                     </div>
                   </div>
                 </div>
@@ -398,7 +428,7 @@
                       <span class="btn btn-danger previous-tab">Back</span>
                     </div>
                     <div class="text-right col-6">
-                      <span class="btn btn-info next-tab">Next</span>
+                      <button type="submit" class="btn btn-success" onclick="return confirm('Apakah Anda Yakin?')">Submit</button>
                     </div>
                   </div>
                 </div>
@@ -544,9 +574,23 @@
   }
 </script>
 <script>
+  $(".select2").select2({
+    theme: "bootstrap4"
+  });
+
+  $("select[name=type_of_mode]").on("change", function() {
+    var value = $(this).val();
+    if (value == 'Sea Transport') {
+      $("select[name=sea]").removeAttr("disabled").val('');
+    } else {
+      $("select[name=sea]").attr("disabled", "disabled").val('');
+    }
+  });
+
   $("select[name=status_pickup]").on("change", function() {
     var value = $(this).val();
     if (value == 'Dropoff') {
+      $("#address_info").css('display','block');
       $("input[name=pickup_name]").attr("readonly", "readonly");
       $("input[name=pickup_address]").attr("readonly", "readonly");
       $("input[name=pickup_city]").attr("readonly", "readonly");
@@ -559,6 +603,7 @@
       $("input[name=pickup_time]").attr("readonly", "readonly");
       $("input[name=pickup_notes]").attr("readonly", "readonly");
     } else if (value == 'Picked Up') {
+      $("#address_info").css('display','none');
       $("input[name=pickup_name]").removeAttr('readonly');
       $("input[name=pickup_address]").removeAttr('readonly');
       $("input[name=pickup_city]").removeAttr('readonly');
@@ -572,6 +617,53 @@
       $("input[name=pickup_notes]").removeAttr('readonly');
     }
   });
+
+  $(document).on("keypress", "input[name='length[]'], input[name='width[]'], input[name='height[]']", function() {
+    get_vol_weight();
+  });
+
+  function get_vol_weight() {
+    var type_of_mode = $("select[name=type_of_mode]").val();
+    var per = 1;
+    var total = 0;
+    var length_array = [];
+    var width_array = [];
+    var height_array = [];
+
+    if (type_of_mode == 'Air Freight') {
+      per = 6000;
+    } else if (type_of_mode == 'Land Shipping') {
+      per = 5000;
+    }
+
+    $("input[name='length[]']").each(function(index, value) {
+      var length_detail = $(this).val();
+
+      length_array.push(length_detail);
+    });
+
+    $("input[name='width[]']").each(function(index, value) {
+      var width_detail = $(this).val();
+
+      width_array.push(width_detail);
+    });
+
+    $("input[name='height[]']").each(function(index, value) {
+      var height_detail = $(this).val();
+
+      height_array.push(height_detail);
+    });
+
+    $.each(length_array, function(index, value) {
+      console.log(length_array[index], width_array[index], height_array[index], per);
+      var volume_weight = (length_array[index] * width_array[index] * height_array[index]) / per;
+      console.log(volume_weight);
+      total += volume_weight;
+    });
+
+    $("#vol_weight").html(total);
+
+  }
 
   /**** JQuery *******/
   $('.next-tab').click(function() {

@@ -27,6 +27,8 @@ class Shipment extends CI_Controller
 	{
 		$data['subview'] 			= 'shipment/shipment_create';
 		$data['meta_title'] 	= 'Create Shipment';
+
+		$data['country'] = json_decode(file_get_contents("./assets/country/country.json"), true);
 		$this->load->view('index', $data);
 	}
 
@@ -42,6 +44,11 @@ class Shipment extends CI_Controller
 		// 	$status = 'Booked';
 		// }
 		$status = 'Service Center';
+		$sea = '';
+
+		if(isset($post['sea'])){
+			$sea = $post['sea'];
+		}
 
 		$form_data = array(
 			'tracking_no' 				=> $tracking_no,
@@ -64,7 +71,7 @@ class Shipment extends CI_Controller
 			'type_of_shipment' 			=> $post['type_of_shipment'],
 			'type_of_mode' 				=> $post['type_of_mode'],
 			'incoterms' 				=> $post['incoterms'],
-			'sea' 						=> $post['sea'],
+			'sea' 						=> $sea,
 			'description_of_goods'		=> $post['description_of_goods'],
 			'hscode'					=> $post['hscode'],
 			'coo'						=> $post['coo'],

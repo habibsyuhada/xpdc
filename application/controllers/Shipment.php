@@ -206,6 +206,7 @@ class Shipment extends CI_Controller
 			'pickup_date' 							=> $post['pickup_date'],
 			'pickup_time' 							=> $post['pickup_time'],
 			'pickup_notes' 							=> $post['pickup_notes'],
+			'billing_same_as' 						=> $post['billing_same_as'],
 			'billing_account' 						=> $post['billing_account'],
 			'billing_name' 							=> $post['billing_name'],
 			'billing_address' 						=> $post['billing_address'],

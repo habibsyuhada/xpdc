@@ -134,9 +134,15 @@
                           <option value="Domestic">Domestic</option>
                         </select>
                       </div>
+                    </div>
+                    <div class="col-md-6">
+                    </div>
+                  </div>
+                  <div class="row clearfix">
+                    <div class="col-md-6">
                       <div class="form-group">
                         <label>Type of Mode</label>
-                        <select class="form-control" name="type_of_mode" required>
+                        <select class="form-control" name="type_of_mode" onchange="get_vol_weight()" required>
                           <option value="">- Select One -</option>
                           <option value="Sea Transport">Sea Transport</option>
                           <option value="Land Shipping">Land Shipping</option>
@@ -145,28 +151,7 @@
                       </div>
                     </div>
                     <div class="col-md-6">
-                      <div class="form-group">
-                        <label>Incoterms</label>
-                        <select class="form-control" name="incoterms" required>
-                          <option value="">-- Select One --</option>
-                          <option value="EXW (ExWorks)">EXW (ExWorks)</option>
-                          <option value="FCA (Free Carrier)">FCA (Free Carrier)</option>
-                          <option value="FAS (Free Alongside Ship)">FAS (Free Alongside Ship)</option>
-                          <option value="FOB (Free On Board)">FOB (Free On Board)</option>
-                          <option value="CFR (Cost and Freight">CFR (Cost and Freight</option>
-                          <option value="CIF (Cost Insurance Freight)">CIF (Cost Insurance Freight)</option>
-                          <option value="CIP (Carriage and Insurance Paid)">CIP (Carriage and Insurance Paid)</option>
-                          <option value="CPT (Carriage Paid To)">CPT (Carriage Paid To)</option>
-                          <option value="DAF (Delivered at Frontier)">DAF (Delivered at Frontier)</option>
-                          <option value="DES (Delivered Ex Ship)">DES (Delivered Ex Ship)</option>
-                          <option value="DEQ (Delivered Ex Quay)">DEQ (Delivered Ex Quay)</option>
-                          <option value="DDU (Delivered Duty Unpaid)">DDU (Delivered Duty Unpaid)</option>
-                          <option value="DDP (Delivered Duty Paid)">DDP (Delivered Duty Paid)</option>
-                          <option value="DAT (Delivered At Terminal)">DAT (Delivered At Terminal)</option>
-                          <option value="DAP (Delivered At Place)">DAP (Delivered At Place)</option>
-                        </select>
-                      </div>
-                      <div class="form-group">
+                      <div class="form-group" style="display: none;">
                         <label>Sea</label>
                         <select class="form-control" name="sea" required disabled>
                           <option value="">- Select Sea -</option>
@@ -190,6 +175,33 @@
                   <div class="row clearfix">
                     <div class="col-md-12">
                       <h6 class="font-weight-bold">Shipment Information</h6>
+                    </div>
+                    <div class="col-md-12">
+                      <div class="row clearfix">
+                        <div class="col-md-6">
+                          <div class="form-group">
+                            <label>Incoterms</label>
+                            <select class="form-control" name="incoterms" required>
+                              <option value="">-- Select One --</option>
+                              <option value="EXW (ExWorks)">EXW (ExWorks)</option>
+                              <option value="FCA (Free Carrier)">FCA (Free Carrier)</option>
+                              <option value="FAS (Free Alongside Ship)">FAS (Free Alongside Ship)</option>
+                              <option value="FOB (Free On Board)">FOB (Free On Board)</option>
+                              <option value="CFR (Cost and Freight">CFR (Cost and Freight</option>
+                              <option value="CIF (Cost Insurance Freight)">CIF (Cost Insurance Freight)</option>
+                              <option value="CIP (Carriage and Insurance Paid)">CIP (Carriage and Insurance Paid)</option>
+                              <option value="CPT (Carriage Paid To)">CPT (Carriage Paid To)</option>
+                              <option value="DAF (Delivered at Frontier)">DAF (Delivered at Frontier)</option>
+                              <option value="DES (Delivered Ex Ship)">DES (Delivered Ex Ship)</option>
+                              <option value="DEQ (Delivered Ex Quay)">DEQ (Delivered Ex Quay)</option>
+                              <option value="DDU (Delivered Duty Unpaid)">DDU (Delivered Duty Unpaid)</option>
+                              <option value="DDP (Delivered Duty Paid)">DDP (Delivered Duty Paid)</option>
+                              <option value="DAT (Delivered At Terminal)">DAT (Delivered At Terminal)</option>
+                              <option value="DAP (Delivered At Place)">DAP (Delivered At Place)</option>
+                            </select>
+                          </div>
+                        </div>
+                      </div>
                     </div>
                     <div class="col-md-6">
                       <div class="form-group">
@@ -268,9 +280,9 @@
                                 <option value="Others">Others</option>
                               </select>
                             </td>
-                            <td><input type="number" class="form-control" name="length[]" value="0"></td>
-                            <td><input type="number" class="form-control" name="width[]" value="0"></td>
-                            <td><input type="number" class="form-control" name="height[]" value="0"></td>
+                            <td><input type="number" class="form-control" name="length[]" value="0" oninput="get_vol_weight()"></td>
+                            <td><input type="number" class="form-control" name="width[]" value="0" oninput="get_vol_weight()"></td>
+                            <td><input type="number" class="form-control" name="height[]" value="0" oninput="get_vol_weight()"></td>
                             <td><input type="number" class="form-control" name="weight[]" value="0"></td>
                             <td><button type="button" class="btn btn-primary" onclick="addrow(this)"><i class="fas fa-plus m-0"></i></button></td>
                           </tr>
@@ -279,10 +291,10 @@
                     </div>
                     <br>
                     <div class="col-md-6">
-                      Vol. Weight : <span id="vol_weight"></span> M<sup>3</sup>
+                      Vol. Weight : <span id="vol_weight">0</span> Kg
                     </div>
                     <div class="col-md-6">
-                      Measurement :
+                      Measurement : <span id="measurement">0</span> M<sup>3</sup>
                     </div>
                   </div>
                   <div class="mt-2 row">
@@ -384,9 +396,25 @@
                     </div>
                     <div class="col-md-6">
                       <div class="form-group">
+                        <label>Same as</label>
+                        <select class="form-control" name="billing_same_as" onchange="same_as(this)" required>
+                          <option value="None">-- None --</option>
+                          <option value="Shipper">Shipper</option>
+                          <option value="Consignee">Consignee</option>
+                        </select>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="row clearfix">
+                    <div class="col-md-6">
+                      <div class="form-group">
                         <label>XPDC Account No.</label>
                         <input type="text" class="form-control" name="billing_account" placeholder="XPDC Account No. (if any)">
                       </div>
+                    </div>
+                  </div>
+                  <div class="row clearfix">
+                    <div class="col-md-6">
                       <div class="form-group">
                         <label>Name</label>
                         <input type="text" class="form-control" name="billing_name" placeholder="Name" required>
@@ -422,6 +450,7 @@
                         <input type="email" class="form-control" name="billing_email" placeholder="Email" required>
                       </div>
                     </div>
+                  </div>
                   </div>
                   <div class="mt-2 row">
                     <div class="text-left col-6">
@@ -562,6 +591,24 @@
   </div>
 </div>
 <script type="text/javascript">
+  function same_as(input) {
+    var same_as = $(input).val();
+    var form = $('input[name=billing_name]').closest('.row');
+    console.log(same_as);
+    if(same_as == "None"){
+      form.find('input').attr('disabled', false)
+      $('input[name=billing_account]').attr('disabled', false);
+      form.slideDown();
+      $("input[name=billing_account]").closest('.form-group').slideDown();
+    }
+    else{
+      form.find('input').attr('disabled', true)
+      $('input[name=billing_account]').attr('disabled', true);
+      form.slideUp();
+      $("input[name=billing_account]").closest('.form-group').slideUp();
+    }
+  }
+
   function addrow(btn) {
     var row_copy = $(btn).closest("tr").html();
     $(btn).closest("tbody").append("<tr>" + row_copy + "</tr>");
@@ -581,10 +628,13 @@
   $("select[name=type_of_mode]").on("change", function() {
     var value = $(this).val();
     if (value == 'Sea Transport') {
-      $("select[name=sea]").removeAttr("disabled").val('');
+      $("select[name=sea]").closest('.form-group').slideDown();
+      $("select[name=sea]").removeAttr("disabled");
     } else {
-      $("select[name=sea]").attr("disabled", "disabled").val('');
+      $("select[name=sea]").closest('.form-group').slideUp();
+      $("select[name=sea]").attr("disabled", "disabled");
     }
+    $("select[name=sea]").val('');
   });
 
   $("select[name=status_pickup]").on("change", function() {
@@ -618,14 +668,15 @@
     }
   });
 
-  $(document).on("keypress", "input[name='length[]'], input[name='width[]'], input[name='height[]']", function() {
-    get_vol_weight();
-  });
+  // $(document).on("keypress", "input[name='length[]'], input[name='width[]'], input[name='height[]']", function() {
+  //   get_vol_weight();
+  // });
 
   function get_vol_weight() {
     var type_of_mode = $("select[name=type_of_mode]").val();
     var per = 1;
-    var total = 0;
+    var total_vol_weight = 0;
+    var total_measurement = 0;
     var length_array = [];
     var width_array = [];
     var height_array = [];
@@ -657,11 +708,14 @@
     $.each(length_array, function(index, value) {
       console.log(length_array[index], width_array[index], height_array[index], per);
       var volume_weight = (length_array[index] * width_array[index] * height_array[index]) / per;
+      var measurement = (length_array[index] * width_array[index] * height_array[index]) / 1000000;
       console.log(volume_weight);
-      total += volume_weight;
+      total_vol_weight += volume_weight;
+      total_measurement += measurement;
     });
 
-    $("#vol_weight").html(total);
+    $("#vol_weight").html((Number(total_vol_weight)).toFixed(2));
+    $("#measurement").html((Number(total_measurement)).toFixed(2));
 
   }
 

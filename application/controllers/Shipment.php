@@ -95,12 +95,23 @@ class Shipment extends CI_Controller
 				'pickup_city' 							=> $post['pickup_city'],
 				'pickup_country' 						=> $post['pickup_country'],
 				'pickup_postcode'						=> $post['pickup_postcode'],
-				'pickup_contact_person' 				=> $post['pickup_contact_person'],
-				'pickup_phone_number' 					=> $post['pickup_phone_number'],
+				'pickup_contact_person' 		=> $post['pickup_contact_person'],
+				'pickup_phone_number' 			=> $post['pickup_phone_number'],
 				'pickup_email' 							=> $post['pickup_email'],
 				'pickup_date' 							=> $post['pickup_date'],
 				'pickup_time' 							=> $post['pickup_time'],
 				'pickup_notes' 							=> $post['pickup_notes'],
+
+				'billing_same_as' 					=> $post['billing_same_as'],
+				'billing_account' 					=> $post['billing_account'],
+				'billing_name' 							=> $post['billing_name'],
+				'billing_address' 					=> $post['billing_address'],
+				'billing_city' 							=> $post['billing_city'],
+				'billing_country' 					=> $post['billing_country'],
+				'billing_postcode' 					=> $post['billing_postcode'],
+				'billing_contact_person' 		=> $post['billing_contact_person'],
+				'billing_phone_number' 			=> $post['billing_phone_number'],
+				'billing_email' 						=> $post['billing_email'],
 			);
 		}
 

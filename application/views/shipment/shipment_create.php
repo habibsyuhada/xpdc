@@ -7,10 +7,10 @@
             <div class="card-body">
               <ul class="nav nav-tabs" id="myTab" role="tablist">
                 <li class="nav-item">
-                  <a class="nav-link active" id="shipper-consignee-tab" data-toggle="tab" href="#shipper-consignee" role="tab" aria-controls="shipper-consignee" aria-selected="true">Shipper & Consignee Information</a>
+                  <a class="nav-link active" id="service-tab" data-toggle="tab" href="#service" role="tab" aria-controls="service" aria-selected="true">Service Information</a>
                 </li>
                 <li class="nav-item">
-                  <a class="nav-link" id="service-tab" data-toggle="tab" href="#service" role="tab" aria-controls="service" aria-selected="false">Service Information</a>
+                  <a class="nav-link" id="shipper-consignee-tab" data-toggle="tab" href="#shipper-consignee" role="tab" aria-controls="shipper-consignee" aria-selected="false">Shipper & Consignee Information</a>
                 </li>
                 <li class="nav-item">
                   <a class="nav-link" id="shipment-info-tab" data-toggle="tab" href="#shipment-info" role="tab" aria-controls="shipment-info" aria-selected="false">Shipment Information</a>
@@ -21,15 +21,66 @@
                 <li class="nav-item">
                   <a class="nav-link" id="billing-tab" data-toggle="tab" href="#billing" role="tab" aria-controls="billing" aria-selected="false">Billing Details</a>
                 </li>
-                <li class="nav-item">
+                <!-- <li class="nav-item">
                   <a class="nav-link" id="shipping-info-tab" data-toggle="tab" href="#shipping-info" role="tab" aria-controls="shipping-info" aria-selected="false">Shipping Information</a>
                 </li>
                 <li class="nav-item">
                   <a class="nav-link" id="assign-shipment-tab" data-toggle="tab" href="#assign-shipment" role="tab" aria-controls="assign-shipment" aria-selected="false">Assign Shipment</a>
-                </li>
+                </li> -->
               </ul>
               <div class="tab-content" id="myTabContent">
-                <div class="tab-pane fade show active" id="shipper-consignee" role="tabpanel" aria-labelledby="shipper-consignee-tab">
+                <div class="tab-pane fade show active" id="service" role="tabpanel" aria-labelledby="service-tab">
+                  <br>
+                  <div class="row clearfix">
+                    <div class="col-md-12">
+                      <h6 class="font-weight-bold">Service Information</h6>
+                    </div>
+                    <div class="col-md-6">
+                      <div class="form-group">
+                        <label>Type of Shipment</label>
+                        <select class="form-control" name="type_of_shipment" required>
+                          <option value="">-- Select One --</option>
+                          <option value="International">International</option>
+                          <option value="Domestic">Domestic</option>
+                        </select>
+                      </div>
+                    </div>
+                    <div class="col-md-6">
+                    </div>
+                  </div>
+                  <div class="row clearfix">
+                    <div class="col-md-6">
+                      <div class="form-group">
+                        <label>Type of Mode</label>
+                        <select class="form-control" name="type_of_mode" onchange="get_vol_weight()" required>
+                          <option value="">- Select One -</option>
+                          <option value="Sea Transport">Sea Transport</option>
+                          <option value="Land Shipping">Land Shipping</option>
+                          <option value="Air Freight">Air Freight</option>
+                        </select>
+                      </div>
+                    </div>
+                    <div class="col-md-6">
+                      <div class="form-group" style="display: none;">
+                        <label>Sea</label>
+                        <select class="form-control" name="sea" required disabled>
+                          <option value="">- Select Sea -</option>
+                          <option value="LCL">LCL</option>
+                          <option value="FCL">FCL</option>
+                        </select>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="mt-2 row">
+                    <div class="text-left col-6">
+                      <span class="btn btn-danger previous-tab">Back</span>
+                    </div>
+                    <div class="text-right col-6">
+                      <span class="btn btn-info next-tab">Next</span>
+                    </div>
+                  </div>
+                </div>
+                <div class="tab-pane fade" id="shipper-consignee" role="tabpanel" aria-labelledby="shipper-consignee-tab">
                   <br>
                   <div class="row clearfix">
                     <div class="col-md-6">
@@ -115,57 +166,6 @@
                   </div>
                   <div class="mt-2 row">
                     <div class="text-right col-12">
-                      <span class="btn btn-info next-tab">Next</span>
-                    </div>
-                  </div>
-                </div>
-                <div class="tab-pane fade" id="service" role="tabpanel" aria-labelledby="service-tab">
-                  <br>
-                  <div class="row clearfix">
-                    <div class="col-md-12">
-                      <h6 class="font-weight-bold">Service Information</h6>
-                    </div>
-                    <div class="col-md-6">
-                      <div class="form-group">
-                        <label>Type of Shipment</label>
-                        <select class="form-control" name="type_of_shipment" required>
-                          <option value="">-- Select One --</option>
-                          <option value="International">International</option>
-                          <option value="Domestic">Domestic</option>
-                        </select>
-                      </div>
-                    </div>
-                    <div class="col-md-6">
-                    </div>
-                  </div>
-                  <div class="row clearfix">
-                    <div class="col-md-6">
-                      <div class="form-group">
-                        <label>Type of Mode</label>
-                        <select class="form-control" name="type_of_mode" onchange="get_vol_weight()" required>
-                          <option value="">- Select One -</option>
-                          <option value="Sea Transport">Sea Transport</option>
-                          <option value="Land Shipping">Land Shipping</option>
-                          <option value="Air Freight">Air Freight</option>
-                        </select>
-                      </div>
-                    </div>
-                    <div class="col-md-6">
-                      <div class="form-group" style="display: none;">
-                        <label>Sea</label>
-                        <select class="form-control" name="sea" required disabled>
-                          <option value="">- Select Sea -</option>
-                          <option value="LCL">LCL</option>
-                          <option value="FCL">FCL</option>
-                        </select>
-                      </div>
-                    </div>
-                  </div>
-                  <div class="mt-2 row">
-                    <div class="text-left col-6">
-                      <span class="btn btn-danger previous-tab">Back</span>
-                    </div>
-                    <div class="text-right col-6">
                       <span class="btn btn-info next-tab">Next</span>
                     </div>
                   </div>
@@ -429,7 +429,13 @@
                       </div>
                       <div class="form-group">
                         <label>Country</label>
-                        <input type="text" class="form-control" name="billing_country" placeholder="Country" required>
+                        <input type="hidden" class="form-control" name="billing_country" placeholder="Country" required>
+                        <select class="form-control select2 d-none" name="billing_country_view" onchange="$('input[name=billing_country]').val($(this).val());" required>
+                          <option value="">- Select One -</option>
+                          <?php foreach ($country['data'] as $data) { ?>
+                            <option value="<?= $data['location'] ?>"><?= $data['location'] ?></option>
+                          <?php } ?>
+                        </select>
                       </div>
                     </div>
                     <div class="col-md-6">
@@ -451,7 +457,6 @@
                       </div>
                     </div>
                   </div>
-                  </div>
                   <div class="mt-2 row">
                     <div class="text-left col-6">
                       <span class="btn btn-danger previous-tab">Back</span>
@@ -461,7 +466,7 @@
                     </div>
                   </div>
                 </div>
-                <div class="tab-pane fade" id="shipping-info" role="tabpanel" aria-labelledby="shipping-info-tab">
+                <!-- <div class="tab-pane fade" id="shipping-info" role="tabpanel" aria-labelledby="shipping-info-tab">
                   <br>
                   <div class="row clearfix">
                     <div class="col-md-6">
@@ -581,7 +586,7 @@
                       <button type="submit" class="btn btn-success" onclick="return confirm('Apakah Anda Yakin?')">Submit</button>
                     </div>
                   </div>
-                </div>
+                </div> -->
               </div>
             </div>
           </div>
@@ -594,18 +599,54 @@
   function same_as(input) {
     var same_as = $(input).val();
     var form = $('input[name=billing_name]').closest('.row');
-    console.log(same_as);
     if(same_as == "None"){
-      form.find('input').attr('disabled', false)
-      $('input[name=billing_account]').attr('disabled', false);
-      form.slideDown();
-      $("input[name=billing_account]").closest('.form-group').slideDown();
+      form.find('input').attr('readonly', false)
+      $('input[name=billing_account]').attr('readonly', false);
+      $("select[name=billing_country_view]").select2({'disabled': false});
+
+      $("input[name=billing_name]").val('');
+      $("input[name=billing_account]").val('');
+      $("input[name=billing_address]").val('');
+      $("input[name=billing_city]").val('');
+      $("select[name=billing_country_view]").val('').trigger('change');
+      $("input[name=billing_country]").val('');
+      $("input[name=billing_postcode]").val('');
+      $("input[name=billing_contact_person]").val('');
+      $("input[name=billing_phone_number]").val('');
+      $("input[name=billing_email]").val('');
     }
     else{
-      form.find('input').attr('disabled', true)
-      $('input[name=billing_account]').attr('disabled', true);
-      form.slideUp();
-      $("input[name=billing_account]").closest('.form-group').slideUp();
+      form.find('input').attr('readonly', true)
+      $("select[name=billing_country_view]").select2({'disabled': true});
+
+      $('input[name=billing_account]').attr('readonly', true);
+      same_as_billing_detail();
+    }
+  }
+
+  $("input[name=shipper_name]").closest('.row').find('input').on("input", function(){
+    same_as_billing_detail();
+  });
+
+  $("input[name=shipper_name]").closest('.row').find('select').on("change", function(){
+    same_as_billing_detail();
+  });
+
+  function same_as_billing_detail() {
+    var same_as = $('select[name=billing_same_as]').val();
+    same_as = same_as.toLowerCase();
+    console.log(same_as);
+    if(same_as != 'none'){
+      $("input[name=billing_name]").val($("input[name="+same_as+"_name]").val());
+      $("input[name=billing_address]").val($("input[name="+same_as+"_address]").val());
+      $("input[name=billing_city]").val($("input[name="+same_as+"_city]").val());
+      var select_country = $("select[name="+same_as+"_country]").val()
+      $("select[name=billing_country_view]").val(select_country).trigger('change');
+      $("input[name=billing_country]").val(select_country);
+      $("input[name=billing_postcode]").val($("input[name="+same_as+"_postcode]").val());
+      $("input[name=billing_contact_person]").val($("input[name="+same_as+"_contact_person]").val());
+      $("input[name=billing_phone_number]").val($("input[name="+same_as+"_phone_number]").val());
+      $("input[name=billing_email]").val($("input[name="+same_as+"_email]").val());
     }
   }
 

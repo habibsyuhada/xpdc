@@ -387,8 +387,12 @@
                     </div>
                     <div class="col-md-6">
                       <div class="form-group">
-                        <label>XPDC Account No.</label>
-                        <input type="text" class="form-control" name="billing_account" placeholder="XPDC Account No. (if any)" value="<?= $shipment['billing_account'] ?>">
+                        <label>Same as</label>
+                        <select class="form-control" name="same_as_billing" onchange="biling_detail_same_as()">
+                          <option value="">-- None --</option>
+                          <option value="shipper">Shipper</option>
+                          <option value="consignee">Consignee</option>
+                        </select>
                       </div>
                       <div class="form-group">
                         <label>Name</label>
@@ -408,6 +412,10 @@
                       </div>
                     </div>
                     <div class="col-md-6">
+                      <div class="form-group">
+                        <label>XPDC Account No.</label>
+                        <input type="text" class="form-control" name="billing_account" placeholder="XPDC Account No. (if any)" value="<?= $shipment['billing_account'] ?>">
+                      </div>
                       <div class="form-group">
                         <label>Postcode</label>
                         <input type="text" class="form-control" name="billing_postcode" placeholder="Postcode" value="<?= $shipment['billing_postcode'] ?>" required>
@@ -566,6 +574,12 @@
   </div>
 </div>
 <script type="text/javascript">
+  // function biling_detail_same_as() {
+  //   if(){
+      
+  //   }
+  // }
+
   function addrow(btn) {
     var row_copy = $(btn).closest("tr").html();
     $(btn).closest("tbody").append("<tr>" + row_copy + "</tr>");

@@ -17,6 +17,9 @@ class Shipment extends CI_Controller
 
 	public function shipment_list()
 	{
+		$summary_list 					= $this->shipment_mod->summary_per_status();
+		$data['summary_list'] 	= $summary_list[0];
+		
 		$data['shipment_list'] 	= $this->shipment_mod->shipment_list_db();
 		$data['subview'] 				= 'shipment/shipment_list';
 		$data['meta_title'] 		= 'Shipment List';

@@ -107,6 +107,18 @@ class Shipment_mod extends CI_Model {
     }
 
     return $batch_no_gen;
-	}
+  }
+  
+  public function summary_per_status(){
+    $query = "SELECT 
+    SUM(IF(status = 'Service Center', 1, 0)) as 'Service Center', 
+    SUM(IF(status = 'Departed', 1, 0)) as 'Departed', 
+    SUM(IF(status = 'Arrived', 1, 0)) as 'Arrived', 
+    SUM(IF(status = 'With Courier', 1, 0)) as 'With Courier', 
+    SUM(IF(status = 'Delivered', 1, 0)) as 'Delivered' 
+    FROM shipment";
+    $query = $this->db->query($query);
+    return $query->result_array();
+  }
 
 }

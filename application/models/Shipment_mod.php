@@ -109,14 +109,35 @@ class Shipment_mod extends CI_Model {
     return $batch_no_gen;
   }
   
-  public function summary_per_status(){
+  public function summary_per_status($where = NULL){
+    $where_str = array();
+    if($where){
+      foreach ($where as $key => $value) {
+        if($key != "status"){
+          $where_str[] = $key." = '".$value."'";
+        }
+      }
+    }
     $query = "SELECT 
+    SUM(IF(status = 'Booked', 1, 0)) as 'Booked', 
+    SUM(IF(status = 'Booking Confirmed', 1, 0)) as 'Booking Confirmed', 
+    SUM(IF(status = 'Picked up', 1, 0)) as 'Picked up', 
+    SUM(IF(status = 'Pending Payment', 1, 0)) as 'Pending Payment', 
     SUM(IF(status = 'Service Center', 1, 0)) as 'Service Center', 
     SUM(IF(status = 'Departed', 1, 0)) as 'Departed', 
     SUM(IF(status = 'Arrived', 1, 0)) as 'Arrived', 
+    SUM(IF(status = 'In Transit', 1, 0)) as 'In Transit', 
+    SUM(IF(status = 'Returned', 1, 0)) as 'Returned', 
+    SUM(IF(status = 'Clearance Event', 1, 0)) as 'Clearance Event', 
+    SUM(IF(status = 'Clearance Complete', 1, 0)) as 'Clearance Complete', 
     SUM(IF(status = 'With Courier', 1, 0)) as 'With Courier', 
-    SUM(IF(status = 'Delivered', 1, 0)) as 'Delivered' 
+    SUM(IF(status = 'Delivered', 1, 0)) as 'Delivered', 
+    SUM(IF(status = 'On Hold', 1, 0)) as 'On Hold', 
+    SUM(IF(status = 'Cancelled', 1, 0)) as 'Cancelled' 
     FROM shipment";
+    if(count($where_str) > 0){
+      $query .= " WHERE ".join(" AND ", $where_str);
+    }
     $query = $this->db->query($query);
     return $query->result_array();
   }

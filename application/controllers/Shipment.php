@@ -17,10 +17,24 @@ class Shipment extends CI_Controller
 
 	public function shipment_list()
 	{
-		$summary_list 					= $this->shipment_mod->summary_per_status();
+		$where = array();
+		$where['status_delete'] 	= 1;
+		if($this->input->get('submit')){
+			if($this->input->get('type_of_shipment')){
+				$where['type_of_shipment'] 	= $this->input->get('type_of_shipment');
+			}
+			if($this->input->get('status')){
+				$where['status'] 	= $this->input->get('status');
+			}
+			if($this->input->get('type_of_mode')){
+				$where['type_of_mode'] 	= $this->input->get('type_of_mode');
+			}
+		}
+
+		$summary_list 					= $this->shipment_mod->summary_per_status($where);
 		$data['summary_list'] 	= $summary_list[0];
 		
-		$data['shipment_list'] 	= $this->shipment_mod->shipment_list_db();
+		$data['shipment_list'] 	= $this->shipment_mod->shipment_list_db($where);
 		$data['subview'] 				= 'shipment/shipment_list';
 		$data['meta_title'] 		= 'Shipment List';
 		$this->load->view('index', $data);

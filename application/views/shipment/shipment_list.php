@@ -6,7 +6,7 @@
 <div class="main-content">
 	<div class="container-fluid">
     <div class="row justify-content-center clearfix">
-      <div class="col-xl-2 col-lg-4 col-md-4 col-sm-12">
+      <div class="col-xl-4 col-lg-4 col-md-4 col-sm-12">
         <div class="widget">
           <div class="widget-body">
             <div class="d-flex justify-content-between align-items-center">
@@ -15,17 +15,17 @@
                 <h2><?php echo $summary_list['Booked']+0 ?></h2>
               </div>
               <div class="icon">
-                <i class="fas fa-info-circle"></i>
+                <i class="far fa-bookmark"></i>
               </div>
             </div>
             <!-- <small class="text-small mt-10 d-block">6% higher than last month</small> -->
           </div>
           <div class="progress progress-sm">
-            <div class="progress-bar bg-danger" role="progressbar" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100" style="width: 100%;"></div>
+            <div class="progress-bar bg-primary" role="progressbar" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100" style="width: 100%;"></div>
           </div>
         </div>
       </div>
-      <div class="col-xl-2 col-lg-4 col-md-4 col-sm-12">
+      <div class="col-xl-4 col-lg-4 col-md-4 col-sm-12">
         <div class="widget">
           <div class="widget-body">
             <div class="d-flex justify-content-between align-items-center">
@@ -34,17 +34,17 @@
                 <h2><?php echo $summary_list['Booking Confirmed']+0 ?></h2>
               </div>
               <div class="icon">
-                <i class="fas fa-info-circle"></i>
+                <i class="fas fa-check-circle"></i>
               </div>
             </div>
             <!-- <small class="text-small mt-10 d-block">6% higher than last month</small> -->
           </div>
           <div class="progress progress-sm">
-            <div class="progress-bar bg-danger" role="progressbar" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100" style="width: 100%;"></div>
+            <div class="progress-bar bg-primary" role="progressbar" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100" style="width: 100%;"></div>
           </div>
         </div>
       </div>
-      <div class="col-xl-2 col-lg-4 col-md-4 col-sm-12">
+      <div class="col-xl-4 col-lg-4 col-md-4 col-sm-12">
         <div class="widget">
           <div class="widget-body">
             <div class="d-flex justify-content-between align-items-center">
@@ -53,17 +53,17 @@
                 <h2><?php echo $summary_list['Picked up']+0 ?></h2>
               </div>
               <div class="icon">
-                <i class="fas fa-info-circle"></i>
+                <i class="fas fa-people-carry"></i>
               </div>
             </div>
             <!-- <small class="text-small mt-10 d-block">6% higher than last month</small> -->
           </div>
           <div class="progress progress-sm">
-            <div class="progress-bar bg-danger" role="progressbar" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100" style="width: 100%;"></div>
+            <div class="progress-bar bg-primary" role="progressbar" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100" style="width: 100%;"></div>
           </div>
         </div>
       </div>
-      <div class="col-xl-2 col-lg-4 col-md-4 col-sm-12">
+      <div class="col-xl-4 col-lg-4 col-md-4 col-sm-12">
         <div class="widget">
           <div class="widget-body">
             <div class="d-flex justify-content-between align-items-center">
@@ -72,7 +72,7 @@
                 <h2><?php echo $summary_list['Pending Payment']+0 ?></h2>
               </div>
               <div class="icon">
-                <i class="fas fa-info-circle"></i>
+                <i class="fas fa-money-bill"></i>
               </div>
             </div>
             <!-- <small class="text-small mt-10 d-block">6% higher than last month</small> -->
@@ -82,7 +82,7 @@
           </div>
         </div>
       </div>
-      <div class="col-xl-2 col-lg-4 col-md-4 col-sm-12">
+      <div class="col-xl-4 col-lg-4 col-md-4 col-sm-12">
         <div class="widget">
           <div class="widget-body">
             <div class="d-flex justify-content-between align-items-center">
@@ -97,11 +97,11 @@
             <!-- <small class="text-small mt-10 d-block">6% higher than last month</small> -->
           </div>
           <div class="progress progress-sm">
-            <div class="progress-bar bg-danger" role="progressbar" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100" style="width: 100%;"></div>
+            <div class="progress-bar bg-warning" role="progressbar" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100" style="width: 100%;"></div>
           </div>
         </div>
       </div>
-      <div class="col-xl-2 col-lg-4 col-md-4 col-sm-12">
+      <div class="col-xl-4 col-lg-4 col-md-4 col-sm-12">
         <div class="widget">
           <div class="widget-body">
             <div class="d-flex justify-content-between align-items-center">
@@ -116,11 +116,11 @@
             <!-- <small class="text-small mt-10 d-block">61% higher than last month</small> -->
           </div>
           <div class="progress progress-sm">
-            <div class="progress-bar bg-warning" role="progressbar" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100" style="width: 100%;"></div>
+            <div class="progress-bar bg-info" role="progressbar" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100" style="width: 100%;"></div>
           </div>
         </div>
       </div>
-      <div class="col-xl-2 col-lg-4 col-md-4 col-sm-12">
+      <div class="col-xl-4 col-lg-4 col-md-4 col-sm-12">
         <div class="widget">
           <div class="widget-body">
             <div class="d-flex justify-content-between align-items-center">
@@ -135,11 +135,11 @@
             <!-- <small class="text-small mt-10 d-block">Total Events</small> -->
           </div>
           <div class="progress progress-sm">
-            <div class="progress-bar bg-info" role="progressbar" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100" style="width: 100%;"></div>
+            <div class="progress-bar bg-success" role="progressbar" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100" style="width: 100%;"></div>
           </div>
         </div>
       </div>
-      <div class="col-xl-2 col-lg-4 col-md-4 col-sm-12">
+      <div class="col-xl-4 col-lg-4 col-md-4 col-sm-12">
         <div class="widget">
           <div class="widget-body">
             <div class="d-flex justify-content-between align-items-center">
@@ -148,7 +148,7 @@
                 <h2><?php echo $summary_list['In Transit']+0 ?></h2>
               </div>
               <div class="icon">
-                <i class="fas fa-plane-arrival"></i>
+                <i class="fas fa-globe-asia"></i>
               </div>
             </div>
             <!-- <small class="text-small mt-10 d-block">Total Events</small> -->
@@ -158,7 +158,7 @@
           </div>
         </div>
       </div>
-      <div class="col-xl-2 col-lg-4 col-md-4 col-sm-12">
+      <div class="col-xl-4 col-lg-4 col-md-4 col-sm-12">
         <div class="widget">
           <div class="widget-body">
             <div class="d-flex justify-content-between align-items-center">
@@ -167,17 +167,17 @@
                 <h2><?php echo $summary_list['Returned']+0 ?></h2>
               </div>
               <div class="icon">
-                <i class="fas fa-plane-arrival"></i>
+                <i class="fas fa-undo"></i>
               </div>
             </div>
             <!-- <small class="text-small mt-10 d-block">Total Events</small> -->
           </div>
           <div class="progress progress-sm">
-            <div class="progress-bar bg-info" role="progressbar" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100" style="width: 100%;"></div>
+            <div class="progress-bar bg-warning" role="progressbar" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100" style="width: 100%;"></div>
           </div>
         </div>
       </div>
-      <div class="col-xl-2 col-lg-4 col-md-4 col-sm-12">
+      <div class="col-xl-4 col-lg-4 col-md-4 col-sm-12">
         <div class="widget">
           <div class="widget-body">
             <div class="d-flex justify-content-between align-items-center">
@@ -186,17 +186,17 @@
                 <h2><?php echo $summary_list['Clearance Event']+0 ?></h2>
               </div>
               <div class="icon">
-                <i class="fas fa-plane-arrival"></i>
+                <i class="fas fa-credit-card"></i>
               </div>
             </div>
             <!-- <small class="text-small mt-10 d-block">Total Events</small> -->
           </div>
           <div class="progress progress-sm">
-            <div class="progress-bar bg-info" role="progressbar" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100" style="width: 100%;"></div>
+            <div class="progress-bar bg-warning" role="progressbar" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100" style="width: 100%;"></div>
           </div>
         </div>
       </div>
-      <div class="col-xl-2 col-lg-4 col-md-4 col-sm-12">
+      <div class="col-xl-4 col-lg-4 col-md-4 col-sm-12">
         <div class="widget">
           <div class="widget-body">
             <div class="d-flex justify-content-between align-items-center">
@@ -205,17 +205,17 @@
                 <h2><?php echo $summary_list['Clearance Complete']+0 ?></h2>
               </div>
               <div class="icon">
-                <i class="fas fa-plane-arrival"></i>
+                <i class="far fa-credit-card"></i>
               </div>
             </div>
             <!-- <small class="text-small mt-10 d-block">Total Events</small> -->
           </div>
           <div class="progress progress-sm">
-            <div class="progress-bar bg-info" role="progressbar" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100" style="width: 100%;"></div>
+            <div class="progress-bar bg-success" role="progressbar" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100" style="width: 100%;"></div>
           </div>
         </div>
       </div>
-      <div class="col-xl-2 col-lg-4 col-md-4 col-sm-12">
+      <div class="col-xl-4 col-lg-4 col-md-4 col-sm-12">
         <div class="widget">
           <div class="widget-body">
             <div class="d-flex justify-content-between align-items-center">
@@ -230,11 +230,11 @@
             <!-- <small class="text-small mt-10 d-block">Total Comments</small> -->
           </div>
           <div class="progress progress-sm">
-            <div class="progress-bar bg-primary" role="progressbar" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100" style="width: 100%;"></div>
+            <div class="progress-bar bg-info" role="progressbar" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100" style="width: 100%;"></div>
           </div>
         </div>
       </div>
-      <div class="col-xl-2 col-lg-4 col-md-4 col-sm-12">
+      <div class="col-xl-4 col-lg-4 col-md-4 col-sm-12">
         <div class="widget">
           <div class="widget-body">
             <div class="d-flex justify-content-between align-items-center">
@@ -253,7 +253,7 @@
           </div>
         </div>
       </div>
-      <div class="col-xl-2 col-lg-4 col-md-4 col-sm-12">
+      <div class="col-xl-4 col-lg-4 col-md-4 col-sm-12">
         <div class="widget">
           <div class="widget-body">
             <div class="d-flex justify-content-between align-items-center">
@@ -262,17 +262,17 @@
                 <h2><?php echo $summary_list['On Hold']+0 ?></h2>
               </div>
               <div class="icon">
-                <i class="fas fa-box"></i>
+                <i class="fas fa-pause-circle"></i>
               </div>
             </div>
             <!-- <small class="text-small mt-10 d-block">Total Comments</small> -->
           </div>
           <div class="progress progress-sm">
-            <div class="progress-bar bg-success" role="progressbar" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100" style="width: 100%;"></div>
+            <div class="progress-bar bg-danger" role="progressbar" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100" style="width: 100%;"></div>
           </div>
         </div>
       </div>
-      <div class="col-xl-2 col-lg-4 col-md-4 col-sm-12">
+      <div class="col-xl-4 col-lg-4 col-md-4 col-sm-12">
         <div class="widget">
           <div class="widget-body">
             <div class="d-flex justify-content-between align-items-center">
@@ -281,13 +281,13 @@
                 <h2><?php echo $summary_list['Cancelled']+0 ?></h2>
               </div>
               <div class="icon">
-                <i class="fas fa-box"></i>
+                <i class="fas fa-window-close"></i>
               </div>
             </div>
             <!-- <small class="text-small mt-10 d-block">Total Comments</small> -->
           </div>
           <div class="progress progress-sm">
-            <div class="progress-bar bg-success" role="progressbar" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100" style="width: 100%;"></div>
+            <div class="progress-bar bg-danger" role="progressbar" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100" style="width: 100%;"></div>
           </div>
         </div>
       </div>

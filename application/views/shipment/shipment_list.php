@@ -305,6 +305,7 @@
           </div>
           <div class="card-body">
             <form id="form_filter" action="" method="GET">
+              <input type="hidden" name="status" value="<?php echo ($this->input->get('status') ? $this->input->get('status') : '') ?>">
               <div class="row clearfix">
                 <div class="col-md-6">
                   <div class="form-group">
@@ -316,31 +317,6 @@
                     </select>
                   </div>
                 </div>
-                <div class="col-md-6">
-                  <div class="form-group">
-                    <label>Status</label>
-                    <select class="form-control" name="status">
-                      <option value="">-- Select Branch Manager --</option>
-                      <option <?php echo ($this->input->get('status') == 'Booked' ? 'selected' : '') ?> value="Booked">Booked</option>
-                      <option <?php echo ($this->input->get('status') == 'Booking Confirmed' ? 'selected' : '') ?> value="Booking Confirmed">Booking Confirmed</option>
-                      <option <?php echo ($this->input->get('status') == 'Picked up' ? 'selected' : '') ?> value="Picked up">Picked up</option>
-                      <option <?php echo ($this->input->get('status') == 'Pending Payment' ? 'selected' : '') ?> value="Pending Payment">Pending Payment</option>
-                      <option <?php echo ($this->input->get('status') == 'Service Center' ? 'selected' : '') ?> value="Service Center">Service Center</option>
-                      <option <?php echo ($this->input->get('status') == 'Departed' ? 'selected' : '') ?> value="Departed">Departed</option>
-                      <option <?php echo ($this->input->get('status') == 'Arrived' ? 'selected' : '') ?> value="Arrived">Arrived</option>
-                      <option <?php echo ($this->input->get('status') == 'In Transit' ? 'selected' : '') ?> value="In Transit">In Transit</option>
-                      <option <?php echo ($this->input->get('status') == 'Returned' ? 'selected' : '') ?> value="Returned">Returned</option>
-                      <option <?php echo ($this->input->get('status') == 'Clearance Event' ? 'selected' : '') ?> value="Clearance Event">Clearance Event</option>
-                      <option <?php echo ($this->input->get('status') == 'Clearance Complete' ? 'selected' : '') ?> value="Clearance Complete">Clearance Complete</option>
-                      <option <?php echo ($this->input->get('status') == 'With Courier' ? 'selected' : '') ?> value="With Courier">With Courier</option>
-                      <option <?php echo ($this->input->get('status') == 'Delivered' ? 'selected' : '') ?> value="Delivered">Delivered</option>
-                      <option <?php echo ($this->input->get('status') == 'On Hold' ? 'selected' : '') ?> value="On Hold">On Hold</option>
-                      <option <?php echo ($this->input->get('status') == 'Cancelled' ? 'selected' : '') ?> value="Cancelled">Cancelled</option>
-                    </select>
-                  </div>
-                </div>
-              </div>
-              <div class="row clearfix">
                 <div class="col-md-6">
                   <div class="form-group">
                     <label>Type of Mode</label>
@@ -367,7 +343,7 @@
       <div class="col-md-12">
         <div class="card">
           <div class="card-header">
-            <h3>Shipment List</h3>
+            <h3>Shipment List <?php echo ($this->input->get('status') ? '('.$this->input->get('status').')' : '') ?></h3>
           </div>
           <div class="card-body">
             <div class="row">
@@ -447,7 +423,7 @@
 
   $('.widget').on('click', function() {
     var status = $(this).find('h6').text();
-    $("select[name=status]").val(status);
+    $("input[name=status]").val(status);
     $(".btn[name=submit]").click();
   });
 </script>

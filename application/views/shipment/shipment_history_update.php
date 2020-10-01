@@ -8,14 +8,14 @@
           </div>
           <div class="card-body">
             <form id='form_history' action="<?php echo base_url(); ?>shipment/shipment_history_update_process" method="POST" class="forms-sample" >
-              <div class="form-group">
+              <!-- <div class="form-group">
                 <label>Date</label>
                 <input type="date" class="form-control" name="history_date" value="<?php echo date("Y-m-d") ?>" required readonly>
               </div>
               <div class="form-group">
                 <label>Time</label>
                 <input type="time" class="form-control" name="history_time" value="<?php echo date("H:i") ?>" required readonly>
-              </div>
+              </div> -->
               <div class="form-group">
                 <label>Location</label>
                 <input type="text" class="form-control" name="history_location" required>
@@ -56,7 +56,7 @@
                 <div class="text-left col-6">
                 </div>
                 <div class="text-right col-6">
-                  <button type="submit" class="btn btn-success">Submit</button>
+                  <span id="scan_loading" class="d-none"><i class="fas fa-circle-notch fa-spin"></i></i> Loading....</span> <button type="submit" class="btn btn-success" name="submit">Submit</button>
                 </div>
               </div>
             </form>
@@ -97,6 +97,8 @@
   var num_scanned = 0;
   $("#form_history").submit(function(e) {
     e.preventDefault(); // avoid to execute the actual submit of the form.
+    $('button[name=submit]').attr('disabled', true);
+    $('#scan_loading').removeClass('d-none');
     var url = $('#form_history').attr('action');
     $.ajax({
       type: "POST",
@@ -120,8 +122,10 @@
             +"<td>"+data.remarks+"</td>"
             +"<tr>";
           $("#table_history tbody").prepend(markup);
-          showSuccessToast(data);
+          showSuccessToast('Your Data has been submitted!');
         }
+        $('button[name=submit]').attr('disabled', false);
+        $('#scan_loading').addClass('d-none');
       }
     });
   });

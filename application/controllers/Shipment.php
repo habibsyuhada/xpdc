@@ -383,6 +383,10 @@ class Shipment extends CI_Controller
 
 		$where['tracking_no'] 	= $post['tracking_no'];
 		$shipment_list 					= $this->shipment_mod->shipment_list_db($where);
+		if(count($shipment_list) == 0){
+		echo "Error : Tracking Number Not Found!";
+			return false;
+		}
 		$shipment_list 					= $shipment_list[0];
 
 		$form_data = array(
@@ -395,8 +399,11 @@ class Shipment extends CI_Controller
 		);
 		$this->shipment_mod->shipment_history_create_process_db($form_data);
 		$this->shipment_update_last_history($shipment_list['id']);
-		$this->session->set_flashdata('success', 'Your Shipment History data has been Created!');
-		redirect('shipment/shipment_history_update');
+		
+		$output = $form_data;
+		$output['tracking_no'] = $post['tracking_no'];
+
+		echo json_encode($output);
 	}
 
 	public function shipment_import()

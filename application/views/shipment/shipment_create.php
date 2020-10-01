@@ -429,7 +429,7 @@
                       </div>
                       <div class="form-group">
                         <label>Country</label>
-                        <input type="hidden" class="form-control" name="billing_country" placeholder="Country" required>
+                        <input type="hidden" class="form-control" name="billing_country" placeholder="Country">
                         <select class="form-control select2 d-none" name="billing_country_view" onchange="$('input[name=billing_country]').val($(this).val());" required>
                           <option value="">- Select One -</option>
                           <?php foreach ($country['data'] as $data) { ?>
@@ -596,6 +596,19 @@
   </div>
 </div>
 <script type="text/javascript">
+  var input_invalid = 0;
+  $("form").on("submit", function() {
+    input_invalid = 0;
+  });
+
+  $("form input").on("invalid", function() {
+    if(input_invalid < 1){
+      var element = $(this).closest('.tab-pane').attr('id');
+      $('#'+element+'-tab').find('a').trigger('click');
+      input_invalid = 1;
+    }
+  });
+
   function same_as(input) {
     var same_as = $(input).val();
     var form = $('input[name=billing_name]').closest('.row');

@@ -55,9 +55,9 @@
 							<div class="nav-item">
 								<a href="<?php echo base_url() ?>shipment/shipment_list"><i class="fas fa-home"></i><span>Dashboard</span></a>
 							</div>
-							<div class="nav-item">
+							<!-- <div class="nav-item">
 								<a href="<?php echo base_url() ?>shipment/shipment_history_update"><i class="fas fa-history"></i><span>Update History</span></a>
-							</div>
+							</div> -->
 							<!-- <div class="nav-item">
 								<a href="pages/navbar.html"><i class="ik ik-menu"></i><span>Navigation</span></a>
 							</div> -->
@@ -75,6 +75,7 @@
 							<div class="nav-item has-sub">
 								<a href="javascript:void(0)"><i class="fas fa-cogs"></i><span>Operation</span></a>
 								<div class="submenu-content">
+									<a href="<?php echo base_url() ?>shipment/shipment_history_update" class="menu-item">Update History</a>
 									<a href="<?php echo base_url() ?>operation/service_center" class="menu-item">Service Center</a>
 									<a href="<?php echo base_url() ?>operation/departed" class="menu-item">Departed</a>
 									<a href="<?php echo base_url() ?>operation/arrived" class="menu-item">Arrived</a>

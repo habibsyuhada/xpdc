@@ -60,7 +60,7 @@ class Shipment extends CI_Controller
 		// } else if ($post['status_pickup'] == 'Picked Up') {
 		// 	$status = 'Booked';
 		// }
-		$status = 'Service Center';
+		$status = 'Booked';
 		$sea = '';
 
 		if(isset($post['sea'])){

@@ -38,6 +38,8 @@ class Shipment_mod extends CI_Model {
     $this->db->select('*');
     $this->db->from('shipment');
     $this->db->join('shipment_detail', 'shipment.id = shipment_detail.id_shipment');
+		$query = $this->db->order_by("created_date", "DESC");
+		$query = $this->db->order_by("tracking_no", "DESC");
 		$query = $this->db->get();
 		return $query->result_array();
 	}

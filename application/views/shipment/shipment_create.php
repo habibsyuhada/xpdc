@@ -1,6 +1,6 @@
 <div class="main-content">
   <div class="container-fluid">
-    <form action="<?php echo base_url(); ?>shipment/shipment_create_process" method="POST" class="forms-sample">
+    <form action="<?php echo base_url(); ?>shipment/shipment_receipt" method="POST" class="forms-sample">
       <div class="row clearfix">
         <div class="col-md-12">
           <div class="card">

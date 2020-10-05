@@ -522,4 +522,11 @@ class Shipment extends CI_Controller
 		$this->pdf->filename = "laporan-petanikode.pdf";
 		$this->pdf->load_view('shipment/shipment_pdf', $data);
 	}
+
+	public function shipment_receipt(){
+		$data['data_input'] 			= $this->input->post();
+		$data['meta_title'] 			= 'Shipment Receipt';
+		$data['subview']    			= 'shipment/shipment_receipt';
+		$this->load->view('index', $data);
+	}
 }

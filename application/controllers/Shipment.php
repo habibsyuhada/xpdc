@@ -347,7 +347,7 @@ class Shipment extends CI_Controller
 		$shipment_list 					= $this->shipment_mod->shipment_list_db($where);
 
 		unset($where);
-		echo $id;
+		// echo $id;
 		$where['id_shipment'] 	= $id;
 		$history_list 					= $this->shipment_mod->shipment_history_list_db($where);
 

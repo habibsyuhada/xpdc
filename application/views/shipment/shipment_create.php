@@ -604,7 +604,7 @@
   $("form input").on("invalid", function() {
     if(input_invalid < 1){
       var element = $(this).closest('.tab-pane').attr('id');
-      $('#'+element+'-tab').find('a').trigger('click');
+      $('#'+element+'-tab').trigger('click');
       input_invalid = 1;
     }
   });

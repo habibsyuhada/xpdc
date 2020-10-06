@@ -21,6 +21,7 @@ class Master_tracking extends CI_Controller {
 
 	public function __construct() {
 		parent::__construct();
+		cek_login();
 		$this->load->model('master_tracking_mod');
 		$this->load->model('shipment_mod');
 	}

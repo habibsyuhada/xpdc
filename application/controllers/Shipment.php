@@ -7,6 +7,7 @@ class Shipment extends CI_Controller
 	public function __construct()
 	{
 		parent::__construct();
+		cek_login();
 		$this->load->model('shipment_mod');
 	}
 
@@ -46,6 +47,16 @@ class Shipment extends CI_Controller
 		$data['meta_title'] 	= 'Create Shipment';
 
 		$data['country'] = json_decode(file_get_contents("./assets/country/country.json"), true);
+		$this->load->view('index', $data);
+	}
+
+	public function shipment_receipt(){
+		// $post = $this->input->post();
+		// test_var(count($post), 1);
+		// test_var($post);
+		$data['data_input'] 			= $this->input->post();
+		$data['meta_title'] 			= 'Shipment Receipt';
+		$data['subview']    			= 'shipment/shipment_receipt';
 		$this->load->view('index', $data);
 	}
 
@@ -521,12 +532,5 @@ class Shipment extends CI_Controller
 		$this->pdf->setPaper('A6', 'potrait');
 		$this->pdf->filename = "laporan-petanikode.pdf";
 		$this->pdf->load_view('shipment/shipment_pdf', $data);
-	}
-
-	public function shipment_receipt(){
-		$data['data_input'] 			= $this->input->post();
-		$data['meta_title'] 			= 'Shipment Receipt';
-		$data['subview']    			= 'shipment/shipment_receipt';
-		$this->load->view('index', $data);
 	}
 }

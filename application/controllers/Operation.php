@@ -6,6 +6,7 @@ class Operation extends CI_Controller
     public function __construct()
     {
         parent::__construct();
+		cek_login();
         $this->load->model('shipment_mod');
         $this->load->model('operation_mod');
     }

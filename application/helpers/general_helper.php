@@ -11,9 +11,14 @@
 
   function cek_login(){
     $CI =& get_instance();
+
+    $link = explode('/', base_url(uri_string()));
 		if(!$CI->session->userdata('id')){
 			redirect('home/login');
-		}
+    }
+    if($CI->session->userdata('id') == "Guest" && !in_array($link[4].'/'.$link[5], array('home/shipment_create', 'shipment/shipment_receipt', 'shipment/shipment_create_process'))){
+      redirect('home/login');
+    }
   }
 
 ?>

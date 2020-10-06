@@ -27,7 +27,11 @@
 								<a class="dropdown-item" href="#"><i class="ik ik-settings dropdown-icon"></i> Settings</a>
 								<a class="dropdown-item" href="#"><span class="float-right"><span class="badge badge-primary">6</span></span><i class="ik ik-mail dropdown-icon"></i> Inbox</a>
 								<a class="dropdown-item" href="#"><i class="ik ik-navigation dropdown-icon"></i> Message</a> -->
+								<?php if($this->session->userdata('id') == "Guest"): ?>
+								<a class="dropdown-item" href="<?php echo base_url(); ?>"><i class="ik ik-home dropdown-icon"></i> Home Page</a>
+								<?php else: ?>
 								<a class="dropdown-item" href="<?php echo base_url(); ?>home/logout"><i class="ik ik-power dropdown-icon"></i> Logout</a>
+								<?php endif; ?>
 							</div>
 						</div>
 
@@ -52,18 +56,14 @@
 					<div class="nav-container">
 						<nav id="main-menu-navigation" class="navigation-main">
 							<div class="nav-lavel">Navigation</div>
+							<?php if($this->session->userdata('id') == "Guest"): ?>
+							<div class="nav-item">
+								<a href="<?php echo base_url() ?>home/shipment_create"><i class="fas fa-plus"></i><span>Create Shipment</span></a>
+							</div>
+							<?php else: ?>
 							<div class="nav-item">
 								<a href="<?php echo base_url() ?>shipment/shipment_list"><i class="fas fa-home"></i><span>Dashboard</span></a>
 							</div>
-							<!-- <div class="nav-item">
-								<a href="<?php echo base_url() ?>shipment/shipment_history_update"><i class="fas fa-history"></i><span>Update History</span></a>
-							</div> -->
-							<!-- <div class="nav-item">
-								<a href="pages/navbar.html"><i class="ik ik-menu"></i><span>Navigation</span></a>
-							</div> -->
-							<!-- <div class="nav-item">
-								<a href="<?php echo base_url() ?>shipment/shipment_history_update"><i class="fas fa-history"></i><span>Shipment History Update</span></a>
-							</div> -->
 							<div class="nav-item has-sub">
 								<a href="javascript:void(0)"><i class="fas fa-pallet"></i><span>Shipment</span></a>
 								<div class="submenu-content">
@@ -90,6 +90,7 @@
 									<a href="<?php echo base_url() ?>master_tracking/master_tracking_create" class="menu-item">Create Shipment</a>
 								</div>
 							</div>
+							<?php endif; ?>
 						</nav>
 					</div>
 				</div>

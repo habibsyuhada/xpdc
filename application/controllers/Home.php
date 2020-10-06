@@ -23,6 +23,10 @@ class Home extends CI_Controller {
 		parent::__construct();
 		$this->load->model('user_mod');
 		$this->load->model('shipment_mod');
+		if($this->session->userdata('id') == "Guest"){
+			$this->session->unset_userdata('id');
+			session_destroy();
+		}
 	}
 
 	public function index(){
@@ -111,5 +115,23 @@ class Home extends CI_Controller {
 		}
 
 		redirect('home/login');
+	}
+
+	public function shipment_create(){
+		if(!$this->session->userdata('id')){
+			$session_user = array(
+				"id" 					=> "Guest",
+			);
+			$this->session->set_userdata($session_user);
+		}
+		if($this->session->userdata('id') != "Guest"){
+			$this->session->set_flashdata('error', 'You Cannot Access the Guest Page!');
+			redirect('shipment/shipment_list');
+		}
+		$data['subview'] 			= 'shipment/shipment_create';
+		$data['meta_title'] 	= 'Create Shipment';
+
+		$data['country'] = json_decode(file_get_contents("./assets/country/country.json"), true);
+		$this->load->view('index', $data);
 	}
 }

@@ -1,5 +1,5 @@
 <div class="main-content">
-	<div class="container-fluid">
+  <div class="container-fluid">
     <form action="<?php echo base_url(); ?>shipment/shipment_create_process" method="POST" class="forms-sample">
       <div class="row clearfix">
         <div class="col-md-12">
@@ -23,9 +23,9 @@
                   <div class="form-group row m-0">
                     <label class="col-sm-3 col-form-label">Type of Mode</label>
                     <div class="col-sm-9">
-                      <label class="col-form-label">: <?php echo $data_input['type_of_mode'] ?> <?php echo ($data_input['sea'] == "" ? "" : "(".$data_input['sea'].")") ?></label>
+                      <label class="col-form-label">: <?php echo $data_input['type_of_mode'] ?> <?php echo (!isset($data_input['sea']) ? "" : "(" . $data_input['sea'] . ")") ?></label>
                       <input type="hidden" name="type_of_mode" value="<?php echo $data_input['type_of_mode'] ?>">
-                      <input type="hidden" name="sea" value="<?php echo $data_input['sea'] ?>">
+                      <input type="hidden" name="sea" value="<?php echo (isset($data_input['sea'])) ? $data_input['sea'] : ''; ?>">
                     </div>
                   </div>
                 </div>
@@ -165,10 +165,10 @@
                     </div>
                   </div>
                   <?php
-                    $hide_pickup = "";
-                    if($data_input['status_pickup'] == 'Dropoff'){
-                      $hide_pickup = 'd-none';
-                    }
+                  $hide_pickup = "";
+                  if ($data_input['status_pickup'] == 'Dropoff') {
+                    $hide_pickup = 'd-none';
+                  }
                   ?>
                   <div class="form-group row m-0 <?php echo $hide_pickup; ?>">
                     <label class="col-sm-3 col-form-label">Name</label>
@@ -306,7 +306,7 @@
                     <input type="hidden" name="width[]" value="<?php echo $data_input['width'][$key] ?>">
                     <input type="hidden" name="height[]" value="<?php echo $data_input['height'][$key] ?>">
                     <input type="hidden" name="weight[]" value="<?php echo $data_input['weight'][$key] ?>">
-                    
+
                   <?php endforeach;  ?>
                 </div>
                 <div class="col-md-6">
@@ -389,7 +389,7 @@
         </div>
       </div>
     </form>
-	</div>
+  </div>
 </div>
 <script type="text/javascript">
 </script>

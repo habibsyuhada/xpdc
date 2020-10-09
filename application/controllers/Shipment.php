@@ -20,21 +20,21 @@ class Shipment extends CI_Controller
 	{
 		$where = array();
 		$where['status_delete'] 	= 1;
-		if($this->input->get('submit')){
-			if($this->input->get('type_of_shipment')){
+		if ($this->input->get('submit')) {
+			if ($this->input->get('type_of_shipment')) {
 				$where['type_of_shipment'] 	= $this->input->get('type_of_shipment');
 			}
-			if($this->input->get('status')){
+			if ($this->input->get('status')) {
 				$where['status'] 	= $this->input->get('status');
 			}
-			if($this->input->get('type_of_mode')){
+			if ($this->input->get('type_of_mode')) {
 				$where['type_of_mode'] 	= $this->input->get('type_of_mode');
 			}
 		}
 
 		$summary_list 					= $this->shipment_mod->summary_per_status($where);
 		$data['summary_list'] 	= $summary_list[0];
-		
+
 		$data['shipment_list'] 	= $this->shipment_mod->shipment_list_db($where);
 		$data['subview'] 				= 'shipment/shipment_list';
 		$data['meta_title'] 		= 'Shipment List';
@@ -50,7 +50,8 @@ class Shipment extends CI_Controller
 		$this->load->view('index', $data);
 	}
 
-	public function shipment_receipt(){
+	public function shipment_receipt()
+	{
 		// $post = $this->input->post();
 		// test_var(count($post), 1);
 		// test_var($post);
@@ -74,7 +75,7 @@ class Shipment extends CI_Controller
 		$status = 'Booked';
 		$sea = '';
 
-		if(isset($post['sea'])){
+		if (isset($post['sea'])) {
 			$sea = $post['sea'];
 		}
 
@@ -373,7 +374,7 @@ class Shipment extends CI_Controller
 	{
 		$where['shipment.id'] 				= $id;
 		$shipment_list 			= $this->shipment_mod->shipment_label_list_db($where);
-		$data['shipment'] 	= $shipment_list[0]; 
+		$data['shipment'] 	= $shipment_list[0];
 
 		$this->load->library('pdf');
 		$this->pdf->setPaper('A6', 'potrait');
@@ -394,8 +395,8 @@ class Shipment extends CI_Controller
 
 		$where['tracking_no'] 	= $post['tracking_no'];
 		$shipment_list 					= $this->shipment_mod->shipment_list_db($where);
-		if(count($shipment_list) == 0){
-		echo "Error : Tracking Number Not Found!";
+		if (count($shipment_list) == 0) {
+			echo "Error : Tracking Number Not Found!";
 			return false;
 		}
 		$shipment_list 					= $shipment_list[0];
@@ -410,7 +411,7 @@ class Shipment extends CI_Controller
 		);
 		$this->shipment_mod->shipment_history_create_process_db($form_data);
 		$this->shipment_update_last_history($shipment_list['id']);
-		
+
 		$output = $form_data;
 		$output['tracking_no'] = $post['tracking_no'];
 

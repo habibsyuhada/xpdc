@@ -26,9 +26,9 @@
 
 <body>
   <?php
-    $dec_value = explode(".",$shipment['declared_value']);
-    $len = strlen(end($dec_value));
-    for ($i = 1; $i <= $shipment['qty']; $i++) {
+  $dec_value = explode(".", $shipment['declared_value']);
+  $len = strlen(end($dec_value));
+  for ($i = 1; $i <= $shipment['qty']; $i++) {
   ?>
     <table width="100%" border="1" cellspacing="0" cellpadding="6">
       <tbody>
@@ -71,7 +71,7 @@
               <b>Description of Goods :</b> <?php echo $shipment['description_of_goods'] ?><br>
               <b>Declared Value :</b> <?php echo number_format($shipment['declared_value'], $len) ?> <?php echo $shipment['currency'] ?><br>
               <b>Weight :</b> <?php echo $shipment['weight'] ?> Kg<br>
-              <div style="text-align: right;"><b><?php echo $shipment['piece_type']?> :</b> <?php echo $i ?> of <?php echo $shipment['qty'] ?> </div>
+              <div style="text-align: right;"><b><?php echo $shipment['piece_type'] ?> :</b> <?php echo $i ?> of <?php echo $shipment['qty'] ?> </div>
             </small>
           </td>
         </tr>

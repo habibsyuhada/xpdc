@@ -326,7 +326,7 @@
               <?php if(isset($shipment)): ?>
               <div class="row justify-content-center">
                 <div class="col-auto">
-                  <img height="60px" src="<?php echo site_url(); ?>shipment/barcode_generator/<?php echo $shipment['tracking_no'] ?>">
+                  <img height="60px" src="<?php echo site_url(); ?>home/barcode_generator/<?php echo $shipment['tracking_no'] ?>">
                   <br>
                   <br>
                   <h4 class="font-weight-bold text-center"><?php echo $shipment['tracking_no'] ?></h4>

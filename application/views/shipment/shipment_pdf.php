@@ -77,7 +77,7 @@
         </tr>
         <tr>
           <td colspan="2" class="text-center">
-            <img height="100px" src="<?php echo site_url(); ?>shipment/barcode_generator/<?php echo $shipment['tracking_no'] ?>"><br>
+            <img height="100px" src="<?php echo site_url(); ?>home/barcode_generator/<?php echo $shipment['tracking_no'] ?>"><br>
             <b style="margin-top: 5px;"><?php echo $shipment['tracking_no'] ?></b>
           </td>
         </tr>

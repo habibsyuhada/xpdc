@@ -512,13 +512,6 @@ class Shipment extends CI_Controller
 		redirect('shipment/shipment_import');
 	}
 
-	function barcode_generator($tracking_no)
-	{
-		$this->load->library('zend');
-		$this->zend->load('Zend/Barcode');
-		Zend_Barcode::render('CODE128', 'image', array('text' => $tracking_no, 'drawText' => false), array());
-	}
-
 	public function laporan_pdf()
 	{
 		// $this->load->view('shipment/shipment_pdf');

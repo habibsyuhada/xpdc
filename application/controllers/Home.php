@@ -134,4 +134,10 @@ class Home extends CI_Controller {
 		$data['country'] = json_decode(file_get_contents("./assets/country/country.json"), true);
 		$this->load->view('index', $data);
 	}
+
+	function barcode_generator($tracking_no){
+		$this->load->library('zend');
+		$this->zend->load('Zend/Barcode');
+		Zend_Barcode::render('CODE128', 'image', array('text' => $tracking_no, 'drawText' => false), array());
+	}
 }

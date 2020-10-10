@@ -7,8 +7,8 @@
             <div class="row clearfix">
               <div class="col-md-6">
                 <div class="form-group">
-                  <label>Link Guest Create Shipment</label>
-                  <textarea class="form-control" rows="3" readonly><?php echo base_url() ?>home/shipment_create/<?php echo strtr($this->encryption->encrypt('2020-10-09'), '+=/', '.-~') ?></textarea>
+                  <label>Link Guest Create Shipment for <?php echo date('Y-m-d') ?></label>
+                  <textarea class="form-control" rows="3" readonly><?php echo base_url() ?>home/shipment_create/<?php echo strtr($this->encryption->encrypt(date('Y-m-d')), '+=/', '.-~') ?></textarea>
                 </div>
               </div>
             </div>

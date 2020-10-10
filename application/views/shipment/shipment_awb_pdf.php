@@ -89,7 +89,7 @@
           Weight: <?php echo $total_weight ?> Kg<!--  100 Kg -->
         </td>
         <td>
-          Vol. Weight: <?php echo $total_vol_weight ?> Kg<!--  100 Kg -->
+          <!-- Vol. Weight: <?php //echo $total_vol_weight ?> Kg -->
         </td>
       </tr>
     </tbody>
@@ -115,13 +115,13 @@
       </tr>
       <tr>
         <td colspan="2">
-          Address: <?php echo $shipment['shipper_address'] ?> City: <?php echo $shipment['shipper_city'] ?> Country: <?php echo $shipment['shipper_country'] ?> Postcode: <?php echo $shipment['shipper_postcode'] ?>
+          Address: <?php echo $shipment['shipper_address'] ?><br>City: <?php echo $shipment['shipper_city'] ?><br>Country: <?php echo $shipment['shipper_country'] ?><br>Postcode: <?php echo $shipment['shipper_postcode'] ?>
         </td>
         <td colspan="2">
-          Address: <?php echo $shipment['consignee_address'] ?> City: <?php echo $shipment['consignee_city'] ?> Country: <?php echo $shipment['consignee_country'] ?> Postcode: <?php echo $shipment['consignee_postcode'] ?>
+          Address: <?php echo $shipment['consignee_address'] ?><br>City: <?php echo $shipment['consignee_city'] ?><br>Country: <?php echo $shipment['consignee_country'] ?><br>Postcode: <?php echo $shipment['consignee_postcode'] ?>
         </td>
-        <td rowspan="2">
-          Signature : Name : Date :
+        <td style="vertical-align: top; border-bottom: 0px;">
+          Signature :
         </td>
       </tr>
       <tr>
@@ -130,6 +130,10 @@
         </td>
         <td colspan="2">
           PIC : <?php echo $shipment['consignee_contact_person'] ?> Phone: <?php echo $shipment['consignee_phone_number'] ?>
+        </td>
+        <td style="vertical-align: top;">
+          Name :<br>
+          Date :
         </td>
       </tr>
       <tr>
@@ -145,7 +149,7 @@
   <table width="100%" border="1" cellspacing="0" cellpadding="6">
     <tbody>
       <tr>
-        <td>
+        <!-- <td>
           Description
         </td>
         <td>
@@ -153,7 +157,7 @@
         </td>
         <td>
           Piece Type
-        </td>
+        </td> -->
         <td>
           Length (cm)
         </td>
@@ -163,13 +167,13 @@
         <td>
           Height (cm)
         </td>
-        <td>
+        <!-- <td>
           Weight (kg)
-        </td>
+        </td> -->
       </tr>
       <?php foreach ($packages_list as $key => $value) : ?>
       <tr>
-        <td>
+        <!-- <td>
           <?php echo $shipment['description_of_goods'] ?>
         </td>
         <td>
@@ -177,7 +181,7 @@
         </td>
         <td>
           <?php echo $value['piece_type'] ?>
-        </td>
+        </td> -->
         <td>
           <?php echo $value['length'] ?>
         </td>
@@ -187,9 +191,9 @@
         <td>
           <?php echo $value['height'] ?>
         </td>
-        <td>
+        <!-- <td>
           <?php echo $value['weight'] ?>
-        </td>
+        </td> -->
       </tr>
       <?php endforeach; ?>
     </tbody>

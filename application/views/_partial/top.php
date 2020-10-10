@@ -90,6 +90,9 @@
 									<a href="<?php echo base_url() ?>master_tracking/master_tracking_create" class="menu-item">Create Shipment</a>
 								</div>
 							</div>
+							<div class="nav-item">
+								<a href="<?php echo base_url() ?>shipment/shipment_link_share"><i class="fas fa-share-alt"></i> <span>Share Link</span></a>
+							</div>
 							<?php endif; ?>
 						</nav>
 					</div>

@@ -117,7 +117,7 @@ class Home extends CI_Controller {
 		redirect('home/login');
 	}
 
-	public function shipment_create(){
+	public function shipment_create($date_key = NULL){
 		if(!$this->session->userdata('id')){
 			$session_user = array(
 				"id" 					=> "Guest",
@@ -127,6 +127,11 @@ class Home extends CI_Controller {
 		if($this->session->userdata('id') != "Guest"){
 			$this->session->set_flashdata('error', 'You Cannot Access the Guest Page!');
 			redirect('shipment/shipment_list');
+		}
+		$date_key = $this->encryption->decrypt(strtr($date_key, '.-~', '+=/'));
+		if(date('Y-m-d') != date('Y-m-d', strtotime($date_key))){
+			$this->session->set_flashdata('error', 'This link is expired! Please contact your administrator!');
+			redirect('home/login');
 		}
 		$data['subview'] 			= 'shipment/shipment_create';
 		$data['meta_title'] 	= 'Create Shipment';

@@ -86,10 +86,10 @@
           Quantity: <?php echo $total_qty ?> <?php echo $shipment['piece_type'] ?> <!--  1 Pallet -->
         </td>
         <td>
-          Weight: <?php echo $total_weight ?> <!--  100 Kg -->
+          Weight: <?php echo $total_weight ?> Kg<!--  100 Kg -->
         </td>
         <td>
-          Vol. Weight: <?php echo $total_vol_weight ?> <!--  100 Kg -->
+          Vol. Weight: <?php echo $total_vol_weight ?> Kg<!--  100 Kg -->
         </td>
       </tr>
     </tbody>

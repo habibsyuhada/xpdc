@@ -540,4 +540,10 @@ class Shipment extends CI_Controller
 		$this->pdf->filename = "laporan-petanikode.pdf";
 		$this->pdf->load_view('shipment/shipment_pdf', $data);
 	}
+
+	public function shipment_link_share(){
+		$data['subview'] 				= 'shipment/shipment_share_link';
+		$data['meta_title'] 		= 'Share Link Shipment';
+		$this->load->view('index', $data);
+	}
 }

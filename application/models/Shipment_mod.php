@@ -81,7 +81,7 @@ class Shipment_mod extends CI_Model
     if (isset($where)) {
       $this->db->where($where);
     }
-    $this->db->select("shipment.*, shipment_packages.qty, shipment_packages.weight, shipment_packages.qty, shipment_packages.piece_type");
+    $this->db->select("shipment.*, shipment_packages.qty, shipment_packages.piece_type, shipment_packages.length, shipment_packages.width, shipment_packages.height, shipment_packages.weight");
     $this->db->from('shipment');
     $this->db->join('shipment_packages', 'shipment.id = shipment_packages.id_shipment');
     $query = $this->db->get();

@@ -384,9 +384,10 @@ class Shipment extends CI_Controller
 
 	public function shipment_awb_pdf($id)
 	{
-		$where['shipment.id'] 				= $id;
-		$shipment_list 			= $this->shipment_mod->shipment_label_list_db($where);
-		$data['shipment'] 	= $shipment_list[0];
+		$where['shipment.id'] 	= $id;
+		$shipment_list 					= $this->shipment_mod->shipment_label_list_db($where);
+		$data['shipment'] 			= $shipment_list[0];
+		$data['packages_list'] 	= $shipment_list;
 
 		$this->load->library('pdf');
 		$this->pdf->setPaper('A4', 'landscape');

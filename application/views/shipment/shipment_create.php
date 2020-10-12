@@ -91,7 +91,7 @@
                       </div>
                       <div class="form-group">
                         <label>Address</label>
-                        <input type="text" class="form-control" name="shipper_address" placeholder="Address" required>
+                        <textarea class="form-control" name="shipper_address" placeholder="Address" required></textarea>
                       </div>
                       <div class="form-group">
                         <label>City</label>
@@ -108,7 +108,7 @@
                       </div>
                       <div class="form-group">
                         <label>Postcode</label>
-                        <input type="text" class="form-control" name="shipper_postcode" placeholder="Postcode" required>
+                        <input type="text" class="form-control" name="shipper_postcode" placeholder="Postcode">
                       </div>
                       <div class="form-group">
                         <label>Contact Person</label>
@@ -120,7 +120,7 @@
                       </div>
                       <div class="form-group">
                         <label>Email</label>
-                        <input type="email" class="form-control" name="shipper_email" placeholder="Email" required>
+                        <input type="email" class="form-control" name="shipper_email" placeholder="Email">
                       </div>
                     </div>
                     <div class="col-md-6">
@@ -131,7 +131,7 @@
                       </div>
                       <div class="form-group">
                         <label>Address</label>
-                        <input type="text" class="form-control" name="consignee_address" placeholder="Address" required>
+                        <textarea class="form-control" name="consignee_address" placeholder="Address" required></textarea>
                       </div>
                       <div class="form-group">
                         <label>City</label>
@@ -148,7 +148,7 @@
                       </div>
                       <div class="form-group">
                         <label>Postcode</label>
-                        <input type="text" class="form-control" name="consignee_postcode" placeholder="Postcode" required>
+                        <input type="text" class="form-control" name="consignee_postcode" placeholder="Postcode">
                       </div>
                       <div class="form-group">
                         <label>Contact Person</label>
@@ -160,7 +160,7 @@
                       </div>
                       <div class="form-group">
                         <label>Email</label>
-                        <input type="email" class="form-control" name="consignee_email" placeholder="Email" required>
+                        <input type="email" class="form-control" name="consignee_email" placeholder="Email">
                       </div>
                     </div>
                   </div>
@@ -201,6 +201,15 @@
                             </select>
                           </div>
                         </div>
+                        <div class="col-md-6">
+                          <div class="form-group">
+                            <label>Insurance</label>
+                            <select class="form-control" name="insurance" required>
+                              <option value="Yes">Yes</option>
+                              <option value="No">No</option>
+                            </select>
+                          </div>
+                        </div>
                       </div>
                     </div>
                     <div class="col-md-6">
@@ -214,7 +223,7 @@
                       </div>
                       <div class="form-group">
                         <label>COO (Country of Origin)</label>
-                        <select class="form-control select2" name="coo" required>
+                        <select class="form-control select2" name="coo">
                           <option value="">- Select One -</option>
                           <?php foreach ($country['data'] as $data) { ?>
                             <option value="<?= $data['location'] ?>"><?= $data['location'] ?></option>
@@ -250,7 +259,7 @@
                       </div>
                       <div class="form-group">
                         <label>Ref No.</label>
-                        <input type="text" class="form-control" name="ref_no" placeholder="Ref No." required>
+                        <input type="text" class="form-control" name="ref_no" placeholder="Ref No.">
                       </div>
                     </div>
                     <br>
@@ -269,7 +278,7 @@
                         </thead>
                         <tbody>
                           <tr>
-                            <td><input type="number" class="form-control" name="qty[]"></td>
+                            <td><input type="number" class="form-control" name="qty[]" oninput="get_vol_weight()"></td>
                             <td>
                               <select class="form-control" name="piece_type[]">
                                 <option value="">-- Select One --</option>
@@ -283,17 +292,20 @@
                             <td><input type="number" class="form-control" name="length[]" value="0" oninput="get_vol_weight()"></td>
                             <td><input type="number" class="form-control" name="width[]" value="0" oninput="get_vol_weight()"></td>
                             <td><input type="number" class="form-control" name="height[]" value="0" oninput="get_vol_weight()"></td>
-                            <td><input type="number" class="form-control" name="weight[]" value="0"></td>
+                            <td><input type="number" class="form-control" name="weight[]" value="0" oninput="get_vol_weight()"></td>
                             <td><button type="button" class="btn btn-primary" onclick="addrow(this)"><i class="fas fa-plus m-0"></i></button></td>
                           </tr>
                         </tbody>
                       </table>
                     </div>
                     <br>
-                    <div class="col-md-6">
+                    <div class="col-md-4">
+                      Act. Weight : <span id="act_weight">0</span> Kg
+                    </div>
+                    <div class="col-md-4">
                       Vol. Weight : <span id="vol_weight">0</span> Kg
                     </div>
-                    <div class="col-md-6">
+                    <div class="col-md-4">
                       Measurement : <span id="measurement">0</span> M<sup>3</sup>
                     </div>
                   </div>
@@ -327,7 +339,7 @@
                               </div>
                               <div class="col-8">
                                 <h4>Warna Jaya Business Park B2-07<br>
-                                Jl. Jendral Sudirman 29413 Batam ID</h4>
+                                  Jl. Jendral Sudirman 29413 Batam ID</h4>
                               </div>
                             </div>
                           </div>
@@ -339,7 +351,7 @@
                       </div>
                       <div class="form-group">
                         <label>Address</label>
-                        <input type="text" class="form-control" name="pickup_address" placeholder="Address" readonly required>
+                        <textarea class="form-control" name="pickup_address" placeholder="Address" readonly required></textarea>
                       </div>
                       <div class="form-group">
                         <label>City</label>
@@ -351,7 +363,7 @@
                       </div>
                       <div class="form-group">
                         <label>Postcode</label>
-                        <input type="text" class="form-control" name="pickup_postcode" placeholder="Postcode" readonly required>
+                        <input type="text" class="form-control" name="pickup_postcode" placeholder="Postcode" readonly>
                       </div>
                       <div class="form-group">
                         <label>Contact Person</label>
@@ -363,7 +375,7 @@
                       </div>
                       <div class="form-group">
                         <label>Email</label>
-                        <input type="email" class="form-control" name="pickup_email" placeholder="Email" readonly required>
+                        <input type="email" class="form-control" name="pickup_email" placeholder="Email" readonly>
                       </div>
                       <div class="form-group">
                         <label>Pick Up Date</label>
@@ -375,7 +387,7 @@
                       </div>
                       <div class="form-group">
                         <label>Notes</label>
-                        <input type="text" class="form-control" name="pickup_notes" placeholder="Notes" readonly required>
+                        <input type="text" class="form-control" name="pickup_notes" placeholder="Notes" readonly>
                       </div>
                     </div>
                   </div>
@@ -421,7 +433,7 @@
                       </div>
                       <div class="form-group">
                         <label>Address</label>
-                        <input type="text" class="form-control" name="billing_address" placeholder="Address" required>
+                        <textarea class="form-control" name="billing_address" placeholder="Address" required></textarea>
                       </div>
                       <div class="form-group">
                         <label>City</label>
@@ -441,7 +453,7 @@
                     <div class="col-md-6">
                       <div class="form-group">
                         <label>Postcode</label>
-                        <input type="text" class="form-control" name="billing_postcode" placeholder="Postcode" required>
+                        <input type="text" class="form-control" name="billing_postcode" placeholder="Postcode">
                       </div>
                       <div class="form-group">
                         <label>Contact Person</label>
@@ -453,7 +465,7 @@
                       </div>
                       <div class="form-group">
                         <label>Email</label>
-                        <input type="email" class="form-control" name="billing_email" placeholder="Email" required>
+                        <input type="email" class="form-control" name="billing_email" placeholder="Email">
                       </div>
                     </div>
                   </div>
@@ -602,9 +614,9 @@
   });
 
   $("form input").on("invalid", function() {
-    if(input_invalid < 1){
+    if (input_invalid < 1) {
       var element = $(this).closest('.tab-pane').attr('id');
-      $('#'+element+'-tab').trigger('click');
+      $('#' + element + '-tab').trigger('click');
       input_invalid = 1;
     }
   });
@@ -612,14 +624,16 @@
   function same_as(input) {
     var same_as = $(input).val();
     var form = $('input[name=billing_name]').closest('.row');
-    if(same_as == "None"){
+    if (same_as == "None") {
       form.find('input').attr('readonly', false)
       $('input[name=billing_account]').attr('readonly', false);
-      $("select[name=billing_country_view]").select2({'disabled': false});
+      $("select[name=billing_country_view]").select2({
+        'disabled': false
+      });
 
       $("input[name=billing_name]").val('');
       $("input[name=billing_account]").val('');
-      $("input[name=billing_address]").val('');
+      $("textarea[name=billing_address]").val('');
       $("input[name=billing_city]").val('');
       $("select[name=billing_country_view]").val('').trigger('change');
       $("input[name=billing_country]").val('');
@@ -627,21 +641,23 @@
       $("input[name=billing_contact_person]").val('');
       $("input[name=billing_phone_number]").val('');
       $("input[name=billing_email]").val('');
-    }
-    else{
+    } else {
       form.find('input').attr('readonly', true)
-      $("select[name=billing_country_view]").select2({'disabled': true});
+      $("select[name=billing_country_view]").select2({
+        'disabled': true
+      });
 
       $('input[name=billing_account]').attr('readonly', true);
+      $('textarea[name=billing_address]').attr('readonly', true);
       same_as_billing_detail();
     }
   }
 
-  $("input[name=shipper_name]").closest('.row').find('input').on("input", function(){
+  $("input[name=shipper_name]").closest('.row').find('input').on("input", function() {
     same_as_billing_detail();
   });
 
-  $("input[name=shipper_name]").closest('.row').find('select').on("change", function(){
+  $("input[name=shipper_name]").closest('.row').find('select').on("change", function() {
     same_as_billing_detail();
   });
 
@@ -649,17 +665,17 @@
     var same_as = $('select[name=billing_same_as]').val();
     same_as = same_as.toLowerCase();
     console.log(same_as);
-    if(same_as != 'none'){
-      $("input[name=billing_name]").val($("input[name="+same_as+"_name]").val());
-      $("input[name=billing_address]").val($("input[name="+same_as+"_address]").val());
-      $("input[name=billing_city]").val($("input[name="+same_as+"_city]").val());
-      var select_country = $("select[name="+same_as+"_country]").val()
+    if (same_as != 'none') {
+      $("input[name=billing_name]").val($("input[name=" + same_as + "_name]").val());
+      $("textarea[name=billing_address]").val($("textarea[name=" + same_as + "_address]").val());
+      $("input[name=billing_city]").val($("input[name=" + same_as + "_city]").val());
+      var select_country = $("select[name=" + same_as + "_country]").val()
       $("select[name=billing_country_view]").val(select_country).trigger('change');
       $("input[name=billing_country]").val(select_country);
-      $("input[name=billing_postcode]").val($("input[name="+same_as+"_postcode]").val());
-      $("input[name=billing_contact_person]").val($("input[name="+same_as+"_contact_person]").val());
-      $("input[name=billing_phone_number]").val($("input[name="+same_as+"_phone_number]").val());
-      $("input[name=billing_email]").val($("input[name="+same_as+"_email]").val());
+      $("input[name=billing_postcode]").val($("input[name=" + same_as + "_postcode]").val());
+      $("input[name=billing_contact_person]").val($("input[name=" + same_as + "_contact_person]").val());
+      $("input[name=billing_phone_number]").val($("input[name=" + same_as + "_phone_number]").val());
+      $("input[name=billing_email]").val($("input[name=" + same_as + "_email]").val());
     }
   }
 
@@ -694,9 +710,9 @@
   $("select[name=status_pickup]").on("change", function() {
     var value = $(this).val();
     if (value == 'Dropoff') {
-      $("#address_info").css('display','block');
+      $("#address_info").css('display', 'block');
       $("input[name=pickup_name]").attr("readonly", "readonly");
-      $("input[name=pickup_address]").attr("readonly", "readonly");
+      $("textarea[name=pickup_address]").attr("readonly", "readonly");
       $("input[name=pickup_city]").attr("readonly", "readonly");
       $("input[name=pickup_country]").attr("readonly", "readonly");
       $("input[name=pickup_postcode]").attr("readonly", "readonly");
@@ -707,9 +723,9 @@
       $("input[name=pickup_time]").attr("readonly", "readonly");
       $("input[name=pickup_notes]").attr("readonly", "readonly");
     } else if (value == 'Picked Up') {
-      $("#address_info").css('display','none');
+      $("#address_info").css('display', 'none');
       $("input[name=pickup_name]").removeAttr('readonly');
-      $("input[name=pickup_address]").removeAttr('readonly');
+      $("textarea[name=pickup_address]").removeAttr('readonly');
       $("input[name=pickup_city]").removeAttr('readonly');
       $("input[name=pickup_country]").removeAttr('readonly');
       $("input[name=pickup_postcode]").removeAttr('readonly');
@@ -729,11 +745,14 @@
   function get_vol_weight() {
     var type_of_mode = $("select[name=type_of_mode]").val();
     var per = 1;
+    var total_act_weight = 0;
     var total_vol_weight = 0;
     var total_measurement = 0;
     var length_array = [];
     var width_array = [];
     var height_array = [];
+    var weight_array = [];
+    var qty_array = [];
 
     if (type_of_mode == 'Air Freight') {
       per = 6000;
@@ -759,15 +778,31 @@
       height_array.push(height_detail);
     });
 
+    $("input[name='weight[]']").each(function(index, value) {
+      var weight_detail = $(this).val();
+
+      weight_array.push(weight_detail);
+    });
+
+    $("input[name='qty[]']").each(function(index, value) {
+      var qty_detail = $(this).val();
+
+      qty_array.push(qty_detail);
+    });
+
+
     $.each(length_array, function(index, value) {
-      console.log(length_array[index], width_array[index], height_array[index], per);
+      console.log(length_array[index], width_array[index], height_array[index], weight_array[index], qty_array[index], per);
+      var actual_weight = qty_array[index] * weight_array[index];
       var volume_weight = (length_array[index] * width_array[index] * height_array[index]) / per;
       var measurement = (length_array[index] * width_array[index] * height_array[index]) / 1000000;
-      console.log(volume_weight);
+
+      total_act_weight += actual_weight;
       total_vol_weight += volume_weight;
       total_measurement += measurement;
     });
 
+    $("#act_weight").html((Number(total_act_weight)).toFixed(2));
     $("#vol_weight").html((Number(total_vol_weight)).toFixed(2));
     $("#measurement").html((Number(total_measurement)).toFixed(2));
 

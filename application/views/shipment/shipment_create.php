@@ -346,6 +346,14 @@
                         </div>
                       </div>
                       <div class="form-group">
+                        <label>Same as</label>
+                        <select class="form-control" name="pickup_same_as" onchange="pickup_same(this)" disabled required>
+                          <option value="None">-- None --</option>
+                          <option value="Shipper">Shipper</option>
+                          <option value="Consignee">Consignee</option>
+                        </select>
+                      </div>
+                      <div class="form-group">
                         <label>Name</label>
                         <input type="text" class="form-control" name="pickup_name" placeholder="Name" readonly required>
                       </div>
@@ -387,7 +395,8 @@
                       </div>
                       <div class="form-group">
                         <label>Notes</label>
-                        <input type="text" class="form-control" name="pickup_notes" placeholder="Notes" readonly>
+                        <!-- <input type="text" class="form-control" name="pickup_notes" placeholder="Notes" readonly> -->
+                        <textarea class="form-control" name="pickup_notes" placeholder="Notes" readonly></textarea>
                       </div>
                     </div>
                   </div>
@@ -625,7 +634,8 @@
     var same_as = $(input).val();
     var form = $('input[name=billing_name]').closest('.row');
     if (same_as == "None") {
-      form.find('input').attr('readonly', false)
+      form.find('input').attr('readonly', false);
+      $('textarea[name=billing_address]').attr('readonly', true);
       $('input[name=billing_account]').attr('readonly', false);
       $("select[name=billing_country_view]").select2({
         'disabled': false
@@ -653,6 +663,45 @@
     }
   }
 
+  function pickup_same(input) {
+    var same_as = $(input).val();
+    var status_pickup = $("select[name=status_pickup").val();
+    var form = $('input[name=pickup_name]').closest('.row');
+    if (same_as == "None" && status_pickup == "Picked Up") {
+      form.find('input').attr('readonly', false);
+      $('textarea[name=pickup_address]').attr('readonly', false);
+      $('textarea[name=pickup_notes]').attr('readonly', false);
+      $('input[name=pickup_account]').attr('readonly', false);
+      $("select[name=pickup_country_view]").select2({
+        'disabled': false
+      });
+
+      $("input[name=pickup_name]").val('');
+      $("input[name=pickup_account]").val('');
+      $("textarea[name=pickup_address]").val('');
+      $("textarea[name=pickup_notes]").val('');
+      $("input[name=pickup_city]").val('');
+      $("select[name=pickup_country_view]").val('').trigger('change');
+      $("input[name=pickup_country]").val('');
+      $("input[name=pickup_postcode]").val('');
+      $("input[name=pickup_contact_person]").val('');
+      $("input[name=pickup_phone_number]").val('');
+      $("input[name=pickup_email]").val('');
+      $("input[name=pickup_date]").val("");
+      $("input[name=pickup_time]").val("");
+    } else {
+      form.find('input').attr('readonly', true)
+      $("select[name=pickup_country_view]").select2({
+        'disabled': true
+      });
+
+      $('input[name=pickup_account]').attr('readonly', true);
+      $('textarea[name=pickup_address]').attr('readonly', true);
+      $('textarea[name=pickup_notes]').attr('readonly', true);
+      same_as_billing_detail();
+    }
+  }
+
   $("input[name=shipper_name]").closest('.row').find('input').on("input", function() {
     same_as_billing_detail();
   });
@@ -664,7 +713,6 @@
   function same_as_billing_detail() {
     var same_as = $('select[name=billing_same_as]').val();
     same_as = same_as.toLowerCase();
-    console.log(same_as);
     if (same_as != 'none') {
       $("input[name=billing_name]").val($("input[name=" + same_as + "_name]").val());
       $("textarea[name=billing_address]").val($("textarea[name=" + same_as + "_address]").val());
@@ -676,6 +724,26 @@
       $("input[name=billing_contact_person]").val($("input[name=" + same_as + "_contact_person]").val());
       $("input[name=billing_phone_number]").val($("input[name=" + same_as + "_phone_number]").val());
       $("input[name=billing_email]").val($("input[name=" + same_as + "_email]").val());
+    }
+
+    var pickup_same_as = $('select[name=pickup_same_as]').val();
+    pickup_same_as = pickup_same_as.toLowerCase();
+    console.log(pickup_same_as);
+    if (pickup_same_as != 'none') {
+      $("input[name=pickup_name]").val($("input[name=" + pickup_same_as + "_name]").val());
+      $("textarea[name=pickup_address]").val($("textarea[name=" + pickup_same_as + "_address]").val());
+      $("input[name=pickup_city]").val($("input[name=" + pickup_same_as + "_city]").val());
+      var select_country = $("select[name=" + pickup_same_as + "_country]").val()
+      $("select[name=pickup_country_view]").val(select_country).trigger('change');
+      $("input[name=pickup_country]").val(select_country);
+      $("input[name=pickup_postcode]").val($("input[name=" + pickup_same_as + "_postcode]").val());
+      $("input[name=pickup_contact_person]").val($("input[name=" + pickup_same_as + "_contact_person]").val());
+      $("input[name=pickup_phone_number]").val($("input[name=" + pickup_same_as + "_phone_number]").val());
+      $("input[name=pickup_email]").val($("input[name=" + pickup_same_as + "_email]").val());
+      
+      $("input[name=pickup_date]").val("");
+      $("input[name=pickup_time]").val("");
+      $("textarea[name=pickup_notes]").val("");
     }
   }
 
@@ -711,7 +779,9 @@
     var value = $(this).val();
     if (value == 'Dropoff') {
       $("#address_info").css('display', 'block');
+      $("select[name=pickup_same_as]").attr("disabled", "disabled");
       $("input[name=pickup_name]").attr("readonly", "readonly");
+      console.log("asd");
       $("textarea[name=pickup_address]").attr("readonly", "readonly");
       $("input[name=pickup_city]").attr("readonly", "readonly");
       $("input[name=pickup_country]").attr("readonly", "readonly");
@@ -721,9 +791,10 @@
       $("input[name=pickup_email]").attr("readonly", "readonly");
       $("input[name=pickup_date]").attr("readonly", "readonly");
       $("input[name=pickup_time]").attr("readonly", "readonly");
-      $("input[name=pickup_notes]").attr("readonly", "readonly");
+      $("textarea[name=pickup_notes]").attr("readonly", "readonly");
     } else if (value == 'Picked Up') {
       $("#address_info").css('display', 'none');
+      $("select[name=pickup_same_as]").removeAttr("disabled");
       $("input[name=pickup_name]").removeAttr('readonly');
       $("textarea[name=pickup_address]").removeAttr('readonly');
       $("input[name=pickup_city]").removeAttr('readonly');
@@ -734,8 +805,21 @@
       $("input[name=pickup_email]").removeAttr('readonly');
       $("input[name=pickup_date]").removeAttr('readonly');
       $("input[name=pickup_time]").removeAttr('readonly');
-      $("input[name=pickup_notes]").removeAttr('readonly');
+      $("textarea[name=pickup_notes]").removeAttr('readonly');
     }
+    $("select[name=pickup_same_as]").val('None').trigger('change');
+    $("input[name=pickup_name]").val('');
+    $("input[name=pickup_account]").val('');
+    $("textarea[name=pickup_address]").val('');
+    $("input[name=pickup_city]").val('');
+    $("input[name=pickup_country]").val('');
+    $("input[name=pickup_postcode]").val('');
+    $("input[name=pickup_contact_person]").val('');
+    $("input[name=pickup_phone_number]").val('');
+    $("input[name=pickup_email]").val('');
+    $("input[name=pickup_date]").val("");
+    $("input[name=pickup_time]").val("");
+    $("textarea[name=pickup_address]").val('');
   });
 
   // $(document).on("keypress", "input[name='length[]'], input[name='width[]'], input[name='height[]']", function() {

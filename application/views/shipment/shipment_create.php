@@ -407,6 +407,12 @@
                       <h6 class="font-weight-bold">Billing Details</h6>
                     </div>
                     <div class="col-md-6">
+                      <div class="col-md-6">
+                        <div class="form-group">
+                          <label>XPDC Account No.</label>
+                          <input type="text" class="form-control" name="billing_account" placeholder="XPDC Account No. (if any)">
+                        </div>
+                      </div>
                       <div class="form-group">
                         <label>Same as</label>
                         <select class="form-control" name="billing_same_as" onchange="same_as(this)" required>
@@ -414,14 +420,6 @@
                           <option value="Shipper">Shipper</option>
                           <option value="Consignee">Consignee</option>
                         </select>
-                      </div>
-                    </div>
-                  </div>
-                  <div class="row clearfix">
-                    <div class="col-md-6">
-                      <div class="form-group">
-                        <label>XPDC Account No.</label>
-                        <input type="text" class="form-control" name="billing_account" placeholder="XPDC Account No. (if any)">
                       </div>
                     </div>
                   </div>

@@ -355,7 +355,7 @@
                       <th class="text-white font-weight-bold">Tracking Number</th>
                       <th class="text-white font-weight-bold">Shipper Name</th>
                       <th class="text-white font-weight-bold">Receiver Name</th>
-                      <th class="text-white font-weight-bold">Container</th>
+                      <th class="text-white font-weight-bold">Type of Mode</th>
                       <th class="text-white font-weight-bold">Status</th>
                       <th class="text-white font-weight-bold">Shipment Type</th>
                       <th class="text-white font-weight-bold"></th>
@@ -364,11 +364,11 @@
                   <tbody>
                     <?php foreach ($shipment_list as $key => $value): ?>
                     <tr>
-                      <td><input type="checkbox" class="checkbox-20" value="<?php echo $value['id'] ?>" onclick="save_checkbox(this)"></td>
-                      <td><?php echo $value['tracking_no'] ?></td>
+                      <td><a class="font-weight-bold" href="<?php echo base_url() ?>shipment/shipment_tracking/<?php echo $value['id'] ?>"><input type="checkbox" class="checkbox-20" value="<?php echo $value['id'] ?>" onclick="save_checkbox(this)"></td>
+                      <td><a class="font-weight-bold" href="<?php echo base_url() ?>shipment/shipment_tracking/<?php echo $value['id'] ?>"><?php echo $value['tracking_no'] ?></a></td>
                       <td><?php echo $value['shipper_name'] ?></td>
                       <td><?php echo $value['consignee_name'] ?></td>
-                      <td><?php echo $value['master_tracking'] ?></td>
+                      <td><?php echo $value['type_of_mode'] ?></td>
                       <td><?php echo $value['status'] ?></td>
                       <td><?php echo $value['type_of_shipment'] ?></td>
                       <td>

@@ -69,7 +69,7 @@
           <td colspan="2">
             <small>
               <b>Description of Goods :</b> <?php echo $shipment['description_of_goods'] ?><br>
-              <b>Declared Value :</b> <?php echo number_format($shipment['declared_value'], $len) ?> <?php echo $shipment['currency'] ?><br>
+              <b>Declared Value :</b> <?php echo $shipment['currency'] ?> <?php echo round($shipment['declared_value'], 2, PHP_ROUND_HALF_UP); ?><br>
               <b>Weight :</b> <?php echo $shipment['weight'] ?> Kg<br>
               <div style="text-align: right;"><b><?php echo $shipment['piece_type'] ?> :</b> <?php echo $i ?> of <?php echo $shipment['qty'] ?> </div>
             </small>

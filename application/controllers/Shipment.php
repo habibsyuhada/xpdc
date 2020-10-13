@@ -20,6 +20,15 @@ class Shipment extends CI_Controller
 	{
 		$where = array();
 		$where['status_delete'] 	= 1;
+		if($this->session->userdata('branch')){
+			if($this->session->userdata('branch') != "NONE"){
+				$where["(shipper_city LIKE '%".$this->session->userdata('branch')."%' OR consignee_city LIKE '%".$this->session->userdata('branch')."%')"] 	= NULL;
+			}
+		}
+		else{
+			redirect('home/logout');
+		}
+
 		if ($this->input->get('submit')) {
 			if ($this->input->get('type_of_shipment')) {
 				$where['type_of_shipment'] 	= $this->input->get('type_of_shipment');
@@ -63,6 +72,9 @@ class Shipment extends CI_Controller
 
 	public function shipment_create_process()
 	{
+		$post = $this->input->post();
+		test_var(count($post), 1);
+		test_var($post);
 		$post = $this->input->post();
 		$tracking_no = $this->shipment_mod->shipment_generate_tracking_no_db();
 		$tracking_no = "XPDC" . $tracking_no;

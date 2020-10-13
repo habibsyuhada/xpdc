@@ -94,6 +94,7 @@ class Home extends CI_Controller {
 				"name" 				=> $user['name'],
 				"email" 			=> $user['email'],
 				"role" 				=> $user['role'],
+				"branch" 			=> $user['branch'],
 			);
 			$this->session->set_userdata($session_user);
 			redirect('home/home');

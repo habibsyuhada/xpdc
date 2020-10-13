@@ -385,13 +385,27 @@
                         <label>Email</label>
                         <input type="email" class="form-control" name="pickup_email" placeholder="Email" readonly>
                       </div>
-                      <div class="form-group">
-                        <label>Pick Up Date</label>
-                        <input type="date" class="form-control" name="pickup_date" placeholder="Pick Up Date" readonly required>
-                      </div>
-                      <div class="form-group">
-                        <label>Pick Up Time</label>
-                        <input type="time" class="form-control" name="pickup_time" placeholder="Pick Up Time" readonly required>
+                      <div class="row clearfix">
+                        <div class="col-md-6">
+                          <div class="form-group">
+                            <label>Pick Up Date From</label>
+                            <input type="date" class="form-control" name="pickup_date" placeholder="Pick Up Date" readonly required>
+                          </div>
+                          <div class="form-group">
+                            <label>Pick Up Time From</label>
+                            <input type="time" class="form-control" name="pickup_time" placeholder="Pick Up Time" readonly required>
+                          </div>
+                        </div>
+                        <div class="col-md-6">
+                          <div class="form-group">
+                            <label>Pick Up Date To</label>
+                            <input type="date" class="form-control" name="pickup_date_to" placeholder="Pick Up Date" readonly required>
+                          </div>
+                          <div class="form-group">
+                            <label>Pick Up Time To</label>
+                            <input type="time" class="form-control" name="pickup_time_to" placeholder="Pick Up Time" readonly required>
+                          </div>
+                        </div>
                       </div>
                       <div class="form-group">
                         <label>Notes</label>
@@ -416,11 +430,9 @@
                       <h6 class="font-weight-bold">Billing Details</h6>
                     </div>
                     <div class="col-md-6">
-                      <div class="col-md-6">
-                        <div class="form-group">
-                          <label>XPDC Account No.</label>
-                          <input type="text" class="form-control" name="billing_account" placeholder="XPDC Account No. (if any)">
-                        </div>
+                      <div class="form-group">
+                        <label>XPDC Account No.</label>
+                        <input type="text" class="form-control" name="billing_account" placeholder="XPDC Account No. (if any)">
                       </div>
                       <div class="form-group">
                         <label>Same as</label>
@@ -633,7 +645,7 @@
     var form = $('input[name=billing_name]').closest('.row');
     if (same_as == "None") {
       form.find('input').attr('readonly', false);
-      $('textarea[name=billing_address]').attr('readonly', true);
+      $('textarea[name=billing_address]').attr('readonly', false);
       $('input[name=billing_account]').attr('readonly', false);
       $("select[name=billing_country_view]").select2({
         'disabled': false
@@ -686,7 +698,9 @@
       $("input[name=pickup_phone_number]").val('');
       $("input[name=pickup_email]").val('');
       $("input[name=pickup_date]").val("");
+      $("input[name=pickup_date_to]").val("");
       $("input[name=pickup_time]").val("");
+      $("input[name=pickup_time_to]").val("");
     } else {
       form.find('input').attr('readonly', true)
       $("select[name=pickup_country_view]").select2({
@@ -740,7 +754,9 @@
       $("input[name=pickup_email]").val($("input[name=" + pickup_same_as + "_email]").val());
       
       $("input[name=pickup_date]").val("");
+      $("input[name=pickup_date_to]").val("");
       $("input[name=pickup_time]").val("");
+      $("input[name=pickup_time_to]").val("");
       $("textarea[name=pickup_notes]").val("");
     }
   }
@@ -788,7 +804,9 @@
       $("input[name=pickup_phone_number]").attr("readonly", "readonly");
       $("input[name=pickup_email]").attr("readonly", "readonly");
       $("input[name=pickup_date]").attr("readonly", "readonly");
+      $("input[name=pickup_date_to]").attr("readonly", "readonly");
       $("input[name=pickup_time]").attr("readonly", "readonly");
+      $("input[name=pickup_time_to]").attr("readonly", "readonly");
       $("textarea[name=pickup_notes]").attr("readonly", "readonly");
     } else if (value == 'Picked Up') {
       $("#address_info").css('display', 'none');
@@ -802,7 +820,9 @@
       $("input[name=pickup_phone_number]").removeAttr('readonly');
       $("input[name=pickup_email]").removeAttr('readonly');
       $("input[name=pickup_date]").removeAttr('readonly');
+      $("input[name=pickup_date_to]").removeAttr('readonly');
       $("input[name=pickup_time]").removeAttr('readonly');
+      $("input[name=pickup_time_to]").removeAttr('readonly');
       $("textarea[name=pickup_notes]").removeAttr('readonly');
     }
     $("select[name=pickup_same_as]").val('None').trigger('change');
@@ -816,7 +836,9 @@
     $("input[name=pickup_phone_number]").val('');
     $("input[name=pickup_email]").val('');
     $("input[name=pickup_date]").val("");
+    $("input[name=pickup_date_to]").val("");
     $("input[name=pickup_time]").val("");
+    $("input[name=pickup_time_to]").val("");
     $("textarea[name=pickup_address]").val('');
   });
 

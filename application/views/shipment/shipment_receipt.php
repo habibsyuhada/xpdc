@@ -162,6 +162,7 @@
                     <div class="col-sm-9">
                       <label class="col-form-label">: <?php echo $data_input['status_pickup'] ?></label>
                       <input type="hidden" name="status_pickup" value="<?php echo $data_input['status_pickup'] ?>">
+                      <input type="hidden" name="pickup_same_as" value="<?php echo (isset($data_input['pickup_same_as']) ? $data_input['pickup_same_as'] : 'None') ?>">
                     </div>
                   </div>
                   <?php
@@ -229,15 +230,17 @@
                   <div class="form-group row m-0 <?php echo $hide_pickup; ?>">
                     <label class="col-sm-3 col-form-label">Pick Up Date</label>
                     <div class="col-sm-9">
-                      <label class="col-form-label">: <?php echo $data_input['pickup_date'] ?></label>
+                      <label class="col-form-label">: <?php echo $data_input['pickup_date'] ?><?php echo ($data_input['pickup_date'] == $data_input['pickup_date_to'] ? "" : " - ".$data_input['pickup_date_to']) ?></label>
                       <input type="hidden" name="pickup_date" value="<?php echo $data_input['pickup_date'] ?>">
+                      <input type="hidden" name="pickup_date_to" value="<?php echo $data_input['pickup_date_to'] ?>">
                     </div>
                   </div>
                   <div class="form-group row m-0 <?php echo $hide_pickup; ?>">
                     <label class="col-sm-3 col-form-label">Pick Up Time</label>
                     <div class="col-sm-9">
-                      <label class="col-form-label">: <?php echo $data_input['pickup_time'] ?></label>
+                      <label class="col-form-label">: <?php echo $data_input['pickup_time'] ?><?php echo ($data_input['pickup_time'] == $data_input['pickup_time_to'] ? "" : " - ".$data_input['pickup_time_to']) ?></label>
                       <input type="hidden" name="pickup_time" value="<?php echo $data_input['pickup_time'] ?>">
+                      <input type="hidden" name="pickup_time_to" value="<?php echo $data_input['pickup_time_to'] ?>">
                     </div>
                   </div>
                   <div class="form-group row m-0 <?php echo $hide_pickup; ?>">
@@ -255,6 +258,13 @@
                     <div class="col-sm-9">
                       <label class="col-form-label">: <?php echo $data_input['incoterms'] ?></label>
                       <input type="hidden" name="incoterms" value="<?php echo $data_input['incoterms'] ?>">
+                    </div>
+                  </div>
+                  <div class="form-group row m-0">
+                    <label class="col-sm-3 col-form-label">Insurance</label>
+                    <div class="col-sm-9">
+                      <label class="col-form-label">: <?php echo $data_input['insurance'] ?></label>
+                      <input type="hidden" name="insurance" value="<?php echo $data_input['insurance'] ?>">
                     </div>
                   </div>
                   <div class="form-group row m-0">
@@ -381,6 +391,7 @@
                 <div class="text-left col-6">
                 </div>
                 <div class="text-right col-6">
+                  <a href="javascript:history.back()" class="btn btn-secondary">Go Back</a>
                   <button type="submit" class="btn btn-success">Submit</button>
                 </div>
               </div>

@@ -63,24 +63,36 @@ class Master_tracking extends CI_Controller {
 		redirect('master_tracking/master_tracking_list');
 	}
 
-	// public function master_tracking_create(){
-	// 	$post = $this->input->post();
+	public function master_tracking_multi_create_process(){
+		$post = $this->input->post();
 
-	// 	$form_data = array(
-	// 		'master_tracking' 	=> $post['master_tracking'],
-	// 		'remarks' 					=> $post['remarks'],
-	// 	);
-	// 	$id_insert	= $this->master_tracking_mod->master_tracking_create_process_db($form_data);
+		$where['shipment.id IN ('.$post['id'].')'] = NULL;
+		$where['shipment.master_tracking !='] = "";
+		$shipment_list 					= $this->shipment_mod->shipment_list_db($where);
+		unset($where);
+		if(count($shipment_list) > 0){
+			foreach ($shipment_list as $key => $value) {
+				$shipment[] = $value['tracking_no'];
+			}
+			$this->session->set_flashdata('error', 'All Documents above already have master tracking!<br>'.join('<br>', $shipment));
+			redirect('shipment/shipment_list');
+		}
 
-	// 	$form_data = array(
-	// 		'master_tracking' 	=> $post['master_tracking'],
-	// 	);
-	// 	$where['id IN ('.$post['id'].')'] = NULL;
-	// 	$this->shipment_mod->shipment_update_process_db($form_data, $where);
+		$form_data = array(
+			'master_tracking' 	=> $post['master_tracking'],
+			'remarks' 					=> $post['remarks'],
+		);
+		$id_insert	= $this->master_tracking_mod->master_tracking_create_process_db($form_data);
 
-	// 	$this->session->set_flashdata('success', 'Your Shipment data has been Updated!');
-	// 	redirect('shipment/shipment_list');
-  // }
+		$form_data = array(
+			'master_tracking' 	=> $post['master_tracking'],
+		);
+		$where['id IN ('.$post['id'].')'] = NULL;
+		$this->shipment_mod->shipment_update_process_db($form_data, $where);
+
+		$this->session->set_flashdata('success', 'Your Shipment data has been Updated!');
+		redirect('shipment/shipment_list');
+  }
   
   public function master_tracking_detail($master_tracking){
     $where['master_tracking'] = $master_tracking;

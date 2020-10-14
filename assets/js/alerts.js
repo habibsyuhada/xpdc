@@ -44,7 +44,8 @@
       showHideTransition: 'slide',
       icon: 'error',
       loaderBg: '#f2a654',
-      position: 'bottom-right'
+      position: 'bottom-right',
+      hideAfter : false,
     })
   };
   showToastPosition = function(position) {

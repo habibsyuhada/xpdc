@@ -353,11 +353,12 @@
                     <tr class="bg-info">
                       <th class="text-white font-weight-bold"></th>
                       <th class="text-white font-weight-bold">Tracking Number</th>
+                      <th class="text-white font-weight-bold">Master Tracking Number</th>
+                      <th class="text-white font-weight-bold">Shipment Type</th>
+                      <th class="text-white font-weight-bold">Type of Mode</th>
                       <th class="text-white font-weight-bold">Shipper Name</th>
                       <th class="text-white font-weight-bold">Receiver Name</th>
-                      <th class="text-white font-weight-bold">Type of Mode</th>
                       <th class="text-white font-weight-bold">Status</th>
-                      <th class="text-white font-weight-bold">Shipment Type</th>
                       <th class="text-white font-weight-bold"></th>
                     </tr>
                   </thead>
@@ -366,11 +367,12 @@
                     <tr>
                       <td><a class="font-weight-bold" href="<?php echo base_url() ?>shipment/shipment_tracking/<?php echo $value['id'] ?>"><input type="checkbox" class="checkbox-20" value="<?php echo $value['id'] ?>" onclick="save_checkbox(this)"></td>
                       <td><a class="font-weight-bold" href="<?php echo base_url() ?>shipment/shipment_tracking/<?php echo $value['id'] ?>"><?php echo $value['tracking_no'] ?></a></td>
+                      <td><?php echo $value['master_tracking'] ?></td>
+                      <td><?php echo $value['type_of_shipment'] ?></td>
+                      <td><?php echo $value['type_of_mode'] ?></td>
                       <td><?php echo $value['shipper_name'] ?></td>
                       <td><?php echo $value['consignee_name'] ?></td>
-                      <td><?php echo $value['type_of_mode'] ?></td>
                       <td><?php echo $value['status'] ?></td>
-                      <td><?php echo $value['type_of_shipment'] ?></td>
                       <td>
                         <a href="<?php echo base_url() ?>shipment/shipment_tracking/<?php echo $value['id'] ?>" class="btn btn-secondary" title="View"><i class="fas fa-eye m-0"></i></a>
                         <!-- <a target="_blank" href="<?php echo base_url() ?>shipment/shipment_tracking_label_pdf/<?php echo $value['id'] ?>" class="btn btn-warning" title="Print"><i class="fas fa-print m-0"></i></a> -->
@@ -386,7 +388,7 @@
                     <?php endforeach; ?>
                   </tbody>
                 </table>
-                <!-- <form id="form_master_tracking" method="POST" action="<?php echo base_url(); ?>master_tracking/master_tracking_create">
+                <form id="form_master_tracking" method="POST" action="<?php echo base_url(); ?>master_tracking/master_tracking_multi_create_process">
                 <div class="row clearfix">
                   <div class="col-md-6">
                     <div class="form-group">
@@ -402,7 +404,7 @@
                     </div>
                   </div>
                 </div>
-                </form> -->
+                </form>
               </div>
             </div>
           </div>

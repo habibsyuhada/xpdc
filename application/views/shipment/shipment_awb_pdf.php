@@ -57,7 +57,8 @@
         </td>
         <td rowspan="3" class="text-center">
           <img height="100%" src="<?php echo site_url(); ?>home/barcode_generator/<?php echo $shipment['tracking_no'] ?>"><br>
-          <b style="margin-top: 5px;"><?php echo $shipment['tracking_no'] ?></b>
+          <b style="margin-top: 5px;"><?php echo $shipment['tracking_no'] ?></b><br>
+          Accounts Copy
         </td>
         <td>
           Shipment Date: <?php echo date("Y-m-d", strtotime($shipment['created_date'])) ?>
@@ -88,7 +89,7 @@
           Weight: <?php echo $total_weight ?> Kg<!--  100 Kg -->
         </td>
         <td>
-          Price: <?php echo $value['declared_value'] ?> Kg<!--  100 Kg -->
+          <!-- Vol. Weight: <?php //echo $total_vol_weight ?> Kg -->
         </td>
       </tr>
     </tbody>
@@ -125,10 +126,10 @@
       </tr>
       <tr>
         <td colspan="2">
-          PIC : <?php echo $shipment['shipper_contact_person'] ?><br>Phone: <?php echo $shipment['shipper_phone_number'] ?>
+          PIC : <?php echo $shipment['shipper_contact_person'] ?> Phone: <?php echo $shipment['shipper_phone_number'] ?>
         </td>
         <td colspan="2">
-          PIC : <?php echo $shipment['consignee_contact_person'] ?><br>Phone: <?php echo $shipment['consignee_phone_number'] ?>
+          PIC : <?php echo $shipment['consignee_contact_person'] ?> Phone: <?php echo $shipment['consignee_phone_number'] ?>
         </td>
         <td style="vertical-align: top;">
           Name :<br>
@@ -143,58 +144,6 @@
           
         </td>
       </tr>
-    </tbody>
-  </table>
-  <table width="100%" border="1" cellspacing="0" cellpadding="6">
-    <tbody>
-      <tr>
-        <!-- <td>
-          Description
-        </td>
-        <td>
-          Qty.
-        </td>
-        <td>
-          Piece Type
-        </td> -->
-        <td>
-          Length (cm)
-        </td>
-        <td>
-          Width (cm)
-        </td>
-        <td>
-          Height (cm)
-        </td>
-        <!-- <td>
-          Weight (kg)
-        </td> -->
-      </tr>
-      <?php foreach ($packages_list as $key => $value) : ?>
-      <tr>
-        <!-- <td>
-          <?php echo $shipment['description_of_goods'] ?>
-        </td>
-        <td>
-          <?php echo $value['qty'] ?>
-        </td>
-        <td>
-          <?php echo $value['piece_type'] ?>
-        </td> -->
-        <td>
-          <?php echo $value['length'] ?>
-        </td>
-        <td>
-          <?php echo $value['width'] ?>
-        </td>
-        <td>
-          <?php echo $value['height'] ?>
-        </td>
-        <!-- <td>
-          <?php echo $value['weight'] ?>
-        </td> -->
-      </tr>
-      <?php endforeach; ?>
     </tbody>
   </table>
 </body>

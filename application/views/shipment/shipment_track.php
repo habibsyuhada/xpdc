@@ -67,8 +67,16 @@
                   </div>
                   <div class="col-md-6">
                     <div class="form-group">
+                      <label>Date</label>
+                      <input type="date" class="form-control" name="history_date" required>
+                    </div>
+                    <div class="form-group">
+                      <label>Time</label>
+                      <input type="time" class="form-control" name="history_time" required>
+                    </div>
+                    <div class="form-group">
                       <label>Remarks</label>
-                      <textarea class="form-control" rows="3" name="history_remarks" required></textarea>
+                      <textarea class="form-control" rows="3" name="history_remarks"></textarea>
                     </div>
                   </div>
                 </div>
@@ -92,16 +100,18 @@
                   <th class="text-white font-weight-bold">Location</th>
                   <th class="text-white font-weight-bold">Status</th>
                   <th class="text-white font-weight-bold">Remarks</th>
+                  <th class="text-white font-weight-bold">Action</th>
                 </tr>
               </thead>
               <tbody>
                 <?php foreach ($history_list as $key => $value): ?>
                 <tr>
                   <td><?php echo $value['date'] ?></td>
-                  <td><?php echo $value['time'] ?></td>
+                  <td><?php echo date("H:i", strtotime($value['time'])) ?></td>
                   <td><?php echo $value['location'] ?></td>
                   <td><?php echo $value['status'] ?></td>
                   <td><?php echo $value['remarks'] ?></td>
+                  <td><a class="btn btn-danger btn-sm" onclick="return confirm('Are you sure?')" href="<?=base_url()?>shipment/shipment_history_delete_db/<?php echo $value['id']?>/<?php echo $value['id_shipment']?>"><i class="fa fa-trash"></i></a></td>
                 </tr>
                 <?php endforeach; ?>
               </tbody>
@@ -141,11 +151,13 @@
           //   +"<td>"+data.remarks+"</td>"
           //   +"<tr>";
           // $("#table_history tbody").prepend(markup);
+          
+          var btn = '<a class="btn btn-danger btn-sm" onclick="return confirm(`Are you sure?`)" href="<?=base_url()?>shipment/shipment_history_delete_db/'+data.id+'/'+data.id_shipment+'"><i class="fa fa-trash"></i></a>'
 
           // var table = $('#example').DataTable();
  
           var rowNode = $('#table_history').DataTable()
-              .row.add( [ data.date, data.time, data.location, data.status, data.remarks ] )
+              .row.add( [ data.date, data.time, data.location, data.status, data.remarks, btn ] )
               .draw()
               .node();
           

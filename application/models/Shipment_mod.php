@@ -75,6 +75,11 @@ class Shipment_mod extends CI_Model
     $query = $this->db->get('shipment_packages');
     return $query->result_array();
   }
+  
+  function shipment_history_delete($where,$table){
+		$this->db->where($where);
+		$this->db->delete($table);
+  }
 
   function shipment_label_list_db($where = null)
   {
@@ -129,9 +134,9 @@ class Shipment_mod extends CI_Model
     $query1_result = $query->result_array();
 
     if ($query1_result) {
-      $batch_no_gen = str_pad($query1_result[0]["tracking_no"] + 1, 6, '0', STR_PAD_LEFT);
+      $batch_no_gen = str_pad($query1_result[0]["tracking_no"] + 1, 10, '0', STR_PAD_LEFT);
     } else {
-      $batch_no_gen = "000001";
+      $batch_no_gen = "0000000001";
     }
 
     return $batch_no_gen;

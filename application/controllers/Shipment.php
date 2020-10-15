@@ -28,7 +28,6 @@ class Shipment extends CI_Controller
 		else{
 			redirect('home/logout');
 		}
-
 		if ($this->input->get('submit')) {
 			if ($this->input->get('type_of_shipment')) {
 				$where['type_of_shipment'] 	= $this->input->get('type_of_shipment');
@@ -72,9 +71,6 @@ class Shipment extends CI_Controller
 
 	public function shipment_create_process()
 	{
-		$post = $this->input->post();
-		test_var(count($post), 1);
-		test_var($post);
 		$post = $this->input->post();
 		$tracking_no = $this->shipment_mod->shipment_generate_tracking_no_db();
 		$tracking_no = "XPDC" . $tracking_no;
@@ -271,9 +267,11 @@ class Shipment extends CI_Controller
 			'main_agent_mawb_mbl'					=> $post['main_agent_mawb_mbl'],
 			'main_agent_carrier'					=> $post['main_agent_carrier'],
 			'main_agent_voyage_flight_no'			=> $post['main_agent_voyage_flight_no'],
+			'main_agent_voyage_flight_date'			=> $post['main_agent_voyage_flight_date'],
 			'secondary_agent_mawb_mbl'				=> $post['secondary_agent_mawb_mbl'],
 			'secondary_agent_carrier'				=> $post['secondary_agent_carrier'],
 			'secondary_agent_voyage_flight_no'		=> $post['secondary_agent_voyage_flight_no'],
+			'secondary_agent_voyage_flight_date'		=> $post['secondary_agent_voyage_flight_date'],
 			'port_of_loading'						=> $post['port_of_loading'],
 			'port_of_discharge'						=> $post['port_of_discharge'],
 			'container_no'							=> $post['container_no'],
@@ -324,6 +322,13 @@ class Shipment extends CI_Controller
 		$this->shipment_mod->shipment_update_process_db($form_data, $where);
 		$this->session->set_flashdata('success', 'Your Shipment data has been Deleted!');
 		redirect('shipment/shipment_list');
+	}
+
+	public function shipment_history_delete_db($id, $id_shipment){
+		$where['id'] = $id;
+		$this->shipment_mod->shipment_history_delete($where, 'shipment_history');
+
+		redirect("shipment/shipment_tracking/".$id_shipment);
 	}
 
 	public function shipment_history_delete_process($id_shipment, $id)
@@ -428,17 +433,18 @@ class Shipment extends CI_Controller
 
 		$form_data = array(
 			'id_shipment' 	=> $shipment_list['id'],
-			'date' 					=> date("Y-m-d"),
-			'time' 					=> date("H:i:s"),
+			'date' 					=> $post['history_date'],
+			'time' 					=> $post['history_time'],
 			'location' 			=> $post['history_location'],
 			'status' 				=> $post['history_status'],
 			'remarks' 			=> $post['history_remarks'],
 		);
-		$this->shipment_mod->shipment_history_create_process_db($form_data);
+		$id_history = $this->shipment_mod->shipment_history_create_process_db($form_data);
 		$this->shipment_update_last_history($shipment_list['id']);
 
 		$output = $form_data;
 		$output['tracking_no'] = $post['tracking_no'];
+		$output['id'] = $id_history;
 
 		echo json_encode($output);
 	}

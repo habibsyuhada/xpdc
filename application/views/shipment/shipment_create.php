@@ -202,13 +202,13 @@
                           </div>
                         </div>
                         <div class="col-md-6">
-                          <div class="form-group">
-                            <label>Insurance</label>
-                            <select class="form-control" name="insurance" required>
-                              <option value="Yes">Yes</option>
-                              <option value="No">No</option>
-                            </select>
-                          </div>
+                            <div class="form-group">
+                                <label>Insurance</label>
+                                <select class="form-control" name="insurance" required>
+                                    <option value="Yes">Yes</option>
+                                    <option value="No">No</option>
+                                </select>
+                            </div>
                         </div>
                       </div>
                     </div>
@@ -383,7 +383,7 @@
                       </div>
                       <div class="form-group">
                         <label>Email</label>
-                        <input type="email" class="form-control" name="pickup_email" placeholder="Email" readonly>
+                        <input type="email" class="form-control" name="pickup_email" placeholder="Email" readonly >
                       </div>
                       <div class="row clearfix">
                         <div class="col-md-6">
@@ -405,11 +405,9 @@
                             <label>Pick Up Time To</label>
                             <input type="time" class="form-control" name="pickup_time_to" placeholder="Pick Up Time" readonly required>
                           </div>
-                        </div>
                       </div>
                       <div class="form-group">
                         <label>Notes</label>
-                        <!-- <input type="text" class="form-control" name="pickup_notes" placeholder="Notes" readonly> -->
                         <textarea class="form-control" name="pickup_notes" placeholder="Notes" readonly></textarea>
                       </div>
                     </div>
@@ -431,16 +429,20 @@
                     </div>
                     <div class="col-md-6">
                       <div class="form-group">
-                        <label>XPDC Account No.</label>
-                        <input type="text" class="form-control" name="billing_account" placeholder="XPDC Account No. (if any)">
-                      </div>
-                      <div class="form-group">
                         <label>Same as</label>
                         <select class="form-control" name="billing_same_as" onchange="same_as(this)" required>
                           <option value="None">-- None --</option>
                           <option value="Shipper">Shipper</option>
                           <option value="Consignee">Consignee</option>
                         </select>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="row clearfix">
+                    <div class="col-md-6">
+                      <div class="form-group">
+                        <label>XPDC Account No.</label>
+                        <input type="text" class="form-control" name="billing_account" placeholder="XPDC Account No. (if any)">
                       </div>
                     </div>
                   </div>
@@ -662,7 +664,7 @@
       $("input[name=billing_phone_number]").val('');
       $("input[name=billing_email]").val('');
     } else {
-      form.find('input').attr('readonly', true)
+      form.find('input').attr('readonly', true);
       $("select[name=billing_country_view]").select2({
         'disabled': true
       });
@@ -752,7 +754,7 @@
       $("input[name=pickup_contact_person]").val($("input[name=" + pickup_same_as + "_contact_person]").val());
       $("input[name=pickup_phone_number]").val($("input[name=" + pickup_same_as + "_phone_number]").val());
       $("input[name=pickup_email]").val($("input[name=" + pickup_same_as + "_email]").val());
-      
+
       $("input[name=pickup_date]").val("");
       $("input[name=pickup_date_to]").val("");
       $("input[name=pickup_time]").val("");

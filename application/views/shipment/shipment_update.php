@@ -155,7 +155,7 @@
                       </div>
                       <div class="form-group">
                         <label>Type of Mode</label>
-                        <select class="form-control" name="type_of_mode">
+                        <select class="form-control" name="type_of_mode" required>
                           <option value="">- Select One -</option>
                           <option value="Sea Transport" <?= ($shipment['type_of_mode'] == 'Sea Transport') ? 'selected' : ''; ?>>Sea Transport</option>
                           <option value="Land Shipping" <?= ($shipment['type_of_mode'] == 'Land Shipping') ? 'selected' : ''; ?>>Land Shipping</option>
@@ -187,7 +187,7 @@
                       </div>
                       <div class="form-group">
                         <label>Sea</label>
-                        <select class="form-control" name="sea" required>
+                        <select class="form-control" name="sea">
                           <option value="">- Select Sea -</option>
                           <option value="LCL" <?= ($shipment['sea'] == 'LCL') ? 'selected' : ''; ?>>LCL</option>
                           <option value="FCL" <?= ($shipment['sea'] == 'FCL') ? 'selected' : ''; ?>>FCL</option>
@@ -326,31 +326,31 @@
                       <h6 class="font-weight-bold">Pick Up Information</h6>
                       <div class="form-group">
                         <label>Name</label>
-                        <input type="text" class="form-control" name="pickup_name" placeholder="Name" value="<?= $shipment['pickup_name'] ?>" required>
+                        <input type="text" class="form-control" name="pickup_name" placeholder="Name" value="<?= $shipment['pickup_name'] ?>">
                       </div>
                       <div class="form-group">
                         <label>Address</label>
-                        <input type="text" class="form-control" name="pickup_address" placeholder="Address" value="<?= $shipment['pickup_address'] ?>" required>
+                        <input type="text" class="form-control" name="pickup_address" placeholder="Address" value="<?= $shipment['pickup_address'] ?>">
                       </div>
                       <div class="form-group">
                         <label>City</label>
-                        <input type="text" class="form-control" name="pickup_city" placeholder="City" value="<?= $shipment['pickup_city'] ?>" required>
+                        <input type="text" class="form-control" name="pickup_city" placeholder="City" value="<?= $shipment['pickup_city'] ?>">
                       </div>
                       <div class="form-group">
                         <label>Country</label>
-                        <input type="text" class="form-control" name="pickup_country" placeholder="Country" value="<?= $shipment['pickup_country'] ?>" required>
+                        <input type="text" class="form-control" name="pickup_country" placeholder="Country" value="<?= $shipment['pickup_country'] ?>">
                       </div>
                       <div class="form-group">
                         <label>Postcode</label>
-                        <input type="text" class="form-control" name="pickup_postcode" placeholder="Postcode" value="<?= $shipment['pickup_postcode'] ?>" required>
+                        <input type="text" class="form-control" name="pickup_postcode" placeholder="Postcode" value="<?= $shipment['pickup_postcode'] ?>">
                       </div>
                       <div class="form-group">
                         <label>Contact Person</label>
-                        <input type="text" class="form-control" name="pickup_contact_person" placeholder="Contact Person" value="<?= $shipment['pickup_contact_person'] ?>" required>
+                        <input type="text" class="form-control" name="pickup_contact_person" placeholder="Contact Person" value="<?= $shipment['pickup_contact_person'] ?>">
                       </div>
                       <div class="form-group">
                         <label>Phone Number</label>
-                        <input type="text" class="form-control" name="pickup_phone_number" placeholder="Phone" value="<?= $shipment['pickup_phone_number'] ?>" required>
+                        <input type="text" class="form-control" name="pickup_phone_number" placeholder="Phone" value="<?= $shipment['pickup_phone_number'] ?>">
                       </div>
                       <div class="form-group">
                         <label>Email</label>
@@ -358,15 +358,15 @@
                       </div>
                       <div class="form-group">
                         <label>Pick Up Date</label>
-                        <input type="date" class="form-control" name="pickup_date" placeholder="Pick Up Date" value="<?= $shipment['pickup_date'] ?>" required>
+                        <input type="date" class="form-control" name="pickup_date" placeholder="Pick Up Date" value="<?= $shipment['pickup_date'] ?>">
                       </div>
                       <div class="form-group">
                         <label>Pick Up Time</label>
-                        <input type="time" class="form-control" name="pickup_time" placeholder="Pick Up Time" value="<?= $shipment['pickup_time'] ?>" required>
+                        <input type="time" class="form-control" name="pickup_time" placeholder="Pick Up Time" value="<?= $shipment['pickup_time'] ?>">
                       </div>
                       <div class="form-group">
                         <label>Notes</label>
-                        <input type="text" class="form-control" name="pickup_notes" placeholder="Notes" value="<?= $shipment['pickup_notes'] ?>" required>
+                        <input type="text" class="form-control" name="pickup_notes" placeholder="Notes" value="<?= $shipment['pickup_notes'] ?>">
                       </div>
                     </div>
                   </div>
@@ -396,19 +396,19 @@
                       </div>
                       <div class="form-group">
                         <label>Name</label>
-                        <input type="text" class="form-control" name="billing_name" placeholder="Name" value="<?= $shipment['billing_name'] ?>" required>
+                        <input type="text" class="form-control" name="billing_name" placeholder="Name" value="<?= $shipment['billing_name'] ?>">
                       </div>
                       <div class="form-group">
                         <label>Address</label>
-                        <input type="text" class="form-control" name="billing_address" placeholder="Address" value="<?= $shipment['billing_address'] ?>" required>
+                        <input type="text" class="form-control" name="billing_address" placeholder="Address" value="<?= $shipment['billing_address'] ?>">
                       </div>
                       <div class="form-group">
                         <label>City</label>
-                        <input type="text" class="form-control" name="billing_city" placeholder="City" value="<?= $shipment['billing_city'] ?>" required>
+                        <input type="text" class="form-control" name="billing_city" placeholder="City" value="<?= $shipment['billing_city'] ?>">
                       </div>
                       <div class="form-group">
                         <label>Country</label>
-                        <input type="text" class="form-control" name="billing_country" placeholder="Country" value="<?= $shipment['billing_country'] ?>" required>
+                        <input type="text" class="form-control" name="billing_country" placeholder="Country" value="<?= $shipment['billing_country'] ?>">
                       </div>
                     </div>
                     <div class="col-md-6">
@@ -418,15 +418,15 @@
                       </div>
                       <div class="form-group">
                         <label>Postcode</label>
-                        <input type="text" class="form-control" name="billing_postcode" placeholder="Postcode" value="<?= $shipment['billing_postcode'] ?>" required>
+                        <input type="text" class="form-control" name="billing_postcode" placeholder="Postcode" value="<?= $shipment['billing_postcode'] ?>">
                       </div>
                       <div class="form-group">
                         <label>Contact Person</label>
-                        <input type="text" class="form-control" name="billing_contact_person" placeholder="Contact Person" value="<?= $shipment['billing_contact_person'] ?>" required>
+                        <input type="text" class="form-control" name="billing_contact_person" placeholder="Contact Person" value="<?= $shipment['billing_contact_person'] ?>">
                       </div>
                       <div class="form-group">
                         <label>Phone Number</label>
-                        <input type="text" class="form-control" name="billing_phone_number" placeholder="Phone" value="<?= $shipment['billing_phone_number'] ?>" required>
+                        <input type="text" class="form-control" name="billing_phone_number" placeholder="Phone" value="<?= $shipment['billing_phone_number'] ?>">
                       </div>
                       <div class="form-group">
                         <label>Email</label>
@@ -450,7 +450,7 @@
                       <h6 class="font-weight-bold">Main Agent</h6>
                       <div class="form-group">
                         <label>MAWB / MBL</label>
-                        <input type="date" class="form-control" name="main_agent_mawb_mbl" placeholder="MAWB / MBL" value="<?= $shipment['main_agent_mawb_mbl'] ?>">
+                        <input type="text" class="form-control" name="main_agent_mawb_mbl" placeholder="MAWB / MBL" value="<?= $shipment['main_agent_mawb_mbl'] ?>">
                       </div>
                       <div class="form-group">
                         <label>Carrier</label>
@@ -458,14 +458,18 @@
                       </div>
                       <div class="form-group">
                         <label>Voyage/Flight No.</label>
-                        <input type="date" class="form-control" name="main_agent_voyage_flight_no" placeholder="Voyage/Flight No." value="<?= $shipment['main_agent_voyage_flight_no'] ?>">
+                        <input type="text" class="form-control" name="main_agent_voyage_flight_no" placeholder="Voyage/Flight No." value="<?= $shipment['main_agent_voyage_flight_no'] ?>">
+                      </div>
+                      <div class="form-group">
+                        <label>Voyage/Flight Date</label>
+                        <input type="date" class="form-control" name="main_agent_voyage_flight_date" placeholder="Voyage/Flight Date" value="<?= $shipment['main_agent_voyage_flight_date'] ?>">
                       </div>
                     </div>
                     <div class="col-md-6">
                       <h6 class="font-weight-bold">Secondary Agent</h6>
                       <div class="form-group">
                         <label>MAWB / MBL</label>
-                        <input type="date" class="form-control" name="secondary_agent_mawb_mbl" placeholder="MAWB / MBL" value="<?= $shipment['secondary_agent_mawb_mbl'] ?>">
+                        <input type="text" class="form-control" name="secondary_agent_mawb_mbl" placeholder="MAWB / MBL" value="<?= $shipment['secondary_agent_mawb_mbl'] ?>">
                       </div>
                       <div class="form-group">
                         <label>Carrier</label>
@@ -473,7 +477,11 @@
                       </div>
                       <div class="form-group">
                         <label>Voyage/Flight No.</label>
-                        <input type="date" class="form-control" name="secondary_agent_voyage_flight_no" placeholder="Voyage/Flight No." value="<?= $shipment['secondary_agent_voyage_flight_no'] ?>">
+                        <input type="text" class="form-control" name="secondary_agent_voyage_flight_no" placeholder="Voyage/Flight No." value="<?= $shipment['secondary_agent_voyage_flight_no'] ?>">
+                      </div>
+                      <div class="form-group">
+                        <label>Voyage/Flight Date</label>
+                        <input type="date" class="form-control" name="secondary_agent_voyage_flight_date" placeholder="Voyage/Flight No." value="<?= $shipment['secondary_agent_voyage_flight_date'] ?>">
                       </div>
                     </div>
                     <div class="col-md-6">

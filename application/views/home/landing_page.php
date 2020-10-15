@@ -332,16 +332,16 @@
                   <h4 class="font-weight-bold text-center"><?php echo $shipment['tracking_no'] ?></h4>
                 </div>
               </div>
-              <div class="row">
-                <div class="col-md-6">
-                  <p class="m-0 py-3 border-bottom"><b>SHIPPER ADDRESS</b></p>
-                  <p class="m-0 py-3"><b>Country : </b><?php echo $shipment['shipper_country'] ?></p>
-                </div>
-                <div class="col-md-6">
-                  <p class="m-0 py-3 border-bottom"><b>CONSIGNEE ADDRESS</b></p>
-                  <p class="m-0 py-3"><b>Country : </b><?php echo $shipment['consignee_country'] ?></p>
-                </div>
-              </div>
+              <!--<div class="row">-->
+              <!--  <div class="col-md-6">-->
+              <!--    <p class="m-0 py-3 border-bottom"><b>SHIPPER ADDRESS</b></p>-->
+              <!--    <p class="m-0 py-3"><b>Country : </b><?php echo $shipment['shipper_country'] ?></p>-->
+              <!--  </div>-->
+              <!--  <div class="col-md-6">-->
+              <!--    <p class="m-0 py-3 border-bottom"><b>CONSIGNEE ADDRESS</b></p>-->
+              <!--    <p class="m-0 py-3"><b>Country : </b><?php echo $shipment['consignee_country'] ?></p>-->
+              <!--  </div>-->
+              <!--</div>-->
               <div class="mb-4 alert alert-dark text-center" role="alert">
                 <b>SHIPMENT STATUS: <?php echo strtoupper($shipment['status']) ?></b>
               </div>
@@ -360,7 +360,7 @@
                   <?php foreach ($history_list as $key => $value): ?>
                   <tr>
                     <td><?php echo $value['date'] ?></td>
-                    <td><?php echo $value['time'] ?></td>
+                    <td><?php echo date('H:i', strtotime($value['time'])) ?></td>
                     <td><?php echo $value['location'] ?></td>
                     <td><?php echo $value['status'] ?></td>
                     <td><?php echo $value['remarks'] ?></td>

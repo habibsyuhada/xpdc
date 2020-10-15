@@ -69,6 +69,19 @@ class Shipment extends CI_Controller
 		$this->load->view('index', $data);
 	}
 
+	public function shipment_receipt_pdf()
+	{
+		// test_var(count($post), 1);
+		// test_var($post);
+		$post = $this->input->post();
+		$data['post'] = $post;
+
+		$this->load->library('pdf');
+		$this->pdf->setPaper('A4', 'potrait');
+		$this->pdf->filename = "Receipt-" . date('Y-m-d H:i:s') . ".pdf";
+		$this->pdf->load_view('shipment/shipment_receipt_pdf', $data);
+	}
+
 	public function shipment_create_process()
 	{
 		$post = $this->input->post();

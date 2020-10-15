@@ -35,7 +35,7 @@
         <tr>
           <td width="50%" class="text-center">
             <img src="<?php echo base_url(); ?>assets/img/logo.png"><br>
-            <b>PT. XENA PRANADIPA DHIA CAKRA</b><br>When Delivered Is Just Not Enough<br>
+            <b>PT. XENA PRANADIPA DHIA CAKRA</b><br>
             <small class="lv2">http://xpdcid.com</small>
           </td>
           <td width="50%">

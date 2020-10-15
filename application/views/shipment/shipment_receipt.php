@@ -392,6 +392,7 @@
                 </div>
                 <div class="text-right col-6">
                   <a href="javascript:history.back()" class="btn btn-secondary">Go Back</a>
+                  <button type="button" class="btn btn-danger" onclick="create_pdf();">PDF</button>
                   <button type="submit" class="btn btn-success">Submit</button>
                 </div>
               </div>
@@ -403,4 +404,12 @@
   </div>
 </div>
 <script type="text/javascript">
+  function create_pdf() {
+    $('form').prop('target', '_blank');
+    var action = $('form').prop('action');
+    $('form').prop('action', '<?php echo base_url() ?>shipment/shipment_receipt_pdf');
+    $('form').submit();
+    $('form').prop('action', action);
+    $('form').prop('target', '');
+  }
 </script>

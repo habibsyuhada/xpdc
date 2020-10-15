@@ -405,6 +405,7 @@
                             <label>Pick Up Time To</label>
                             <input type="time" class="form-control" name="pickup_time_to" placeholder="Pick Up Time" readonly required>
                           </div>
+                        </div>
                       </div>
                       <div class="form-group">
                         <label>Notes</label>
@@ -428,6 +429,11 @@
                       <h6 class="font-weight-bold">Billing Details</h6>
                     </div>
                     <div class="col-md-6">
+                      
+                      <div class="form-group">
+                        <label>XPDC Account No.</label>
+                        <input type="text" class="form-control" name="billing_account" placeholder="XPDC Account No. (if any)">
+                      </div>
                       <div class="form-group">
                         <label>Same as</label>
                         <select class="form-control" name="billing_same_as" onchange="same_as(this)" required>
@@ -435,14 +441,6 @@
                           <option value="Shipper">Shipper</option>
                           <option value="Consignee">Consignee</option>
                         </select>
-                      </div>
-                    </div>
-                  </div>
-                  <div class="row clearfix">
-                    <div class="col-md-6">
-                      <div class="form-group">
-                        <label>XPDC Account No.</label>
-                        <input type="text" class="form-control" name="billing_account" placeholder="XPDC Account No. (if any)">
                       </div>
                     </div>
                   </div>
@@ -864,6 +862,8 @@
       per = 6000;
     } else if (type_of_mode == 'Land Shipping') {
       per = 5000;
+    } else if (type_of_mode == 'Sea Transport') {
+      per = 5000;
     }
 
     $("input[name='length[]']").each(function(index, value) {
@@ -900,8 +900,8 @@
     $.each(length_array, function(index, value) {
       console.log(length_array[index], width_array[index], height_array[index], weight_array[index], qty_array[index], per);
       var actual_weight = qty_array[index] * weight_array[index];
-      var volume_weight = (length_array[index] * width_array[index] * height_array[index]) / per;
-      var measurement = (length_array[index] * width_array[index] * height_array[index]) / 1000000;
+      var volume_weight = qty_array[index] * (length_array[index] * width_array[index] * height_array[index]) / per;
+      var measurement = qty_array[index] * (length_array[index] * width_array[index] * height_array[index]) / 1000000;
 
       total_act_weight += actual_weight;
       total_vol_weight += volume_weight;

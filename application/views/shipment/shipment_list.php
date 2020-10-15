@@ -388,7 +388,7 @@
                     <?php endforeach; ?>
                   </tbody>
                 </table>
-                <!-- <form id="form_master_tracking" method="POST" action="<?php echo base_url(); ?>master_tracking/master_tracking_create">
+                <form id="form_master_tracking" method="POST" action="<?php echo base_url(); ?>master_tracking/master_tracking_multi_create_process">
                 <div class="row clearfix">
                   <div class="col-md-6">
                     <div class="form-group">
@@ -404,7 +404,7 @@
                     </div>
                   </div>
                 </div>
-                </form> -->
+                </form> 
               </div>
             </div>
           </div>

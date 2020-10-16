@@ -10,7 +10,7 @@
 
     body {
       margin: 0px;
-      font-size: 16px;
+      font-size: 14px;
     }
 
     .text-center {
@@ -368,7 +368,7 @@
               <tr>
                 <td>Pick Up Date Time</td>
                 <td>:</td>
-                <td><?php echo $post['pickup_date'] ?> <?php echo $post['pickup_time'] ?> - <?php echo ($post['pickup_date'].$post['pickup_time'] == $post['pickup_date'].$post['pickup_time'] ? "" : " - ".$post['pickup_date_to']." ".$post['pickup_time_to'])  ?></td>
+                <td><?php echo $post['pickup_date'] ?> <?php echo $post['pickup_time'] ?> <?php echo ($post['pickup_date'].$post['pickup_time'] == $post['pickup_date'].$post['pickup_time'] ? "" : " - ".$post['pickup_date_to']." ".$post['pickup_time_to'])  ?></td>
               </tr>
               <tr>
                 <td>Notes</td>

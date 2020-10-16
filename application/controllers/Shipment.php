@@ -69,11 +69,31 @@ class Shipment extends CI_Controller
 		$this->load->view('index', $data);
 	}
 
-	public function shipment_receipt_pdf()
+	public function shipment_receipt_pdf($id = NULL)
 	{
 		// test_var(count($post), 1);
 		// test_var($post);
-		$post = $this->input->post();
+		if($id){
+			$where['shipment.id'] 	= $id;
+			$data_post 							= $this->shipment_mod->shipment_list_db($where);
+			unset($where);
+			$data_post 							= $data_post[0];
+
+			$where['id_shipment'] 	= $id;
+			$packages_list 					= $this->shipment_mod->shipment_packages_list_db($where);
+			unset($where);
+			foreach ($packages_list as $key => $value) {
+				foreach ($value as $key2 => $value2) {
+					if(!in_array($key2, array('id', 'id_shipment', 'create_date', 'status_delete')))
+					$data_post[$key2][] = $value2;
+				}
+			}
+			$post = $data_post;
+		}
+		else{
+			$post = $this->input->post();
+		}
+		
 		$data['post'] = $post;
 
 		$this->load->library('pdf');
@@ -135,11 +155,13 @@ class Shipment extends CI_Controller
 
 		if ($post['status_pickup'] == 'Dropoff') {
 			$form_data = array(
-				'id_shipment' 						=> $id_shipment
+				'id_shipment' 							=> $id_shipment,
+				'status_pickup' 						=> $post['status_pickup'],
 			);
 		} else if ($post['status_pickup'] == 'Picked Up') {
 			$form_data = array(
 				'id_shipment' 							=> $id_shipment,
+				'status_pickup' 						=> $post['status_pickup'],
 				'pickup_same_as' 						=> $post['pickup_same_as'],
 				'pickup_name' 							=> $post['pickup_name'],
 				'pickup_address' 						=> $post['pickup_address'],

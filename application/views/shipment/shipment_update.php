@@ -81,7 +81,7 @@
                       </div>
                       <div class="form-group">
                         <label>Postcode</label>
-                        <input type="text" class="form-control" name="shipper_postcode" placeholder="Postcode" value="<?= $shipment['shipper_postcode'] ?>" required>
+                        <input type="text" class="form-control" name="shipper_postcode" placeholder="Postcode" value="<?= $shipment['shipper_postcode'] ?>">
                       </div>
                       <div class="form-group">
                         <label>Contact Person</label>
@@ -221,7 +221,7 @@
                       </div>
                       <div class="form-group">
                         <label>COO (Country of Origin)</label>
-                        <input type="text" class="form-control" name="coo" placeholder="COO (Country of Origin)" value="<?= $shipment['coo'] ?>" required>
+                        <input type="text" class="form-control" name="coo" placeholder="COO (Country of Origin)" value="<?= $shipment['coo'] ?>">
                       </div>
                     </div>
                     <div class="col-md-6">
@@ -462,7 +462,7 @@
                       </div>
                       <div class="form-group">
                         <label>Voyage/Flight Date</label>
-                        <input type="date" class="form-control" name="main_agent_voyage_flight_date" placeholder="Voyage/Flight Date" value="<?= $shipment['main_agent_voyage_flight_date'] ?>">
+                        <input type="date" class="form-control" name="main_agent_voyage_flight_date" placeholder="Voyage/Flight Date" value="<?= @$shipment['main_agent_voyage_flight_date'] ?>">
                       </div>
                     </div>
                     <div class="col-md-6">
@@ -481,7 +481,7 @@
                       </div>
                       <div class="form-group">
                         <label>Voyage/Flight Date</label>
-                        <input type="date" class="form-control" name="secondary_agent_voyage_flight_date" placeholder="Voyage/Flight No." value="<?= $shipment['secondary_agent_voyage_flight_date'] ?>">
+                        <input type="date" class="form-control" name="secondary_agent_voyage_flight_date" placeholder="Voyage/Flight No." value="<?= @$shipment['secondary_agent_voyage_flight_date'] ?>">
                       </div>
                     </div>
                     <div class="col-md-6">

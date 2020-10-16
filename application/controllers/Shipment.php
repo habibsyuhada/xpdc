@@ -133,13 +133,14 @@ class Shipment extends CI_Controller
 		);
 		$id_shipment = $this->shipment_mod->shipment_create_process_db($form_data);
 
-		if ($post['status_pickup'] = 'Dropoff') {
+		if ($post['status_pickup'] == 'Dropoff') {
 			$form_data = array(
 				'id_shipment' 						=> $id_shipment
 			);
 		} else if ($post['status_pickup'] == 'Picked Up') {
 			$form_data = array(
 				'id_shipment' 							=> $id_shipment,
+				'pickup_same_as' 						=> $post['pickup_same_as'],
 				'pickup_name' 							=> $post['pickup_name'],
 				'pickup_address' 						=> $post['pickup_address'],
 				'pickup_city' 							=> $post['pickup_city'],
@@ -150,6 +151,8 @@ class Shipment extends CI_Controller
 				'pickup_email' 							=> $post['pickup_email'],
 				'pickup_date' 							=> $post['pickup_date'],
 				'pickup_time' 							=> $post['pickup_time'],
+				'pickup_date_to' 						=> $post['pickup_date_to'],
+				'pickup_time_to' 						=> $post['pickup_time_to'],
 				'pickup_notes' 							=> $post['pickup_notes'],
 
 				'billing_same_as' 					=> $post['billing_same_as'],

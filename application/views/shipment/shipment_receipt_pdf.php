@@ -49,9 +49,9 @@
   </style>
 </head>
 <?php
-$total_act_weight = 0;
-$total_vol_weight = 0;
-$total_measurement = 0;
+  $total_act_weight = 0;
+  $total_vol_weight = 0;
+  $total_measurement = 0;
   $per = 5000;
   if ($post['type_of_mode'] == 'Air Freight') {
     $per = 6000;
@@ -324,6 +324,7 @@ $total_measurement = 0;
                 <td>:</td>
                 <td><?php echo $post['status_pickup'] ?></td>
               </tr>
+              <?php if ($post['status_pickup'] != 'Dropoff') : ?>
               <tr>
                 <td>Name</td>
                 <td>:</td>
@@ -374,6 +375,7 @@ $total_measurement = 0;
                 <td>:</td>
                 <td><?php echo $post['pickup_email'] ?></td>
               </tr>
+              <?php endif; ?>
             </tbody>
           </table>
           <br>

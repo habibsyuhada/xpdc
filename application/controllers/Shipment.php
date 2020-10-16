@@ -171,7 +171,7 @@ class Shipment extends CI_Controller
 			'id_shipment' 			=> $id_shipment,
 			'date' 					=> date("Y-m-d"),
 			'time' 					=> date("H:i:s"),
-			'location' 				=> $post['shipper_country'],
+			'location' 				=> $post['shipper_city'].", ".$post['shipper_country'],
 			'status' 				=> $status,
 			'remarks' 				=> "",
 		);
@@ -546,7 +546,7 @@ class Shipment extends CI_Controller
 				'id_shipment' 		=> $id_shipment,
 				'date' 						=> date("Y-m-d"),
 				'time' 						=> date("H:i:s"),
-				'location' 				=> $post['shipper_country'][$key],
+				'location' 				=> $post['shipper_city'][$key].", ".$post['shipper_country'][$key],
 				'status' 					=> "Booked",
 				'remarks' 				=> "",
 			);

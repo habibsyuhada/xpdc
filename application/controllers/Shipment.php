@@ -271,7 +271,7 @@ class Shipment extends CI_Controller
 			'type_of_shipment' 			=> $post['type_of_shipment'],
 			'type_of_mode' 				=> $post['type_of_mode'],
 			'incoterms' 				=> $post['incoterms'],
-			'sea' 						=> $post['sea'],
+			'sea' 						=> @$post['sea'],
 			'description_of_goods'		=> $post['description_of_goods'],
 			'hscode'					=> $post['hscode'],
 			'coo'						=> $post['coo'],

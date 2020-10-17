@@ -395,35 +395,35 @@
                       </div>
                       <div class="form-group">
                         <label>Name</label>
-                        <input type="text" class="form-control" name="pickup_name" value="<?php echo $shipment['pickup_name'] ?>" placeholder="Name" <?php echo ($shipment['status_pickup'] == 'Dropoff' || $shipment['pickup_same_as'] != "None" ? 'readonly' : '') ?> required>
+                        <input type="text" class="form-control" name="pickup_name" value="<?php echo $shipment['pickup_name'] ?>" placeholder="Name" <?php echo (($shipment['status_pickup'] == 'Dropoff' || !in_array($shipment['pickup_same_as'], array("", "None"))) ? 'readonly' : '') ?> required>
                       </div>
                       <div class="form-group">
                         <label>Address</label>
-                        <textarea class="form-control" name="pickup_address" placeholder="Address" <?php echo ($shipment['status_pickup'] == 'Dropoff' || $shipment['pickup_same_as'] != "None" ? 'readonly' : '') ?> required><?php echo $shipment['pickup_address'] ?></textarea>
+                        <textarea class="form-control" name="pickup_address" placeholder="Address" <?php echo (($shipment['status_pickup'] == 'Dropoff' ||!in_array ($shipment['pickup_same_as'], array("", "None"))) ? 'readonly' : '') ?> required><?php echo $shipment['pickup_address'] ?></textarea>
                       </div>
                       <div class="form-group">
                         <label>City</label>
-                        <input type="text" class="form-control" name="pickup_city" value="<?php echo $shipment['pickup_city'] ?>" placeholder="City" <?php echo ($shipment['status_pickup'] == 'Dropoff' || $shipment['pickup_same_as'] != "None" ? 'readonly' : '') ?> required>
+                        <input type="text" class="form-control" name="pickup_city" value="<?php echo $shipment['pickup_city'] ?>" placeholder="City" <?php echo (($shipment['status_pickup'] == 'Dropoff' || !in_array($shipment['pickup_same_as'], array("", "None"))) ? 'readonly' : '') ?> required>
                       </div>
                       <div class="form-group">
                         <label>Country</label>
-                        <input type="text" class="form-control" name="pickup_country" value="<?php echo $shipment['pickup_country'] ?>" placeholder="Country" <?php echo ($shipment['status_pickup'] == 'Dropoff' || $shipment['pickup_same_as'] != "None" ? 'readonly' : '') ?> required>
+                        <input type="text" class="form-control" name="pickup_country" value="<?php echo $shipment['pickup_country'] ?>" placeholder="Country" <?php echo (($shipment['status_pickup'] == 'Dropoff' || !in_array($shipment['pickup_same_as'], array("", "None"))) ? 'readonly' : '') ?> required>
                       </div>
                       <div class="form-group">
                         <label>Postcode</label>
-                        <input type="text" class="form-control" name="pickup_postcode" value="<?php echo $shipment['pickup_postcode'] ?>" placeholder="Postcode" <?php echo ($shipment['status_pickup'] == 'Dropoff' || $shipment['pickup_same_as'] != "None" ? 'readonly' : '') ?>>
+                        <input type="text" class="form-control" name="pickup_postcode" value="<?php echo $shipment['pickup_postcode'] ?>" placeholder="Postcode" <?php echo (($shipment['status_pickup'] == 'Dropoff' || !in_array($shipment['pickup_same_as'], array("", "None"))) ? 'readonly' : '') ?>>
                       </div>
                       <div class="form-group">
                         <label>Contact Person</label>
-                        <input type="text" class="form-control" name="pickup_contact_person" value="<?php echo $shipment['pickup_contact_person'] ?>" placeholder="Contact Person" <?php echo ($shipment['status_pickup'] == 'Dropoff' || $shipment['pickup_same_as'] != "None" ? 'readonly' : '') ?> required>
+                        <input type="text" class="form-control" name="pickup_contact_person" value="<?php echo $shipment['pickup_contact_person'] ?>" placeholder="Contact Person" <?php echo (($shipment['status_pickup'] == 'Dropoff' || !in_array($shipment['pickup_same_as'], array("", "None"))) ? 'readonly' : '') ?> required>
                       </div>
                       <div class="form-group">
                         <label>Phone Number</label>
-                        <input type="text" class="form-control" name="pickup_phone_number" value="<?php echo $shipment['pickup_phone_number'] ?>" placeholder="Phone" <?php echo ($shipment['status_pickup'] == 'Dropoff' || $shipment['pickup_same_as'] != "None" ? 'readonly' : '') ?> required>
+                        <input type="text" class="form-control" name="pickup_phone_number" value="<?php echo $shipment['pickup_phone_number'] ?>" placeholder="Phone" <?php echo (($shipment['status_pickup'] == 'Dropoff' || !in_array($shipment['pickup_same_as'], array("", "None"))) ? 'readonly' : '') ?> required>
                       </div>
                       <div class="form-group">
                         <label>Email</label>
-                        <input type="email" class="form-control" name="pickup_email" value="<?php echo $shipment['pickup_email'] ?>" placeholder="Email" <?php echo ($shipment['status_pickup'] == 'Dropoff' || $shipment['pickup_same_as'] != "None" ? 'readonly' : '') ?> >
+                        <input type="email" class="form-control" name="pickup_email" value="<?php echo $shipment['pickup_email'] ?>" placeholder="Email" <?php echo (($shipment['status_pickup'] == 'Dropoff' || !in_array($shipment['pickup_same_as'], array("", "None"))) ? 'readonly' : '') ?> >
                       </div>
                       <div class="row clearfix">
                         <div class="col-md-6">

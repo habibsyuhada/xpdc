@@ -461,7 +461,7 @@
                       <div class="form-group">
                         <label>Country</label>
                         <input type="hidden" class="form-control" name="billing_country" placeholder="Country">
-                        <select class="form-control select2 d-none" name="billing_country_view" onchange="$('input[name=billing_country]').val($(this).val());" required>
+                        <select class="form-control select2" name="billing_country_view" onchange="$('input[name=billing_country]').val($(this).val());" required>
                           <option value="">- Select One -</option>
                           <?php foreach ($country['data'] as $data) { ?>
                             <option value="<?= $data['location'] ?>"><?= $data['location'] ?></option>
@@ -680,7 +680,7 @@
     if (same_as == "None" && status_pickup == "Picked Up") {
       form.find('input').attr('readonly', false);
       $('textarea[name=pickup_address]').attr('readonly', false);
-      $('textarea[name=pickup_notes]').attr('readonly', false);
+      // $('textarea[name=pickup_notes]').attr('readonly', false);
       $('input[name=pickup_account]').attr('readonly', false);
       $("select[name=pickup_country_view]").select2({
         'disabled': false
@@ -689,7 +689,7 @@
       $("input[name=pickup_name]").val('');
       $("input[name=pickup_account]").val('');
       $("textarea[name=pickup_address]").val('');
-      $("textarea[name=pickup_notes]").val('');
+      // $("textarea[name=pickup_notes]").val('');
       $("input[name=pickup_city]").val('');
       $("select[name=pickup_country_view]").val('').trigger('change');
       $("input[name=pickup_country]").val('');
@@ -697,10 +697,10 @@
       $("input[name=pickup_contact_person]").val('');
       $("input[name=pickup_phone_number]").val('');
       $("input[name=pickup_email]").val('');
-      $("input[name=pickup_date]").val("");
-      $("input[name=pickup_date_to]").val("");
-      $("input[name=pickup_time]").val("");
-      $("input[name=pickup_time_to]").val("");
+      // $("input[name=pickup_date]").val("");
+      // $("input[name=pickup_date_to]").val("");
+      // $("input[name=pickup_time]").val("");
+      // $("input[name=pickup_time_to]").val("");
     } else {
       form.find('input').attr('readonly', true)
       $("select[name=pickup_country_view]").select2({
@@ -709,7 +709,9 @@
 
       $('input[name=pickup_account]').attr('readonly', true);
       $('textarea[name=pickup_address]').attr('readonly', true);
-      $('textarea[name=pickup_notes]').attr('readonly', true);
+      if(status_pickup == "Picked Up"){
+        $('input[name=pickup_date], input[name=pickup_date_to], input[name=pickup_time], input[name=pickup_time_to]').attr('readonly', false);
+      }
       same_as_billing_detail();
     }
   }

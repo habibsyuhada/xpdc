@@ -237,6 +237,8 @@ class Shipment extends CI_Controller
 			redirect("shipment/shipment_list");
 		}
 
+		$data['country'] = json_decode(file_get_contents("./assets/country/country.json"), true);
+		
 		$data['shipment'] 			= $shipment_list[0];
 		$data['packages_list'] 	= $packages_list;
 		$data['history_list'] 	= $history_list;
@@ -281,26 +283,30 @@ class Shipment extends CI_Controller
 		$this->shipment_mod->shipment_update_process_db($form_data, $where);
 
 		$form_data = array(
+			'status_pickup' 						=> $post['status_pickup'],
+			'pickup_same_as' 						=> $post['pickup_same_as'],
 			'pickup_name' 							=> $post['pickup_name'],
 			'pickup_address' 						=> $post['pickup_address'],
 			'pickup_city' 							=> $post['pickup_city'],
 			'pickup_country' 						=> $post['pickup_country'],
 			'pickup_postcode'						=> $post['pickup_postcode'],
-			'pickup_contact_person' 				=> $post['pickup_contact_person'],
-			'pickup_phone_number' 					=> $post['pickup_phone_number'],
+			'pickup_contact_person' 		=> $post['pickup_contact_person'],
+			'pickup_phone_number' 			=> $post['pickup_phone_number'],
 			'pickup_email' 							=> $post['pickup_email'],
 			'pickup_date' 							=> $post['pickup_date'],
 			'pickup_time' 							=> $post['pickup_time'],
+			'pickup_date_to' 						=> $post['pickup_date_to'],
+			'pickup_time_to' 						=> $post['pickup_time_to'],
 			'pickup_notes' 							=> $post['pickup_notes'],
-			'billing_same_as' 						=> $post['billing_same_as'],
-			'billing_account' 						=> $post['billing_account'],
+			'billing_same_as' 					=> $post['billing_same_as'],
+			'billing_account' 					=> $post['billing_account'],
 			'billing_name' 							=> $post['billing_name'],
-			'billing_address' 						=> $post['billing_address'],
+			'billing_address' 					=> $post['billing_address'],
 			'billing_city' 							=> $post['billing_city'],
-			'billing_country' 						=> $post['billing_country'],
-			'billing_postcode' 						=> $post['billing_postcode'],
-			'billing_contact_person' 				=> $post['billing_contact_person'],
-			'billing_phone_number' 					=> $post['billing_phone_number'],
+			'billing_country' 					=> $post['billing_country'],
+			'billing_postcode' 					=> $post['billing_postcode'],
+			'billing_contact_person' 		=> $post['billing_contact_person'],
+			'billing_phone_number' 			=> $post['billing_phone_number'],
 			'billing_email' 						=> $post['billing_email'],
 			'main_agent_mawb_mbl'					=> $post['main_agent_mawb_mbl'],
 			'main_agent_carrier'					=> $post['main_agent_carrier'],
@@ -320,7 +326,7 @@ class Shipment extends CI_Controller
 		$where2['id_shipment'] = $post['id'];
 		$this->shipment_mod->shipment_detail_update_process_db($form_data, $where2);
 
-		foreach ($post['description'] as $key => $value) {
+		foreach ($post['qty'] as $key => $value) {
 			unset($where);
 			if ($post['id_detail'][$key] == "") {
 				$form_data = array(

@@ -60,7 +60,7 @@
   <script src="<?php echo base_url() ?>assets/landing_page/js/scrolling-nav.js"></script>
   
   <!--====== Main js ======-->
-  <script src="<?php echo base_url() ?>assets/landing_page/js/main.js"></script>
+  <script src="<?php echo base_url() ?>assets/landing_page/js/main.js?v=1"></script>
 
   <style>
     .border-2px{
@@ -111,11 +111,11 @@
       background-color: #f9ca24;
     }
 
-    @media screen and (max-width: 992px) {
+    /* @media screen and (max-width: 992px) {
       .tracking_no {
         display: none;
       }
-    }
+    } */
   </style>
   
 </head>
@@ -155,7 +155,7 @@
           <nav class="navbar navbar-expand-lg">
              
             <a class="navbar-brand" href="#">
-              <img src="<?php echo base_url() ?>assets/landing_page/images/logo-xpdc.png" alt="Logo">
+              <img src="<?php echo base_url() ?>assets/img/logo-fix.png" alt="Logo" width="150px">
             </a>
             
             <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarTwo" aria-controls="navbarTwo" aria-expanded="false" aria-label="Toggle navigation">
@@ -204,24 +204,21 @@
                 <div class="slider-content pb-5">
                   <h1 class="title text-capitalize">XPDC</h1>
                   <p class="text text-capitalize">when delivered is just not enough. one-stop logistics solutions</p>
-                  <!-- <ul class="slider-btn rounded-buttons">
-                    <li><a class="main-btn rounded-one" href="#">GET STARTED</a></li>
-                    <li><a class="main-btn rounded-two" href="#">DOWNLOAD</a></li>
-                  </ul> -->
-                </div>
-                <div class="p-3 text-center tracking_no" style="background: rgba(255, 255, 255, 0.3);">
-                  <h4 class="mb-3 text-white">XPDC Tracking Number</h4>
-                  <h6 class="mb-3 text-white">Enter the Tracking No</h6>
-                  <form>
-                    <div class="form-row">
-                      <div class="form-group col-md">
-                        <input type="text" class="form-control" name="tracking_no" placeholder="Ex: 12345">
+                  <br>
+                  <div class="p-3 text-center tracking_no" style="background: rgba(255, 255, 255, 0.3);">
+                    <h4 class="mb-3 text-white">XPDC Tracking Number</h4>
+                    <h6 class="mb-3 text-white">Enter the Tracking No</h6>
+                    <form>
+                      <div class="form-row">
+                        <div class="form-group col-md">
+                          <input type="text" class="form-control" name="tracking_no" placeholder="Ex: 12345">
+                        </div>
+                        <div class="form-group col-md-auto">
+                          <button class="btn btn-warning btn-block">Track Result</button>
+                        </div>
                       </div>
-                      <div class="form-group col-md-auto">
-                        <button class="btn btn-warning btn-block">Track Result</button>
-                      </div>
-                    </div>
-                  </form>
+                    </form>
+                  </div>
                 </div>
               </div>
             </div> <!-- row -->
@@ -240,25 +237,22 @@
                 <div class="slider-content pb-5">
                   <h1 class="title">XPDC</h1>
                   <p class="text text-capitalize">a dynamic provider of comprehensive logistics company. serve with professionalism</p>
-                  <!-- <ul class="slider-btn rounded-buttons">
-                    <li><a class="main-btn rounded-one" href="#">GET STARTED</a></li>
-                    <li><a class="main-btn rounded-two" href="#">DOWNLOAD</a></li>
-                  </ul> -->
+                  <br>
+                  <div class="p-3 text-center tracking_no" style="background: rgba(255, 255, 255, 0.3);">
+                    <h4 class="mb-3 text-white">XPDC Tracking Number</h4>
+                    <h6 class="mb-3 text-white">Enter the Tracking No</h6>
+                    <form>
+                      <div class="form-row">
+                        <div class="form-group col-md">
+                          <input type="text" class="form-control" name="tracking_no" placeholder="Ex: 12345">
+                        </div>
+                        <div class="form-group col-md-auto">
+                          <button class="btn btn-warning btn-block">Track Result</button>
+                        </div>
+                      </div>
+                    </form>
+                  </div>
                 </div> <!-- slider-content -->
-                <div class="p-3 text-center tracking_no" style="background: rgba(255, 255, 255, 0.3);">
-                  <h4 class="mb-3 text-white">XPDC Tracking Number</h4>
-                  <h6 class="mb-3 text-white">Enter the Tracking No</h6>
-                  <form>
-                    <div class="form-row">
-                      <div class="form-group col-md">
-                        <input type="text" class="form-control" name="tracking_no" placeholder="Ex: 12345">
-                      </div>
-                      <div class="form-group col-md-auto">
-                        <button class="btn btn-warning btn-block">Track Result</button>
-                      </div>
-                    </div>
-                  </form>
-                </div>
               </div>
             </div> <!-- row -->
           </div> <!-- container -->
@@ -299,8 +293,9 @@
                   We diversified service offering includes unique logistic handling and services to meet our customer’s unique request. We present our customers a center of excellence they can partner with and benefit from full transparency and a sincere commitment to mutual success.
                   </p>
                 </div>
-                <div class="col">
-                  <img src="<?php echo base_url() ?>assets/landing_page/images/logo-xpdc.png" alt="Logo" width="100%">
+                <div class="col text-center">
+                  <br>
+                  <img src="<?php echo base_url() ?>assets/img/logo-fix.png" alt="Logo" width="300px">
                 </div>
               </div>
             </div>
@@ -668,7 +663,7 @@
       <div class="row justify-content-center">
         <div class="col-lg-6">
           <div class="footer-logo text-center">
-            <a class="mt-30" href="index.html"><img src="<?php echo base_url() ?>assets/landing_page/images/logo-xpdc.png" alt="Logo"></a>
+            <a class="mt-30" href="index.html"><img src="<?php echo base_url() ?>assets/img/logo-fix.png" alt="Logo"></a>
           </div> <!-- footer logo -->
           <ul class="social text-center mt-60">
             <li><a href="#"><i class="lni lni-facebook-filled"></i></a></li>

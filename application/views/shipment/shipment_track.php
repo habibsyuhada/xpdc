@@ -6,7 +6,7 @@
           <div class="card-body">
             <div class="row justify-content-center">
               <div class="col-auto">
-                <img src="<?php echo base_url(); ?>assets/img/logo-big-xpdc.png" class="header-brand-img" alt="lavalite">
+                <img src="<?php echo base_url(); ?>assets/img/logo-big-xpdc.png" class="header-brand-img" alt="lavalite" width="150px">
               </div>
             </div>
             <br>

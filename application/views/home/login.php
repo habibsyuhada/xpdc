@@ -37,7 +37,7 @@
           <div class="col-xl-4 col-lg-6 col-md-7 my-auto p-0">
             <div class="authentication-form mx-auto">
               <div class="logo-centered text-center" style="width: auto;">
-                <a href="<?php echo base_url() ?>home/login"><img src="<?php echo base_url() ?>assets/img/logo.png" alt=""></a>
+                <a href="<?php echo base_url() ?>"><img src="<?php echo base_url() ?>assets/img/logo-fix.png" alt="" width="100%"></a>
               </div>
               <h3>Sign In to XPDC</h3>
               <p>Happy to see you again!</p>

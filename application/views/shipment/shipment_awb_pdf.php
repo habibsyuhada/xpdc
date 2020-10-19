@@ -53,7 +53,7 @@
     <tbody>
       <tr>
         <td rowspan="3" class="text-center">
-          <img src="<?php echo base_url(); ?>assets/img/logo.png"><br>
+          <img src="<?php echo base_url(); ?>assets/img/logo-fix.png" width="150px"><br>
         </td>
         <td rowspan="3" class="text-center">
           <img height="100%" src="<?php echo site_url(); ?>home/barcode_generator/<?php echo $shipment['tracking_no'] ?>"><br>

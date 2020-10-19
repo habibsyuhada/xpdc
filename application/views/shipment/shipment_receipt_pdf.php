@@ -71,9 +71,13 @@
     <tbody>
       <tr>
         <td class="text-center">
-          <img src="<?php echo base_url(); ?>assets/img/logo.png"><br>
+          <img src="<?php echo base_url(); ?>assets/img/logo-fix.png" width="150px"><br>
         </td>
         <td class="text-center">
+          <img height="100%" src="<?php echo site_url(); ?>home/barcode_generator/<?php echo $post['tracking_no'] ?>"><br>
+          <b style="margin-top: 5px;"><?php echo $post['tracking_no'] ?></b>
+        </td>
+        <td class="text-center" width="50%">
           <h1>SHIPMENT RECEIPT</h1>
         </td>
       </tr>
@@ -381,6 +385,30 @@
           <br>
         </td>
       </tr>
+    </tbody>
+  </table>
+  <table class="table td-valign-top text-center" width="100%" border="1" cellspacing="0" cellpadding="6">
+    <thead>
+      <tr>
+        <th>Qty.</th>
+        <th>Package Type</th>
+        <th>Length(cm)</th>
+        <th>Width(cm)</th>
+        <th>Height(cm)</th>
+        <th>Weight(kg)</th>
+      </tr>
+    </thead>
+    <tbody>
+      <?php foreach ($post['qty'] as $key => $value) : ?>
+      <tr>
+        <td><?php echo $post['qty'][$key] ?></td>
+        <td><?php echo $post['piece_type'][$key] ?></td>
+        <td><?php echo $post['length'][$key] ?></td>
+        <td><?php echo $post['width'][$key] ?></td>
+        <td><?php echo $post['height'][$key] ?></td>
+        <td><?php echo $post['weight'][$key] ?></td>
+      </tr>
+      <?php endforeach;  ?>
     </tbody>
   </table>
 </body>

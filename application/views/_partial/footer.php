@@ -1,6 +1,6 @@
 				<footer class="footer">
 					<div class="w-100 clearfix">
-						<span class="text-center text-sm-left d-md-inline-block">Copyright © 2018 All Rights Reserved.</span>
+						<span class="text-center text-sm-left d-md-inline-block">Copyright © 2020 All Rights Reserved.</span>
 					</div>
 				</footer>
 				

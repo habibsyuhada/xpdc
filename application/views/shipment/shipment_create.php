@@ -278,7 +278,7 @@
                         </thead>
                         <tbody>
                           <tr>
-                            <td><input type="number" class="form-control" name="qty[]" oninput="get_vol_weight()"></td>
+                            <td><input type="number" class="form-control" step="any" name="qty[]" oninput="get_vol_weight()"></td>
                             <td>
                               <select class="form-control" name="piece_type[]">
                                 <option value="">-- Select One --</option>
@@ -289,10 +289,10 @@
                                 <option value="Others">Others</option>
                               </select>
                             </td>
-                            <td><input type="number" class="form-control" name="length[]" value="0" oninput="get_vol_weight()"></td>
-                            <td><input type="number" class="form-control" name="width[]" value="0" oninput="get_vol_weight()"></td>
-                            <td><input type="number" class="form-control" name="height[]" value="0" oninput="get_vol_weight()"></td>
-                            <td><input type="number" class="form-control" name="weight[]" value="0" oninput="get_vol_weight()"></td>
+                            <td><input type="number" class="form-control" step="any" name="length[]" value="0" oninput="get_vol_weight()"></td>
+                            <td><input type="number" class="form-control" step="any" name="width[]" value="0" oninput="get_vol_weight()"></td>
+                            <td><input type="number" class="form-control" step="any" name="height[]" value="0" oninput="get_vol_weight()"></td>
+                            <td><input type="number" class="form-control" step="any" name="weight[]" value="0" oninput="get_vol_weight()"></td>
                             <td><button type="button" class="btn btn-primary" onclick="addrow(this)"><i class="fas fa-plus m-0"></i></button></td>
                           </tr>
                         </tbody>

@@ -309,7 +309,7 @@
                           <?php foreach ($packages_list as $key => $value) : ?>
                             <tr>
                               <td>
-                                <input type="number" class="form-control" oninput="get_vol_weight()" name="qty[]" value="<?php echo $value['qty'] ?>">
+                                <input type="number" class="form-control" oninput="get_vol_weight()" step="any" name="qty[]" value="<?php echo $value['qty'] ?>">
                                 <input type="hidden" class="form-control" name="id_detail[]" value="<?php echo $value['id'] ?>">
                               </td>
                               <td>
@@ -322,10 +322,10 @@
                                   <option value="Others" <?php echo ($value['piece_type'] == "Others" ? 'selected' : '') ?>>Others</option>
                                 </select>
                               </td>
-                              <td><input type="number" class="form-control" oninput="get_vol_weight()" name="length[]" value="<?php echo $value['length'] ?>"></td>
-                              <td><input type="number" class="form-control" oninput="get_vol_weight()" name="width[]" value="<?php echo $value['width'] ?>"></td>
-                              <td><input type="number" class="form-control" oninput="get_vol_weight()" name="height[]" value="<?php echo $value['height'] ?>"></td>
-                              <td><input type="number" class="form-control" oninput="get_vol_weight()" name="weight[]" value="<?php echo $value['weight'] ?>"></td>
+                              <td><input type="number" class="form-control" oninput="get_vol_weight()" step="any" name="length[]" value="<?php echo $value['length'] ?>"></td>
+                              <td><input type="number" class="form-control" oninput="get_vol_weight()" step="any" name="width[]" value="<?php echo $value['width'] ?>"></td>
+                              <td><input type="number" class="form-control" oninput="get_vol_weight()" step="any" name="height[]" value="<?php echo $value['height'] ?>"></td>
+                              <td><input type="number" class="form-control" oninput="get_vol_weight()" step="any" name="weight[]" value="<?php echo $value['weight'] ?>"></td>
                               <td>
                                 <?php if ($key == 0) : ?>
                                   <button type="button" class="btn btn-primary" onclick="addrow(this)"><i class="fas fa-plus m-0"></i></button>

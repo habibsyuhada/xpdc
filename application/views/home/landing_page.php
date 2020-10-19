@@ -197,7 +197,7 @@
       </ol>
 
       <div class="carousel-inner">
-        <div class="carousel-item active" style="height: 100vh ;background: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.6)), url(<?php echo base_url() ?>assets/landing_page/images/Airfreight-e1570778763730.jpg);background-position: center;background-size: cover;">
+        <div class="carousel-item active" style="height: 100vh; min-height: 640px; background: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.6)), url(<?php echo base_url() ?>assets/landing_page/images/Airfreight-e1570778763730.jpg);background-position: center;background-size: cover;">
           <div class="container">
             <div class="row">
               <div class="col-lg-6">
@@ -230,7 +230,7 @@
           </div> -->
         </div> <!-- carousel-item -->
 
-        <div class="carousel-item" style="height: 100vh ;background: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.6)), url(<?php echo base_url() ?>assets/landing_page/images/global-sea-freight-e1570781123661.jpg);background-position: center;background-size: cover;">
+        <div class="carousel-item" style="height: 100vh ;min-height: 640px; background: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.6)), url(<?php echo base_url() ?>assets/landing_page/images/global-sea-freight-e1570781123661.jpg);background-position: center;background-size: cover;">
           <div class="container">
             <div class="row">
               <div class="col-lg-6">

@@ -73,10 +73,12 @@
         <td class="text-center">
           <img src="<?php echo base_url(); ?>assets/img/logo-fix.png" width="150px"><br>
         </td>
+        <?php if(isset($post['tracking_no'])): ?>
         <td class="text-center">
           <img height="100%" src="<?php echo site_url(); ?>home/barcode_generator/<?php echo $post['tracking_no'] ?>"><br>
           <b style="margin-top: 5px;"><?php echo $post['tracking_no'] ?></b>
         </td>
+        <?php endif; ?>
         <td class="text-center" width="50%">
           <h1>SHIPMENT RECEIPT</h1>
         </td>

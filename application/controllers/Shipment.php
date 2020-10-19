@@ -423,7 +423,7 @@ class Shipment extends CI_Controller
 		// echo $id;
 		$where['id_shipment'] 	= $id;
 		$history_list 					= $this->shipment_mod->shipment_history_list_db($where);
-
+		
 		$data['shipment'] 			= $shipment_list[0];
 		$data['history_list'] 	= $history_list;
 		$data['subview'] 				= 'shipment/shipment_track';

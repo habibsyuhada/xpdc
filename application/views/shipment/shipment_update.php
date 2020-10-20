@@ -319,6 +319,8 @@
                                   <option value="Carton" <?php echo ($value['piece_type'] == "Carton" ? 'selected' : '') ?>>Carton</option>
                                   <option value="Crate" <?php echo ($value['piece_type'] == "Crate" ? 'selected' : '') ?>>Crate</option>
                                   <option value="Loose" <?php echo ($value['piece_type'] == "Loose" ? 'selected' : '') ?>>Loose</option>
+                                  <option value="Container 20 GP" <?php echo ($value['piece_type'] == "Container 20 GP" ? 'selected' : '') ?>>Container 20 GP</option>
+                                  <option value="Container 40 GP" <?php echo ($value['piece_type'] == "Container 40 GP" ? 'selected' : '') ?>>Container 40 GP</option>
                                   <option value="Others" <?php echo ($value['piece_type'] == "Others" ? 'selected' : '') ?>>Others</option>
                                 </select>
                               </td>

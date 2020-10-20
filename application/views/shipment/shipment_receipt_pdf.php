@@ -405,10 +405,10 @@
       <tr>
         <td><?php echo $post['qty'][$key] ?></td>
         <td><?php echo $post['piece_type'][$key] ?></td>
-        <td><?php echo $post['length'][$key] ?></td>
-        <td><?php echo $post['width'][$key] ?></td>
-        <td><?php echo $post['height'][$key] ?></td>
-        <td><?php echo $post['weight'][$key] ?></td>
+        <td><?php echo $post['length'][$key]+0 ?></td>
+        <td><?php echo $post['width'][$key]+0 ?></td>
+        <td><?php echo $post['height'][$key]+0 ?></td>
+        <td><?php echo $post['weight'][$key]+0 ?></td>
       </tr>
       <?php endforeach;  ?>
     </tbody>

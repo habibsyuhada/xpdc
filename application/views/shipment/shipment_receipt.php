@@ -208,10 +208,10 @@
                   ?>
                     <input type="hidden" name="qty[]" value="<?php echo $data_input['qty'][$key] ?>">
                     <input type="hidden" name="piece_type[]" value="<?php echo $data_input['piece_type'][$key] ?>">
-                    <input type="hidden" name="length[]" value="<?php echo $data_input['length'][$key] ?>">
-                    <input type="hidden" name="width[]" value="<?php echo $data_input['width'][$key] ?>">
-                    <input type="hidden" name="height[]" value="<?php echo $data_input['height'][$key] ?>">
-                    <input type="hidden" name="weight[]" value="<?php echo $data_input['weight'][$key] ?>">
+                    <input type="hidden" name="length[]" value="<?php echo $data_input['length'][$key]+0 ?>">
+                    <input type="hidden" name="width[]" value="<?php echo $data_input['width'][$key]+0 ?>">
+                    <input type="hidden" name="height[]" value="<?php echo $data_input['height'][$key]+0 ?>">
+                    <input type="hidden" name="weight[]" value="<?php echo $data_input['weight'][$key]+0 ?>">
                   <?php endforeach;  ?>
                   <div class="form-group row m-0">
                     <label class="col-sm-3 col-form-label">Act. Weight</label>

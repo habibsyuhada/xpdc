@@ -365,7 +365,7 @@
                   <tbody>
                     <?php foreach ($shipment_list as $key => $value): ?>
                     <tr>
-                      <td><a class="font-weight-bold" href="<?php echo base_url() ?>shipment/shipment_tracking/<?php echo $value['id'] ?>"><input type="checkbox" class="checkbox-20" value="<?php echo $value['id'] ?>" onclick="save_checkbox(this)"></td>
+                      <td><input type="checkbox" class="checkbox-20" value="<?php echo $value['id'] ?>" onclick="save_checkbox(this)"></td>
                       <td><a class="font-weight-bold" href="<?php echo base_url() ?>shipment/shipment_tracking/<?php echo $value['id'] ?>"><?php echo $value['tracking_no'] ?></a></td>
                       <td><?php echo $value['master_tracking'] ?></td>
                       <td><?php echo $value['type_of_shipment'] ?></td>

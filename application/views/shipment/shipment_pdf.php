@@ -25,11 +25,8 @@
 </head>
 
 <body>
-  <?php
-  $dec_value = explode(".", $shipment['declared_value']);
-  $len = strlen(end($dec_value));
-  for ($i = 1; $i <= $shipment['qty']; $i++) {
-  ?>
+  <?php foreach ($shipment_list as $key => $shipment) : ?>
+    <?php for ($i = 1; $i <= $shipment['qty']; $i++) : ?>
     <table width="100%" border="1" cellspacing="0" cellpadding="6">
       <tbody>
         <tr>
@@ -83,7 +80,8 @@
         </tr>
       </tbody>
     </table>
-  <?php } ?>
+    <?php endfor; ?>
+  <?php endforeach; ?>
 </body>
 
 </html>

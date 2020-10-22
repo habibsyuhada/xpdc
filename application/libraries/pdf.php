@@ -48,6 +48,7 @@ class Pdf extends Dompdf{
         // Render the PDF
         $this->render();
             // Output the generated PDF to Browser
+            ob_end_clean();
                $this->stream($this->filename, array("Attachment" => false));
     }
 }

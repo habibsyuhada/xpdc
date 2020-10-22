@@ -435,8 +435,11 @@ class Shipment extends CI_Controller
 	{
 		$where['shipment.id'] 				= $id;
 		$shipment_list 			= $this->shipment_mod->shipment_label_list_db($where);
-		$data['shipment'] 	= $shipment_list[0];
-
+		$data['shipment_list'] 	= $shipment_list;
+		// $data['shipment'] 	= $shipment_list[0];
+		unset($where);
+		// $this->load->view('shipment/shipment_pdf', $data);
+		
 		$this->load->library('pdf');
 		$this->pdf->setPaper('A6', 'potrait');
 		$this->pdf->filename = "Label-" . $data['shipment']['tracking_no'] . ".pdf";

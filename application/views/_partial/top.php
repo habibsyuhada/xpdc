@@ -21,7 +21,7 @@
 					</div>
 					<div class="top-menu d-flex align-items-center">
 						<div class="dropdown">
-							<a class="dropdown-toggle" href="#" id="userDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><img class="avatar" src="<?php echo base_url(); ?>assets/img/user.jpg" alt=""><span style="position: relative; bottom: 3px; left: 5px;"><b><?php echo $this->session->userdata('name') ?></b></span></a>
+							<a class="dropdown-toggle" href="#" id="userDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><img class="avatar" src="<?php echo base_url(); ?>assets/img/just_logo_xpdc.jpeg" alt=""><span style="position: relative; bottom: 3px; left: 5px;"><b><?php echo $this->session->userdata('name') ?></b></span></a>
 							<div class="dropdown-menu dropdown-menu-right" aria-labelledby="userDropdown">
 								<!-- <a class="dropdown-item" href="profile.html"><i class="ik ik-user dropdown-icon"></i> Profile</a>
 								<a class="dropdown-item" href="#"><i class="ik ik-settings dropdown-icon"></i> Settings</a>

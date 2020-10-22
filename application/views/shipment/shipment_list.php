@@ -299,13 +299,14 @@
             <h3>Filter</h3>
             <div class="card-header-right">
               <ul class="list-unstyled card-option">
-                <li><i class="ik ik-minus minimize-card"></i></li>
+                <li><i class="ik minimize-card ik-plus"></i></li>
               </ul>
             </div>
           </div>
-          <div class="card-body">
+          <div class="card-body" style="display: none;">
             <form id="form_filter" action="" method="GET">
               <input type="hidden" name="status" value="<?php echo ($this->input->get('status') ? $this->input->get('status') : '') ?>">
+              <h6 class="font-weight-bold">Service Information</h6>
               <div class="row clearfix">
                 <div class="col-md-6">
                   <div class="form-group">
@@ -328,10 +329,90 @@
                     </select>
                   </div>
                 </div>
+                <div class="col-md-6">
+                  <h6 class="font-weight-bold">Shipper Information</h6>
+                  <div class="form-group">
+                    <label>Shipper Name</label>
+                    <input type="text" class="form-control" name="shipper_name" value="<?php echo @$this->input->get('shipper_name') ?>" placeholder="Shipper Name">
+                  </div>
+                  <div class="form-group">
+                    <label>Address</label>
+                    <textarea class="form-control" name="shipper_address" placeholder="Address"><?php echo @$this->input->get('shipper_address') ?></textarea>
+                  </div>
+                  <div class="form-group">
+                    <label>City</label>
+                    <input type="text" class="form-control" name="shipper_city" value="<?php echo @$this->input->get('shipper_city') ?>" placeholder="City">
+                  </div>
+                  <div class="form-group">
+                    <label>Country</label>
+                    <select class="form-control select2" name="shipper_country">
+                      <option value="">- Select One -</option>
+                      <?php foreach ($country['data'] as $data) { ?>
+                        <option value="<?= $data['location'] ?>" <?php echo ($this->input->get('shipper_country') == $data['location'] ? 'selected' : '') ?>><?= $data['location'] ?></option>
+                      <?php } ?>
+                    </select>
+                  </div>
+                  <div class="form-group">
+                    <label>Postcode</label>
+                    <input type="text" class="form-control" name="shipper_postcode" value="<?php echo @$this->input->get('shipper_postcode') ?>" placeholder="Postcode">
+                  </div>
+                  <div class="form-group">
+                    <label>Contact Person</label>
+                    <input type="text" class="form-control" name="shipper_contact_person" value="<?php echo @$this->input->get('shipper_contact_person') ?>" placeholder="Contact Person">
+                  </div>
+                  <div class="form-group">
+                    <label>Phone Number</label>
+                    <input type="text" class="form-control" name="shipper_phone_number" value="<?php echo @$this->input->get('shipper_phone_number') ?>" placeholder="Phone Number">
+                  </div>
+                  <div class="form-group">
+                    <label>Email</label>
+                    <input type="email" class="form-control" name="shipper_email" value="<?php echo @$this->input->get('shipper_email') ?>" placeholder="Email">
+                  </div>
+                </div>
+                <div class="col-md-6">
+                  <h6 class="font-weight-bold">Consignee Information</h6>
+                  <div class="form-group">
+                    <label>Consignee Name</label>
+                    <input type="text" class="form-control" name="consignee_name" value="<?php echo @$this->input->get('consignee_name') ?>" placeholder="Receiver Name">
+                  </div>
+                  <div class="form-group">
+                    <label>Address</label>
+                    <textarea class="form-control" name="consignee_address" placeholder="Address"><?php echo @$this->input->get('consignee_address') ?></textarea>
+                  </div>
+                  <div class="form-group">
+                    <label>City</label>
+                    <input type="text" class="form-control" name="consignee_city" value="<?php echo @$this->input->get('consignee_city') ?>" placeholder="City">
+                  </div>
+                  <div class="form-group">
+                    <label>Country</label>
+                    <select class="form-control select2" name="consignee_country">
+                      <option value="">- Select One -</option>
+                      <?php foreach ($country['data'] as $data) { ?>
+                        <option value="<?= $data['location'] ?>" <?php echo ($this->input->get('consignee_country') == $data['location'] ? 'selected' : '') ?>><?= $data['location'] ?></option>
+                      <?php } ?>
+                    </select>
+                  </div>
+                  <div class="form-group">
+                    <label>Postcode</label>
+                    <input type="text" class="form-control" name="consignee_postcode" value="<?php echo @$this->input->get('consignee_postcode') ?>" placeholder="Postcode">
+                  </div>
+                  <div class="form-group">
+                    <label>Contact Person</label>
+                    <input type="text" class="form-control" name="consignee_contact_person" value="<?php echo @$this->input->get('consignee_contact_person') ?>" placeholder="Contact Person">
+                  </div>
+                  <div class="form-group">
+                    <label>Phone Number</label>
+                    <input type="text" class="form-control" name="consignee_phone_number" value="<?php echo @$this->input->get('consignee_phone_number') ?>" placeholder="Phone Number">
+                  </div>
+                  <div class="form-group">
+                    <label>Email</label>
+                    <input type="email" class="form-control" name="consignee_email" value="<?php echo @$this->input->get('consignee_email') ?>" placeholder="Email">
+                  </div>
+                </div>
               </div>
               <div class="row clearfix">
                 <div class="col-md text-right">
-                  <button type="submit" name="submit" value="search" class="btn btn-info"><i class="fas fa-search"></i> Search</button>
+                  <button type="submit" class="btn btn-info"><i class="fas fa-search"></i> Search</button>
                 </div>
               </div>
             </form>
@@ -432,6 +513,6 @@
   $('.widget').on('click', function() {
     var status = $(this).find('h6').text();
     $("input[name=status]").val(status);
-    $(".btn[name=submit]").click();
+    $("#form_filter .btn[type=submit]").click();
   });
 </script>

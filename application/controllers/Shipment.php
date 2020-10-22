@@ -18,6 +18,7 @@ class Shipment extends CI_Controller
 
 	public function shipment_list()
 	{
+		// test_var($this->input->get());
 		$where = array();
 		$where['status_delete'] 	= 1;
 		if($this->session->userdata('branch')){
@@ -28,15 +29,21 @@ class Shipment extends CI_Controller
 		else{
 			redirect('home/logout');
 		}
-		if ($this->input->get('submit')) {
-			if ($this->input->get('type_of_shipment')) {
-				$where['type_of_shipment'] 	= $this->input->get('type_of_shipment');
-			}
-			if ($this->input->get('status')) {
-				$where['status'] 	= $this->input->get('status');
-			}
-			if ($this->input->get('type_of_mode')) {
-				$where['type_of_mode'] 	= $this->input->get('type_of_mode');
+		// if ($this->input->get('submit')) {
+		// 	if ($this->input->get('type_of_shipment')) {
+		// 		$where['type_of_shipment'] 	= $this->input->get('type_of_shipment');
+		// 	}
+		// 	if ($this->input->get('status')) {
+		// 		$where['status'] 	= $this->input->get('status');
+		// 	}
+		// 	if ($this->input->get('type_of_mode')) {
+		// 		$where['type_of_mode'] 	= $this->input->get('type_of_mode');
+		// 	}
+		// }
+		
+		foreach ($this->input->get() as $key => $value) {
+			if ($this->input->get($key)) {
+				$where[$key." LIKE '%".$value."%'"] 	= NULL;
 			}
 		}
 

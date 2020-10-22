@@ -515,4 +515,8 @@
     $("input[name=status]").val(status);
     $("#form_filter .btn[type=submit]").click();
   });
+  
+  $(".select2").select2({
+    theme: "bootstrap4"
+  });
 </script>

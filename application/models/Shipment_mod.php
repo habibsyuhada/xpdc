@@ -148,7 +148,12 @@ class Shipment_mod extends CI_Model
     if ($where) {
       foreach ($where as $key => $value) {
         if ($key != "status") {
-          $where_str[] = $key . " = '" . $value . "'";
+          if($value == NULL){
+            $where_str[] = $key;
+          }
+          else{
+            $where_str[] = $key . " = '" . $value . "'";
+          }
         }
       }
     }

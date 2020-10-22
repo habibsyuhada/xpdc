@@ -51,6 +51,9 @@ class Shipment extends CI_Controller
 		$data['summary_list'] 	= $summary_list[0];
 
 		$data['shipment_list'] 	= $this->shipment_mod->shipment_list_db($where);
+
+		$data['country'] = json_decode(file_get_contents("./assets/country/country.json"), true);
+		
 		$data['subview'] 				= 'shipment/shipment_list';
 		$data['meta_title'] 		= 'Shipment List';
 		$this->load->view('index', $data);

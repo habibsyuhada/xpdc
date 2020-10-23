@@ -545,6 +545,10 @@
                     <div class="col-md-6">
                       <h6 class="font-weight-bold">Main Agent</h6>
                       <div class="form-group">
+                        <label>Agent Name</label>
+                        <input type="text" class="form-control" name="main_agent_name" placeholder="Main Agent Name" value="<?= $shipment['main_agent_mawb_mbl'] ?>">
+                      </div>
+                      <div class="form-group">
                         <label>MAWB / MBL</label>
                         <input type="text" class="form-control" name="main_agent_mawb_mbl" placeholder="MAWB / MBL" value="<?= $shipment['main_agent_mawb_mbl'] ?>">
                       </div>
@@ -563,6 +567,10 @@
                     </div>
                     <div class="col-md-6">
                       <h6 class="font-weight-bold">Secondary Agent</h6>
+                      <div class="form-group">
+                        <label>Agent Name</label>
+                        <input type="text" class="form-control" name="secondary_agent_name" placeholder="Secondary Agent Name" value="<?= $shipment['main_agent_mawb_mbl'] ?>">
+                      </div>
                       <div class="form-group">
                         <label>MAWB / MBL</label>
                         <input type="text" class="form-control" name="secondary_agent_mawb_mbl" placeholder="MAWB / MBL" value="<?= $shipment['secondary_agent_mawb_mbl'] ?>">

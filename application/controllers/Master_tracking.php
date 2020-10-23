@@ -65,6 +65,10 @@ class Master_tracking extends CI_Controller {
 
 	public function master_tracking_multi_create_process(){
 		$post = $this->input->post();
+		if(count($post['id']) < 1){
+			$this->session->set_flashdata('error', 'Please tick shipment first to create new master tracking!');
+			redirect('shipment/shipment_list');
+		}
 
 		$where['shipment.id IN ('.$post['id'].')'] = NULL;
 		$where['shipment.master_tracking !='] = "";

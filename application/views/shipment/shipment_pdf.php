@@ -25,6 +25,7 @@
 </head>
 
 <body>
+  <?php $no = 0; ?>
   <?php foreach ($shipment_list as $key => $shipment) : ?>
     <?php for ($i = 1; $i <= $shipment['qty']; $i++) : ?>
     <table width="100%" border="1" cellspacing="0" cellpadding="6">
@@ -68,7 +69,7 @@
               <b>Description of Goods :</b> <?php echo $shipment['description_of_goods'] ?><br>
               <b>Declared Value :</b> <?php echo $shipment['currency'] ?> <?php echo round($shipment['declared_value'], 2, PHP_ROUND_HALF_UP); ?><br>
               <b>Weight :</b> <?php echo $shipment['weight'] ?> Kg<br>
-              <div style="text-align: right;"><b><?php echo $shipment['piece_type'] ?> :</b> <?php echo $i ?> of <?php echo $shipment['qty'] ?> </div>
+              <div style="text-align: right;"><b><?php echo $shipment['piece_type'] ?> :</b> <?php echo $no++ ?> of <?php echo $total_label ?> </div>
             </small>
           </td>
         </tr>

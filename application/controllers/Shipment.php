@@ -449,6 +449,11 @@ class Shipment extends CI_Controller
 		// $data['shipment'] 	= $shipment_list[0];
 		unset($where);
 		// $this->load->view('shipment/shipment_pdf', $data);
+		$total_label = 0;
+		foreach ($shipment_list as $key => $shipment){
+			$total_label = $total_label + $shipment['qty'];
+		}
+		$data['total_label'] 	= $total_label;
 		
 		$this->load->library('pdf');
 		$this->pdf->setPaper('A6', 'potrait');

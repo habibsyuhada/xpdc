@@ -25,14 +25,15 @@
 </head>
 
 <body>
-  <?php $no = 0; ?>
+  <?php $no = 1; ?>
   <?php foreach ($shipment_list as $key => $shipment) : ?>
     <?php for ($i = 1; $i <= $shipment['qty']; $i++) : ?>
     <table width="100%" border="1" cellspacing="0" cellpadding="6">
       <tbody>
         <tr>
           <td width="50%" class="text-center">
-            <img src="<?php echo base_url(); ?>assets/img/logo-fix.png" width="150px"><br>
+            <!-- <img src="assets/img/logo-fix.png" width="150px"><br> -->
+            <img src="data:image/png;base64,<?php echo $logo ?>" width="150px"><br>
             <b>PT. XENA PRANADIPA DHIA CAKRA</b><br>
             <small class="lv2">http://xpdcid.com</small>
           </td>
@@ -75,7 +76,7 @@
         </tr>
         <tr>
           <td colspan="2" class="text-center">
-            <img height="100px" src="<?php echo site_url(); ?>home/barcode_generator/<?php echo $shipment['tracking_no'] ?>"><br>
+            <img height="100px" src="data:image/png;base64,<?php echo $label_track ?>"><br>
             <b style="margin-top: 5px;"><?php echo $shipment['tracking_no'] ?></b>
           </td>
         </tr>

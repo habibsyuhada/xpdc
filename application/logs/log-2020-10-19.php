@@ -9,3 +9,5 @@ ERROR - 2020-10-19 07:12:04 --> Severity: Notice --> Undefined offset: 0 C:\xamp
 ERROR - 2020-10-19 07:15:22 --> 404 Page Not Found: Assets/landing_page
 ERROR - 2020-10-19 07:15:22 --> 404 Page Not Found: Assets/landing_page
 ERROR - 2020-10-19 07:15:22 --> 404 Page Not Found: Assets/landing_page
+ERROR - 2020-10-19 20:14:46 --> 404 Page Not Found: Assets/favicon.ico
+ERROR - 2020-10-19 20:15:11 --> 404 Page Not Found: Shipment/favicon.ico

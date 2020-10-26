@@ -8,6 +8,7 @@ class Shipment extends CI_Controller
 	{
 		parent::__construct();
 		cek_login();
+		$this->load->model('home_mod');
 		$this->load->model('shipment_mod');
 	}
 
@@ -29,17 +30,6 @@ class Shipment extends CI_Controller
 		else{
 			redirect('home/logout');
 		}
-		// if ($this->input->get('submit')) {
-		// 	if ($this->input->get('type_of_shipment')) {
-		// 		$where['type_of_shipment'] 	= $this->input->get('type_of_shipment');
-		// 	}
-		// 	if ($this->input->get('status')) {
-		// 		$where['status'] 	= $this->input->get('status');
-		// 	}
-		// 	if ($this->input->get('type_of_mode')) {
-		// 		$where['type_of_mode'] 	= $this->input->get('type_of_mode');
-		// 	}
-		// }
 		
 		foreach ($this->input->get() as $key => $value) {
 			if ($this->input->get($key)) {
@@ -51,6 +41,10 @@ class Shipment extends CI_Controller
 		$data['summary_list'] 	= $summary_list[0];
 
 		$data['shipment_list'] 	= $this->shipment_mod->shipment_list_db($where);
+
+		unset($where);
+		$where['role'] 				= "Driver";
+		$data['driver_list'] 	= $this->home_mod->user_list($where);
 
 		$data['country'] = json_decode(file_get_contents("./assets/country/country.json"), true);
 		
@@ -68,12 +62,34 @@ class Shipment extends CI_Controller
 		$this->load->view('index', $data);
 	}
 
-	public function shipment_receipt()
+	public function shipment_receipt($id = NULL)
 	{
 		// $post = $this->input->post();
 		// test_var(count($post), 1);
 		// test_var($post);
-		$data['data_input'] 			= $this->input->post();
+
+		if($id){
+			$where['shipment.id'] 	= $id;
+			$data_post 							= $this->shipment_mod->shipment_list_db($where);
+			unset($where);
+			$data_post 							= $data_post[0];
+
+			$where['id_shipment'] 	= $id;
+			$packages_list 					= $this->shipment_mod->shipment_packages_list_db($where);
+			unset($where);
+			foreach ($packages_list as $key => $value) {
+				foreach ($value as $key2 => $value2) {
+					if(!in_array($key2, array('id', 'id_shipment', 'create_date', 'status_delete')))
+					$data_post[$key2][] = $value2;
+				}
+			}
+			$post = $data_post;
+		}
+		else{
+			$post = $this->input->post();
+		}
+
+		$data['data_input'] 			= $post;
 		$data['meta_title'] 			= 'Shipment Receipt';
 		$data['subview']    			= 'shipment/shipment_receipt';
 		$this->load->view('index', $data);
@@ -415,11 +431,7 @@ class Shipment extends CI_Controller
 		$history 								= $history_list[0];
 
 		$form_data = array(
-			// 'date' 				=> $history['date'],
-			// 'time' 				=> $history['time'],
-			// 'location' 		=> $history['location'],
 			'status' 			=> $history['status'],
-			// 'remarks' 		=> $history['remarks'],
 		);
 		unset($where);
 		$where['id'] = $id;
@@ -456,10 +468,16 @@ class Shipment extends CI_Controller
 			$total_label = $total_label + $shipment['qty'];
 		}
 		$data['total_label'] 	= $total_label;
+
+		$label_track = set_barcode($shipment['tracking_no']);
+		$data['label_track'] 	= $label_track;
+		$data['logo'] 	= base64_encode(file_get_contents("assets/img/logo-big-xpdc.png"));
+
+		// $this->load->view('shipment/shipment_pdf', $data);
 		
 		$this->load->library('pdf');
 		$this->pdf->setPaper('A6', 'potrait');
-		$this->pdf->filename = "Label-" . $data['shipment']['tracking_no'] . ".pdf";
+		$this->pdf->filename = "Label-" . $shipment['tracking_no'] . ".pdf";
 		$this->pdf->load_view('shipment/shipment_pdf', $data);
 	}
 

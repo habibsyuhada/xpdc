@@ -16,4 +16,12 @@ class Home_mod extends CI_Model {
 		return $query->result_array();
 	}
 
+  function user_list_by_id($where_in){
+    $this->db->where_in('id', $where_in);
+    $this->db->select('*');
+    $this->db->from('user');
+		$query = $this->db->get();
+		return $query->result_array();
+	}
+
 }

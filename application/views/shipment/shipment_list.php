@@ -336,10 +336,6 @@
                     <input type="text" class="form-control" name="shipper_name" value="<?php echo @$this->input->get('shipper_name') ?>" placeholder="Shipper Name">
                   </div>
                   <div class="form-group">
-                    <label>Address</label>
-                    <textarea class="form-control" name="shipper_address" placeholder="Address"><?php echo @$this->input->get('shipper_address') ?></textarea>
-                  </div>
-                  <div class="form-group">
                     <label>City</label>
                     <input type="text" class="form-control" name="shipper_city" value="<?php echo @$this->input->get('shipper_city') ?>" placeholder="City">
                   </div>
@@ -352,32 +348,12 @@
                       <?php } ?>
                     </select>
                   </div>
-                  <div class="form-group">
-                    <label>Postcode</label>
-                    <input type="text" class="form-control" name="shipper_postcode" value="<?php echo @$this->input->get('shipper_postcode') ?>" placeholder="Postcode">
-                  </div>
-                  <div class="form-group">
-                    <label>Contact Person</label>
-                    <input type="text" class="form-control" name="shipper_contact_person" value="<?php echo @$this->input->get('shipper_contact_person') ?>" placeholder="Contact Person">
-                  </div>
-                  <div class="form-group">
-                    <label>Phone Number</label>
-                    <input type="text" class="form-control" name="shipper_phone_number" value="<?php echo @$this->input->get('shipper_phone_number') ?>" placeholder="Phone Number">
-                  </div>
-                  <div class="form-group">
-                    <label>Email</label>
-                    <input type="email" class="form-control" name="shipper_email" value="<?php echo @$this->input->get('shipper_email') ?>" placeholder="Email">
-                  </div>
                 </div>
                 <div class="col-md-6">
                   <h6 class="font-weight-bold">Consignee Information</h6>
                   <div class="form-group">
                     <label>Consignee Name</label>
                     <input type="text" class="form-control" name="consignee_name" value="<?php echo @$this->input->get('consignee_name') ?>" placeholder="Receiver Name">
-                  </div>
-                  <div class="form-group">
-                    <label>Address</label>
-                    <textarea class="form-control" name="consignee_address" placeholder="Address"><?php echo @$this->input->get('consignee_address') ?></textarea>
                   </div>
                   <div class="form-group">
                     <label>City</label>
@@ -391,22 +367,6 @@
                         <option value="<?= $data['location'] ?>" <?php echo ($this->input->get('consignee_country') == $data['location'] ? 'selected' : '') ?>><?= $data['location'] ?></option>
                       <?php } ?>
                     </select>
-                  </div>
-                  <div class="form-group">
-                    <label>Postcode</label>
-                    <input type="text" class="form-control" name="consignee_postcode" value="<?php echo @$this->input->get('consignee_postcode') ?>" placeholder="Postcode">
-                  </div>
-                  <div class="form-group">
-                    <label>Contact Person</label>
-                    <input type="text" class="form-control" name="consignee_contact_person" value="<?php echo @$this->input->get('consignee_contact_person') ?>" placeholder="Contact Person">
-                  </div>
-                  <div class="form-group">
-                    <label>Phone Number</label>
-                    <input type="text" class="form-control" name="consignee_phone_number" value="<?php echo @$this->input->get('consignee_phone_number') ?>" placeholder="Phone Number">
-                  </div>
-                  <div class="form-group">
-                    <label>Email</label>
-                    <input type="email" class="form-control" name="consignee_email" value="<?php echo @$this->input->get('consignee_email') ?>" placeholder="Email">
                   </div>
                 </div>
               </div>
@@ -447,7 +407,7 @@
                     <?php foreach ($shipment_list as $key => $value): ?>
                     <tr>
                       <td><input type="checkbox" class="checkbox-20" value="<?php echo $value['id'] ?>" onclick="save_checkbox(this)"></td>
-                      <td><a class="font-weight-bold" href="<?php echo base_url() ?>shipment/shipment_tracking/<?php echo $value['id'] ?>"><?php echo $value['tracking_no'] ?></a></td>
+                      <td><a target="_blank" class="font-weight-bold" href="<?php echo base_url() ?>shipment/shipment_receipt/<?php echo $value['id'] ?>"><?php echo $value['tracking_no'] ?></a></td>
                       <td><?php echo $value['master_tracking'] ?></td>
                       <td><?php echo $value['type_of_shipment'] ?></td>
                       <td><?php echo $value['type_of_mode'] ?></td>
@@ -456,6 +416,7 @@
                       <td><?php echo $value['status'] ?></td>
                       <td>
                         <a href="<?php echo base_url() ?>shipment/shipment_tracking/<?php echo $value['id'] ?>" class="btn btn-secondary" title="View"><i class="fas fa-eye m-0"></i></a>
+                        <a href="<?php echo base_url() ?>driver/driver_update/<?php echo $value['id'] ?>" class="btn btn-info" title="Driver"><i class="fas fa-truck"></i></a>
                         <!-- <a target="_blank" href="<?php echo base_url() ?>shipment/shipment_tracking_label_pdf/<?php echo $value['id'] ?>" class="btn btn-warning" title="Print"><i class="fas fa-print m-0"></i></a> -->
                         <a href="<?php echo base_url() ?>shipment/shipment_update/<?php echo $value['id'] ?>" class="btn btn-primary" title="Update"><i class="fas fa-edit m-0"></i></a>
                         <button type="button" class="btn btn btn-warning dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><i class="fas fa-print m-0"></i> <i class="ik ik-chevron-down m-0"></i></button>
@@ -470,23 +431,48 @@
                     <?php endforeach; ?>
                   </tbody>
                 </table>
-                <form id="form_master_tracking" method="POST" action="<?php echo base_url(); ?>master_tracking/master_tracking_multi_create_process">
+                
                 <div class="row clearfix">
-                  <div class="col-md-6">
-                    <div class="form-group">
-                      <label>You tick <span class="text-info num_ticker">0</span> documents to Console.</label>
-                      <input type="text" class="form-control" name="master_tracking" placeholder="Master Tracking">
-                    </div>
-                    <div class="form-group">
-                      <input type="text" class="form-control" name="remarks" placeholder="Remarks">
-                    </div>
-                    <div class="form-group">
-                      <input type="hidden" class="form-control" name="id">
-                      <button type="submit" class="btn btn-success" onclick="return confirm('Apakah Anda Yakin?')">Submit</button>
-                    </div>
+                  <div class="col-md-6  border-left border-right">
+                    <form id="form_master_tracking" method="POST" action="<?php echo base_url(); ?>master_tracking/master_tracking_multi_create_process">
+                      <div class="form-group">
+                        <label>You tick <b class="text-success num_ticker">0</b> documents to <b class="text-success">Console</b>.</label>
+                        <input type="text" class="form-control" name="master_tracking" placeholder="Master Tracking">
+                      </div>
+                      <div class="form-group">
+                        <input type="text" class="form-control" name="remarks" placeholder="Remarks">
+                      </div>
+                      <div class="form-group">
+                        <input type="hidden" class="form-control" name="id">
+                        <button type="submit" class="btn btn-success" onclick="return confirm('Apakah Anda Yakin?')">Create Console</button>
+                      </div>
+                    </form> 
+                  </div>
+                  <div class="col-md-6 border-left border-right">
+                    <form id="form_assign_driver" method="POST" action="<?php echo base_url(); ?>driver/assign_driver_process">
+                      <div class="form-group">
+                        <label>You tick <b class="text-info num_ticker">0</b> documents to <b class="text-info">Assign Driver</b>.</label>
+                        <select class="form-control" name="driver">
+                          <option value="">--- Choose Driver ---</option>
+                          <?php foreach ($driver_list as $key => $value) : ?>
+                          <option value="<?php echo $value['id'] ?>"><?php echo $value['name'] ?></option>
+                          <?php endforeach; ?>
+                        </select>
+                      </div>
+                      <div class="form-group">
+                        <select class="form-control" name="status">
+                          <option value="">--- Choose Status ---</option>
+                          <option value="pickup">PickUp</option>
+                          <option value="deliver">Deliver</option>
+                        </select>
+                      </div>
+                      <div class="form-group">
+                        <input type="hidden" class="form-control" name="id">
+                        <button type="submit" class="btn btn-info" onclick="return confirm('Apakah Anda Yakin?')">Assign</button>
+                      </div>
+                    </form> 
                   </div>
                 </div>
-                </form> 
               </div>
             </div>
           </div>
@@ -506,8 +492,13 @@
     }
     $(".num_ticker").html(data_checkbox.length)
   }
+
   $('#form_master_tracking').submit(function() {
     $("#form_master_tracking input[name=id]").val(data_checkbox.join(", "));
+  });
+  
+  $('#form_assign_driver').submit(function() {
+    $("#form_assign_driver input[name=id]").val(data_checkbox.join(", "));
   });
 
   $('.widget').on('click', function() {

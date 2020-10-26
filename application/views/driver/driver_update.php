@@ -107,7 +107,7 @@
                 <?php elseif($shipment['status_driver_pickup'] == 2): ?>
                 <div class="form-group">
                   <label>Location</label>
-                  <input type="text" class="form-control" name="location_driver_pickup" value="<?php echo $shipment["shipper_city"].", ".$shipment["shipper_country"] ?>" readonly>
+                  <input type="text" class="form-control" name="location_driver_pickup" value="<?php echo $shipment["consignee_city"].", ".$shipment["consignee_country"] ?>" readonly>
                 </div>
                 <div class="form-group">
                   <label>Photo upload</label><br>
@@ -164,7 +164,7 @@
                 <?php elseif($shipment['status_driver_deliver'] == 2): ?>
                 <div class="form-group">
                   <label>Location</label>
-                  <input type="text" class="form-control" name="location_driver_deliver" value="<?php echo $shipment["shipper_city"].", ".$shipment["shipper_country"] ?>" readonly>
+                  <input type="text" class="form-control" name="location_driver_deliver" value="<?php echo $shipment["consignee_city"].", ".$shipment["consignee_country"] ?>" readonly>
                 </div>
                 <div class="form-group">
                   <label>Photo upload</label><br>

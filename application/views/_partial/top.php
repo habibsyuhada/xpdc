@@ -42,7 +42,7 @@
 
 		<div class="page-wrap">
 			<div class="app-sidebar colored">
-				<div class="sidebar-header">
+				<div class="sidebar-header" style="overflow: hidden; padding-left: 7px;">
 					<a class="header-brand" href="<?php echo base_url()?>">
 						<img src="<?php echo base_url(); ?>assets/img/logo-fix.png" class="header-brand-img" alt="lavalite" width="150px">
 					</a>

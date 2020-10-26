@@ -569,7 +569,7 @@
                       <h6 class="font-weight-bold">Secondary Agent</h6>
                       <div class="form-group">
                         <label>Agent Name</label>
-                        <input type="text" class="form-control" name="secondary_agent_name" placeholder="Secondary Agent Name" value="<?= $shipment['main_agent_mawb_mbl'] ?>">
+                        <input type="text" class="form-control" name="secondary_agent_name" placeholder="Secondary Agent Name" value="<?= $shipment['secondary_agent_mawb_mbl'] ?>">
                       </div>
                       <div class="form-group">
                         <label>MAWB / MBL</label>

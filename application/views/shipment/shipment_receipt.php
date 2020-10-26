@@ -5,7 +5,7 @@
         <div class="col-md-12">
           <div class="card">
             <div class="card-header">
-              <h3>Shipment Receipt</h3>
+              <h3>Shipment <?php echo (isset($data_input['tracking_no']) ? "Preview" : "Receipt") ?></h3>
             </div>
             <div class="card-body">
               <div class="row">
@@ -253,6 +253,32 @@
               </div>
               <br>
               <br>
+              <table class="table table-bordered td-valign-top text-center">
+                <thead>
+                  <tr class="bg-info">
+                    <th class="text-white">Qty.</th>
+                    <th class="text-white">Package Type</th>
+                    <th class="text-white">Length(cm)</th>
+                    <th class="text-white">Width(cm)</th>
+                    <th class="text-white">Height(cm)</th>
+                    <th class="text-white">Weight(kg)</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <?php foreach ($data_input['qty'] as $key => $value) : ?>
+                  <tr>
+                    <td><?php echo $data_input['qty'][$key] ?></td>
+                    <td><?php echo $data_input['piece_type'][$key] ?></td>
+                    <td><?php echo $data_input['length'][$key]+0 ?></td>
+                    <td><?php echo $data_input['width'][$key]+0 ?></td>
+                    <td><?php echo $data_input['height'][$key]+0 ?></td>
+                    <td><?php echo $data_input['weight'][$key]+0 ?></td>
+                  </tr>
+                  <?php endforeach;  ?>
+                </tbody>
+              </table>
+              <br>
+              <br>
               <div class="row">
                 <div class="col-md-6">
                   <h6 class="font-weight-bold border-bottom">Billing Details</h6>
@@ -418,6 +444,7 @@
                   </div>
                 </div>
               </div>
+              <?php if(!isset($data_input['tracking_no'])): ?>
               <div class="mt-2 row">
                 <div class="text-left col-6">
                 </div>
@@ -427,6 +454,132 @@
                   <button type="submit" class="btn btn-success">Submit</button>
                 </div>
               </div>
+              <?php endif; ?>
+              
+              <?php if(isset($data_input['tracking_no'])): ?>
+              <br>
+              <br>
+              <div class="row">
+                <div class="col-md-6">
+                  <h6 class="font-weight-bold border-bottom">Main Agent</h6>
+                  <div class="form-group row m-0">
+                    <label class="col-sm-3 col-form-label">Agent Name</label>
+                    <div class="col-sm-9">
+                      <label class="col-form-label">: <?php echo $data_input['main_agent_name'] ?></label>
+                      <input type="hidden" name="main_agent_name" value="<?php echo $data_input['main_agent_name'] ?>">
+                    </div>
+                  </div>
+                  <div class="form-group row m-0">
+                    <label class="col-sm-3 col-form-label">MAWB / MBL</label>
+                    <div class="col-sm-9">
+                      <label class="col-form-label">: <?php echo $data_input['main_agent_mawb_mbl'] ?></label>
+                      <input type="hidden" name="main_agent_mawb_mbl" value="<?php echo $data_input['main_agent_mawb_mbl'] ?>">
+                    </div>
+                  </div>
+                  <div class="form-group row m-0">
+                    <label class="col-sm-3 col-form-label">Carrier</label>
+                    <div class="col-sm-9">
+                      <label class="col-form-label">: <?php echo $data_input['main_agent_carrier'] ?></label>
+                      <input type="hidden" name="main_agent_carrier" value="<?php echo $data_input['main_agent_carrier'] ?>">
+                    </div>
+                  </div>
+                  <div class="form-group row m-0">
+                    <label class="col-sm-3 col-form-label">Voyage/Flight No.</label>
+                    <div class="col-sm-9">
+                      <label class="col-form-label">: <?php echo $data_input['main_agent_voyage_flight_no'] ?></label>
+                      <input type="hidden" name="main_agent_voyage_flight_no" value="<?php echo $data_input['main_agent_voyage_flight_no'] ?>">
+                    </div>
+                  </div>
+                  <div class="form-group row m-0">
+                    <label class="col-sm-3 col-form-label">Voyage/Flight Date</label>
+                    <div class="col-sm-9">
+                      <label class="col-form-label">: <?php echo $data_input['main_agent_voyage_flight_date'] ?></label>
+                      <input type="hidden" name="main_agent_voyage_flight_date" value="<?php echo $data_input['main_agent_voyage_flight_date'] ?>">
+                    </div>
+                  </div>
+                  <div class="form-group row m-0">
+                    <label class="col-sm-3 col-form-label">Port of Loading</label>
+                    <div class="col-sm-9">
+                      <label class="col-form-label">: <?php echo $data_input['port_of_loading'] ?></label>
+                      <input type="hidden" name="port_of_loading" value="<?php echo $data_input['port_of_loading'] ?>">
+                    </div>
+                  </div>
+                  <div class="form-group row m-0">
+                    <label class="col-sm-3 col-form-label">Port of Discharge</label>
+                    <div class="col-sm-9">
+                      <label class="col-form-label">: <?php echo $data_input['port_of_discharge'] ?></label>
+                      <input type="hidden" name="port_of_discharge" value="<?php echo $data_input['port_of_discharge'] ?>">
+                    </div>
+                  </div>
+                  <div class="form-group row m-0">
+                    <label class="col-sm-3 col-form-label">Container No</label>
+                    <div class="col-sm-9">
+                      <label class="col-form-label">: <?php echo $data_input['container_no'] ?></label>
+                      <input type="hidden" name="container_no" value="<?php echo $data_input['container_no'] ?>">
+                    </div>
+                  </div>
+                </div>
+                <div class="col-md-6">
+                  <h6 class="font-weight-bold border-bottom">Secondary Agent</h6>
+                  <div class="form-group row m-0">
+                    <label class="col-sm-3 col-form-label">Agent Name</label>
+                    <div class="col-sm-9">
+                      <label class="col-form-label">: <?php echo $data_input['secondary_agent_name'] ?></label>
+                      <input type="hidden" name="secondary_agent_name" value="<?php echo $data_input['secondary_agent_name'] ?>">
+                    </div>
+                  </div>
+                  <div class="form-group row m-0">
+                    <label class="col-sm-3 col-form-label">MAWB / MBL</label>
+                    <div class="col-sm-9">
+                      <label class="col-form-label">: <?php echo $data_input['secondary_agent_mawb_mbl'] ?></label>
+                      <input type="hidden" name="secondary_agent_mawb_mbl" value="<?php echo $data_input['secondary_agent_mawb_mbl'] ?>">
+                    </div>
+                  </div>
+                  <div class="form-group row m-0">
+                    <label class="col-sm-3 col-form-label">Carrier</label>
+                    <div class="col-sm-9">
+                      <label class="col-form-label">: <?php echo $data_input['secondary_agent_carrier'] ?></label>
+                      <input type="hidden" name="secondary_agent_carrier" value="<?php echo $data_input['secondary_agent_carrier'] ?>">
+                    </div>
+                  </div>
+                  <div class="form-group row m-0">
+                    <label class="col-sm-3 col-form-label">Voyage/Flight No.</label>
+                    <div class="col-sm-9">
+                      <label class="col-form-label">: <?php echo $data_input['secondary_agent_voyage_flight_no'] ?></label>
+                      <input type="hidden" name="secondary_agent_voyage_flight_no" value="<?php echo $data_input['secondary_agent_voyage_flight_no'] ?>">
+                    </div>
+                  </div>
+                  <div class="form-group row m-0">
+                    <label class="col-sm-3 col-form-label">Voyage/Flight Date</label>
+                    <div class="col-sm-9">
+                      <label class="col-form-label">: <?php echo $data_input['secondary_agent_voyage_flight_date'] ?></label>
+                      <input type="hidden" name="secondary_agent_voyage_flight_date" value="<?php echo $data_input['secondary_agent_voyage_flight_date'] ?>">
+                    </div>
+                  </div>
+                  <div class="form-group row m-0">
+                    <label class="col-sm-3 col-form-label">Seal No.</label>
+                    <div class="col-sm-9">
+                      <label class="col-form-label">: <?php echo $data_input['seal_no'] ?></label>
+                      <input type="hidden" name="seal_no" value="<?php echo $data_input['seal_no'] ?>">
+                    </div>
+                  </div>
+                  <div class="form-group row m-0">
+                    <label class="col-sm-3 col-form-label">CIPL No.</label>
+                    <div class="col-sm-9">
+                      <label class="col-form-label">: <?php echo $data_input['cipl_no'] ?></label>
+                      <input type="hidden" name="cipl_no" value="<?php echo $data_input['cipl_no'] ?>">
+                    </div>
+                  </div>
+                  <div class="form-group row m-0">
+                    <label class="col-sm-3 col-form-label">Permit No</label>
+                    <div class="col-sm-9">
+                      <label class="col-form-label">: <?php echo $data_input['permit_no'] ?></label>
+                      <input type="hidden" name="permit_no" value="<?php echo $data_input['permit_no'] ?>">
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <?php endif; ?>
             </div>
           </div>
         </div>

@@ -1,3 +1,10 @@
+<?php
+  $role = $this->session->userdata('role');
+  $page_permission = array(
+    0 => ( in_array($role, array("Driver")) ? 0 : 1), //Create
+    1 => ( in_array($role, array("Driver")) ? 0 : 1), //Delete
+  );
+?>
 <div class="main-content">
   <div class="container-fluid">
     <div class="row clearfix">
@@ -32,6 +39,7 @@
               <b>SHIPMENT STATUS: <?php echo strtoupper($shipment['status']) ?></b>
             </div>
 
+            <?php if($page_permission[0] == 1): ?>
             <p class="mt-4 pt-4 border-bottom"><b>UPDATE SHIPMENT HISTORY</b></p>
             <button id="btn_collapse" class="btn btn-block btn-primary" type="button" data-toggle="collapse" data-target="#update_shipment_history" aria-expanded="false" aria-controls="update_shipment_history" onclick="$('#btn_collapse').addClass('d-none')">Click to Update Shipment History</button>
             <div class="collapse" id="update_shipment_history">
@@ -90,6 +98,7 @@
                 </div>
               </form>
             </div>
+            <?php endif; ?>
 
             <p class="mt-4 pt-4 border-bottom"><b>SHIPMENT HISTORY</b></p>
             <table id="table_history" class="table">
@@ -100,7 +109,9 @@
                   <th class="text-white font-weight-bold">Location</th>
                   <th class="text-white font-weight-bold">Status</th>
                   <th class="text-white font-weight-bold">Remarks</th>
+                  <?php if($page_permission[1] == 1): ?>
                   <th class="text-white font-weight-bold">Action</th>
+                  <?php endif; ?>
                 </tr>
               </thead>
               <tbody>
@@ -111,7 +122,9 @@
                   <td><?php echo $value['location'] ?></td>
                   <td><?php echo $value['status'] ?></td>
                   <td><?php echo $value['remarks'] ?></td>
+                  <?php if($page_permission[1] == 1): ?>
                   <td><a class="btn btn-danger btn-sm" onclick="return confirm('Are you sure?')" href="<?=base_url()?>shipment/shipment_history_delete_db/<?php echo $value['id']?>/<?php echo $value['id_shipment']?>"><i class="fa fa-trash"></i></a></td>
+                  <?php endif; ?>
                 </tr>
                 <?php endforeach; ?>
               </tbody>
@@ -127,6 +140,7 @@
     order: [[0, "desc"], [1, "desc"]]
   });
 
+  <?php if($page_permission[0] == 1): ?>
   $("#form_history").submit(function(e) {
     e.preventDefault(); // avoid to execute the actual submit of the form.
     $('button[name=submit]').attr('disabled', true);
@@ -172,4 +186,5 @@
       }
     });
   });
+  <?php endif; ?>
 </script>

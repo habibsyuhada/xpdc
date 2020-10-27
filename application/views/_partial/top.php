@@ -1,3 +1,15 @@
+<?php
+	$role = $this->session->userdata('role');
+	$side_permission = array(
+		0 => 1, //Shipment List
+		1 => ( in_array($role, array("Driver")) ? 0 : 1), //Create Shipment
+		2 => ( in_array($role, array("Driver")) ? 0 : 1), //Import Shipment
+		3 => ( in_array($role, array("Driver")) ? 0 : 1), //Operation
+		4 => ( in_array($role, array("Driver")) ? 0 : 1), //Master Tracking List
+		5 => ( in_array($role, array("Driver")) ? 0 : 1), //Create Shipment
+		6 => ( in_array($role, array("Driver")) ? 0 : 1), //Share Link
+	);
+?>
 <body>
 	<!--[if lt IE 8]>
 		<p class="browserupgrade">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> to improve your experience.</p>
@@ -66,10 +78,15 @@
 								<a href="javascript:void(0)"><i class="fas fa-pallet"></i><span>Shipment</span></a>
 								<div class="submenu-content">
 									<a href="<?php echo base_url() ?>shipment/shipment_list" class="menu-item">Shipment List</a>
+									<?php if($side_permission[1] == 1): ?>
 									<a href="<?php echo base_url() ?>shipment/shipment_create" class="menu-item">Create Shipment</a>
+									<?php endif; ?>
+									<?php if($side_permission[2] == 1): ?>
 									<a href="<?php echo base_url() ?>shipment/shipment_import" class="menu-item">Import Shipment</a>
+									<?php endif; ?>
 								</div>
 							</div>
+							<?php if($side_permission[3] == 1): ?>
 							<div class="nav-item has-sub">
 								<a href="javascript:void(0)"><i class="fas fa-cogs"></i><span>Operation</span></a>
 								<div class="submenu-content">
@@ -81,16 +98,25 @@
 									<a href="<?php echo base_url() ?>operation/delivered" class="menu-item">Delivered</a>
 								</div>
 							</div>
+							<?php endif; ?>
+							<?php if($side_permission[4] == 1 || $side_permission[5] == 1): ?>
 							<div class="nav-item has-sub">
 								<a href="javascript:void(0)"><i class="fas fa-box"></i><span>Master Tracking</span></a>
 								<div class="submenu-content">
+									<?php if($side_permission[4] == 1): ?>
 									<a href="<?php echo base_url() ?>master_tracking/master_tracking_list" class="menu-item">Master Tracking List</a>
+									<?php endif; ?>
+									<?php if($side_permission[5] == 1): ?>
 									<a href="<?php echo base_url() ?>master_tracking/master_tracking_create" class="menu-item">Create Shipment</a>
+									<?php endif; ?>
 								</div>
 							</div>
+							<?php endif; ?>
+							<?php if($side_permission[6] == 1): ?>
 							<div class="nav-item">
 								<a href="<?php echo base_url() ?>shipment/shipment_link_share"><i class="fas fa-share-alt"></i> <span>Share Link</span></a>
 							</div>
+							<?php endif; ?>
 							<?php endif; ?>
 						</nav>
 					</div>

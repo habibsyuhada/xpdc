@@ -24,11 +24,15 @@ class Shipment extends CI_Controller
 		$where['status_delete'] 	= 1;
 		if($this->session->userdata('branch')){
 			if($this->session->userdata('branch') != "NONE"){
-				$where["(shipper_city LIKE '%".$this->session->userdata('branch')."%' OR consignee_city LIKE '%".$this->session->userdata('branch')."%')"] 	= NULL;
+				$where["(shipper_city LIKE '%".$this->session->userdata('branch')."%' OR consignee_city LIKE '%".$this->session->userdata('branch')."%' OR branch LIKE '%".$this->session->userdata('branch')."%')"] 	= NULL;
 			}
 		}
 		else{
 			redirect('home/logout');
+		}
+
+		if($this->session->userdata('role') == "Driver"){
+			$where["(driver_pickup = ".$this->session->userdata('id')." OR driver_deliver = ".$this->session->userdata('id').")"] 	= NULL;
 		}
 		
 		foreach ($this->input->get() as $key => $value) {
@@ -44,6 +48,11 @@ class Shipment extends CI_Controller
 
 		unset($where);
 		$where['role'] 				= "Driver";
+		if($this->session->userdata('branch')){
+			if($this->session->userdata('branch') != "NONE"){
+				$where["branch"] 	= $this->session->userdata('branch');
+			}
+		}
 		$data['driver_list'] 	= $this->home_mod->user_list($where);
 
 		$data['country'] = json_decode(file_get_contents("./assets/country/country.json"), true);
@@ -175,7 +184,8 @@ class Shipment extends CI_Controller
 			'currency'					=> $post['currency'],
 			'ref_no'					=> $post['ref_no'],
 			'status'					=> $status,
-			'status_delete'				=> 1
+			'status_delete'				=> 1,
+			'branch'				=> $this->session->userdata('branch'),
 		);
 		$id_shipment = $this->shipment_mod->shipment_create_process_db($form_data);
 

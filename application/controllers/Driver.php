@@ -69,7 +69,7 @@ class Driver extends CI_Controller
 			'driver_'.$post['status'] 	=> $post['driver'],
 			'status_driver_'.$post['status'] 	=> 1,
 		);
-		$where['id IN ('.join(", ", $post['id']).')'] = NULL;
+		$where['id IN ('.$post['id'].')'] = NULL;
 		$this->shipment_mod->shipment_update_process_db($form_data, $where);
 
 		if($post['status'] == "pickup"){

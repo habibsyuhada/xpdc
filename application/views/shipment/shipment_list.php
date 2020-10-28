@@ -1,3 +1,14 @@
+<?php
+  $role = $this->session->userdata('role');
+  $page_permission = array(
+    0 => 1, //Driver
+    1 => ( in_array($role, array("Driver")) ? 0 : 1), //Update
+    2 => ( in_array($role, array("Driver")) ? 0 : 1), //Print
+    3 => ( in_array($role, array("Driver")) ? 0 : 1), //Delete
+    4 => ( in_array($role, array("Driver")) ? 0 : 1), //master_tracking
+    5 => ( in_array($role, array("Driver")) ? 0 : 1), //assign_driver
+  );
+?>
 <style>
   .widget{
     cursor: pointer;
@@ -416,16 +427,24 @@
                       <td><?php echo $value['status'] ?></td>
                       <td>
                         <a href="<?php echo base_url() ?>shipment/shipment_tracking/<?php echo $value['id'] ?>" class="btn btn-secondary" title="View"><i class="fas fa-eye m-0"></i></a>
+                        <?php if($page_permission[0] == 1): ?>
                         <a href="<?php echo base_url() ?>driver/driver_update/<?php echo $value['id'] ?>" class="btn btn-info" title="Driver"><i class="fas fa-truck"></i></a>
+                        <?php endif; ?>
                         <!-- <a target="_blank" href="<?php echo base_url() ?>shipment/shipment_tracking_label_pdf/<?php echo $value['id'] ?>" class="btn btn-warning" title="Print"><i class="fas fa-print m-0"></i></a> -->
+                        <?php if($page_permission[1] == 1): ?>
                         <a href="<?php echo base_url() ?>shipment/shipment_update/<?php echo $value['id'] ?>" class="btn btn-primary" title="Update"><i class="fas fa-edit m-0"></i></a>
+                        <?php endif; ?>
+                        <?php if($page_permission[2] == 1): ?>
                         <button type="button" class="btn btn btn-warning dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><i class="fas fa-print m-0"></i> <i class="ik ik-chevron-down m-0"></i></button>
                         <div class="dropdown-menu">
                           <a class="dropdown-item" target="_blank" href="<?php echo base_url() ?>shipment/shipment_tracking_label_pdf/<?php echo $value['id'] ?>">Label</a>
                           <a class="dropdown-item" target="_blank" href="<?php echo base_url() ?>shipment/shipment_awb_pdf/<?php echo $value['id'] ?>">WayBill</a>
                           <a class="dropdown-item" target="_blank" href="<?php echo base_url() ?>shipment/shipment_receipt_pdf/<?php echo $value['id'] ?>">Receipt</a>
                         </div>
+                        <?php endif; ?>
+                        <?php if($page_permission[3] == 1): ?>
                         <a href="<?php echo base_url(); ?>shipment/shipment_delete_process/<?php echo $value['id'] ?>" onclick="return confirm('Are you sure to delete this? You cannot revert it later.')" class="btn btn-danger" title="Delete"><i class="fas fa-trash m-0"></i></a>
+                        <?php endif; ?>
                       </td>
                     </tr>
                     <?php endforeach; ?>
@@ -433,6 +452,7 @@
                 </table>
                 
                 <div class="row clearfix">
+                  <?php if($page_permission[4] == 1): ?>
                   <div class="col-md-6  border-left border-right">
                     <form id="form_master_tracking" method="POST" action="<?php echo base_url(); ?>master_tracking/master_tracking_multi_create_process">
                       <div class="form-group">
@@ -448,6 +468,8 @@
                       </div>
                     </form> 
                   </div>
+                  <?php endif; ?>
+                  <?php if($page_permission[5] == 1): ?>
                   <div class="col-md-6 border-left border-right">
                     <form id="form_assign_driver" method="POST" action="<?php echo base_url(); ?>driver/assign_driver_process">
                       <div class="form-group">
@@ -472,6 +494,7 @@
                       </div>
                     </form> 
                   </div>
+                  <?php endif; ?>
                 </div>
               </div>
             </div>

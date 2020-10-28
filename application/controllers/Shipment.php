@@ -511,7 +511,14 @@ class Shipment extends CI_Controller
 			echo "Error : Tracking Number Not Found!";
 			return false;
 		}
+		elseif($post['history_date'] > date("Y-m-d") || $post['history_time'] > date("H:i")){
+			echo "Error : Tracking Number Not Found!";
+			return false;
+		}
+
 		$shipment_list 					= $shipment_list[0];
+
+		
 
 		$form_data = array(
 			'id_shipment' 	=> $shipment_list['id'],
@@ -521,6 +528,7 @@ class Shipment extends CI_Controller
 			'status' 				=> $post['history_status'],
 			'remarks' 			=> $post['history_remarks'],
 		);
+		test_var($form_data);
 		$id_history = $this->shipment_mod->shipment_history_create_process_db($form_data);
 		$this->shipment_update_last_history($shipment_list['id']);
 

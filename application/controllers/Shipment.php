@@ -45,6 +45,7 @@ class Shipment extends CI_Controller
 		$data['summary_list'] 	= $summary_list[0];
 
 		$data['shipment_list'] 	= $this->shipment_mod->shipment_list_db($where);
+		test_var($data['shipment_list']);
 
 		unset($where);
 		$where['role'] 				= "Driver";
@@ -344,22 +345,24 @@ class Shipment extends CI_Controller
 			'billing_contact_person' 		=> $post['billing_contact_person'],
 			'billing_phone_number' 			=> $post['billing_phone_number'],
 			'billing_email' 						=> $post['billing_email'],
-			'main_agent_name'					=> $post['main_agent_name'],
-			'main_agent_mawb_mbl'					=> $post['main_agent_mawb_mbl'],
-			'main_agent_carrier'					=> $post['main_agent_carrier'],
-			'main_agent_voyage_flight_no'			=> $post['main_agent_voyage_flight_no'],
-			'main_agent_voyage_flight_date'			=> $post['main_agent_voyage_flight_date'],
-			'secondary_agent_name'					=> $post['secondary_agent_name'],
-			'secondary_agent_mawb_mbl'				=> $post['secondary_agent_mawb_mbl'],
-			'secondary_agent_carrier'				=> $post['secondary_agent_carrier'],
-			'secondary_agent_voyage_flight_no'		=> $post['secondary_agent_voyage_flight_no'],
+			'main_agent_name'												=> $post['main_agent_name'],
+			'main_agent_mawb_mbl'										=> $post['main_agent_mawb_mbl'],
+			'main_agent_carrier'										=> $post['main_agent_carrier'],
+			'main_agent_voyage_flight_no'						=> $post['main_agent_voyage_flight_no'],
+			'main_agent_voyage_flight_date'					=> $post['main_agent_voyage_flight_date'],
+			'main_agent_cost'												=> $post['main_agent_cost'],
+			'secondary_agent_name'									=> $post['secondary_agent_name'],
+			'secondary_agent_mawb_mbl'							=> $post['secondary_agent_mawb_mbl'],
+			'secondary_agent_carrier'								=> $post['secondary_agent_carrier'],
+			'secondary_agent_voyage_flight_no'			=> $post['secondary_agent_voyage_flight_no'],
 			'secondary_agent_voyage_flight_date'		=> $post['secondary_agent_voyage_flight_date'],
-			'port_of_loading'						=> $post['port_of_loading'],
-			'port_of_discharge'						=> $post['port_of_discharge'],
-			'container_no'							=> $post['container_no'],
-			'seal_no'								=> $post['seal_no'],
-			'cipl_no'								=> $post['cipl_no'],
-			'permit_no'								=> $post['permit_no']
+			'secondary_agent_cost'									=> $post['secondary_agent_cost'],
+			'port_of_loading'												=> $post['port_of_loading'],
+			'port_of_discharge'											=> $post['port_of_discharge'],
+			'container_no'													=> $post['container_no'],
+			'seal_no'																=> $post['seal_no'],
+			'cipl_no'																=> $post['cipl_no'],
+			'permit_no'															=> $post['permit_no']
 		);
 		$where2['id_shipment'] = $post['id'];
 		$this->shipment_mod->shipment_detail_update_process_db($form_data, $where2);
@@ -521,14 +524,12 @@ class Shipment extends CI_Controller
 			echo "Error : Tracking Number Not Found!";
 			return false;
 		}
-		elseif($post['history_date'] > date("Y-m-d") || $post['history_time'] > date("H:i")){
-			echo "Error : Tracking Number Not Found!";
+		elseif($post['history_date'] > date("Y-m-d") || ($post['history_date'] == date("Y-m-d") && $post['history_time'] > date("H:i"))){
+			echo "Error : You cannot submit for a future date!<br>Current time : ".date("Y-m-d H:i");
 			return false;
 		}
 
 		$shipment_list 					= $shipment_list[0];
-
-		
 
 		$form_data = array(
 			'id_shipment' 	=> $shipment_list['id'],

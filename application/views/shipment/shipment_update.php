@@ -564,6 +564,10 @@
                         <label>Voyage/Flight Date</label>
                         <input type="date" class="form-control" name="main_agent_voyage_flight_date" placeholder="Voyage/Flight Date" value="<?= @$shipment['main_agent_voyage_flight_date'] ?>">
                       </div>
+                      <div class="form-group">
+                        <label>Cost</label>
+                        <input type="number" class="form-control" name="main_agent_cost" placeholder="Cost" value="<?= @$shipment['main_agent_cost'] ?>">
+                      </div>
                     </div>
                     <div class="col-md-6">
                       <h6 class="font-weight-bold">Secondary Agent</h6>
@@ -586,6 +590,10 @@
                       <div class="form-group">
                         <label>Voyage/Flight Date</label>
                         <input type="date" class="form-control" name="secondary_agent_voyage_flight_date" placeholder="Voyage/Flight No." value="<?= @$shipment['secondary_agent_voyage_flight_date'] ?>">
+                      </div>
+                      <div class="form-group">
+                        <label>Cost</label>
+                        <input type="number" class="form-control" name="secondary_agent_cost" placeholder="Cost" value="<?= @$shipment['secondary_agent_cost'] ?>">
                       </div>
                     </div>
                     <div class="col-md-6">

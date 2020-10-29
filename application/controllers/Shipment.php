@@ -45,7 +45,7 @@ class Shipment extends CI_Controller
 		$data['summary_list'] 	= $summary_list[0];
 
 		$data['shipment_list'] 	= $this->shipment_mod->shipment_list_db($where);
-		test_var($data['shipment_list']);
+		// test_var($data['shipment_list']);
 
 		unset($where);
 		$where['role'] 				= "Driver";

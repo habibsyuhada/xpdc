@@ -248,7 +248,7 @@
                       </div>
                       <div class="form-group">
                         <label>HSCode</label>
-                        <input type="text" class="form-control" name="hscode" value="<?php echo $shipment['hscode'] ?>" placeholder="HSCode" required>
+                        <input type="text" class="form-control" name="hscode" value="<?php echo $shipment['hscode'] ?>" placeholder="HSCode">
                       </div>
                       <div class="form-group">
                         <label>COO (Country of Origin)</label>

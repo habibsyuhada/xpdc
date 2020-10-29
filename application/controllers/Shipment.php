@@ -539,7 +539,6 @@ class Shipment extends CI_Controller
 			'status' 				=> $post['history_status'],
 			'remarks' 			=> $post['history_remarks'],
 		);
-		test_var($form_data);
 		$id_history = $this->shipment_mod->shipment_history_create_process_db($form_data);
 		$this->shipment_update_last_history($shipment_list['id']);
 

@@ -76,11 +76,11 @@
                   <div class="col-md-6">
                     <div class="form-group">
                       <label>Date</label>
-                      <input type="date" class="form-control" name="history_date" required>
+                      <input type="date" class="form-control" name="history_date" value="<?php echo date("Y-m-d") ?>" required>
                     </div>
                     <div class="form-group">
                       <label>Time</label>
-                      <input type="time" class="form-control" name="history_time" required>
+                      <input type="time" class="form-control" name="history_time" value="<?php echo date("H:i") ?>" required>
                     </div>
                     <div class="form-group">
                       <label>Remarks</label>
@@ -151,7 +151,7 @@
       url: url,
       data: $("#form_history").serialize(), // serializes the form's elements.
       success: function(data){
-        $('input[name=tracking_no]').val('');
+        // $('input[name=tracking_no]').val('');
         if(data.includes('Error') == true){
           showDangerToast(data);
         }

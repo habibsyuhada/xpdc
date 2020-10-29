@@ -267,6 +267,8 @@ class Shipment extends CI_Controller
 		echo $id;
 		$where['id_shipment'] 	= $id;
 		$packages_list 					= $this->shipment_mod->shipment_packages_list_db($where);
+		$where['id_shipment'] 	= $id;
+		$cost_list 							= $this->shipment_mod->shipment_cost_list_db($where);
 		$history_list 					= $this->shipment_mod->shipment_history_list_db($where);
 
 		if (count($shipment_list) <= 0) {
@@ -278,6 +280,7 @@ class Shipment extends CI_Controller
 		
 		$data['shipment'] 			= $shipment_list[0];
 		$data['packages_list'] 	= $packages_list;
+		$data['cost_list'] 			= $cost_list;
 		$data['history_list'] 	= $history_list;
 		$data['t'] 							= 'g';
 		$data['subview'] 				= 'shipment/shipment_update';
@@ -350,13 +353,13 @@ class Shipment extends CI_Controller
 			'main_agent_carrier'										=> $post['main_agent_carrier'],
 			'main_agent_voyage_flight_no'						=> $post['main_agent_voyage_flight_no'],
 			'main_agent_voyage_flight_date'					=> $post['main_agent_voyage_flight_date'],
-			'main_agent_cost'												=> $post['main_agent_cost'],
+			// 'main_agent_cost'												=> $post['main_agent_cost'],
 			'secondary_agent_name'									=> $post['secondary_agent_name'],
 			'secondary_agent_mawb_mbl'							=> $post['secondary_agent_mawb_mbl'],
 			'secondary_agent_carrier'								=> $post['secondary_agent_carrier'],
 			'secondary_agent_voyage_flight_no'			=> $post['secondary_agent_voyage_flight_no'],
 			'secondary_agent_voyage_flight_date'		=> $post['secondary_agent_voyage_flight_date'],
-			'secondary_agent_cost'									=> $post['secondary_agent_cost'],
+			// 'secondary_agent_cost'									=> $post['secondary_agent_cost'],
 			'port_of_loading'												=> $post['port_of_loading'],
 			'port_of_discharge'											=> $post['port_of_discharge'],
 			'container_no'													=> $post['container_no'],
@@ -391,6 +394,26 @@ class Shipment extends CI_Controller
 				);
 				$where['id'] = $post['id_detail'][$key];
 				$this->shipment_mod->shipment_packages_update_process_db($form_data, $where);
+			}
+		}
+		foreach ($post['cost'] as $key => $value) {
+			if($value != "" && $value != "0"){
+				unset($where);
+				if ($post['id_cost'][$key] == "") {
+					$form_data = array(
+						'id_shipment' 			=> $post['id'],
+						'description' 			=> $post['description'][$key],
+						'cost' 							=> $post['cost'][$key],
+					);
+					$this->shipment_mod->shipment_cost_create_process_db($form_data);
+				} else {
+					$form_data = array(
+						'description' 			=> $post['description'][$key],
+						'cost' 							=> $post['cost'][$key],
+					);
+					$where['id'] = $post['id_cost'][$key];
+					$this->shipment_mod->shipment_cost_update_process_db($form_data, $where);
+				}
 			}
 		}
 
@@ -435,6 +458,15 @@ class Shipment extends CI_Controller
 		);
 		$where['id'] = $id;
 		$this->shipment_mod->shipment_packages_update_process_db($form_data, $where);
+	}
+
+	public function shipment_cost_delete_process($id)
+	{
+		$form_data = array(
+			'status_delete'	=> 0,
+		);
+		$where['id'] = $id;
+		$this->shipment_mod->shipment_cost_update_process_db($form_data, $where);
 	}
 
 	public function shipment_update_last_history($id)

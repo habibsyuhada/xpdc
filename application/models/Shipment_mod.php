@@ -75,6 +75,31 @@ class Shipment_mod extends CI_Model
     $query = $this->db->get('shipment_packages');
     return $query->result_array();
   }
+
+  public function shipment_cost_create_process_db($data)
+  {
+    $this->db->insert('shipment_cost', $data);
+    $insert_id = $this->db->insert_id();
+    return $insert_id;
+  }
+
+  public function shipment_cost_update_process_db($data, $where)
+  {
+    $this->db->where($where);
+    $this->db->update('shipment_cost', $data);
+  }
+
+  function shipment_cost_list_db($where = null, $show_all = 0)
+  {
+    if (isset($where)) {
+      $this->db->where($where);
+    }
+    if ($show_all != 1) {
+      $this->db->where('status_delete', '1');
+    }
+    $query = $this->db->get('shipment_cost');
+    return $query->result_array();
+  }
   
   function shipment_history_delete($where,$table){
 		$this->db->where($where);

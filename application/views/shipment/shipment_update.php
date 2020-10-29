@@ -54,6 +54,9 @@
                   <a class="nav-link" id="shipping-info-tab" data-toggle="tab" href="#shipping-info" role="tab" aria-controls="shipping-info" aria-selected="false">Shipping Information</a>
                 </li>
                 <li class="nav-item">
+                  <a class="nav-link" id="shipment-cost-tab" data-toggle="tab" href="#shipment-cost" role="tab" aria-controls="shipment-cost" aria-selected="false">Shipment Cost</a>
+                </li>
+                <li class="nav-item">
                   <a class="nav-link" id="assign-shipment-tab" data-toggle="tab" href="#assign-shipment" role="tab" aria-controls="assign-shipment" aria-selected="false">Assign Shipment</a>
                 </li>
               </ul>
@@ -564,10 +567,10 @@
                         <label>Voyage/Flight Date</label>
                         <input type="date" class="form-control" name="main_agent_voyage_flight_date" placeholder="Voyage/Flight Date" value="<?= @$shipment['main_agent_voyage_flight_date'] ?>">
                       </div>
-                      <div class="form-group">
+                      <!-- <div class="form-group">
                         <label>Cost</label>
                         <input type="number" class="form-control" name="main_agent_cost" placeholder="Cost" value="<?= @$shipment['main_agent_cost'] ?>">
-                      </div>
+                      </div> -->
                     </div>
                     <div class="col-md-6">
                       <h6 class="font-weight-bold">Secondary Agent</h6>
@@ -591,10 +594,10 @@
                         <label>Voyage/Flight Date</label>
                         <input type="date" class="form-control" name="secondary_agent_voyage_flight_date" placeholder="Voyage/Flight No." value="<?= @$shipment['secondary_agent_voyage_flight_date'] ?>">
                       </div>
-                      <div class="form-group">
+                      <!-- <div class="form-group">
                         <label>Cost</label>
                         <input type="number" class="form-control" name="secondary_agent_cost" placeholder="Cost" value="<?= @$shipment['secondary_agent_cost'] ?>">
-                      </div>
+                      </div> -->
                     </div>
                     <div class="col-md-6">
                       <div class="form-group">
@@ -623,6 +626,61 @@
                         <label>Permit No.</label>
                         <input type="text" class="form-control" name="permit_no" placeholder="Permit No." value="<?= $shipment['permit_no'] ?>">
                       </div>
+                    </div>
+                  </div>
+                  <div class="mt-2 row">
+                    <div class="text-left col-6">
+                      <span class="btn btn-danger previous-tab">Back</span>
+                    </div>
+                    <div class="text-right col-6">
+                      <span class="btn btn-info next-tab">Next</span>
+                    </div>
+                  </div>
+                </div>
+                <div class="tab-pane fade" id="shipment-cost" role="tabpanel" aria-labelledby="shipment-cost-tab">
+                  <br>
+                  <div class="row clearfix">
+                    <div class="col-md-12">
+                      <table class="table text-center">
+                        <thead>
+                          <tr class="bg-info">
+                            <th class="text-white font-weight-bold">Description</th>
+                            <th class="text-white font-weight-bold">Type</th>
+                            <th class="text-white font-weight-bold">Cost</th>
+                            <th class="text-white font-weight-bold"></th>
+                          </tr>
+                        </thead>
+                        <tbody>
+                          <?php if(count($cost_list) < 1) : ?>
+                          <tr>
+                            <td>
+                              <input type="text" class="form-control" name="description[]">
+                              <input type="hidden" class="form-control" name="id_cost[]">
+                            </td>
+                            <td><input type="number" class="form-control" name="cost[]"></td>
+                            <td>
+                              <button type="button" class="btn btn-primary" onclick="addrow(this)"><i class="fas fa-plus m-0"></i></button>
+                            </td>
+                          </tr>
+                          <?php endif; ?>
+                          <?php foreach ($cost_list as $key => $value) : ?>
+                            <tr>
+                              <td>
+                                <input type="text" class="form-control" name="description[]" value="<?php echo $value['description'] ?>">
+                                <input type="hidden" class="form-control" name="id_cost[]" value="<?php echo $value['id'] ?>">
+                              </td>
+                              <td><input type="number" class="form-control" name="cost[]" value="<?php echo $value['cost']+0 ?>"></td>
+                              <td>
+                                <?php if ($key == 0) : ?>
+                                  <button type="button" class="btn btn-primary" onclick="addrow(this)"><i class="fas fa-plus m-0"></i></button>
+                                <?php else : ?>
+                                  <button type="button" onclick="deletepackage('<?php echo $value['id'] ?>', this)" class="btn btn-danger"><i class="fas fa-trash m-0"></i></button>
+                                <?php endif; ?>
+                              </td>
+                            </tr>
+                          <?php endforeach; ?>
+                        </tbody>
+                      </table>
                     </div>
                   </div>
                   <div class="mt-2 row">

@@ -645,7 +645,6 @@
                         <thead>
                           <tr class="bg-info">
                             <th class="text-white font-weight-bold">Description</th>
-                            <th class="text-white font-weight-bold">Type</th>
                             <th class="text-white font-weight-bold">Cost</th>
                             <th class="text-white font-weight-bold"></th>
                           </tr>

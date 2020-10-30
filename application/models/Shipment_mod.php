@@ -106,10 +106,13 @@ class Shipment_mod extends CI_Model
 		$this->db->delete($table);
   }
 
-  function shipment_label_list_db($where = null)
+  function shipment_label_list_db($where = null, $show_all = 0)
   {
     if (isset($where)) {
       $this->db->where($where);
+    }
+    if ($show_all != 1) {
+      $this->db->where('shipment_packages.status_delete', '1');
     }
     $this->db->select("shipment.*, shipment_packages.qty, shipment_packages.piece_type, shipment_packages.length, shipment_packages.width, shipment_packages.height, shipment_packages.weight");
     $this->db->from('shipment');

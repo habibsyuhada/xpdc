@@ -24,7 +24,7 @@ class Shipment extends CI_Controller
 		$where['status_delete'] 	= 1;
 		if($this->session->userdata('branch')){
 			if($this->session->userdata('branch') != "NONE"){
-				$where["(shipper_city LIKE '%".$this->session->userdata('branch')."%' OR consignee_city LIKE '%".$this->session->userdata('branch')."%' OR branch LIKE '%".$this->session->userdata('branch')."%')"] 	= NULL;
+				// $where["(shipper_city LIKE '%".$this->session->userdata('branch')."%' OR consignee_city LIKE '%".$this->session->userdata('branch')."%' OR branch LIKE '%".$this->session->userdata('branch')."%')"] 	= NULL;
 			}
 		}
 		else{

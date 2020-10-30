@@ -72,7 +72,7 @@ class Driver extends CI_Controller
 		$where['id IN ('.$post['id'].')'] = NULL;
 		$this->shipment_mod->shipment_update_process_db($form_data, $where);
 
-		if($post['status'] == "pickup"){
+		if($post['status'] == "deliver"){
 			$date_now = date("Y-m-d");
 			$time_now = date("H:i:s");
 			foreach ($shipment_list as $key => $value) {

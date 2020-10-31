@@ -75,10 +75,13 @@
 							<div class="nav-item">
 								<a href="<?php echo base_url() ?>home/home"><i class="fas fa-home"></i><span>Dashboard</span></a>
 							</div>
+							<?php if(in_array("1", array($side_permission[0], $side_permission[1], $side_permission[2]))): ?>
 							<div class="nav-item has-sub">
 								<a href="javascript:void(0)"><i class="fas fa-pallet"></i><span>Shipment</span></a>
 								<div class="submenu-content">
+									<?php if($side_permission[0] == 1): ?>
 									<a href="<?php echo base_url() ?>shipment/shipment_list" class="menu-item">Shipment List</a>
+									<?php endif; ?>
 									<?php if($side_permission[1] == 1): ?>
 									<a href="<?php echo base_url() ?>shipment/shipment_create" class="menu-item">Create Shipment</a>
 									<?php endif; ?>
@@ -87,6 +90,7 @@
 									<?php endif; ?>
 								</div>
 							</div>
+							<?php endif; ?>
 							<?php if($side_permission[7] == 1): ?>
 							<div class="nav-item has-sub">
 								<a href="javascript:void(0)"><i class="fas fa-truck"></i><span>Driver</span></a>

@@ -421,6 +421,57 @@ class Shipment extends CI_Controller
 		redirect('shipment/shipment_update/' . $post['id']);
 	}
 
+	public function shipment_cost($id){
+		$where['id'] 						= $id;
+		$shipment_list 					= $this->shipment_mod->shipment_list_db($where);
+		$data['shipment_list'] 	= $shipment_list[0];
+
+		unset($where);
+		echo $id;
+		$where['id_shipment'] 	= $id;
+		$cost_list 							= $this->shipment_mod->shipment_cost_list_db($where);
+		$data['cost_list'] 			= $cost_list;
+
+		$data['subview'] 				= 'shipment/shipment_cost';
+		$data['meta_title'] 		= 'Shipment Cost';
+		$this->load->view('index', $data);
+	}
+
+	public function shipment_cost_process(){
+		$post = $this->input->post();
+		foreach ($post['unit_price'] as $key => $value) {
+			if($value != "" && $value != "0"){
+				unset($where);
+				if ($post['id_cost'][$key] == "") {
+					$form_data = array(
+						'id_shipment' 			=> $post['id'],
+						'description' 			=> $post['description'][$key],
+						'qty' 							=> $post['qty'][$key],
+						'uom' 							=> $post['uom'][$key],
+						'currency' 					=> $post['currency'][$key],
+						'unit_price' 				=> $post['unit_price'][$key],
+						'exchange_rate' 		=> $post['exchange_rate'][$key],
+					);
+					$this->shipment_mod->shipment_cost_create_process_db($form_data);
+				} else {
+					$form_data = array(
+						'description' 			=> $post['description'][$key],
+						'qty' 							=> $post['qty'][$key],
+						'uom' 							=> $post['uom'][$key],
+						'currency' 					=> $post['currency'][$key],
+						'unit_price' 				=> $post['unit_price'][$key],
+						'exchange_rate' 		=> $post['exchange_rate'][$key],
+					);
+					$where['id'] = $post['id_cost'][$key];
+					$this->shipment_mod->shipment_cost_update_process_db($form_data, $where);
+				}
+			}
+		}
+
+		// $this->session->set_flashdata('success', 'Your Shipment data has been Updated!');
+		// redirect('shipment/shipment_cost/' . $post['id']);
+	}
+
 	public function shipment_delete_process($id)
 	{
 		$form_data = array(

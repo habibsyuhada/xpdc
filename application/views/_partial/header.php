@@ -57,5 +57,13 @@
       margin-left: 0px;
       width: 100%;
     }
+
+    .min-w30px{
+      min-width: 150px;
+    }
+
+    .overflow-auto{
+      overflow: auto;
+    }
   </style>
 </head>

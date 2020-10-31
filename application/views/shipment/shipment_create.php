@@ -286,8 +286,8 @@
                                 <option value="Carton">Carton</option>
                                 <option value="Crate">Crate</option>
                                 <option value="Loose">Loose</option>
-                                <option value="Loose">Container 20 GP</option>
-                                <option value="Loose">Container 40 GP</option>
+                                <option value="Container 20 GP">Container 20 GP</option>
+                                <option value="Container 40 GP">Container 40 GP</option>
                                 <option value="Others">Others</option>
                               </select>
                             </td>

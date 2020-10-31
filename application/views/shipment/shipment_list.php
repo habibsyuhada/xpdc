@@ -428,6 +428,7 @@
                       <td>
                         <a href="<?php echo base_url() ?>shipment/shipment_tracking/<?php echo $value['id'] ?>" class="btn btn-secondary" title="View"><i class="fas fa-eye m-0"></i></a>
                         <?php if($page_permission[0] == 1): ?>
+                        <a href="<?php echo base_url() ?>shipment/shipment_cost/<?php echo $value['id'] ?>" class="btn btn-success" title="Driver"><i class="fas fa-dollar-sign"></i></a>
                         <a href="<?php echo base_url() ?>driver/driver_update/<?php echo $value['id'] ?>" class="btn btn-info" title="Driver"><i class="fas fa-truck"></i></a>
                         <?php endif; ?>
                         <!-- <a target="_blank" href="<?php echo base_url() ?>shipment/shipment_tracking_label_pdf/<?php echo $value['id'] ?>" class="btn btn-warning" title="Print"><i class="fas fa-print m-0"></i></a> -->

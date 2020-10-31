@@ -16,293 +16,6 @@
 </style>
 <div class="main-content">
 	<div class="container-fluid">
-    <div class="row justify-content-center clearfix">
-      <div class="col-xl-4 col-lg-4 col-md-4 col-sm-12">
-        <div class="widget">
-          <div class="widget-body">
-            <div class="d-flex justify-content-between align-items-center">
-              <div class="state">
-                <h6>Booked</h6>
-                <h2><?php echo $summary_list['Booked']+0 ?></h2>
-              </div>
-              <div class="icon">
-                <i class="far fa-bookmark"></i>
-              </div>
-            </div>
-            <!-- <small class="text-small mt-10 d-block">6% higher than last month</small> -->
-          </div>
-          <div class="progress progress-sm">
-            <div class="progress-bar bg-primary" role="progressbar" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100" style="width: 100%;"></div>
-          </div>
-        </div>
-      </div>
-      <div class="col-xl-4 col-lg-4 col-md-4 col-sm-12">
-        <div class="widget">
-          <div class="widget-body">
-            <div class="d-flex justify-content-between align-items-center">
-              <div class="state">
-                <h6>Booking Confirmed</h6>
-                <h2><?php echo $summary_list['Booking Confirmed']+0 ?></h2>
-              </div>
-              <div class="icon">
-                <i class="fas fa-check-circle"></i>
-              </div>
-            </div>
-            <!-- <small class="text-small mt-10 d-block">6% higher than last month</small> -->
-          </div>
-          <div class="progress progress-sm">
-            <div class="progress-bar bg-primary" role="progressbar" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100" style="width: 100%;"></div>
-          </div>
-        </div>
-      </div>
-      <div class="col-xl-4 col-lg-4 col-md-4 col-sm-12">
-        <div class="widget">
-          <div class="widget-body">
-            <div class="d-flex justify-content-between align-items-center">
-              <div class="state">
-                <h6>Picked up</h6>
-                <h2><?php echo $summary_list['Picked up']+0 ?></h2>
-              </div>
-              <div class="icon">
-                <i class="fas fa-people-carry"></i>
-              </div>
-            </div>
-            <!-- <small class="text-small mt-10 d-block">6% higher than last month</small> -->
-          </div>
-          <div class="progress progress-sm">
-            <div class="progress-bar bg-primary" role="progressbar" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100" style="width: 100%;"></div>
-          </div>
-        </div>
-      </div>
-      <div class="col-xl-4 col-lg-4 col-md-4 col-sm-12">
-        <div class="widget">
-          <div class="widget-body">
-            <div class="d-flex justify-content-between align-items-center">
-              <div class="state">
-                <h6>Pending Payment</h6>
-                <h2><?php echo $summary_list['Pending Payment']+0 ?></h2>
-              </div>
-              <div class="icon">
-                <i class="fas fa-money-bill"></i>
-              </div>
-            </div>
-            <!-- <small class="text-small mt-10 d-block">6% higher than last month</small> -->
-          </div>
-          <div class="progress progress-sm">
-            <div class="progress-bar bg-danger" role="progressbar" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100" style="width: 100%;"></div>
-          </div>
-        </div>
-      </div>
-      <div class="col-xl-4 col-lg-4 col-md-4 col-sm-12">
-        <div class="widget">
-          <div class="widget-body">
-            <div class="d-flex justify-content-between align-items-center">
-              <div class="state">
-                <h6>Service Center</h6>
-                <h2><?php echo $summary_list['Service Center']+0 ?></h2>
-              </div>
-              <div class="icon">
-                <i class="fas fa-info-circle"></i>
-              </div>
-            </div>
-            <!-- <small class="text-small mt-10 d-block">6% higher than last month</small> -->
-          </div>
-          <div class="progress progress-sm">
-            <div class="progress-bar bg-warning" role="progressbar" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100" style="width: 100%;"></div>
-          </div>
-        </div>
-      </div>
-      <div class="col-xl-4 col-lg-4 col-md-4 col-sm-12">
-        <div class="widget">
-          <div class="widget-body">
-            <div class="d-flex justify-content-between align-items-center">
-              <div class="state">
-                <h6>Departed</h6>
-                <h2><?php echo $summary_list['Departed']+0 ?></h2>
-              </div>
-              <div class="icon">
-                <i class="fas fa-plane-departure"></i>
-              </div>
-            </div>
-            <!-- <small class="text-small mt-10 d-block">61% higher than last month</small> -->
-          </div>
-          <div class="progress progress-sm">
-            <div class="progress-bar bg-info" role="progressbar" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100" style="width: 100%;"></div>
-          </div>
-        </div>
-      </div>
-      <div class="col-xl-4 col-lg-4 col-md-4 col-sm-12">
-        <div class="widget">
-          <div class="widget-body">
-            <div class="d-flex justify-content-between align-items-center">
-              <div class="state">
-                <h6>Arrived</h6>
-                <h2><?php echo $summary_list['Arrived']+0 ?></h2>
-              </div>
-              <div class="icon">
-                <i class="fas fa-plane-arrival"></i>
-              </div>
-            </div>
-            <!-- <small class="text-small mt-10 d-block">Total Events</small> -->
-          </div>
-          <div class="progress progress-sm">
-            <div class="progress-bar bg-success" role="progressbar" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100" style="width: 100%;"></div>
-          </div>
-        </div>
-      </div>
-      <div class="col-xl-4 col-lg-4 col-md-4 col-sm-12">
-        <div class="widget">
-          <div class="widget-body">
-            <div class="d-flex justify-content-between align-items-center">
-              <div class="state">
-                <h6>In Transit</h6>
-                <h2><?php echo $summary_list['In Transit']+0 ?></h2>
-              </div>
-              <div class="icon">
-                <i class="fas fa-globe-asia"></i>
-              </div>
-            </div>
-            <!-- <small class="text-small mt-10 d-block">Total Events</small> -->
-          </div>
-          <div class="progress progress-sm">
-            <div class="progress-bar bg-info" role="progressbar" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100" style="width: 100%;"></div>
-          </div>
-        </div>
-      </div>
-      <div class="col-xl-4 col-lg-4 col-md-4 col-sm-12">
-        <div class="widget">
-          <div class="widget-body">
-            <div class="d-flex justify-content-between align-items-center">
-              <div class="state">
-                <h6>Returned</h6>
-                <h2><?php echo $summary_list['Returned']+0 ?></h2>
-              </div>
-              <div class="icon">
-                <i class="fas fa-undo"></i>
-              </div>
-            </div>
-            <!-- <small class="text-small mt-10 d-block">Total Events</small> -->
-          </div>
-          <div class="progress progress-sm">
-            <div class="progress-bar bg-warning" role="progressbar" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100" style="width: 100%;"></div>
-          </div>
-        </div>
-      </div>
-      <div class="col-xl-4 col-lg-4 col-md-4 col-sm-12">
-        <div class="widget">
-          <div class="widget-body">
-            <div class="d-flex justify-content-between align-items-center">
-              <div class="state">
-                <h6>Clearance Event</h6>
-                <h2><?php echo $summary_list['Clearance Event']+0 ?></h2>
-              </div>
-              <div class="icon">
-                <i class="fas fa-credit-card"></i>
-              </div>
-            </div>
-            <!-- <small class="text-small mt-10 d-block">Total Events</small> -->
-          </div>
-          <div class="progress progress-sm">
-            <div class="progress-bar bg-warning" role="progressbar" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100" style="width: 100%;"></div>
-          </div>
-        </div>
-      </div>
-      <div class="col-xl-4 col-lg-4 col-md-4 col-sm-12">
-        <div class="widget">
-          <div class="widget-body">
-            <div class="d-flex justify-content-between align-items-center">
-              <div class="state">
-                <h6>Clearance Complete</h6>
-                <h2><?php echo $summary_list['Clearance Complete']+0 ?></h2>
-              </div>
-              <div class="icon">
-                <i class="far fa-credit-card"></i>
-              </div>
-            </div>
-            <!-- <small class="text-small mt-10 d-block">Total Events</small> -->
-          </div>
-          <div class="progress progress-sm">
-            <div class="progress-bar bg-success" role="progressbar" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100" style="width: 100%;"></div>
-          </div>
-        </div>
-      </div>
-      <div class="col-xl-4 col-lg-4 col-md-4 col-sm-12">
-        <div class="widget">
-          <div class="widget-body">
-            <div class="d-flex justify-content-between align-items-center">
-              <div class="state">
-                <h6>With Courier</h6>
-                <h2><?php echo $summary_list['With Courier']+0 ?></h2>
-              </div>
-              <div class="icon">
-                <i class="fas fa-truck"></i>
-              </div>
-            </div>
-            <!-- <small class="text-small mt-10 d-block">Total Comments</small> -->
-          </div>
-          <div class="progress progress-sm">
-            <div class="progress-bar bg-info" role="progressbar" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100" style="width: 100%;"></div>
-          </div>
-        </div>
-      </div>
-      <div class="col-xl-4 col-lg-4 col-md-4 col-sm-12">
-        <div class="widget">
-          <div class="widget-body">
-            <div class="d-flex justify-content-between align-items-center">
-              <div class="state">
-                <h6>Delivered</h6>
-                <h2><?php echo $summary_list['Delivered']+0 ?></h2>
-              </div>
-              <div class="icon">
-                <i class="fas fa-box"></i>
-              </div>
-            </div>
-            <!-- <small class="text-small mt-10 d-block">Total Comments</small> -->
-          </div>
-          <div class="progress progress-sm">
-            <div class="progress-bar bg-success" role="progressbar" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100" style="width: 100%;"></div>
-          </div>
-        </div>
-      </div>
-      <div class="col-xl-4 col-lg-4 col-md-4 col-sm-12">
-        <div class="widget">
-          <div class="widget-body">
-            <div class="d-flex justify-content-between align-items-center">
-              <div class="state">
-                <h6>On Hold</h6>
-                <h2><?php echo $summary_list['On Hold']+0 ?></h2>
-              </div>
-              <div class="icon">
-                <i class="fas fa-pause-circle"></i>
-              </div>
-            </div>
-            <!-- <small class="text-small mt-10 d-block">Total Comments</small> -->
-          </div>
-          <div class="progress progress-sm">
-            <div class="progress-bar bg-danger" role="progressbar" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100" style="width: 100%;"></div>
-          </div>
-        </div>
-      </div>
-      <div class="col-xl-4 col-lg-4 col-md-4 col-sm-12">
-        <div class="widget">
-          <div class="widget-body">
-            <div class="d-flex justify-content-between align-items-center">
-              <div class="state">
-                <h6>Cancelled</h6>
-                <h2><?php echo $summary_list['Cancelled']+0 ?></h2>
-              </div>
-              <div class="icon">
-                <i class="fas fa-window-close"></i>
-              </div>
-            </div>
-            <!-- <small class="text-small mt-10 d-block">Total Comments</small> -->
-          </div>
-          <div class="progress progress-sm">
-            <div class="progress-bar bg-danger" role="progressbar" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100" style="width: 100%;"></div>
-          </div>
-        </div>
-      </div>
-    </div>
     <div class="row clearfix">
       <div class="col-md-12">
         <div class="card">
@@ -316,7 +29,7 @@
           </div>
           <div class="card-body" style="display: none;">
             <form id="form_filter" action="" method="GET">
-              <input type="hidden" name="status" value="<?php echo ($this->input->get('status') ? $this->input->get('status') : '') ?>">
+              <input type="hidden" name="status_driver" value="<?php echo ($this->input->get('status_driver') ? $this->input->get('status_driver') : '') ?>">
               <h6 class="font-weight-bold">Service Information</h6>
               <div class="row clearfix">
                 <div class="col-md-6">
@@ -326,6 +39,27 @@
                       <option value="">-- Select One --</option>
                       <option <?php echo ($this->input->get('type_of_shipment') == 'International' ? 'selected' : '') ?> value="International">International</option>
                       <option <?php echo ($this->input->get('type_of_shipment') == 'Domestic' ? 'selected' : '') ?> value="Domestic">Domestic</option>
+                    </select>
+                  </div>
+                  <div class="form-group">
+                    <label>Status</label>
+                    <select class="form-control" name="status">
+                      <option value="">-- Select One --</option>
+                      <option <?php echo ($this->input->get('status') == 'Booked' ? 'selected' : '') ?> value="Booked">Booked</option>
+                      <option <?php echo ($this->input->get('status') == 'Booking Confirmed' ? 'selected' : '') ?> value="Booking Confirmed">Booking Confirmed</option>
+                      <option <?php echo ($this->input->get('status') == 'Picked up' ? 'selected' : '') ?> value="Picked up">Picked up</option>
+                      <option <?php echo ($this->input->get('status') == 'Pending Payment' ? 'selected' : '') ?> value="Pending Payment">Pending Payment</option>
+                      <option <?php echo ($this->input->get('status') == 'Service Center' ? 'selected' : '') ?> value="Service Center">Service Center</option>
+                      <option <?php echo ($this->input->get('status') == 'Departed' ? 'selected' : '') ?> value="Departed">Departed</option>
+                      <option <?php echo ($this->input->get('status') == 'Arrived' ? 'selected' : '') ?> value="Arrived">Arrived</option>
+                      <option <?php echo ($this->input->get('status') == 'In Transit' ? 'selected' : '') ?> value="In Transit">In Transit</option>
+                      <option <?php echo ($this->input->get('status') == 'Returned' ? 'selected' : '') ?> value="Returned">Returned</option>
+                      <option <?php echo ($this->input->get('status') == 'Clearance Event' ? 'selected' : '') ?> value="Clearance Event">Clearance Event</option>
+                      <option <?php echo ($this->input->get('status') == 'Clearance Complete' ? 'selected' : '') ?> value="Clearance Complete">Clearance Complete</option>
+                      <option <?php echo ($this->input->get('status') == 'With Courier' ? 'selected' : '') ?> value="With Courier">With Courier</option>
+                      <option <?php echo ($this->input->get('status') == 'Delivered' ? 'selected' : '') ?> value="Delivered">Delivered</option>
+                      <option <?php echo ($this->input->get('status') == 'On Hold' ? 'selected' : '') ?> value="On Hold">On Hold</option>
+                      <option <?php echo ($this->input->get('status') == 'Cancelled' ? 'selected' : '') ?> value="Cancelled">Cancelled</option>
                     </select>
                   </div>
                 </div>

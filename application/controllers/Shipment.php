@@ -24,25 +24,28 @@ class Shipment extends CI_Controller
 		$where['status_delete'] 	= 1;
 		if($this->session->userdata('branch')){
 			if($this->session->userdata('branch') != "NONE"){
-				// $where["(shipper_city LIKE '%".$this->session->userdata('branch')."%' OR consignee_city LIKE '%".$this->session->userdata('branch')."%' OR branch LIKE '%".$this->session->userdata('branch')."%')"] 	= NULL;
+				$where["(assign_branch LIKE '%".$this->session->userdata('branch')."%' OR branch LIKE '%".$this->session->userdata('branch')."%')"] 	= NULL;
 			}
 		}
 		else{
 			redirect('home/logout');
 		}
 
-		if($this->session->userdata('role') == "Driver"){
-			$where["(driver_pickup = ".$this->session->userdata('id')." OR driver_deliver = ".$this->session->userdata('id').")"] 	= NULL;
+		if($this->input->get('status_driver')){
+			$where["(driver_".$this->input->get('status_driver')." = ".$this->session->userdata('id')." OR driver_".$this->input->get('status_driver')." = ".$this->session->userdata('id').")"] 	= NULL;
 		}
 		
 		foreach ($this->input->get() as $key => $value) {
 			if ($this->input->get($key)) {
-				$where[$key." LIKE '%".$value."%'"] 	= NULL;
+				$exc_filter = array("status_driver");
+				if(!in_array($key, $exc_filter)){
+					$where[$key." LIKE '%".$value."%'"] 	= NULL;
+				}
 			}
 		}
 
-		$summary_list 					= $this->shipment_mod->summary_per_status($where);
-		$data['summary_list'] 	= $summary_list[0];
+		// $summary_list 					= $this->shipment_mod->summary_per_status($where);
+		// $data['summary_list'] 	= $summary_list[0];
 
 		$data['shipment_list'] 	= $this->shipment_mod->shipment_list_db($where);
 		// test_var($data['shipment_list']);
@@ -468,8 +471,8 @@ class Shipment extends CI_Controller
 			}
 		}
 
-		// $this->session->set_flashdata('success', 'Your Shipment data has been Updated!');
-		// redirect('shipment/shipment_cost/' . $post['id']);
+		$this->session->set_flashdata('success', 'Your Shipment data has been Updated!');
+		redirect('shipment/shipment_cost/' . $post['id']);
 	}
 
 	public function shipment_delete_process($id)

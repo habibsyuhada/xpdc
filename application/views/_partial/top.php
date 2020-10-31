@@ -8,6 +8,7 @@
 		4 => ( in_array($role, array("Driver")) ? 0 : 1), //Master Tracking List
 		5 => ( in_array($role, array("Driver")) ? 0 : 1), //Create Shipment
 		6 => ( in_array($role, array("Driver")) ? 0 : 1), //Share Link
+		7 => ( in_array($role, array("Driver", "Super Admin")) ? 1 : 0), //Driver
 	);
 ?>
 <body>
@@ -65,14 +66,14 @@
 				<div class="sidebar-content">
 					<div class="nav-container">
 						<nav id="main-menu-navigation" class="navigation-main">
-							<div class="nav-lavel">Navigation</div>
+							<div class="nav-lavel">Navigation (<?php echo $role ?>)</div>
 							<?php if($this->session->userdata('id') == "Guest"): ?>
 							<div class="nav-item">
 								<a href="<?php echo base_url() ?>home/shipment_create"><i class="fas fa-plus"></i><span>Create Shipment</span></a>
 							</div>
 							<?php else: ?>
 							<div class="nav-item">
-								<a href="<?php echo base_url() ?>shipment/shipment_list"><i class="fas fa-home"></i><span>Dashboard</span></a>
+								<a href="<?php echo base_url() ?>home/home"><i class="fas fa-home"></i><span>Dashboard</span></a>
 							</div>
 							<div class="nav-item has-sub">
 								<a href="javascript:void(0)"><i class="fas fa-pallet"></i><span>Shipment</span></a>
@@ -86,6 +87,15 @@
 									<?php endif; ?>
 								</div>
 							</div>
+							<?php if($side_permission[7] == 1): ?>
+							<div class="nav-item has-sub">
+								<a href="javascript:void(0)"><i class="fas fa-truck"></i><span>Driver</span></a>
+								<div class="submenu-content">
+									<a href="<?php echo base_url() ?>shipment/shipment_list?status_driver=pickup" class="menu-item">PickUp List</a>
+									<a href="<?php echo base_url() ?>shipment/shipment_list?status_driver=deliver" class="menu-item">Deliver List</a>
+								</div>
+							</div>
+							<?php endif; ?>
 							<?php if($side_permission[3] == 1): ?>
 							<div class="nav-item has-sub">
 								<a href="javascript:void(0)"><i class="fas fa-cogs"></i><span>Operation</span></a>

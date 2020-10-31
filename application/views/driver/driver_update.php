@@ -69,6 +69,58 @@
               <div class="col-md-6">
                 <h6 class="font-weight-bold">PickUp Detail</h6>
                 <hr>
+                <div class="form-group row m-0">
+                  <label class="col-sm-12 col-form-label font-weight-bold">Pickup Information</label>
+                </div>
+                <div class="form-group row m-0">
+                  <label class="col-sm-3 col-form-label">Name</label>
+                  <div class="col-sm-9">
+                    <label class="col-form-label">: <?php echo $shipment['pickup_name'] ?></label>
+                  </div>
+                </div>
+                <div class="form-group row m-0">
+                  <label class="col-sm-3 col-form-label">Address</label>
+                  <div class="col-sm-9">
+                    <label class="col-form-label">: <?php echo $shipment['pickup_address'] ?></label>
+                  </div>
+                </div>
+                <div class="form-group row m-0">
+                  <label class="col-sm-3 col-form-label">City</label>
+                  <div class="col-sm-9">
+                    <label class="col-form-label">: <?php echo $shipment['pickup_city'] ?></label>
+                  </div>
+                </div>
+                <div class="form-group row m-0">
+                  <label class="col-sm-3 col-form-label">Country</label>
+                  <div class="col-sm-9">
+                    <label class="col-form-label">: <?php echo $shipment['pickup_country'] ?></label>
+                  </div>
+                </div>
+                <div class="form-group row m-0">
+                  <label class="col-sm-3 col-form-label">Postcode</label>
+                  <div class="col-sm-9">
+                    <label class="col-form-label">: <?php echo $shipment['pickup_postcode'] ?></label>
+                  </div>
+                </div>
+                <div class="form-group row m-0">
+                  <label class="col-sm-3 col-form-label">Contact Person</label>
+                  <div class="col-sm-9">
+                    <label class="col-form-label">: <?php echo $shipment['pickup_contact_person'] ?></label>
+                  </div>
+                </div>
+                <div class="form-group row m-0">
+                  <label class="col-sm-3 col-form-label">Phone Number</label>
+                  <div class="col-sm-9">
+                    <label class="col-form-label">: <?php echo $shipment['pickup_phone_number'] ?></label>
+                  </div>
+                </div>
+                <div class="form-group row m-0">
+                  <label class="col-sm-3 col-form-label">Email</label>
+                  <div class="col-sm-9">
+                    <label class="col-form-label">: <?php echo $shipment['pickup_email'] ?></label>
+                  </div>
+                </div>
+                <hr>
                 <div class="form-group">
                   <label>Dirver</label>
                   <input type="text" class="form-control" name="driver_pickup" value="<?php echo (@$driver_list[$shipment["driver_pickup"]]['name'] == "" ? "Not Assigned" : @$driver_list[$shipment["driver_pickup"]]['name']) ?>" readonly>
@@ -136,7 +188,7 @@
                   <input type="hidden" name="status" value="deliver">
                   <div class="form-group">
                     <label>Location</label>
-                    <input type="text" class="form-control" name="location_driver_deliver" value="<?php echo $shipment["shipper_city"].", ".$shipment["shipper_country"] ?>">
+                    <input type="text" class="form-control" name="location_driver_deliver" value="<?php echo $shipment["pickup_city"].", ".$shipment["pickup_country"] ?>">
                   </div>
                   <div class="form-group">
                     <label>Photo upload</label>

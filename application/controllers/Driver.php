@@ -54,12 +54,12 @@ class Driver extends CI_Controller
 			}
 			elseif($post['status'] == "deliver"){
 				foreach ($shipment_list as $key => $value) {
-					if($value['status'] != "Clearance Complete"){
+					if($value['status'] != "Service Center"){
 						$shipment[] = $value['tracking_no'];
 					}
 				}
 				if(count(@$shipment) > 0){
-					$this->session->set_flashdata('error', 'All shipment below is not Clearance Complete status!<br>'.join('<br>', $shipment));
+					$this->session->set_flashdata('error', 'All shipment below is not Service Center status!<br>'.join('<br>', $shipment));
 					redirect('shipment/shipment_list');
 				}
 			}

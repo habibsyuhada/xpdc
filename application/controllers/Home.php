@@ -67,10 +67,28 @@ class Home extends CI_Controller {
 		if(!$this->session->userdata('id')){
 			redirect('home/login');
 		}
-		redirect('shipment/shipment_list');
-		// $data['subview'] 			= 'home/home';
-		// $data['meta_title'] 	= 'Home';
-		// $this->load->view('index', $data);
+		// redirect('shipment/shipment_list');
+
+		$where['status_delete'] 	= 1;
+		if($this->session->userdata('branch')){
+			if($this->session->userdata('branch') != "NONE"){
+				$where["(assign_branch LIKE '%".$this->session->userdata('branch')."%' OR branch LIKE '%".$this->session->userdata('branch')."%')"] 	= NULL;
+			}
+		}
+		else{
+			redirect('home/logout');
+		}
+
+		if($this->session->userdata('role') == "Driver"){
+			$where["(driver_pickup = ".$this->session->userdata('id')." OR driver_deliver = ".$this->session->userdata('id').")"] 	= NULL;
+		}
+
+		$summary_list 					= $this->shipment_mod->summary_per_status($where);
+		$data['summary_list'] 	= $summary_list[0];
+
+		$data['subview'] 			= 'home/home';
+		$data['meta_title'] 	= 'Home';
+		$this->load->view('index', $data);
 	}
 
 	public function login(){

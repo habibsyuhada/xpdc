@@ -1,5 +1,6 @@
 <?php defined('BASEPATH') OR exit('No direct script access allowed'); ?>
 
+<<<<<<< Updated upstream
 ERROR - 2020-10-30 05:36:04 --> 404 Page Not Found: Assets/favicon.ico
 ERROR - 2020-10-30 05:36:27 --> 404 Page Not Found: Shipment/favicon.ico
 ERROR - 2020-10-30 05:46:20 --> Severity: Notice --> Undefined index: description C:\xampp\htdocs\xpdc\application\views\shipment\shipment_update.php 657
@@ -74,3 +75,14 @@ WHERE `id_shipment` = '293'
 AND `status_delete` = '1'
 ERROR - 2020-10-30 05:56:15 --> Severity: Notice --> Undefined variable: costs_list C:\xampp\htdocs\xpdc\application\views\shipment\shipment_update.php 654
 ERROR - 2020-10-30 05:56:15 --> Severity: Warning --> Invalid argument supplied for foreach() C:\xampp\htdocs\xpdc\application\views\shipment\shipment_update.php 654
+=======
+ERROR - 2020-10-30 11:10:52 --> 404 Page Not Found: Assets/favicon.ico
+ERROR - 2020-10-30 11:11:02 --> 404 Page Not Found: Shipment/favicon.ico
+ERROR - 2020-10-30 11:11:15 --> Severity: Notice --> Undefined offset: 0 C:\xampp\htdocs\xpdc\application\controllers\Driver.php 99
+ERROR - 2020-10-30 11:11:31 --> Severity: Notice --> Undefined offset: 0 C:\xampp\htdocs\xpdc\application\controllers\Shipment.php 496
+ERROR - 2020-10-30 11:14:35 --> Severity: Warning --> count(): Parameter must be an array or an object that implements Countable C:\xampp\htdocs\xpdc\application\controllers\Driver.php 35
+ERROR - 2020-10-30 11:14:35 --> Severity: Warning --> count(): Parameter must be an array or an object that implements Countable C:\xampp\htdocs\xpdc\application\controllers\Driver.php 61
+ERROR - 2020-10-30 11:15:35 --> Severity: Notice --> Undefined offset: 0 C:\xampp\htdocs\xpdc\application\controllers\Driver.php 99
+ERROR - 2020-10-30 11:16:21 --> Severity: Notice --> Undefined offset: 0 C:\xampp\htdocs\xpdc\application\controllers\Driver.php 99
+ERROR - 2020-10-30 11:16:34 --> Severity: Notice --> Undefined offset: 0 C:\xampp\htdocs\xpdc\application\controllers\Driver.php 99
+>>>>>>> Stashed changes

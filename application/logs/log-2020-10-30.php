@@ -72,6 +72,7 @@ AND `status_delete` = '1'
 ERROR - 2020-10-30 05:56:05 --> Query error: Unknown column 'status_delete' in 'where clause' - Invalid query: SELECT *
 FROM `shipment_cost`
 WHERE `id_shipment` = '293'
+<<<<<<< Updated upstream
 AND `status_delete` = '1'
 ERROR - 2020-10-30 05:56:15 --> Severity: Notice --> Undefined variable: costs_list C:\xampp\htdocs\xpdc\application\views\shipment\shipment_update.php 654
 ERROR - 2020-10-30 05:56:15 --> Severity: Warning --> Invalid argument supplied for foreach() C:\xampp\htdocs\xpdc\application\views\shipment\shipment_update.php 654
@@ -85,4 +86,21 @@ ERROR - 2020-10-30 11:14:35 --> Severity: Warning --> count(): Parameter must be
 ERROR - 2020-10-30 11:15:35 --> Severity: Notice --> Undefined offset: 0 C:\xampp\htdocs\xpdc\application\controllers\Driver.php 99
 ERROR - 2020-10-30 11:16:21 --> Severity: Notice --> Undefined offset: 0 C:\xampp\htdocs\xpdc\application\controllers\Driver.php 99
 ERROR - 2020-10-30 11:16:34 --> Severity: Notice --> Undefined offset: 0 C:\xampp\htdocs\xpdc\application\controllers\Driver.php 99
+>>>>>>> Stashed changes
+=======
+AND `status_delete` = '1'
+ERROR - 2020-10-30 05:56:15 --> Severity: Notice --> Undefined variable: costs_list C:\xampp\htdocs\xpdc\application\views\shipment\shipment_update.php 654
+ERROR - 2020-10-30 05:56:15 --> Severity: Warning --> Invalid argument supplied for foreach() C:\xampp\htdocs\xpdc\application\views\shipment\shipment_update.php 654
+ERROR - 2020-10-30 22:39:57 --> Severity: Warning --> mysqli::real_connect(): (HY000/1049): Unknown database 'ehxnbljayf' C:\xampp\htdocs\xpdc\system\database\drivers\mysqli\mysqli_driver.php 203
+ERROR - 2020-10-30 22:39:57 --> Unable to connect to the database
+ERROR - 2020-10-30 22:40:26 --> 404 Page Not Found: Assets/favicon.ico
+ERROR - 2020-10-30 22:40:38 --> 404 Page Not Found: Shipment/favicon.ico
+ERROR - 2020-10-30 22:48:35 --> Severity: Notice --> Undefined variable: cost_list C:\xampp\htdocs\xpdc\application\views\shipment\shipment_cost.php 67
+ERROR - 2020-10-30 22:48:35 --> Severity: Warning --> count(): Parameter must be an array or an object that implements Countable C:\xampp\htdocs\xpdc\application\views\shipment\shipment_cost.php 67
+ERROR - 2020-10-30 22:48:35 --> Severity: Notice --> Undefined variable: cost_list C:\xampp\htdocs\xpdc\application\views\shipment\shipment_cost.php 113
+ERROR - 2020-10-30 22:48:35 --> Severity: Warning --> Invalid argument supplied for foreach() C:\xampp\htdocs\xpdc\application\views\shipment\shipment_cost.php 113
+ERROR - 2020-10-30 22:48:39 --> Severity: Notice --> Undefined variable: cost_list C:\xampp\htdocs\xpdc\application\views\shipment\shipment_cost.php 67
+ERROR - 2020-10-30 22:48:39 --> Severity: Warning --> count(): Parameter must be an array or an object that implements Countable C:\xampp\htdocs\xpdc\application\views\shipment\shipment_cost.php 67
+ERROR - 2020-10-30 22:48:39 --> Severity: Notice --> Undefined variable: cost_list C:\xampp\htdocs\xpdc\application\views\shipment\shipment_cost.php 113
+ERROR - 2020-10-30 22:48:39 --> Severity: Warning --> Invalid argument supplied for foreach() C:\xampp\htdocs\xpdc\application\views\shipment\shipment_cost.php 113
 >>>>>>> Stashed changes

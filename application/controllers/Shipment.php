@@ -31,6 +31,10 @@ class Shipment extends CI_Controller
 			redirect('home/logout');
 		}
 
+		if($this->session->userdata('role') == "Driver"){
+			$where["(driver_pickup = ".$this->session->userdata('id')." OR driver_deliver = ".$this->session->userdata('id').")"] 	= NULL;
+		}
+
 		if($this->input->get('status_driver')){
 			$where["(driver_".$this->input->get('status_driver')." = ".$this->session->userdata('id')." OR driver_".$this->input->get('status_driver')." = ".$this->session->userdata('id').")"] 	= NULL;
 		}

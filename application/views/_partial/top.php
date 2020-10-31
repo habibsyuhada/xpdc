@@ -1,7 +1,7 @@
 <?php
 	$role = $this->session->userdata('role');
 	$side_permission = array(
-		0 => 1, //Shipment List
+		0 => ( in_array($role, array("Driver")) ? 0 : 1), //Shipment List
 		1 => ( in_array($role, array("Driver")) ? 0 : 1), //Create Shipment
 		2 => ( in_array($role, array("Driver")) ? 0 : 1), //Import Shipment
 		3 => ( in_array($role, array("Driver")) ? 0 : 1), //Operation

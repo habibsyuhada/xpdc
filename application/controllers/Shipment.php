@@ -193,6 +193,7 @@ class Shipment extends CI_Controller
 			'ref_no'					=> $post['ref_no'],
 			'status'					=> $status,
 			'status_delete'				=> 1,
+			'created_by'				=> $this->session->userdata('email'),
 			'branch'				=> $this->session->userdata('branch'),
 		);
 		$id_shipment = $this->shipment_mod->shipment_create_process_db($form_data);
@@ -325,6 +326,7 @@ class Shipment extends CI_Controller
 			'declared_value'			=> $post['declared_value'],
 			'currency'					=> $post['currency'],
 			'ref_no'					=> $post['ref_no'],
+			'assign_branch'					=> $post['assign_branch'],
 		);
 		$where['id'] = $post['id'];
 		$this->shipment_mod->shipment_update_process_db($form_data, $where);

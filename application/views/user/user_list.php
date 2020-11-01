@@ -12,25 +12,24 @@
                 <table class="table data_table">
                   <thead>
                     <tr class="bg-info">
-                      <th class="text-white font-weight-bold"></th>
-                      <th class="text-white font-weight-bold">Master Tracking No</th>
-                      <th class="text-white font-weight-bold">Number Shipment</th>
-                      <th class="text-white font-weight-bold">Remarks</th>
+                      <th class="text-white font-weight-bold">Name</th>
+                      <th class="text-white font-weight-bold">E-Mail</th>
+                      <th class="text-white font-weight-bold">Role</th>
+                      <th class="text-white font-weight-bold">Branch</th>
                       <th class="text-white font-weight-bold"></th>
                     </tr>
                   </thead>
                   <tbody>
-                    <?php foreach ($master_list as $key => $value): ?>
+                    <?php foreach ($user_list as $key => $value): ?>
                     <tr>
-                      <td><input type="checkbox" class="checkbox-20"></td>
-                      <td><?php echo $value['master_tracking'] ?></td>
-                      <td><?php echo @count(@$shipment[$value['master_tracking']]) ?></td>
-                      <td><?php echo $value['remarks'] ?></td>
+                      <td><?php echo $value['name'] ?></td>
+                      <td><?php echo $value['email'] ?></td>
+                      <td><?php echo $value['role'] ?></td>
+                      <td><?php echo $value['branch'] ?></td>
                       <td>
-                        <a href="<?php echo base_url() ?>master_tracking/master_tracking_detail/<?php echo $value['master_tracking'] ?>" class="btn btn-secondary" title="View"><i class="fas fa-eye m-0"></i></a>
-                        <!-- <a target="_blank" href="#" class="btn btn-warning" title="Print"><i class="fas fa-print m-0"></i></a>
-                        <a href="#" class="btn btn-primary" title="Update"><i class="fas fa-edit m-0"></i></a>
-                        <a href="#" class="btn btn-danger" title="Delete"><i class="fas fa-trash m-0"></i></a> -->
+                        <a href="<?php echo base_url() ?>user/user_update/<?php echo $value['id'] ?>" class="btn btn-primary" title="Update"><i class="fas fa-edit m-0"></i></a>
+                        <a href="<?php echo base_url() ?>user/user_rest_password/<?php echo $value['id'] ?>" class="btn btn-success" title="Reset" onclick="return confirm('Are You Sure?')"><i class="fas fa-redo-alt"></i></a>
+                        <a href="<?php echo base_url() ?>user/user_delete_process/<?php echo $value['id'] ?>" class="btn btn-danger" title="Delete" onclick="return confirm('Are You Sure?')"><i class="fas fa-trash m-0"></i></a>
                       </td>
                     </tr>
                     <?php endforeach; ?>

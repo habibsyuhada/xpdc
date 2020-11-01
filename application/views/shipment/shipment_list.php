@@ -2,11 +2,12 @@
   $role = $this->session->userdata('role');
   $page_permission = array(
     0 => 1, //Driver
-    1 => ( in_array($role, array("Driver")) ? 0 : 1), //Update
-    2 => ( in_array($role, array("Driver")) ? 0 : 1), //Print
-    3 => ( in_array($role, array("Driver")) ? 0 : 1), //Delete
-    4 => ( in_array($role, array("Driver")) ? 0 : 1), //master_tracking
-    5 => ( in_array($role, array("Driver")) ? 0 : 1), //assign_driver
+    1 => ( in_array($role, array("Super Admin", "Operator")) ? 1 : 0), //Update
+    2 => ( in_array($role, array("Super Admin", "Operator", "Finance")) ? 1 : 0), //Print
+    3 => ( in_array($role, array("Super Admin", "Operator")) ? 1 : 0), //Delete
+    4 => ( in_array($role, array("Super Admin", "Operator")) ? 1 : 0), //master_tracking
+    5 => ( in_array($role, array("Super Admin", "Operator")) ? 1 : 0), //assign_driver
+    6 => ( in_array($role, array("Super Admin", "Finance")) ? 1 : 0), //shipment cost
   );
 ?>
 <style>
@@ -129,7 +130,11 @@
       <div class="col-md-12">
         <div class="card">
           <div class="card-header">
+            <?php if($this->input->get('status_driver')): ?>
+            <h3 class="text-capitalize"><?php echo $this->input->get('status_driver') ?> List</h3>
+            <?php else: ?>
             <h3>Shipment List <?php echo ($this->input->get('status') ? '('.$this->input->get('status').')' : '') ?></h3>
+            <?php endif; ?>
           </div>
           <div class="card-body">
             <div class="row">
@@ -161,8 +166,10 @@
                       <td><?php echo $value['status'] ?></td>
                       <td>
                         <a href="<?php echo base_url() ?>shipment/shipment_tracking/<?php echo $value['id'] ?>" class="btn btn-secondary" title="View"><i class="fas fa-eye m-0"></i></a>
-                        <?php if($page_permission[0] == 1): ?>
+                        <?php if($page_permission[6] == 1): ?>
                         <a href="<?php echo base_url() ?>shipment/shipment_cost/<?php echo $value['id'] ?>" class="btn btn-success" title="Driver"><i class="fas fa-dollar-sign"></i></a>
+                        <?php endif; ?>
+                        <?php if($page_permission[0] == 1): ?>
                         <a href="<?php echo base_url() ?>driver/driver_update/<?php echo $value['id'] ?>" class="btn btn-info" title="Driver"><i class="fas fa-truck"></i></a>
                         <?php endif; ?>
                         <!-- <a target="_blank" href="<?php echo base_url() ?>shipment/shipment_tracking_label_pdf/<?php echo $value['id'] ?>" class="btn btn-warning" title="Print"><i class="fas fa-print m-0"></i></a> -->

@@ -32,3 +32,45 @@ AND `status_delete` = '1'
 ORDER BY `shipment`.`created_date` DESC, `shipment`.`tracking_no` DESC
 ERROR - 2020-10-31 18:50:09 --> Severity: Warning --> count(): Parameter must be an array or an object that implements Countable C:\xampp\htdocs\xpdc\application\controllers\Driver.php 35
 ERROR - 2020-10-31 18:50:09 --> Severity: Warning --> count(): Parameter must be an array or an object that implements Countable C:\xampp\htdocs\xpdc\application\controllers\Driver.php 50
+ERROR - 2020-10-31 19:35:19 --> Severity: Notice --> Undefined variable: master_list C:\xampp\htdocs\xpdc\application\views\user\user_list.php 23
+ERROR - 2020-10-31 19:35:19 --> Severity: Warning --> Invalid argument supplied for foreach() C:\xampp\htdocs\xpdc\application\views\user\user_list.php 23
+ERROR - 2020-10-31 19:35:20 --> 404 Page Not Found: User/favicon.ico
+ERROR - 2020-10-31 19:35:39 --> Severity: Notice --> Undefined index: master_tracking C:\xampp\htdocs\xpdc\application\views\user\user_list.php 26
+ERROR - 2020-10-31 19:35:39 --> Severity: Notice --> Undefined index: remarks C:\xampp\htdocs\xpdc\application\views\user\user_list.php 28
+ERROR - 2020-10-31 19:35:39 --> Severity: Notice --> Undefined index: master_tracking C:\xampp\htdocs\xpdc\application\views\user\user_list.php 30
+ERROR - 2020-10-31 19:35:39 --> Severity: Notice --> Undefined index: master_tracking C:\xampp\htdocs\xpdc\application\views\user\user_list.php 26
+ERROR - 2020-10-31 19:35:39 --> Severity: Notice --> Undefined index: remarks C:\xampp\htdocs\xpdc\application\views\user\user_list.php 28
+ERROR - 2020-10-31 19:35:39 --> Severity: Notice --> Undefined index: master_tracking C:\xampp\htdocs\xpdc\application\views\user\user_list.php 30
+ERROR - 2020-10-31 19:35:39 --> Severity: Notice --> Undefined index: master_tracking C:\xampp\htdocs\xpdc\application\views\user\user_list.php 26
+ERROR - 2020-10-31 19:35:39 --> Severity: Notice --> Undefined index: remarks C:\xampp\htdocs\xpdc\application\views\user\user_list.php 28
+ERROR - 2020-10-31 19:35:39 --> Severity: Notice --> Undefined index: master_tracking C:\xampp\htdocs\xpdc\application\views\user\user_list.php 30
+ERROR - 2020-10-31 19:35:39 --> Severity: Notice --> Undefined index: master_tracking C:\xampp\htdocs\xpdc\application\views\user\user_list.php 26
+ERROR - 2020-10-31 19:35:40 --> Severity: Notice --> Undefined index: remarks C:\xampp\htdocs\xpdc\application\views\user\user_list.php 28
+ERROR - 2020-10-31 19:35:40 --> Severity: Notice --> Undefined index: master_tracking C:\xampp\htdocs\xpdc\application\views\user\user_list.php 30
+ERROR - 2020-10-31 19:35:40 --> Severity: Notice --> Undefined index: master_tracking C:\xampp\htdocs\xpdc\application\views\user\user_list.php 26
+ERROR - 2020-10-31 19:35:40 --> Severity: Notice --> Undefined index: remarks C:\xampp\htdocs\xpdc\application\views\user\user_list.php 28
+ERROR - 2020-10-31 19:35:40 --> Severity: Notice --> Undefined index: master_tracking C:\xampp\htdocs\xpdc\application\views\user\user_list.php 30
+ERROR - 2020-10-31 19:35:40 --> Severity: Notice --> Undefined index: master_tracking C:\xampp\htdocs\xpdc\application\views\user\user_list.php 26
+ERROR - 2020-10-31 19:35:40 --> Severity: Notice --> Undefined index: remarks C:\xampp\htdocs\xpdc\application\views\user\user_list.php 28
+ERROR - 2020-10-31 19:35:40 --> Severity: Notice --> Undefined index: master_tracking C:\xampp\htdocs\xpdc\application\views\user\user_list.php 30
+ERROR - 2020-10-31 19:35:40 --> Severity: Notice --> Undefined index: master_tracking C:\xampp\htdocs\xpdc\application\views\user\user_list.php 26
+ERROR - 2020-10-31 19:35:40 --> Severity: Notice --> Undefined index: remarks C:\xampp\htdocs\xpdc\application\views\user\user_list.php 28
+ERROR - 2020-10-31 19:35:40 --> Severity: Notice --> Undefined index: master_tracking C:\xampp\htdocs\xpdc\application\views\user\user_list.php 30
+ERROR - 2020-10-31 19:35:40 --> Severity: Notice --> Undefined index: master_tracking C:\xampp\htdocs\xpdc\application\views\user\user_list.php 26
+ERROR - 2020-10-31 19:35:40 --> Severity: Notice --> Undefined index: remarks C:\xampp\htdocs\xpdc\application\views\user\user_list.php 28
+ERROR - 2020-10-31 19:35:40 --> Severity: Notice --> Undefined index: master_tracking C:\xampp\htdocs\xpdc\application\views\user\user_list.php 30
+ERROR - 2020-10-31 19:37:00 --> Severity: Notice --> Undefined index: master_tracking C:\xampp\htdocs\xpdc\application\views\user\user_list.php 30
+ERROR - 2020-10-31 19:37:00 --> Severity: Notice --> Undefined index: master_tracking C:\xampp\htdocs\xpdc\application\views\user\user_list.php 30
+ERROR - 2020-10-31 19:37:00 --> Severity: Notice --> Undefined index: master_tracking C:\xampp\htdocs\xpdc\application\views\user\user_list.php 30
+ERROR - 2020-10-31 19:37:00 --> Severity: Notice --> Undefined index: master_tracking C:\xampp\htdocs\xpdc\application\views\user\user_list.php 30
+ERROR - 2020-10-31 19:37:00 --> Severity: Notice --> Undefined index: master_tracking C:\xampp\htdocs\xpdc\application\views\user\user_list.php 30
+ERROR - 2020-10-31 19:37:00 --> Severity: Notice --> Undefined index: master_tracking C:\xampp\htdocs\xpdc\application\views\user\user_list.php 30
+ERROR - 2020-10-31 19:37:00 --> Severity: Notice --> Undefined index: master_tracking C:\xampp\htdocs\xpdc\application\views\user\user_list.php 30
+ERROR - 2020-10-31 19:37:00 --> Severity: Notice --> Undefined index: master_tracking C:\xampp\htdocs\xpdc\application\views\user\user_list.php 30
+ERROR - 2020-10-31 19:47:00 --> Severity: Notice --> Undefined index: email C:\xampp\htdocs\xpdc\application\controllers\User.php 51
+ERROR - 2020-10-31 19:47:00 --> Query error: Column 'email' cannot be null - Invalid query: INSERT INTO `user` (`name`, `email`, `password`, `role`, `branch`) VALUES ('habibsumedang@gmail.com', NULL, '889bafb8da42610a062c16b93cfaec86', 'Super Admin', 'NONE')
+ERROR - 2020-10-31 19:50:31 --> Severity: error --> Exception: Call to undefined method User_mod::user_list() C:\xampp\htdocs\xpdc\application\controllers\User.php 34
+ERROR - 2020-10-31 19:58:31 --> Severity: error --> Exception: Call to undefined method User_mod::user_update_process_db() C:\xampp\htdocs\xpdc\application\controllers\User.php 94
+ERROR - 2020-10-31 19:59:07 --> Severity: error --> Exception: Call to undefined method User_mod::user_update_process_db() C:\xampp\htdocs\xpdc\application\controllers\User.php 94
+ERROR - 2020-10-31 19:59:23 --> Severity: error --> Exception: Too few arguments to function User::user_update(), 0 passed in C:\xampp\htdocs\xpdc\system\core\CodeIgniter.php on line 532 and exactly 1 expected C:\xampp\htdocs\xpdc\application\controllers\User.php 70
+ERROR - 2020-10-31 20:09:30 --> Severity: error --> Exception: syntax error, unexpected end of file C:\xampp\htdocs\xpdc\application\views\_partial\top.php 138

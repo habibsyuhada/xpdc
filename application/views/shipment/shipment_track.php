@@ -1,8 +1,8 @@
 <?php
   $role = $this->session->userdata('role');
   $page_permission = array(
-    0 => ( in_array($role, array("Driver")) ? 0 : 1), //Create
-    1 => ( in_array($role, array("Driver")) ? 0 : 1), //Delete
+    0 => ( in_array($role, array("Super Admin", "Operator")) ? 1 : 0), //Create
+    1 => ( in_array($role, array("Super Admin", "Operator")) ? 1 : 0), //Delete
   );
 ?>
 <div class="main-content">

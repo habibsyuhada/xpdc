@@ -662,9 +662,11 @@
                     </div>
                     <div class="col-md-6">
                       <div class="form-group">
-                        <label>Branch Manager</label>
+                        <label>Branch</label>
                         <select class="form-control" name="assign_branch">
                           <option value="">-- Select One --</option>
+                          <option value="BATAM" <?php echo ($shipment['assign_branch'] == "BATAM" ? 'selected' : '') ?>>BATAM</option>
+                          <option value="JAKARTA" <?php echo ($shipment['assign_branch'] == "JAKARTA" ? 'selected' : '') ?>>JAKARTA</option>
                         </select>
                       </div>
                       <div class="form-group">

@@ -200,7 +200,11 @@ class Shipment_mod extends CI_Model
     SUM(IF(status = 'With Courier', 1, 0)) as 'With Courier', 
     SUM(IF(status = 'Delivered', 1, 0)) as 'Delivered', 
     SUM(IF(status = 'On Hold', 1, 0)) as 'On Hold', 
-    SUM(IF(status = 'Cancelled', 1, 0)) as 'Cancelled' 
+    SUM(IF(status = 'Cancelled', 1, 0)) as 'Cancelled',
+    SUM(IF(status_driver_pickup = '1' AND driver_pickup = '".$this->session->userdata('id')."', 1, 0)) as 'Outstanding Pickup',
+    SUM(IF(status_driver_pickup = '2' AND driver_pickup = '".$this->session->userdata('id')."', 1, 0)) as 'Done Pickup',
+    SUM(IF(status_driver_deliver = '1' AND driver_deliver = '".$this->session->userdata('id')."', 1, 0)) as 'Outstanding Deliver',
+    SUM(IF(status_driver_deliver = '2' AND driver_deliver = '".$this->session->userdata('id')."', 1, 0)) as 'Done Deliver'
     FROM shipment";
     if (count($where_str) > 0) {
       $query .= " WHERE " . join(" AND ", $where_str);

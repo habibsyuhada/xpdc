@@ -1,14 +1,15 @@
 <?php
 	$role = $this->session->userdata('role');
 	$side_permission = array(
-		0 => ( in_array($role, array("Driver")) ? 0 : 1), //Shipment List
-		1 => ( in_array($role, array("Driver")) ? 0 : 1), //Create Shipment
-		2 => ( in_array($role, array("Driver")) ? 0 : 1), //Import Shipment
-		3 => ( in_array($role, array("Driver")) ? 0 : 1), //Operation
-		4 => ( in_array($role, array("Driver")) ? 0 : 1), //Master Tracking List
-		5 => ( in_array($role, array("Driver")) ? 0 : 1), //Create Shipment
-		6 => ( in_array($role, array("Driver")) ? 0 : 1), //Share Link
+		0 => ( in_array($role, array("Super Admin", "Operator", "Finance")) ? 1 : 0), //Shipment List
+		1 => ( in_array($role, array("Super Admin", "Operator")) ? 1 : 0), //Create Shipment
+		2 => ( in_array($role, array("Super Admin", "Operator")) ? 1 : 0), //Import Shipment
+		3 => ( in_array($role, array("Super Admin", "Operator")) ? 1 : 0), //Operation
+		4 => ( in_array($role, array("Super Admin", "Operator")) ? 1 : 0), //Master Tracking List
+		5 => ( in_array($role, array("Super Admin", "Operator")) ? 1 : 0), //Create Master Tracking
+		6 => ( in_array($role, array("Super Admin", "Operator")) ? 1 : 0), //Share Link
 		7 => ( in_array($role, array("Driver", "Super Admin")) ? 1 : 0), //Driver
+		8 => ( in_array($role, array("Super Admin")) ? 1 : 0), //User Management
 	);
 ?>
 <body>
@@ -43,6 +44,7 @@
 								<?php if($this->session->userdata('id') == "Guest"): ?>
 								<a class="dropdown-item" href="<?php echo base_url(); ?>"><i class="ik ik-home dropdown-icon"></i> Home Page</a>
 								<?php else: ?>
+								<a class="dropdown-item" href="<?php echo base_url(); ?>user/user_password"><i class="fas fa-key dropdown-icon"></i> Change Password</a>
 								<a class="dropdown-item" href="<?php echo base_url(); ?>home/logout"><i class="ik ik-power dropdown-icon"></i> Logout</a>
 								<?php endif; ?>
 							</div>
@@ -121,7 +123,7 @@
 									<a href="<?php echo base_url() ?>master_tracking/master_tracking_list" class="menu-item">Master Tracking List</a>
 									<?php endif; ?>
 									<?php if($side_permission[5] == 1): ?>
-									<a href="<?php echo base_url() ?>master_tracking/master_tracking_create" class="menu-item">Create Shipment</a>
+									<a href="<?php echo base_url() ?>master_tracking/master_tracking_create" class="menu-item">Create Master Tracking</a>
 									<?php endif; ?>
 								</div>
 							</div>
@@ -131,7 +133,16 @@
 								<a href="<?php echo base_url() ?>shipment/shipment_link_share"><i class="fas fa-share-alt"></i> <span>Share Link</span></a>
 							</div>
 							<?php endif; ?>
+							<?php if($side_permission[8] == 1): ?>
+							<div class="nav-item has-sub">
+								<a href="javascript:void(0)"><i class="fas fa-user"></i><span>User</span></a>
+								<div class="submenu-content">
+									<a href="<?php echo base_url() ?>user/user_list" class="menu-item">User List</a>
+									<a href="<?php echo base_url() ?>user/user_create" class="menu-item">Create User</a>
+								</div>
+							</div>
 							<?php endif; ?>
+							<?php endif;//Not Guest ?>
 						</nav>
 					</div>
 				</div>

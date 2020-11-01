@@ -1,8 +1,8 @@
 <?php
   $role = $this->session->userdata('role');
   $page_permission = array(
-    0 => ( in_array($role, array("Driver")) ? 0 : 1), //Dashboard not Driver
-    1 => ( !in_array($role, array("Driver")) ? 0 : 1), //Dashboard Driver
+    0 => ( in_array($role, array("Super Admin", "Operator", "Finance")) ? 1 : 0), //Dashboard not Driver
+    1 => ( in_array($role, array("Driver")) ? 1 : 0), //Dashboard Driver
   );
 ?>
 <style>
@@ -15,7 +15,7 @@
     <?php if($page_permission[0] == 1): ?>
 		<div class="row justify-content-center clearfix">
       <div class="col-xl-4 col-lg-4 col-md-4 col-sm-12">
-        <div class="widget">
+        <div class="widget status">
           <div class="widget-body">
             <div class="d-flex justify-content-between align-items-center">
               <div class="state">
@@ -34,7 +34,7 @@
         </div>
       </div>
       <div class="col-xl-4 col-lg-4 col-md-4 col-sm-12">
-        <div class="widget">
+        <div class="widget status">
           <div class="widget-body">
             <div class="d-flex justify-content-between align-items-center">
               <div class="state">
@@ -53,7 +53,7 @@
         </div>
       </div>
       <div class="col-xl-4 col-lg-4 col-md-4 col-sm-12">
-        <div class="widget">
+        <div class="widget status">
           <div class="widget-body">
             <div class="d-flex justify-content-between align-items-center">
               <div class="state">
@@ -72,7 +72,7 @@
         </div>
       </div>
       <div class="col-xl-4 col-lg-4 col-md-4 col-sm-12">
-        <div class="widget">
+        <div class="widget status">
           <div class="widget-body">
             <div class="d-flex justify-content-between align-items-center">
               <div class="state">
@@ -91,7 +91,7 @@
         </div>
       </div>
       <div class="col-xl-4 col-lg-4 col-md-4 col-sm-12">
-        <div class="widget">
+        <div class="widget status">
           <div class="widget-body">
             <div class="d-flex justify-content-between align-items-center">
               <div class="state">
@@ -110,7 +110,7 @@
         </div>
       </div>
       <div class="col-xl-4 col-lg-4 col-md-4 col-sm-12">
-        <div class="widget">
+        <div class="widget status">
           <div class="widget-body">
             <div class="d-flex justify-content-between align-items-center">
               <div class="state">
@@ -129,7 +129,7 @@
         </div>
       </div>
       <div class="col-xl-4 col-lg-4 col-md-4 col-sm-12">
-        <div class="widget">
+        <div class="widget status">
           <div class="widget-body">
             <div class="d-flex justify-content-between align-items-center">
               <div class="state">
@@ -148,7 +148,7 @@
         </div>
       </div>
       <div class="col-xl-4 col-lg-4 col-md-4 col-sm-12">
-        <div class="widget">
+        <div class="widget status">
           <div class="widget-body">
             <div class="d-flex justify-content-between align-items-center">
               <div class="state">
@@ -167,7 +167,7 @@
         </div>
       </div>
       <div class="col-xl-4 col-lg-4 col-md-4 col-sm-12">
-        <div class="widget">
+        <div class="widget status">
           <div class="widget-body">
             <div class="d-flex justify-content-between align-items-center">
               <div class="state">
@@ -186,7 +186,7 @@
         </div>
       </div>
       <div class="col-xl-4 col-lg-4 col-md-4 col-sm-12">
-        <div class="widget">
+        <div class="widget status">
           <div class="widget-body">
             <div class="d-flex justify-content-between align-items-center">
               <div class="state">
@@ -205,7 +205,7 @@
         </div>
       </div>
       <div class="col-xl-4 col-lg-4 col-md-4 col-sm-12">
-        <div class="widget">
+        <div class="widget status">
           <div class="widget-body">
             <div class="d-flex justify-content-between align-items-center">
               <div class="state">
@@ -224,7 +224,7 @@
         </div>
       </div>
       <div class="col-xl-4 col-lg-4 col-md-4 col-sm-12">
-        <div class="widget">
+        <div class="widget status">
           <div class="widget-body">
             <div class="d-flex justify-content-between align-items-center">
               <div class="state">
@@ -243,7 +243,7 @@
         </div>
       </div>
       <div class="col-xl-4 col-lg-4 col-md-4 col-sm-12">
-        <div class="widget">
+        <div class="widget status">
           <div class="widget-body">
             <div class="d-flex justify-content-between align-items-center">
               <div class="state">
@@ -262,7 +262,7 @@
         </div>
       </div>
       <div class="col-xl-4 col-lg-4 col-md-4 col-sm-12">
-        <div class="widget">
+        <div class="widget status">
           <div class="widget-body">
             <div class="d-flex justify-content-between align-items-center">
               <div class="state">
@@ -281,7 +281,7 @@
         </div>
       </div>
       <div class="col-xl-4 col-lg-4 col-md-4 col-sm-12">
-        <div class="widget">
+        <div class="widget status">
           <div class="widget-body">
             <div class="d-flex justify-content-between align-items-center">
               <div class="state">
@@ -303,13 +303,13 @@
     <?php endif; ?>
     <?php if($page_permission[1] == 1): ?>
     <div class="row justify-content-center clearfix">
-      <div class="col-xl-3 col-lg-6 col-md-6 col-sm-12">
-        <div class="widget">
+      <div class="col-xl-4 col-lg-4 col-md-4 col-sm-12">
+        <div class="widget status-driver">
           <div class="widget-body">
             <div class="d-flex justify-content-between align-items-center">
               <div class="state">
-                <h6 name="Booking Confirmed">Outstanding Pickup</h6>
-                <h2><?php echo $summary_list['Booking Confirmed']+0 ?></h2>
+                <h6 name="pickup">(Outstanding) Picked Up</h6>
+                <h2><?php echo $summary_list['Outstanding Pickup']+0 ?></h2>
               </div>
               <div class="icon">
                 <i class="fas fa-check-circle"></i>
@@ -322,13 +322,13 @@
           </div>
         </div>
       </div>
-      <div class="col-xl-3 col-lg-6 col-md-6 col-sm-12">
-        <div class="widget">
+      <div class="col-xl-4 col-lg-4 col-md-4 col-sm-12">
+        <div class="widget status-driver">
           <div class="widget-body">
             <div class="d-flex justify-content-between align-items-center">
               <div class="state">
-                <h6 name="Picked up">Picked up</h6>
-                <h2><?php echo $summary_list['Picked up']+0 ?></h2>
+                <h6 name="pickup">(Done) Picked Up</h6>
+                <h2><?php echo $summary_list['Done Pickup']+0 ?></h2>
               </div>
               <div class="icon">
                 <i class="fas fa-people-carry"></i>
@@ -341,13 +341,32 @@
           </div>
         </div>
       </div>
-      <div class="col-xl-3 col-lg-6 col-md-6 col-sm-12">
-        <div class="widget">
+      <div class="col-xl-4 col-lg-4 col-md-4 col-sm-12">
+        <div class="widget status-driver">
           <div class="widget-body">
             <div class="d-flex justify-content-between align-items-center">
               <div class="state">
-                <h6 name="With Courier">Outstanding Deliver</h6>
-                <h2><?php echo $summary_list['With Courier']+0 ?></h2>
+                <h6 name="pickup">(Total) Picked Up</h6>
+                <h2><?php echo $summary_list['Done Pickup']+$summary_list['Outstanding Pickup']+0 ?></h2>
+              </div>
+              <div class="icon">
+                <i class="fas fa-people-carry"></i>
+              </div>
+            </div>
+            <!-- <small class="text-small mt-10 d-block">6% higher than last month</small> -->
+          </div>
+          <div class="progress progress-sm">
+            <div class="progress-bar bg-primary" role="progressbar" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100" style="width: 100%;"></div>
+          </div>
+        </div>
+      </div>
+      <div class="col-xl-4 col-lg-4 col-md-4 col-sm-12">
+        <div class="widget status-driver">
+          <div class="widget-body">
+            <div class="d-flex justify-content-between align-items-center">
+              <div class="state">
+                <h6 name="deliver">(Outstanding) Deliver</h6>
+                <h2><?php echo $summary_list['Outstanding Deliver']+0 ?></h2>
               </div>
               <div class="icon">
                 <i class="fas fa-truck"></i>
@@ -360,13 +379,32 @@
           </div>
         </div>
       </div>
-      <div class="col-xl-3 col-lg-6 col-md-6 col-sm-12">
-        <div class="widget">
+      <div class="col-xl-4 col-lg-4 col-md-4 col-sm-12">
+        <div class="widget status-driver">
           <div class="widget-body">
             <div class="d-flex justify-content-between align-items-center">
               <div class="state">
-                <h6 name="Delivered">Delivered</h6>
-                <h2><?php echo $summary_list['Delivered']+0 ?></h2>
+                <h6 name="deliver">(Done) Delivered</h6>
+                <h2><?php echo $summary_list['Done Deliver']+0 ?></h2>
+              </div>
+              <div class="icon">
+                <i class="fas fa-box"></i>
+              </div>
+            </div>
+            <!-- <small class="text-small mt-10 d-block">Total Comments</small> -->
+          </div>
+          <div class="progress progress-sm">
+            <div class="progress-bar bg-success" role="progressbar" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100" style="width: 100%;"></div>
+          </div>
+        </div>
+      </div>
+      <div class="col-xl-4 col-lg-4 col-md-4 col-sm-12">
+        <div class="widget status-driver">
+          <div class="widget-body">
+            <div class="d-flex justify-content-between align-items-center">
+              <div class="state">
+                <h6 name="deliver">(Total) Delivered</h6>
+                <h2><?php echo $summary_list['Outstanding Deliver']+$summary_list['Done Deliver']+0 ?></h2>
               </div>
               <div class="icon">
                 <i class="fas fa-box"></i>
@@ -384,8 +422,12 @@
 	</div>
 </div>
 <script>
-	$('.widget').on('click', function() {
+	$('.widget.status').on('click', function() {
     var status = $(this).find('h6').attr("name");
 		window.location = "<?php echo base_url() ?>shipment/shipment_list?status="+status;
+  });
+  $('.widget.status-driver').on('click', function() {
+    var status = $(this).find('h6').attr("name");
+		window.location = "<?php echo base_url() ?>shipment/shipment_list?status_driver="+status;
   });
 </script>

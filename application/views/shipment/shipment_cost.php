@@ -17,6 +17,7 @@
                     <th nowrap class="text-white font-weight-bold min-w30px">Sub Total</th>
                     <th nowrap class="text-white font-weight-bold min-w30px">Exchange Rate to IDR</th>
                     <th nowrap class="text-white font-weight-bold min-w30px">Total</th>
+                    <th nowrap class="text-white font-weight-bold min-w30px">Remarks</th>
                     <th nowrap class="text-white font-weight-bold min-w30px"></th>
                   </tr>
                 </thead>
@@ -36,7 +37,7 @@
                         <option value="Set">Set</option>
                         <option value="Trip">Trip</option>
                         <option value="Pallet">Pallet</option>
-                        <option value="Loose">Container 40 GP</option>
+                        <option value="Persentage">Persentage</option>
                       </select>
                     </td>
                     <td>
@@ -63,6 +64,7 @@
                     <td><input type="number" class="form-control" value="0" name="subtotal[]" readonly></td>
                     <td><input type="number" class="form-control" value="0" oninput="get_total(this)"name="exchange_rate[]"></td>
                     <td><input type="number" class="form-control" value="0" name="total[]" readonly></td>
+                    <td><textarea class="form-control" name="remarks[]" placeholder="..."></textarea></td>
                     <td>
                       <button type="button" class="btn btn-primary" onclick="addrow(this)"><i class="fas fa-plus m-0"></i></button>
                     </td>
@@ -83,7 +85,7 @@
                         <option value="Set" <?php echo ($value['uom'] == "Set" ? 'selected' : '') ?>>Set</option>
                         <option value="Trip" <?php echo ($value['uom'] == "Trip" ? 'selected' : '') ?>>Trip</option>
                         <option value="Pallet" <?php echo ($value['uom'] == "Pallet" ? 'selected' : '') ?>>Pallet</option>
-                        <option value="Loose" <?php echo ($value['uom'] == "Loose" ? 'selected' : '') ?>>Container 40 GP</option>
+                        <option value="Persentage" <?php echo ($value['uom'] == "Persentage" ? 'selected' : '') ?>>Persentage</option>
                       </select>
                     </td>
                     <td>
@@ -110,6 +112,7 @@
                     <td><input type="number" class="form-control" value="<?php echo $value['qty']*$value['unit_price'] ?>" name="subtotal[]" readonly></td>
                     <td><input type="number" class="form-control" value="<?php echo $value['exchange_rate'] ?>" oninput="get_total(this)"name="exchange_rate[]"></td>
                     <td><input type="number" class="form-control" value="<?php echo $value['qty']*$value['unit_price']*$value['exchange_rate'] ?>" name="total[]" readonly></td>
+                    <td><textarea class="form-control" name="remarks[]" placeholder="..."><?php echo $value['remarks'] ?></textarea></td>
                     <td>
                       <?php if ($key == 0) : ?>
                         <button type="button" class="btn btn-primary" onclick="addrow(this)"><i class="fas fa-plus m-0"></i></button>
@@ -150,6 +153,7 @@
     $(btn).closest("tbody").find("tr:last").find("input").val("");
     $(btn).closest("tbody").find("tr:last").find("input[type=number]").val("0");
     $(btn).closest("tbody").find("tr:last").find("select").val("");
+    $(btn).closest("tbody").find("tr:last").find("textarea").text("");
   }
 
   function deleterow(btn) {

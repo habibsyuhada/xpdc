@@ -32,7 +32,7 @@ class Driver extends CI_Controller
 
 	public function assign_driver_process(){
 		$post = $this->input->post();
-		if(count($post['id']) < 1){
+		if($post['id'] == ""){
 			$this->session->set_flashdata('error', 'Please tick shipment first to assign driver!');
 			redirect('shipment/shipment_list');
 		}
@@ -41,6 +41,7 @@ class Driver extends CI_Controller
 		$shipment_list 					= $this->shipment_mod->shipment_list_db($where);
 		unset($where);
 		if(count($shipment_list) > 0){
+			$shipment = array();
 			if($post['status'] == "pickup"){
 				foreach ($shipment_list as $key => $value) {
 					if($value['status'] != "Booking Confirmed"){

@@ -128,4 +128,35 @@ class Master_tracking extends CI_Controller {
 		echo json_encode($shipment);
 		// test_var($this->input->post());
 	}
+
+	public function master_tracking_update($master_tracking){
+		$where['master_tracking'] 	= $master_tracking;
+		$shipment_list 							= $this->shipment_mod->shipment_list_db($where);
+		test_var($shipment_list);
+
+		if (count($shipment_list) <= 0) {
+			$this->session->set_flashdata('error', 'Shipment not Found!');
+			redirect("master_tracking/master_tracking_list");
+		}
+
+		$all_same = true;
+		$first = $shipment_list[0]['main_agent_name'].$shipment_list[0]['main_agent_mawb_mbl'].$shipment_list[0]['main_agent_carrier'].$shipment_list[0]['main_agent_voyage_flight_no'].$shipment_list[0]['main_agent_voyage_flight_date'].$shipment_list[0]['secondary_agent_name'].$shipment_list[0]['secondary_agent_mawb_mbl'].$shipment_list[0]['secondary_agent_carrier'].$shipment_list[0]['secondary_agent_voyage_flight_no'].$shipment_list[0]['secondary_agent_voyage_flight_date'].$shipment_list[0]['port_of_loading'].$shipment_list[0]['port_of_discharge'].$shipment_list[0]['container_no'].$shipment_list[0]['seal_no'].$shipment_list[0]['cipl_no'].$shipment_list[0]['permit_no'].$shipment_list[0]['assign_branch'];
+		foreach ($shipment_list as $key => $value) {
+			$new = $value['main_agent_name'].$value['main_agent_mawb_mbl'].$value['main_agent_carrier'].$value['main_agent_voyage_flight_no'].$value['main_agent_voyage_flight_date'].$value['secondary_agent_name'].$value['secondary_agent_mawb_mbl'].$value['secondary_agent_carrier'].$value['secondary_agent_voyage_flight_no'].$value['secondary_agent_voyage_flight_date'].$value['port_of_loading'].$value['port_of_discharge'].$value['container_no'].$value['seal_no'].$value['cipl_no'].$value['permit_no'].$value['assign_branch'];
+			if($first != $new){
+				$all_same = false;
+			}
+		}
+		if($all_same == true){
+			$shipment = $shipment_list[0];
+		}
+		else{
+			$shipment = array();
+		}
+		
+		$data['shipment'] 			= $shipment;
+		$data['subview'] 				= 'master_tracking/master_tracking_update';
+		$data['meta_title'] 		= 'Master Tracking Update';
+		$this->load->view('index', $data);
+	}
 }

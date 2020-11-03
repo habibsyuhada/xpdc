@@ -28,9 +28,7 @@
                       <td><?php echo $value['remarks'] ?></td>
                       <td>
                         <a href="<?php echo base_url() ?>master_tracking/master_tracking_detail/<?php echo $value['master_tracking'] ?>" class="btn btn-secondary" title="View"><i class="fas fa-eye m-0"></i></a>
-                        <!-- <a target="_blank" href="#" class="btn btn-warning" title="Print"><i class="fas fa-print m-0"></i></a>
-                        <a href="#" class="btn btn-primary" title="Update"><i class="fas fa-edit m-0"></i></a>
-                        <a href="#" class="btn btn-danger" title="Delete"><i class="fas fa-trash m-0"></i></a> -->
+                        <a href="<?php echo base_url() ?>master_tracking/master_tracking_update/<?php echo $value['master_tracking'] ?>" class="btn btn-primary" title="Update"><i class="fas fa-edit m-0"></i></a>
                       </td>
                     </tr>
                     <?php endforeach; ?>

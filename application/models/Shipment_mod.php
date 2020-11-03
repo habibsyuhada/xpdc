@@ -144,6 +144,7 @@ class Shipment_mod extends CI_Model
     }
     $query = $this->db->order_by("date", "desc");
     $query = $this->db->order_by("time", "desc");
+    $query = $this->db->order_by("create_date", "desc");
     // Produces: ORDER BY date DESC, time DESC
     $query = $this->db->get('shipment_history');
     return $query->result_array();

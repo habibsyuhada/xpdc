@@ -405,26 +405,6 @@ class Shipment extends CI_Controller
 				$this->shipment_mod->shipment_packages_update_process_db($form_data, $where);
 			}
 		}
-		foreach ($post['cost'] as $key => $value) {
-			if($value != "" && $value != "0"){
-				unset($where);
-				if ($post['id_cost'][$key] == "") {
-					$form_data = array(
-						'id_shipment' 			=> $post['id'],
-						'description' 			=> $post['description'][$key],
-						'cost' 							=> $post['cost'][$key],
-					);
-					$this->shipment_mod->shipment_cost_create_process_db($form_data);
-				} else {
-					$form_data = array(
-						'description' 			=> $post['description'][$key],
-						'cost' 							=> $post['cost'][$key],
-					);
-					$where['id'] = $post['id_cost'][$key];
-					$this->shipment_mod->shipment_cost_update_process_db($form_data, $where);
-				}
-			}
-		}
 
 		$this->session->set_flashdata('success', 'Your Shipment data has been Updated!');
 		redirect('shipment/shipment_update/' . $post['id']);
@@ -460,6 +440,7 @@ class Shipment extends CI_Controller
 						'currency' 					=> $post['currency'][$key],
 						'unit_price' 				=> $post['unit_price'][$key],
 						'exchange_rate' 		=> $post['exchange_rate'][$key],
+						'remarks' 					=> $post['remarks'][$key],
 					);
 					$this->shipment_mod->shipment_cost_create_process_db($form_data);
 				} else {
@@ -470,6 +451,7 @@ class Shipment extends CI_Controller
 						'currency' 					=> $post['currency'][$key],
 						'unit_price' 				=> $post['unit_price'][$key],
 						'exchange_rate' 		=> $post['exchange_rate'][$key],
+						'remarks' 					=> $post['remarks'][$key],
 					);
 					$where['id'] = $post['id_cost'][$key];
 					$this->shipment_mod->shipment_cost_update_process_db($form_data, $where);

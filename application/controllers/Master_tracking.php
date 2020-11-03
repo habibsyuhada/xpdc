@@ -132,7 +132,6 @@ class Master_tracking extends CI_Controller {
 	public function master_tracking_update($master_tracking){
 		$where['master_tracking'] 	= $master_tracking;
 		$shipment_list 							= $this->shipment_mod->shipment_list_db($where);
-		test_var($shipment_list);
 
 		if (count($shipment_list) <= 0) {
 			$this->session->set_flashdata('error', 'Shipment not Found!');
@@ -158,5 +157,47 @@ class Master_tracking extends CI_Controller {
 		$data['subview'] 				= 'master_tracking/master_tracking_update';
 		$data['meta_title'] 		= 'Master Tracking Update';
 		$this->load->view('index', $data);
+	}
+
+	public function master_tracking_update_process(){
+		$post = $this->input->post();
+
+		$form_data = array(
+			'assign_branch'					=> $post['assign_branch'],
+		);
+		$where['master_tracking'] = $post['master_tracking'];
+		$this->shipment_mod->shipment_update_process_db($form_data, $where);
+
+		$shipment_list 	= $this->shipment_mod->shipment_list_db($where);
+		$id_shipment 		= array();
+		foreach ($shipment_list as $key => $value) {
+			$id_shipment[] = $value['id'];
+		}
+
+		$form_data = array(
+			'main_agent_name'												=> $post['main_agent_name'],
+			'main_agent_mawb_mbl'										=> $post['main_agent_mawb_mbl'],
+			'main_agent_carrier'										=> $post['main_agent_carrier'],
+			'main_agent_voyage_flight_no'						=> $post['main_agent_voyage_flight_no'],
+			'main_agent_voyage_flight_date'					=> $post['main_agent_voyage_flight_date'],
+			// 'main_agent_cost'												=> $post['main_agent_cost'],
+			'secondary_agent_name'									=> $post['secondary_agent_name'],
+			'secondary_agent_mawb_mbl'							=> $post['secondary_agent_mawb_mbl'],
+			'secondary_agent_carrier'								=> $post['secondary_agent_carrier'],
+			'secondary_agent_voyage_flight_no'			=> $post['secondary_agent_voyage_flight_no'],
+			'secondary_agent_voyage_flight_date'		=> $post['secondary_agent_voyage_flight_date'],
+			// 'secondary_agent_cost'									=> $post['secondary_agent_cost'],
+			'port_of_loading'												=> $post['port_of_loading'],
+			'port_of_discharge'											=> $post['port_of_discharge'],
+			'container_no'													=> $post['container_no'],
+			'seal_no'																=> $post['seal_no'],
+			'cipl_no'																=> $post['cipl_no'],
+			'permit_no'															=> $post['permit_no']
+		);
+		$where2["id_shipment IN ('".join("', '", $id_shipment)."')"] = NULL;
+		$this->shipment_mod->shipment_detail_update_process_db($form_data, $where2);
+
+		$this->session->set_flashdata('success', 'Your Shipment data has been Updated!');
+		redirect('master_tracking/master_tracking_update/'.$post['master_tracking']);
 	}
 }

@@ -15,7 +15,7 @@
 </style>
 <div class="main-content">
   <div class="container-fluid">
-    <form action="<?php echo base_url(); ?>shipment/shipment_update_process" method="POST" class="forms-sample">
+    <form action="<?php echo base_url(); ?>master_tracking/master_tracking_update_process" method="POST" class="forms-sample">
       <input type="hidden" name="id" value="<?php echo $shipment['id'] ?>">
       <input type="hidden" name="tracking_no" value="<?php echo $shipment['tracking_no'] ?>">
       <input type="hidden" name="master_tracking" value="<?php echo $shipment['master_tracking'] ?>">
@@ -51,7 +51,7 @@
                       <h6 class="font-weight-bold">Main Agent</h6>
                       <div class="form-group">
                         <label>Agent Name</label>
-                        <input type="text" class="form-control" name="main_agent_name" placeholder="Main Agent Name" value="<?= $shipment['main_agent_mawb_mbl'] ?>">
+                        <input type="text" class="form-control" name="main_agent_name" placeholder="Main Agent Name" value="<?= $shipment['main_agent_name'] ?>">
                       </div>
                       <div class="form-group">
                         <label>MAWB / MBL</label>
@@ -78,7 +78,7 @@
                       <h6 class="font-weight-bold">Secondary Agent</h6>
                       <div class="form-group">
                         <label>Agent Name</label>
-                        <input type="text" class="form-control" name="secondary_agent_name" placeholder="Secondary Agent Name" value="<?= $shipment['secondary_agent_mawb_mbl'] ?>">
+                        <input type="text" class="form-control" name="secondary_agent_name" placeholder="Secondary Agent Name" value="<?= $shipment['secondary_agent_name'] ?>">
                       </div>
                       <div class="form-group">
                         <label>MAWB / MBL</label>
@@ -214,310 +214,9 @@
     }
   });
 
-  function same_as(input) {
-    var same_as = $(input).val();
-    var form = $('input[name=billing_name]').closest('.row');
-    if (same_as == "None") {
-      form.find('input').attr('readonly', false);
-      $('textarea[name=billing_address]').attr('readonly', false);
-      $('input[name=billing_account]').attr('readonly', false);
-      $("select[name=billing_country_view]").select2({
-        'disabled': false
-      });
-
-      $("input[name=billing_name]").val('');
-      $("input[name=billing_account]").val('');
-      $("textarea[name=billing_address]").val('');
-      $("input[name=billing_city]").val('');
-      $("select[name=billing_country_view]").val('').trigger('change');
-      $("input[name=billing_country]").val('');
-      $("input[name=billing_postcode]").val('');
-      $("input[name=billing_contact_person]").val('');
-      $("input[name=billing_phone_number]").val('');
-      $("input[name=billing_email]").val('');
-    } else {
-      form.find('input').attr('readonly', true);
-      $("select[name=billing_country_view]").select2({
-        'disabled': true
-      });
-
-      $('input[name=billing_account]').attr('readonly', true);
-      $('textarea[name=billing_address]').attr('readonly', true);
-      same_as_billing_detail();
-    }
-  }
-
-  function pickup_same(input) {
-    var same_as = $(input).val();
-    var status_pickup = $("select[name=status_pickup").val();
-    var form = $('input[name=pickup_name]').closest('.row');
-    if (same_as == "None" && status_pickup == "Picked Up") {
-      form.find('input').attr('readonly', false);
-      $('textarea[name=pickup_address]').attr('readonly', false);
-      // $('textarea[name=pickup_notes]').attr('readonly', false);
-      $('input[name=pickup_account]').attr('readonly', false);
-      $("select[name=pickup_country_view]").select2({
-        'disabled': false
-      });
-
-      $("input[name=pickup_name]").val('');
-      $("input[name=pickup_account]").val('');
-      $("textarea[name=pickup_address]").val('');
-      // $("textarea[name=pickup_notes]").val('');
-      $("input[name=pickup_city]").val('');
-      $("select[name=pickup_country_view]").val('').trigger('change');
-      $("input[name=pickup_country]").val('');
-      $("input[name=pickup_postcode]").val('');
-      $("input[name=pickup_contact_person]").val('');
-      $("input[name=pickup_phone_number]").val('');
-      $("input[name=pickup_email]").val('');
-      // $("input[name=pickup_date]").val("");
-      // $("input[name=pickup_date_to]").val("");
-      // $("input[name=pickup_time]").val("");
-      // $("input[name=pickup_time_to]").val("");
-    } else {
-      form.find('input').attr('readonly', true)
-      $("select[name=pickup_country_view]").select2({
-        'disabled': true
-      });
-
-      $('input[name=pickup_account]').attr('readonly', true);
-      $('textarea[name=pickup_address]').attr('readonly', true);
-      if(status_pickup == "Picked Up"){
-        $('input[name=pickup_date], input[name=pickup_date_to], input[name=pickup_time], input[name=pickup_time_to]').attr('readonly', false);
-      }
-      same_as_billing_detail();
-    }
-  }
-
-  $("input[name=shipper_name]").closest('.row').find('input').on("input", function() {
-    same_as_billing_detail();
-  });
-
-  $("input[name=shipper_name]").closest('.row').find('select').on("change", function() {
-    same_as_billing_detail();
-  });
-
-  function same_as_billing_detail() {
-    var same_as = $('select[name=billing_same_as]').val();
-    same_as = same_as.toLowerCase();
-    if (same_as != 'none') {
-      $("input[name=billing_name]").val($("input[name=" + same_as + "_name]").val());
-      $("textarea[name=billing_address]").val($("textarea[name=" + same_as + "_address]").val());
-      $("input[name=billing_city]").val($("input[name=" + same_as + "_city]").val());
-      var select_country = $("select[name=" + same_as + "_country]").val()
-      $("select[name=billing_country_view]").val(select_country).trigger('change');
-      $("input[name=billing_country]").val(select_country);
-      $("input[name=billing_postcode]").val($("input[name=" + same_as + "_postcode]").val());
-      $("input[name=billing_contact_person]").val($("input[name=" + same_as + "_contact_person]").val());
-      $("input[name=billing_phone_number]").val($("input[name=" + same_as + "_phone_number]").val());
-      $("input[name=billing_email]").val($("input[name=" + same_as + "_email]").val());
-    }
-
-    var pickup_same_as = $('select[name=pickup_same_as]').val();
-    pickup_same_as = pickup_same_as.toLowerCase();
-    console.log(pickup_same_as);
-    if (pickup_same_as != 'none') {
-      $("input[name=pickup_name]").val($("input[name=" + pickup_same_as + "_name]").val());
-      $("textarea[name=pickup_address]").val($("textarea[name=" + pickup_same_as + "_address]").val());
-      $("input[name=pickup_city]").val($("input[name=" + pickup_same_as + "_city]").val());
-      var select_country = $("select[name=" + pickup_same_as + "_country]").val()
-      $("select[name=pickup_country_view]").val(select_country).trigger('change');
-      $("input[name=pickup_country]").val(select_country);
-      $("input[name=pickup_postcode]").val($("input[name=" + pickup_same_as + "_postcode]").val());
-      $("input[name=pickup_contact_person]").val($("input[name=" + pickup_same_as + "_contact_person]").val());
-      $("input[name=pickup_phone_number]").val($("input[name=" + pickup_same_as + "_phone_number]").val());
-      $("input[name=pickup_email]").val($("input[name=" + pickup_same_as + "_email]").val());
-
-      $("input[name=pickup_date]").val("");
-      $("input[name=pickup_date_to]").val("");
-      $("input[name=pickup_time]").val("");
-      $("input[name=pickup_time_to]").val("");
-      $("textarea[name=pickup_notes]").val("");
-    }
-  }
-
   $(".select2").select2({
     theme: "bootstrap4"
   });
-
-  $("select[name=type_of_mode]").on("change", function() {
-    var value = $(this).val();
-    if (value == 'Sea Transport') {
-      $("select[name=sea]").closest('.form-group').slideDown();
-      $("select[name=sea]").removeAttr("disabled");
-    } else {
-      $("select[name=sea]").closest('.form-group').slideUp();
-      $("select[name=sea]").attr("disabled", "disabled");
-    }
-    $("select[name=sea]").val('');
-  });
-
-  $("select[name=status_pickup]").on("change", function() {
-    var value = $(this).val();
-    if (value == 'Dropoff') {
-      $("#address_info").css('display', 'block');
-      $("select[name=pickup_same_as]").attr("disabled", "disabled");
-      $("input[name=pickup_name]").attr("readonly", "readonly");
-      console.log("asd");
-      $("textarea[name=pickup_address]").attr("readonly", "readonly");
-      $("input[name=pickup_city]").attr("readonly", "readonly");
-      $("input[name=pickup_country]").attr("readonly", "readonly");
-      $("input[name=pickup_postcode]").attr("readonly", "readonly");
-      $("input[name=pickup_contact_person]").attr("readonly", "readonly");
-      $("input[name=pickup_phone_number]").attr("readonly", "readonly");
-      $("input[name=pickup_email]").attr("readonly", "readonly");
-      $("input[name=pickup_date]").attr("readonly", "readonly");
-      $("input[name=pickup_date_to]").attr("readonly", "readonly");
-      $("input[name=pickup_time]").attr("readonly", "readonly");
-      $("input[name=pickup_time_to]").attr("readonly", "readonly");
-      $("textarea[name=pickup_notes]").attr("readonly", "readonly");
-    } else if (value == 'Picked Up') {
-      $("#address_info").css('display', 'none');
-      $("select[name=pickup_same_as]").removeAttr("disabled");
-      $("input[name=pickup_name]").removeAttr('readonly');
-      $("textarea[name=pickup_address]").removeAttr('readonly');
-      $("input[name=pickup_city]").removeAttr('readonly');
-      $("input[name=pickup_country]").removeAttr('readonly');
-      $("input[name=pickup_postcode]").removeAttr('readonly');
-      $("input[name=pickup_contact_person]").removeAttr('readonly');
-      $("input[name=pickup_phone_number]").removeAttr('readonly');
-      $("input[name=pickup_email]").removeAttr('readonly');
-      $("input[name=pickup_date]").removeAttr('readonly');
-      $("input[name=pickup_date_to]").removeAttr('readonly');
-      $("input[name=pickup_time]").removeAttr('readonly');
-      $("input[name=pickup_time_to]").removeAttr('readonly');
-      $("textarea[name=pickup_notes]").removeAttr('readonly');
-    }
-    $("select[name=pickup_same_as]").val('None').trigger('change');
-    $("input[name=pickup_name]").val('');
-    $("input[name=pickup_account]").val('');
-    $("textarea[name=pickup_address]").val('');
-    $("input[name=pickup_city]").val('');
-    $("input[name=pickup_country]").val('');
-    $("input[name=pickup_postcode]").val('');
-    $("input[name=pickup_contact_person]").val('');
-    $("input[name=pickup_phone_number]").val('');
-    $("input[name=pickup_email]").val('');
-    $("input[name=pickup_date]").val("");
-    $("input[name=pickup_date_to]").val("");
-    $("input[name=pickup_time]").val("");
-    $("input[name=pickup_time_to]").val("");
-    $("textarea[name=pickup_address]").val('');
-  });
-
-  // $(document).on("keypress", "input[name='length[]'], input[name='width[]'], input[name='height[]']", function() {
-  //   get_vol_weight();
-  // });
-
-  function get_vol_weight() {
-    var type_of_mode = $("select[name=type_of_mode]").val();
-    var per = 1;
-    var total_act_weight = 0;
-    var total_vol_weight = 0;
-    var total_measurement = 0;
-    var length_array = [];
-    var width_array = [];
-    var height_array = [];
-    var weight_array = [];
-    var qty_array = [];
-
-    if (type_of_mode == 'Air Freight') {
-      per = 6000;
-    } else if (type_of_mode == 'Land Shipping') {
-      per = 5000;
-    } else if (type_of_mode == 'Sea Transport') {
-      per = 5000;
-    }
-
-    $("input[name='length[]']").each(function(index, value) {
-      var length_detail = $(this).val();
-
-      length_array.push(length_detail);
-    });
-
-    $("input[name='width[]']").each(function(index, value) {
-      var width_detail = $(this).val();
-
-      width_array.push(width_detail);
-    });
-
-    $("input[name='height[]']").each(function(index, value) {
-      var height_detail = $(this).val();
-
-      height_array.push(height_detail);
-    });
-
-    $("input[name='weight[]']").each(function(index, value) {
-      var weight_detail = $(this).val();
-
-      weight_array.push(weight_detail);
-    });
-
-    $("input[name='qty[]']").each(function(index, value) {
-      var qty_detail = $(this).val();
-
-      qty_array.push(qty_detail);
-    });
-
-
-    $.each(length_array, function(index, value) {
-      console.log(length_array[index], width_array[index], height_array[index], weight_array[index], qty_array[index], per);
-      var actual_weight = qty_array[index] * weight_array[index];
-      var volume_weight = qty_array[index] * (length_array[index] * width_array[index] * height_array[index]) / per;
-      var measurement = qty_array[index] * (length_array[index] * width_array[index] * height_array[index]) / 1000000;
-
-      total_act_weight += actual_weight;
-      total_vol_weight += volume_weight;
-      total_measurement += measurement;
-    });
-
-    $("#act_weight").html((Number(total_act_weight)).toFixed(2));
-    $("#vol_weight").html((Number(total_vol_weight)).toFixed(2));
-    $("#measurement").html((Number(total_measurement)).toFixed(2));
-
-  }
-
-  function addrow(btn) {
-    var row_copy = $(btn).closest("tr").html();
-    $(btn).closest("tbody").append("<tr>" + row_copy + "</tr>");
-    var btn_delete = '<button type="button" class="btn btn-danger" onclick="deleterow(this)"><i class="fas fa-trash m-0"></i></button>';
-    $(btn).closest("tbody").find("tr:last").find("td:last").html(btn_delete);
-    $(btn).closest("tbody").find("tr:last").find("input").val("");
-    $(btn).closest("tbody").find("tr:last").find("select").val("");
-  }
-
-  function deleterow(btn) {
-    $(btn).closest("tr").remove();
-  }
-
-  function deletepackage(id, btn) {
-    var valid = confirm('Are you sure to delete this? You cannot revert it later.');
-    if (valid == true) {
-      $.ajax({
-        url: "<?php echo base_url(); ?>shipment/shipment_packages_delete_process/" + id,
-        type: "post",
-        success: function(data) {
-          $(btn).closest("tr").remove();
-          showSuccessToast('Your Shipment Package data has been Delete!');
-        }
-      });
-    }
-  }
-
-  function deletehistory(id, btn) {
-    var valid = confirm('Are you sure to delete this? You cannot revert it later.');
-    if (valid == true) {
-      $.ajax({
-        url: "<?php echo base_url(); ?>shipment/shipment_history_delete_process/<?php echo $shipment['id'] ?>/" + id,
-        type: "post",
-        success: function(data) {
-          $(btn).closest("tr").remove();
-          showSuccessToast('Your Shipment Package data has been Delete!');
-        }
-      });
-    }
-  }
 
   $('.next-tab').click(function() {
     $('.nav-tabs .active').parent().next('li').find('a').trigger('click');
@@ -525,9 +224,5 @@
 
   $('.previous-tab').click(function() {
     $('.nav-tabs .active').parent().prev('li').find('a').trigger('click');
-  });
-
-  $(document).ready(function (){
-    get_vol_weight();
   });
 </script>

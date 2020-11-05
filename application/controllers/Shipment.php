@@ -202,6 +202,17 @@ class Shipment extends CI_Controller
 			$form_data = array(
 				'id_shipment' 							=> $id_shipment,
 				'status_pickup' 						=> $post['status_pickup'],
+
+				'billing_same_as' 					=> $post['billing_same_as'],
+				'billing_account' 					=> $post['billing_account'],
+				'billing_name' 							=> $post['billing_name'],
+				'billing_address' 					=> $post['billing_address'],
+				'billing_city' 							=> $post['billing_city'],
+				'billing_country' 					=> $post['billing_country'],
+				'billing_postcode' 					=> $post['billing_postcode'],
+				'billing_contact_person' 		=> $post['billing_contact_person'],
+				'billing_phone_number' 			=> $post['billing_phone_number'],
+				'billing_email' 						=> $post['billing_email'],
 			);
 		} else if ($post['status_pickup'] == 'Picked Up') {
 			$form_data = array(
@@ -642,30 +653,35 @@ class Shipment extends CI_Controller
 	public function shipment_history_update_process()
 	{
 		$post = $this->input->post();
-
 		$where['tracking_no'] 	= $post['tracking_no'];
 		$shipment_list 					= $this->shipment_mod->shipment_list_db($where);
 		if (count($shipment_list) == 0) {
-			echo "Error : Tracking Number Not Found!";
-			return false;
+			$where = [
+				"master_tracking"  => $post['tracking_no'],
+			];
+			$shipment_list 					= $this->shipment_mod->shipment_list_db($where);
+			if (count($shipment_list) == 0) {
+				echo "Error : Tracking Number Not Found!";
+				return false;
+			}
 		}
 		elseif($post['history_date'] > date("Y-m-d") || ($post['history_date'] == date("Y-m-d") && $post['history_time'] > date("H:i"))){
 			echo "Error : You cannot submit for a future date!<br>Current time : ".date("Y-m-d H:i");
 			return false;
 		}
 
-		$shipment_list 					= $shipment_list[0];
-
-		$form_data = array(
-			'id_shipment' 	=> $shipment_list['id'],
-			'date' 					=> $post['history_date'],
-			'time' 					=> $post['history_time'],
-			'location' 			=> $post['history_location'],
-			'status' 				=> $post['history_status'],
-			'remarks' 			=> $post['history_remarks'],
-		);
-		$id_history = $this->shipment_mod->shipment_history_create_process_db($form_data);
-		$this->shipment_update_last_history($shipment_list['id']);
+		foreach ($shipment_list as $key => $value) {
+			$form_data = array(
+				'id_shipment' 	=> $value['id'],
+				'date' 					=> $post['history_date'],
+				'time' 					=> $post['history_time'],
+				'location' 			=> $post['history_location'],
+				'status' 				=> $post['history_status'],
+				'remarks' 			=> $post['history_remarks'],
+			);
+			$id_history = $this->shipment_mod->shipment_history_create_process_db($form_data);
+			$this->shipment_update_last_history($value['id']);
+		}
 
 		$output = $form_data;
 		$output['tracking_no'] = $post['tracking_no'];

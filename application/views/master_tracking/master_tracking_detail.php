@@ -16,6 +16,50 @@
       <div class="col-md-12">
         <div class="card">
           <div class="card-header">
+            <h3>Master Tracking Detail</h3>
+            <div class="card-header-right">
+              <ul class="list-unstyled card-option">
+                <li><i class="ik minimize-card ik-plus"></i></li>
+              </ul>
+            </div>
+          </div>
+          <div class="card-body" style="display: none;">
+            <div class="row">
+              <div class="col-md-6">
+                <!-- <h6 class="font-weight-bold border-bottom">Shipper Information</h6> -->
+                <div class="form-group row m-0">
+                  <label class="col-sm-3 col-form-label">Total Value</label>
+                  <div class="col-sm-9">
+                    <label class="col-form-label font-weight-bold">: <?php echo $summary_total['total_value'] ?></label>
+                  </div>
+                </div>
+                <div class="form-group row m-0">
+                  <label class="col-sm-3 col-form-label">Total Actual Weight</label>
+                  <div class="col-sm-9">
+                    <label class="col-form-label font-weight-bold">: <?php echo $summary_total['total_act_weight'] ?></label>
+                  </div>
+                </div>
+              </div>
+              <div class="col-md-6">
+                <!-- <h6 class="font-weight-bold border-bottom">Shipper Information</h6> -->
+                <div class="form-group row m-0">
+                  <label class="col-sm-3 col-form-label">Total Measuremet</label>
+                  <div class="col-sm-9">
+                    <label class="col-form-label font-weight-bold">: <?php echo $summary_total['total_measurement'] ?></label>
+                  </div>
+                </div>
+                <div class="form-group row m-0">
+                  <label class="col-sm-3 col-form-label">Total Vol. Weight</label>
+                  <div class="col-sm-9">
+                    <label class="col-form-label font-weight-bold">: <?php echo $summary_total['total_vol_weight'] ?></label>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="card">
+          <div class="card-header">
             <h3>Add New Tracking Number</h3>
           </div>
           <div class="card-body">

@@ -272,11 +272,9 @@ class Shipment extends CI_Controller
 		$shipment_list 					= $this->shipment_mod->shipment_list_db($where);
 
 		unset($where);
-		echo $id;
 		$where['id_shipment'] 	= $id;
 		$packages_list 					= $this->shipment_mod->shipment_packages_list_db($where);
 		$where['id_shipment'] 	= $id;
-		$cost_list 							= $this->shipment_mod->shipment_cost_list_db($where);
 		$history_list 					= $this->shipment_mod->shipment_history_list_db($where);
 
 		if (count($shipment_list) <= 0) {
@@ -288,11 +286,10 @@ class Shipment extends CI_Controller
 		
 		$data['shipment'] 			= $shipment_list[0];
 		$data['packages_list'] 	= $packages_list;
-		$data['cost_list'] 			= $cost_list;
 		$data['history_list'] 	= $history_list;
 		$data['t'] 							= 'g';
 		$data['subview'] 				= 'shipment/shipment_update';
-		$data['meta_title'] 		= 'Shipment List';
+		$data['meta_title'] 		= 'Shipment Update';
 		$this->load->view('index', $data);
 	}
 
@@ -326,7 +323,6 @@ class Shipment extends CI_Controller
 			'declared_value'			=> $post['declared_value'],
 			'currency'					=> $post['currency'],
 			'ref_no'					=> $post['ref_no'],
-			'assign_branch'					=> $post['assign_branch'],
 		);
 		$where['id'] = $post['id'];
 		$this->shipment_mod->shipment_update_process_db($form_data, $where);
@@ -357,24 +353,6 @@ class Shipment extends CI_Controller
 			'billing_contact_person' 		=> $post['billing_contact_person'],
 			'billing_phone_number' 			=> $post['billing_phone_number'],
 			'billing_email' 						=> $post['billing_email'],
-			'main_agent_name'												=> $post['main_agent_name'],
-			'main_agent_mawb_mbl'										=> $post['main_agent_mawb_mbl'],
-			'main_agent_carrier'										=> $post['main_agent_carrier'],
-			'main_agent_voyage_flight_no'						=> $post['main_agent_voyage_flight_no'],
-			'main_agent_voyage_flight_date'					=> $post['main_agent_voyage_flight_date'],
-			// 'main_agent_cost'												=> $post['main_agent_cost'],
-			'secondary_agent_name'									=> $post['secondary_agent_name'],
-			'secondary_agent_mawb_mbl'							=> $post['secondary_agent_mawb_mbl'],
-			'secondary_agent_carrier'								=> $post['secondary_agent_carrier'],
-			'secondary_agent_voyage_flight_no'			=> $post['secondary_agent_voyage_flight_no'],
-			'secondary_agent_voyage_flight_date'		=> $post['secondary_agent_voyage_flight_date'],
-			// 'secondary_agent_cost'									=> $post['secondary_agent_cost'],
-			'port_of_loading'												=> $post['port_of_loading'],
-			'port_of_discharge'											=> $post['port_of_discharge'],
-			'container_no'													=> $post['container_no'],
-			'seal_no'																=> $post['seal_no'],
-			'cipl_no'																=> $post['cipl_no'],
-			'permit_no'															=> $post['permit_no']
 		);
 		$where2['id_shipment'] = $post['id'];
 		$this->shipment_mod->shipment_detail_update_process_db($form_data, $where2);
@@ -410,6 +388,62 @@ class Shipment extends CI_Controller
 		redirect('shipment/shipment_update/' . $post['id']);
 	}
 
+	public function shipment_edit($id)
+	{
+		$where['id'] 						= $id;
+		$shipment_list 					= $this->shipment_mod->shipment_list_db($where);
+		unset($where);
+
+		if (count($shipment_list) <= 0) {
+			$this->session->set_flashdata('error', 'Shipment not Found!');
+			redirect("shipment/shipment_list");
+		}
+
+		$data['country'] = json_decode(file_get_contents("./assets/country/country.json"), true);
+		
+		$data['shipment'] 			= $shipment_list[0];
+		$data['t'] 							= 'g';
+		$data['subview'] 				= 'shipment/shipment_edit';
+		$data['meta_title'] 		= 'Shipment Edit Shipping Information';
+		$this->load->view('index', $data);
+	}
+
+	public function shipment_edit_process()
+	{
+		$post = $this->input->post();
+		$form_data = array(
+			'assign_branch'					=> $post['assign_branch'],
+		);
+		$where['id'] = $post['id'];
+		$this->shipment_mod->shipment_update_process_db($form_data, $where);
+
+		$form_data = array(
+			'main_agent_name'												=> $post['main_agent_name'],
+			'main_agent_mawb_mbl'										=> $post['main_agent_mawb_mbl'],
+			'main_agent_carrier'										=> $post['main_agent_carrier'],
+			'main_agent_voyage_flight_no'						=> $post['main_agent_voyage_flight_no'],
+			'main_agent_voyage_flight_date'					=> $post['main_agent_voyage_flight_date'],
+			// 'main_agent_cost'												=> $post['main_agent_cost'],
+			'secondary_agent_name'									=> $post['secondary_agent_name'],
+			'secondary_agent_mawb_mbl'							=> $post['secondary_agent_mawb_mbl'],
+			'secondary_agent_carrier'								=> $post['secondary_agent_carrier'],
+			'secondary_agent_voyage_flight_no'			=> $post['secondary_agent_voyage_flight_no'],
+			'secondary_agent_voyage_flight_date'		=> $post['secondary_agent_voyage_flight_date'],
+			// 'secondary_agent_cost'									=> $post['secondary_agent_cost'],
+			'port_of_loading'												=> $post['port_of_loading'],
+			'port_of_discharge'											=> $post['port_of_discharge'],
+			'container_no'													=> $post['container_no'],
+			'seal_no'																=> $post['seal_no'],
+			'cipl_no'																=> $post['cipl_no'],
+			'permit_no'															=> $post['permit_no']
+		);
+		$where2['id_shipment'] = $post['id'];
+		$this->shipment_mod->shipment_detail_update_process_db($form_data, $where2);
+
+		$this->session->set_flashdata('success', 'Your Shipment data has been Updated!');
+		redirect($_SERVER['HTTP_REFERER']);
+	}
+
 	public function shipment_cost($id){
 		$where['id'] 						= $id;
 		$shipment_list 					= $this->shipment_mod->shipment_list_db($where);
@@ -419,7 +453,23 @@ class Shipment extends CI_Controller
 		echo $id;
 		$where['id_shipment'] 	= $id;
 		$cost_list 							= $this->shipment_mod->shipment_cost_list_db($where);
-		$data['cost_list'] 			= $cost_list;
+		$main_agent 						= array();
+		$secondary_agent				= array();
+		$costumer								= array();
+		foreach ($cost_list as $key => $value) {
+			if($value['category'] == "main-agent"){
+				$main_agent[] = $value;
+			}
+			elseif($value['category'] == "secondary-agent"){
+				$secondary_agent[] = $value;
+			}
+			elseif($value['category'] == "costumer"){
+				$costumer[] = $value;
+			}
+		}
+		$data['main_agent'] 			= $main_agent;
+		$data['secondary_agent'] 	= $secondary_agent;
+		$data['costumer'] 				= $costumer;
 
 		$data['subview'] 				= 'shipment/shipment_cost';
 		$data['meta_title'] 		= 'Shipment Cost';
@@ -441,6 +491,7 @@ class Shipment extends CI_Controller
 						'unit_price' 				=> $post['unit_price'][$key],
 						'exchange_rate' 		=> $post['exchange_rate'][$key],
 						'remarks' 					=> $post['remarks'][$key],
+						'category' 					=> $post['category'],
 					);
 					$this->shipment_mod->shipment_cost_create_process_db($form_data);
 				} else {
@@ -460,7 +511,7 @@ class Shipment extends CI_Controller
 		}
 
 		$this->session->set_flashdata('success', 'Your Shipment data has been Updated!');
-		redirect('shipment/shipment_cost/' . $post['id']);
+		redirect($_SERVER['HTTP_REFERER']);
 	}
 
 	public function shipment_delete_process($id)

@@ -1,4 +1,7 @@
 <?php
+
+use Sabberworm\CSS\Value\Value;
+
 defined('BASEPATH') OR exit('No direct script access allowed');
 
 class Master_tracking extends CI_Controller {
@@ -101,6 +104,42 @@ class Master_tracking extends CI_Controller {
   public function master_tracking_detail($master_tracking){
     $where['master_tracking'] = $master_tracking;
 		$data['shipment_list'] 	  = $this->shipment_mod->shipment_list_db($where);
+		unset($where);
+		$id_shipment = array();
+		$currency = "";
+		$total_value = 0;
+		$total_act_weight = 0;
+		$total_vol_weight = 0;
+		$total_measurement = 0;
+		$per = 5000;
+		foreach ($data['shipment_list'] as $key => $value) {
+			$total_value += $value['declared_value'];
+			$currency = $value['currency'];
+			$id_shipment[] = $value['id'];
+			if ($value['type_of_mode'] == 'Air Freight') {
+				$per = 6000;
+			}
+		}
+		if(count($id_shipment) > 0){
+			$where["id_shipment IN ('".join("', '", $id_shipment)."')"] 	= NULL;
+			$packages_list 					= $this->shipment_mod->shipment_packages_list_db($where);
+			foreach ($packages_list as $key => $value) {
+				$actual_weight = $value['qty'] * $value['weight'];
+				$volume_weight = $value['qty'] * ($value['length'] * $value['width'] * $value['height']) / $per;
+				$measurement = $value['qty'] * ($value['length'] * $value['width'] * $value['height']) / 1000000;
+
+				$total_act_weight += $actual_weight;
+				$total_vol_weight += $volume_weight;
+				$total_measurement += $measurement;
+			}
+		}
+		
+		$data['summary_total'] 		= array(
+			"total_value" => $currency." ".$total_value,
+			"total_act_weight" => $total_act_weight,
+			"total_vol_weight" => $total_vol_weight,
+			"total_measurement" => $total_measurement,
+		);
 		$data['master_tracking'] 	= $master_tracking;
 		$data['subview'] 				  = 'master_tracking/master_tracking_detail';
 		$data['meta_title'] 		  = 'Shipment List';

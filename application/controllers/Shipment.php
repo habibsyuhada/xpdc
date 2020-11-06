@@ -525,6 +525,107 @@ class Shipment extends CI_Controller
 		redirect($_SERVER['HTTP_REFERER']);
 	}
 
+	public function shipment_update_invoice_process(){
+		$post = $this->input->post();
+
+		$config['upload_path']          = 'file/invoice/';
+		$config['file_name']            = 'invoice_'.$post['category'].'_'.$post['id'].'_'.date('YmsHis');
+		$config['allowed_types']        = '*';
+		$config['overwrite'] 						= TRUE;
+
+		$this->load->library('upload', $config);
+		$this->upload->initialize($config);
+
+		if (!$this->upload->do_upload('file')) {
+			$this->session->set_flashdata('error', $this->upload->display_errors());
+			redirect($_SERVER['HTTP_REFERER']);
+			return false;
+		}
+
+		if($post['main_agent_invoice']){
+			$form_data = array(
+				'main_agent_invoice'				=> $post['main_agent_invoice'],
+				'main_agent_invoice_attc'		=> $this->upload->data('file_name'),
+			);
+		}
+		elseif($post['secondary_agent_invoice']){
+			$form_data = array(
+				'secondary_agent_invoice'				=> $post['secondary_agent_invoice'],
+				'secondary_agent_invoice_attc'		=> $this->upload->data('file_name'),
+			);
+		}
+		
+		$where2['id_shipment'] = $post['id'];
+		$this->shipment_mod->shipment_detail_update_process_db($form_data, $where2);
+
+		$this->session->set_flashdata('success', 'Your Shipment data has been Updated!');
+		redirect($_SERVER['HTTP_REFERER']);
+	}
+
+	public function shipment_bill($id){
+		$where['id'] 						= $id;
+		$shipment_list 					= $this->shipment_mod->shipment_list_db($where);
+		$data['shipment_list'] 	= $shipment_list[0];
+
+		unset($where);
+		echo $id;
+		$where['id_shipment'] 	= $id;
+		$cost_list 							= $this->shipment_mod->shipment_cost_list_db($where);
+		$main_agent 						= array();
+		$secondary_agent				= array();
+		$costumer								= array();
+		foreach ($cost_list as $key => $value) {
+			if($value['category'] == "costumer"){
+				$costumer[] = $value;
+			}
+		}
+		$data['main_agent'] 			= $main_agent;
+		$data['secondary_agent'] 	= $secondary_agent;
+		$data['costumer'] 				= $costumer;
+
+		$data['subview'] 				= 'shipment/shipment_bill';
+		$data['meta_title'] 		= 'Shipment Cost';
+		$this->load->view('index', $data);
+	}
+
+	public function shipment_bill_process(){
+		$post = $this->input->post();
+		foreach ($post['unit_price'] as $key => $value) {
+			if($value != "" && $value != "0"){
+				unset($where);
+				if ($post['id_cost'][$key] == "") {
+					$form_data = array(
+						'id_shipment' 			=> $post['id'],
+						'description' 			=> $post['description'][$key],
+						'qty' 							=> $post['qty'][$key],
+						'uom' 							=> $post['uom'][$key],
+						'currency' 					=> $post['currency'][$key],
+						'unit_price' 				=> $post['unit_price'][$key],
+						'exchange_rate' 		=> $post['exchange_rate'][$key],
+						'remarks' 					=> $post['remarks'][$key],
+						'category' 					=> $post['category'],
+					);
+					$this->shipment_mod->shipment_cost_create_process_db($form_data);
+				} else {
+					$form_data = array(
+						'description' 			=> $post['description'][$key],
+						'qty' 							=> $post['qty'][$key],
+						'uom' 							=> $post['uom'][$key],
+						'currency' 					=> $post['currency'][$key],
+						'unit_price' 				=> $post['unit_price'][$key],
+						'exchange_rate' 		=> $post['exchange_rate'][$key],
+						'remarks' 					=> $post['remarks'][$key],
+					);
+					$where['id'] = $post['id_cost'][$key];
+					$this->shipment_mod->shipment_cost_update_process_db($form_data, $where);
+				}
+			}
+		}
+
+		$this->session->set_flashdata('success', 'Your Shipment data has been Updated!');
+		redirect($_SERVER['HTTP_REFERER']);
+	}
+
 	public function shipment_delete_process($id)
 	{
 		$form_data = array(

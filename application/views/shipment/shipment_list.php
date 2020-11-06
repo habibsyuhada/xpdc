@@ -167,7 +167,8 @@
                       <td>
                         <a href="<?php echo base_url() ?>shipment/shipment_tracking/<?php echo $value['id'] ?>" class="btn btn-secondary" title="View"><i class="fas fa-eye m-0"></i></a>
                         <?php if($page_permission[6] == 1): ?>
-                        <a href="<?php echo base_url() ?>shipment/shipment_cost/<?php echo $value['id'] ?>" class="btn btn-success" title="Driver"><i class="fas fa-dollar-sign"></i></a>
+                        <a href="<?php echo base_url() ?>shipment/shipment_cost/<?php echo $value['id'] ?>" class="btn btn-success" title="Shipment Cost"><i class="fas fa-dollar-sign"></i></a>
+                        <a href="<?php echo base_url() ?>shipment/shipment_bill/<?php echo $value['id'] ?>" class="btn btn-facebook" title="Shipment Bill"><i class="fas fa-coins"></i></a>
                         <?php endif; ?>
                         <?php if($page_permission[0] == 1): ?>
                         <a href="<?php echo base_url() ?>driver/driver_update/<?php echo $value['id'] ?>" class="btn btn-info" title="Driver"><i class="fas fa-truck"></i></a>

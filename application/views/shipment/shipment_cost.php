@@ -35,9 +35,6 @@
               <li class="nav-item">
                 <a class="nav-link" id="secondary-agent-tab" data-toggle="tab" href="#secondary-agent" role="tab" aria-controls="secondary-agent" aria-selected="false">Secondary Agent Cost</a>
               </li>
-              <li class="nav-item">
-                <a class="nav-link" id="costumer-tab" data-toggle="tab" href="#costumer" role="tab" aria-controls="costumer" aria-selected="false">Costumer Cost</a>
-              </li>
             </ul>
             <br>
             <div class="tab-content" id="myTabContent">
@@ -69,7 +66,53 @@
                     </div>
                   </div>
                 </div>
-                
+
+                <br>
+                <h6 class="font-weight-bold border-bottom">Invoice Detail</h6>
+                <div class="row">
+                  <div class="col-md">
+                    <form action="<?php echo base_url() ?>shipment/shipment_update_invoice_process" method="POST" enctype="multipart/form-data">
+                      <input type="hidden" class="form-control" name="id" value="<?php echo $shipment_list['id']; ?>">
+                      <input type="hidden" class="form-control" name="category" value="secondary-agent">
+                      <div class="form-group">
+                        <label>Invoice No :</label>
+                        <input type="text" class="form-control" name="main_agent_invoice" placeholder="Main Agent Invoice No.">
+                      </div>
+                      <div class="form-group">
+                        <label>Attachment :</label>
+                        <input type="file" name="file" class="file-upload-default">
+                        <div class="input-group col-xs-12">
+                          <input type="text" class="form-control file-upload-info" disabled placeholder="Upload Attachment">
+                          <span class="input-group-append">
+                            <button class="file-upload-browse btn btn-info" type="button">Upload</button>
+                          </span>
+                        </div>
+                      </div>
+                      <div class="form-group">
+                        <button type="submit" class="btn btn-sm btn-primary">Update</button>
+                      </div>
+                    </form>
+                  </div>
+                  <div class="col-md-1"></div>
+                  <div class="col-md">
+                    <div class="form-group">
+                      <label>Invoice No :</label>
+                      <div class="font-weight-bold"><?php echo ($shipment_list['main_agent_invoice'] == "" ? "-" : $shipment_list['main_agent_invoice']) ?></div>
+                    </div>
+                    <div class="form-group">
+                      <label>Attachment :</label>
+                      <?php if($shipment_list['main_agent_invoice_attc'] == ""): ?>
+                        <div class="font-weight-bold">-</div>
+                      <?php else: ?>
+                        <br>
+                        <a target="_blank" href="<?php echo base_url() ?>file/invoice/<?php echo $shipment_list['main_agent_invoice_attc'] ?>" class="btn btn-flat btn-dark"><i class="fas fa-file-pdf"></i></a>
+                      <?php endif; ?>
+                    </div>
+                  </div>
+                </div>
+
+                <br>
+                <h6 class="font-weight-bold border-bottom">Cost Detail</h6>
                 <?php
                   $total_all = 0;
                 ?>
@@ -236,6 +279,53 @@
                     </div>
                   </div>
                 </div>
+
+                <br>
+                <h6 class="font-weight-bold border-bottom">Invoice Detail</h6>
+                <div class="row">
+                  <div class="col-md">
+                    <form action="<?php echo base_url() ?>shipment/shipment_update_invoice_process" method="POST" enctype="multipart/form-data">
+                      <input type="hidden" class="form-control" name="id" value="<?php echo $shipment_list['id']; ?>">
+                      <input type="hidden" class="form-control" name="category" value="secondary-agent">
+                      <div class="form-group">
+                        <label>Invoice No :</label>
+                        <input type="text" class="form-control" name="secondary_agent_invoice" placeholder="Secondary Agent Invoice No.">
+                      </div>
+                      <div class="form-group">
+                        <label>Attachment :</label>
+                        <input type="file" name="file" class="file-upload-default">
+                        <div class="input-group col-xs-12">
+                          <input type="text" class="form-control file-upload-info" disabled placeholder="Upload Attachment">
+                          <span class="input-group-append">
+                            <button class="file-upload-browse btn btn-info" type="button">Upload</button>
+                          </span>
+                        </div>
+                      </div>
+                      <div class="form-group">
+                        <button type="submit" class="btn btn-sm btn-primary">Update</button>
+                      </div>
+                    </form>
+                  </div>
+                  <div class="col-md-1"></div>
+                  <div class="col-md">
+                    <div class="form-group">
+                      <label>Invoice No :</label>
+                      <div class="font-weight-bold"><?php echo ($shipment_list['secondary_agent_invoice'] == "" ? "-" : $shipment_list['secondary_agent_invoice']) ?></div>
+                    </div>
+                    <div class="form-group">
+                      <label>Attachment :</label>
+                      <?php if($shipment_list['secondary_agent_invoice_attc'] == ""): ?>
+                        <div class="font-weight-bold">-</div>
+                      <?php else: ?>
+                        <br>
+                        <a target="_blank" href="<?php echo base_url() ?>file/invoice/<?php echo $shipment_list['secondary_agent_invoice_attc'] ?>" class="btn btn-flat btn-dark"><i class="fas fa-file-pdf"></i></a>
+                      <?php endif; ?>
+                    </div>
+                  </div>
+                </div>
+                
+                <br>
+                <h6 class="font-weight-bold border-bottom">Cost Detail</h6>
                 <?php
                   $total_all = 0;
                 ?>
@@ -308,144 +398,6 @@
                       <?php endif; ?>
                       <?php 
                         foreach ($secondary_agent as $key => $value) : 
-                          $total_all += $value['qty']*$value['unit_price']*$value['exchange_rate'];
-                      ?>
-                        <tr>
-                        <td>
-                          <input type="text" class="form-control" name="description[]" value="<?php echo $value['description'] ?>" required>
-                          <input type="hidden" class="form-control" name="id_cost[]" value="<?php echo $value['id'] ?>">
-                        </td>
-                        <td><input type="number" class="form-control" value="<?php echo $value['qty'] ?>" oninput="get_total(this)" name="qty[]"></td>
-                        <td>
-                          <select class="form-control" name="uom[]" required>
-                            <option value="">-- Select One --</option>
-                            <option value="Kg" <?php echo ($value['uom'] == "Kg" ? 'selected' : '') ?>>Kg</option>
-                            <option value="M3" <?php echo ($value['uom'] == "M3" ? 'selected' : '') ?>>M3</option>
-                            <option value="Set" <?php echo ($value['uom'] == "Set" ? 'selected' : '') ?>>Set</option>
-                            <option value="Trip" <?php echo ($value['uom'] == "Trip" ? 'selected' : '') ?>>Trip</option>
-                            <option value="Pallet" <?php echo ($value['uom'] == "Pallet" ? 'selected' : '') ?>>Pallet</option>
-                            <option value="Persentage" <?php echo ($value['uom'] == "Persentage" ? 'selected' : '') ?>>Persentage</option>
-                          </select>
-                        </td>
-                        <td>
-                          <select class="form-control" name="currency[]" required>
-                            <option value="">-- Select One --</option>
-                            <option value="AED" <?php echo ($value['currency'] == "AED" ? 'selected' : '') ?>>AED</option>
-                            <option value="AUD" <?php echo ($value['currency'] == "AUD" ? 'selected' : '') ?>>AUD</option>
-                            <option value="CNY" <?php echo ($value['currency'] == "CNY" ? 'selected' : '') ?>>CNY</option>
-                            <option value="EUR" <?php echo ($value['currency'] == "EUR" ? 'selected' : '') ?>>EUR</option>
-                            <option value="GBP" <?php echo ($value['currency'] == "GBP" ? 'selected' : '') ?>>GBP</option>
-                            <option value="HKD" <?php echo ($value['currency'] == "HKD" ? 'selected' : '') ?>>HKD</option>
-                            <option value="IDR" <?php echo ($value['currency'] == "IDR" ? 'selected' : '') ?>>IDR</option>
-                            <option value="INR" <?php echo ($value['currency'] == "INR" ? 'selected' : '') ?>>INR</option>
-                            <option value="JPY" <?php echo ($value['currency'] == "JPY" ? 'selected' : '') ?>>JPY</option>
-                            <option value="KRW" <?php echo ($value['currency'] == "KRW" ? 'selected' : '') ?>>KRW</option>
-                            <option value="MYR" <?php echo ($value['currency'] == "MYR" ? 'selected' : '') ?>>MYR</option>
-                            <option value="SGD" <?php echo ($value['currency'] == "SGD" ? 'selected' : '') ?>>SGD</option>
-                            <option value="THB" <?php echo ($value['currency'] == "THB" ? 'selected' : '') ?>>THB</option>
-                            <option value="TWD" <?php echo ($value['currency'] == "TWD" ? 'selected' : '') ?>>TWD</option>
-                            <option value="USD" <?php echo ($value['currency'] == "USD" ? 'selected' : '') ?>>USD</option>
-                          </select>
-                        </td>
-                        <td><input type="number" class="form-control" value="<?php echo $value['unit_price'] ?>" oninput="get_total(this)" name="unit_price[]"></td>
-                        <td><input type="number" class="form-control" value="<?php echo $value['qty']*$value['unit_price'] ?>" name="subtotal[]" readonly></td>
-                        <td><input type="number" class="form-control" value="<?php echo $value['exchange_rate'] ?>" oninput="get_total(this)"name="exchange_rate[]"></td>
-                        <td><input type="number" class="form-control" value="<?php echo $value['qty']*$value['unit_price']*$value['exchange_rate'] ?>" name="total[]" readonly></td>
-                        <td><textarea class="form-control" name="remarks[]" placeholder="..."><?php echo $value['remarks'] ?></textarea></td>
-                        <td>
-                          <?php if ($key == 0) : ?>
-                            <button type="button" class="btn btn-primary" onclick="addrow(this)"><i class="fas fa-plus m-0"></i></button>
-                          <?php else : ?>
-                            <button type="button" onclick="deletecost('<?php echo $value['id'] ?>', this)" class="btn btn-danger"><i class="fas fa-trash m-0"></i></button>
-                          <?php endif; ?>
-                        </td>
-                      </tr>
-                      <?php endforeach; ?>
-                    </tbody>
-                  </table>
-                  <div class="row clearfix">
-                    <div class="col-md">
-                      <h5 class="font-weight-bold">Total All : IDR <span name="total_all"><?php echo $total_all ?></span></h5>
-                    </div>
-                    <div class="col-md text-right">
-                      <button type="submit" class="btn btn-success">Submit</button>
-                    </div>
-                  </div>
-                </form>
-              </div>
-              <div class="tab-pane fade" id="costumer" role="tabpanel" aria-labelledby="costumer-tab">
-                <?php
-                  $total_all = 0;
-                ?>
-                <form action="<?php echo base_url() ?>shipment/shipment_cost_process" method="POST">
-                  <input type="hidden" class="form-control" name="id" value="<?php echo $shipment_list['id']; ?>">
-                  <input type="hidden" class="form-control" name="category" value="costumer">
-                  <table class="table text-center">
-                    <thead>
-                      <tr class="bg-info">
-                        <th nowrap class="text-white font-weight-bold min-w30px">Description</th>
-                        <th nowrap class="text-white font-weight-bold min-w30px">Quantity</th>
-                        <th nowrap class="text-white font-weight-bold min-w30px">UOM</th>
-                        <th nowrap class="text-white font-weight-bold min-w30px">Currency</th>
-                        <th nowrap class="text-white font-weight-bold min-w30px">Unit Price</th>
-                        <th nowrap class="text-white font-weight-bold min-w30px">Sub Total</th>
-                        <th nowrap class="text-white font-weight-bold min-w30px">Exchange Rate to IDR</th>
-                        <th nowrap class="text-white font-weight-bold min-w30px">Total</th>
-                        <th nowrap class="text-white font-weight-bold min-w30px">Remarks</th>
-                        <th nowrap class="text-white font-weight-bold min-w30px"></th>
-                      </tr>
-                    </thead>
-                    <tbody>
-                      <?php if(count($costumer) < 1) : ?>
-                      <tr>
-                        <td>
-                          <input type="text" class="form-control" name="description[]" required>
-                          <input type="hidden" class="form-control" name="id_cost[]">
-                        </td>
-                        <td><input type="number" class="form-control" value="0" oninput="get_total(this)" name="qty[]"></td>
-                        <td>
-                          <select class="form-control" name="uom[]" required>
-                            <option value="">-- Select One --</option>
-                            <option value="Kg">Kg</option>
-                            <option value="M3">M3</option>
-                            <option value="Set">Set</option>
-                            <option value="Trip">Trip</option>
-                            <option value="Pallet">Pallet</option>
-                            <option value="Persentage">Persentage</option>
-                          </select>
-                        </td>
-                        <td>
-                          <select class="form-control" name="currency[]" required>
-                            <option value="">-- Select One --</option>
-                            <option value="AED">AED</option>
-                            <option value="AUD">AUD</option>
-                            <option value="CNY">CNY</option>
-                            <option value="EUR">EUR</option>
-                            <option value="GBP">GBP</option>
-                            <option value="HKD">HKD</option>
-                            <option value="IDR">IDR</option>
-                            <option value="INR">INR</option>
-                            <option value="JPY">JPY</option>
-                            <option value="KRW">KRW</option>
-                            <option value="MYR">MYR</option>
-                            <option value="SGD">SGD</option>
-                            <option value="THB">THB</option>
-                            <option value="TWD">TWD</option>
-                            <option value="USD">USD</option>
-                          </select>
-                        </td>
-                        <td><input type="number" class="form-control" value="0" oninput="get_total(this)" name="unit_price[]"></td>
-                        <td><input type="number" class="form-control" value="0" name="subtotal[]" readonly></td>
-                        <td><input type="number" class="form-control" value="0" oninput="get_total(this)"name="exchange_rate[]"></td>
-                        <td><input type="number" class="form-control" value="0" name="total[]" readonly></td>
-                        <td><textarea class="form-control" name="remarks[]" placeholder="..."></textarea></td>
-                        <td>
-                          <button type="button" class="btn btn-primary" onclick="addrow(this)"><i class="fas fa-plus m-0"></i></button>
-                        </td>
-                      </tr>
-                      <?php endif; ?>
-                      <?php 
-                        foreach ($costumer as $key => $value) : 
                           $total_all += $value['qty']*$value['unit_price']*$value['exchange_rate'];
                       ?>
                         <tr>

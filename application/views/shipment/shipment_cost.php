@@ -73,7 +73,7 @@
                   <div class="col-md">
                     <form action="<?php echo base_url() ?>shipment/shipment_update_invoice_process" method="POST" enctype="multipart/form-data">
                       <input type="hidden" class="form-control" name="id" value="<?php echo $shipment_list['id']; ?>">
-                      <input type="hidden" class="form-control" name="category" value="secondary-agent">
+                      <input type="hidden" class="form-control" name="category" value="main-agent">
                       <div class="form-group">
                         <label>Invoice No :</label>
                         <input type="text" class="form-control" name="main_agent_invoice" placeholder="Main Agent Invoice No.">

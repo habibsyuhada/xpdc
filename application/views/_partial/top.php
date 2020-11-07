@@ -108,10 +108,10 @@
 								<div class="submenu-content">
 									<a href="<?php echo base_url() ?>shipment/shipment_history_update" class="menu-item">Update History</a>
 									<a href="<?php echo base_url() ?>operation/service_center" class="menu-item">Service Center</a>
-									<a href="<?php echo base_url() ?>operation/departed" class="menu-item">Departed</a>
+									<!-- <a href="<?php echo base_url() ?>operation/departed" class="menu-item">Departed</a>
 									<a href="<?php echo base_url() ?>operation/arrived" class="menu-item">Arrived</a>
 									<a href="<?php echo base_url() ?>operation/with_courier" class="menu-item">With Courier</a>
-									<a href="<?php echo base_url() ?>operation/delivered" class="menu-item">Delivered</a>
+									<a href="<?php echo base_url() ?>operation/delivered" class="menu-item">Delivered</a> -->
 								</div>
 							</div>
 							<?php endif; ?>

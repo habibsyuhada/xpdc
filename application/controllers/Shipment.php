@@ -422,11 +422,6 @@ class Shipment extends CI_Controller
 	public function shipment_edit_process()
 	{
 		$post = $this->input->post();
-		$form_data = array(
-			'assign_branch'					=> $post['assign_branch'],
-		);
-		$where['id'] = $post['id'];
-		$this->shipment_mod->shipment_update_process_db($form_data, $where);
 
 		$form_data = array(
 			'main_agent_name'												=> $post['main_agent_name'],
@@ -450,6 +445,39 @@ class Shipment extends CI_Controller
 		);
 		$where2['id_shipment'] = $post['id'];
 		$this->shipment_mod->shipment_detail_update_process_db($form_data, $where2);
+
+		$this->session->set_flashdata('success', 'Your Shipment data has been Updated!');
+		redirect($_SERVER['HTTP_REFERER']);
+	}
+
+	public function shipment_assign($id)
+	{
+		$where['id'] 						= $id;
+		$shipment_list 					= $this->shipment_mod->shipment_list_db($where);
+		unset($where);
+
+		if (count($shipment_list) <= 0) {
+			$this->session->set_flashdata('error', 'Shipment not Found!');
+			redirect("shipment/shipment_list");
+		}
+
+		$data['country'] = json_decode(file_get_contents("./assets/country/country.json"), true);
+		
+		$data['shipment'] 			= $shipment_list[0];
+		$data['t'] 							= 'g';
+		$data['subview'] 				= 'shipment/shipment_assign';
+		$data['meta_title'] 		= 'Assign Shipment';
+		$this->load->view('index', $data);
+	}
+
+	public function shipment_assign_process()
+	{
+		$post = $this->input->post();
+		$form_data = array(
+			'assign_branch'					=> $post['assign_branch'],
+		);
+		$where['id'] = $post['id'];
+		$this->shipment_mod->shipment_update_process_db($form_data, $where);
 
 		$this->session->set_flashdata('success', 'Your Shipment data has been Updated!');
 		redirect($_SERVER['HTTP_REFERER']);
@@ -624,6 +652,29 @@ class Shipment extends CI_Controller
 
 		$this->session->set_flashdata('success', 'Your Shipment data has been Updated!');
 		redirect($_SERVER['HTTP_REFERER']);
+	}
+
+	public function shipment_invoice_pdf($id)
+	{
+		$where['shipment.id'] 		= $id;
+		$shipment_list 						= $this->shipment_mod->shipment_list_db($where);
+		$shipment 								= $shipment_list[0];
+		$data['shipment'] 				= $shipment;
+		unset($where);
+		$total_label = 0;
+		foreach ($shipment_list as $key => $shipment){
+			$total_label = $total_label + $shipment['qty'];
+		}
+		$data['total_label'] 	= $total_label;
+
+		$label_track = set_barcode($shipment['tracking_no']);
+		$data['label_track'] 	= $label_track;
+		$data['logo'] 	= base64_encode(file_get_contents("assets/img/logo-big-xpdc.png"));
+		
+		$this->load->library('pdf');
+		$this->pdf->setPaper('A4', 'potrait');
+		$this->pdf->filename = "Label-" . $shipment['tracking_no'] . ".pdf";
+		$this->pdf->load_view('shipment/shipment_invoice_pdf', $data);
 	}
 
 	public function shipment_delete_process($id)

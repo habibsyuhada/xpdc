@@ -569,7 +569,7 @@ class Shipment extends CI_Controller
 			redirect($_SERVER['HTTP_REFERER']);
 			return false;
 		}
-
+		
 		if($post['main_agent_invoice']){
 			$form_data = array(
 				'main_agent_invoice'				=> $post['main_agent_invoice'],
@@ -581,6 +581,9 @@ class Shipment extends CI_Controller
 				'secondary_agent_invoice'				=> $post['secondary_agent_invoice'],
 				'secondary_agent_invoice_attc'		=> $this->upload->data('file_name'),
 			);
+		}
+		if($post['status_cost'] != 1){
+			$form_data['status_cost'] = 1;
 		}
 		
 		$where2['id_shipment'] = $post['id'];
@@ -670,6 +673,12 @@ class Shipment extends CI_Controller
 			'create_by' 			=> $this->session->userdata('id'),
 		);
 		$id_shipment = $this->shipment_mod->shipment_invoice_create_process_db($form_data);
+
+		$form_data = array(
+			'status_bill' 		=> 1,
+		);
+		$where['id_shipment'] = $id;
+		$this->shipment_mod->shipment_detail_update_process_db($form_data, $where);
 
 		$this->session->set_flashdata('success', 'Your Invoice data has been Created!');
 		redirect($_SERVER['HTTP_REFERER']);

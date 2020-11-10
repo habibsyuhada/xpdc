@@ -150,6 +150,9 @@
                       <th class="text-white font-weight-bold">Shipper Name</th>
                       <th class="text-white font-weight-bold">Receiver Name</th>
                       <th class="text-white font-weight-bold">Status</th>
+                      <?php if($page_permission[6] == 1): ?>
+                      <th class="text-white font-weight-bold">Status Finance</th>
+                      <?php endif; ?>
                       <th class="text-white font-weight-bold"></th>
                     </tr>
                   </thead>
@@ -164,6 +167,21 @@
                       <td><?php echo $value['shipper_name'] ?></td>
                       <td><?php echo $value['consignee_name'] ?></td>
                       <td><a target="_blank" class="font-weight-bold" href="<?php echo base_url() ?>shipment/shipment_tracking/<?php echo $value['id'] ?>"><?php echo $value['status'] ?></a></td>
+                      <?php if($page_permission[6] == 1): ?>
+                      <td>
+                        <?php if($value['status_cost'] == 1): ?>
+                        <span class="badge badge-sm badge-success mb-1">Paid</span>
+                        <?php else: ?>
+                        <span class="badge badge-sm badge-danger mb-1">Unpaid</span>
+                        <?php endif; ?>
+                        <br>
+                        <?php if($value['status_bill'] == 1): ?>
+                        <span class="badge badge-sm badge-success mb-1">Billed</span>
+                        <?php else: ?>
+                        <span class="badge badge-sm badge-danger mb-1">Unbilled</span>
+                        <?php endif; ?>
+                      </td>
+                      <?php endif; ?>
                       <td>
                         <!-- <a href="<?php echo base_url() ?>shipment/shipment_tracking/<?php echo $value['id'] ?>" class="btn btn-secondary" title="View"><i class="fas fa-eye m-0"></i></a> -->
                         <?php if($page_permission[6] == 1): ?>

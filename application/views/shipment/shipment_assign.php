@@ -79,7 +79,7 @@
               </div>
               <div class="mt-2 row">
                 <div class="text-left col-6">
-                  <span class="btn btn-danger previous-tab">Back</span>
+                  <!-- <span class="btn btn-danger previous-tab">Back</span> -->
                 </div>
                 <div class="text-right col-6">
                   <button type="submit" class="btn btn-success" onclick="return confirm('Apakah Anda Yakin?')">Submit</button>

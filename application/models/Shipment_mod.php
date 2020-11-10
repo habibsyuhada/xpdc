@@ -155,7 +155,7 @@ class Shipment_mod extends CI_Model
     if ($where) {
       $query = $this->db->where($where);
     }
-    $query = $this->db->select('RIGHT(tracking_no, 6) AS tracking_no');
+    $query = $this->db->select('RIGHT(tracking_no, 10) AS tracking_no');
     $query = $this->db->order_by('tracking_no', 'DESC');
     $query = $this->db->limit("1");
     $query = $this->db->get('shipment');
@@ -164,6 +164,27 @@ class Shipment_mod extends CI_Model
 
     if ($query1_result) {
       $batch_no_gen = str_pad($query1_result[0]["tracking_no"] + 1, 10, '0', STR_PAD_LEFT);
+    } else {
+      $batch_no_gen = "0000000001";
+    }
+
+    return $batch_no_gen;
+  }
+
+  public function shipment_generate_invoice_no_db($where = NULL)
+  {
+    if ($where) {
+      $query = $this->db->where($where);
+    }
+    $query = $this->db->select('RIGHT(invoice_no, 10) AS invoice_no');
+    $query = $this->db->order_by('invoice_no', 'DESC');
+    $query = $this->db->limit("1");
+    $query = $this->db->get('shipment_invoice');
+
+    $query1_result = $query->result_array();
+
+    if ($query1_result) {
+      $batch_no_gen = str_pad($query1_result[0]["invoice_no"] + 1, 10, '0', STR_PAD_LEFT);
     } else {
       $batch_no_gen = "0000000001";
     }
@@ -212,5 +233,27 @@ class Shipment_mod extends CI_Model
     }
     $query = $this->db->query($query);
     return $query->result_array();
+  }
+
+  function shipment_invoice_list_db($where = null)
+  {
+    if (isset($where)) {
+      $this->db->where($where);
+    }
+    $query = $this->db->get('shipment_invoice');
+    return $query->result_array();
+  }
+
+  public function shipment_invoice_create_process_db($data)
+  {
+    $this->db->insert('shipment_invoice', $data);
+    $insert_id = $this->db->insert_id();
+    return $insert_id;
+  }
+
+  public function shipment_invoice_update_process_db($data, $where)
+  {
+    $this->db->where($where);
+    $this->db->update('shipment_invoice', $data);
   }
 }

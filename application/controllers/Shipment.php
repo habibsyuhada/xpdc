@@ -596,6 +596,13 @@ class Shipment extends CI_Controller
 		$data['shipment_list'] 	= $shipment_list[0];
 
 		unset($where);
+		$where['id_shipment'] 	= $id;
+		$shipment_invoice 			= $this->shipment_mod->shipment_invoice_list_db($where);
+		if(count($shipment_invoice) > 0){
+			$data['invoice'] 				= $shipment_invoice[0];
+		}
+
+		unset($where);
 		echo $id;
 		$where['id_shipment'] 	= $id;
 		$cost_list 							= $this->shipment_mod->shipment_cost_list_db($where);
@@ -612,7 +619,7 @@ class Shipment extends CI_Controller
 		$data['costumer'] 				= $costumer;
 
 		$data['subview'] 				= 'shipment/shipment_bill';
-		$data['meta_title'] 		= 'Shipment Cost';
+		$data['meta_title'] 		= 'Shipment Bill';
 		$this->load->view('index', $data);
 	}
 
@@ -651,6 +658,40 @@ class Shipment extends CI_Controller
 		}
 
 		$this->session->set_flashdata('success', 'Your Shipment data has been Updated!');
+		redirect($_SERVER['HTTP_REFERER']);
+	}
+
+	public function shipment_invoice_create_process($id){
+		$invoice_no = "INVOICE".$this->shipment_mod->shipment_generate_invoice_no_db();
+		$form_data = array(
+			'id_shipment' 		=> $id,
+			'invoice_no' 			=> $invoice_no,
+			'invoice_date' 		=> date("Y-m-d"),
+			'create_by' 			=> $this->session->userdata('id'),
+		);
+		$id_shipment = $this->shipment_mod->shipment_invoice_create_process_db($form_data);
+
+		$this->session->set_flashdata('success', 'Your Invoice data has been Created!');
+		redirect($_SERVER['HTTP_REFERER']);
+	}
+
+	public function shipment_invoice_update_process()
+	{
+		$post = $this->input->post();
+		// test_var($post);
+		$form_data = array(
+			'payment_terms' 		=> $post['payment_terms'],
+			'vat' 							=> $post['vat'],
+			'discount' 					=> $post['discount'],
+			'notes' 						=> $post['notes'],
+			'beneficiary_name'	=> $post['beneficiary_name'],
+			'acc_no'						=> $post['acc_no'],
+			'bank_name'					=> $post['bank_name'],
+		);
+		$where['id'] = $post['id'];
+		$this->shipment_mod->shipment_invoice_update_process_db($form_data, $where);
+
+		$this->session->set_flashdata('success', 'Your Invoice data has been Updated!');
 		redirect($_SERVER['HTTP_REFERER']);
 	}
 

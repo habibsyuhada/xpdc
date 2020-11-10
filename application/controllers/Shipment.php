@@ -149,6 +149,7 @@ class Shipment extends CI_Controller
 	{
 		$post = $this->input->post();
 		$tracking_no = $this->shipment_mod->shipment_generate_tracking_no_db();
+		test_var($tracking_no);
 		$tracking_no = "XPDC" . $tracking_no;
 
 		// if ($post['status_pickup'] == 'Dropoff') {
@@ -710,20 +711,29 @@ class Shipment extends CI_Controller
 		$shipment_list 						= $this->shipment_mod->shipment_list_db($where);
 		$shipment 								= $shipment_list[0];
 		$data['shipment'] 				= $shipment;
-		unset($where);
-		$total_label = 0;
-		foreach ($shipment_list as $key => $shipment){
-			$total_label = $total_label + $shipment['qty'];
-		}
-		$data['total_label'] 	= $total_label;
 
-		$label_track = set_barcode($shipment['tracking_no']);
-		$data['label_track'] 	= $label_track;
+		unset($where);
+		$where['id_shipment'] 	= $id;
+		$shipment_invoice 			= $this->shipment_mod->shipment_invoice_list_db($where);
+		$data['invoice'] 				= $shipment_invoice[0];
+
+		unset($where);
+		$where['id_shipment'] 	= $id;
+		$cost_list 							= $this->shipment_mod->shipment_cost_list_db($where);
+		$costumer								= array();
+		foreach ($cost_list as $key => $value) {
+			if($value['category'] == "costumer"){
+				$costumer[] = $value;
+			}
+		}
+		$data['costumer'] 				= $costumer;
+
+
 		$data['logo'] 	= base64_encode(file_get_contents("assets/img/logo-big-xpdc.png"));
 		
 		$this->load->library('pdf');
 		$this->pdf->setPaper('A4', 'potrait');
-		$this->pdf->filename = "Label-" . $shipment['tracking_no'] . ".pdf";
+		$this->pdf->filename = "Invoice-" . $shipment['tracking_no'] . ".pdf";
 		$this->pdf->load_view('shipment/shipment_invoice_pdf', $data);
 	}
 

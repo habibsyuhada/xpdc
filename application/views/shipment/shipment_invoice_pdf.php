@@ -11,6 +11,7 @@
     body {
       margin: 0px;
       font-size: 14px;
+      padding: 15px;
     }
 
     .text-center {
@@ -46,347 +47,207 @@
     .td-valign-top > tbody > tr > td {
       vertical-align: top;
     }
+
+    .bl{
+      border-left: 1px solid #000 !important;
+    }
+    .nowrap{
+      white-space:nowrap !important;
+    }
   </style>
 </head>
 <body>
-  <table class="table" width="100%" border="1" cellspacing="0" cellpadding="6">
+  <table class="table td-valign-top" width="100%" border="0" cellspacing="0" cellpadding="6">
     <tbody>
       <tr>
         <td class="text-center" width="50%">
           <h1>INVOICE</h1>
         </td>
-        <td class="text-center">
+        <td class="text-center" colspan="2">
           <img src="<?php echo base_url(); ?>assets/img/logo-fix.png" width="150px"><br>
         </td>
       </tr>
+      <tr>
+        <td>
+          <b>Bill To</b><br>
+          <?php echo $shipment['billing_name'] ?><br>
+          <?php echo $shipment['billing_address'] ?><br>
+          <br>
+          <b>Attn. to</b><br>
+          <?php echo $shipment['billing_contact_person'] ?><br>
+          <?php echo $shipment['billing_phone_number'] ?>
+        </td>
+        <td class="nowrap">
+          <b>Invoice No.</b><br>
+          <?php echo $invoice['invoice_no'] ?><br>
+          <br>
+          <b>Invoice Date</b><br>
+          <?php echo $invoice['invoice_date'] ?><br>
+          <br>
+          <b>Payment Terms</b><br>
+          <?php echo $invoice['payment_terms'] ?>
+        </td>
+        <td class="bl nowrap">
+          <b>PT. XENA PRANADIPA DHIA CAKRA</b><br>
+          Warna Jaya Business Park B2-07<br>
+          Jl. Jendral Sudirman Kel. Taman Baloi<br>
+          Kec. Batam Kota Batam 29413<br>
+          Kepulauan Riau - Indonesia<br>
+          Telephone : (+62) 778 4089 918<br>
+          Website : www.xpdcid.com
+        </td>
+      </tr>
     </tbody>
   </table>
-  <table class="table td-valign-top" width="100%" border="1" cellspacing="0" cellpadding="6">
+  <br>
+  <table class="td-valign-top" width="100%" border="1" cellspacing="0" cellpadding="3">
     <tbody>
       <tr>
-        <td class="br" width="50%">
-          <h2>Shipper Information</h2><br>
-          <table class="td-valign-top" width="100%" border="0" cellspacing="0" cellpadding="0">
-            <tbody>
-              <tr>
-                <td>Shipper Name</td>
-                <td>:</td>
-                <td><?php echo $shipment['shipper_name'] ?></td>
-              </tr>
-              <tr>
-                <td>Address</td>
-                <td>:</td>
-                <td><?php echo $shipment['shipper_address'] ?></td>
-              </tr>
-              <tr>
-                <td>City</td>
-                <td>:</td>
-                <td><?php echo $shipment['shipper_city'] ?></td>
-              </tr>
-              <tr>
-                <td>Country</td>
-                <td>:</td>
-                <td><?php echo $shipment['shipper_country'] ?></td>
-              </tr>
-              <tr>
-                <td>Postcode</td>
-                <td>:</td>
-                <td><?php echo $shipment['shipper_postcode'] ?></td>
-              </tr>
-              <tr>
-                <td>Contact Person</td>
-                <td>:</td>
-                <td><?php echo $shipment['shipper_contact_person'] ?></td>
-              </tr>
-              <tr>
-                <td>Phone Number</td>
-                <td>:</td>
-                <td><?php echo $shipment['shipper_phone_number'] ?></td>
-              </tr>
-              <tr>
-                <td>Email</td>
-                <td>:</td>
-                <td><?php echo $shipment['shipper_email'] ?></td>
-              </tr>
-            </tbody>
+        <td>
+          <table border="0" width="100%" cellspacing="0" cellpadding="0">
+            <tr>
+              <td><b>Tracking No.</b></td>
+              <td class="text-right"><?php echo $shipment['tracking_no'] ?></td>
+            </tr>
           </table>
-          <br>
         </td>
-        <td class="bl" width="50%">
-          <h2>Consignee Information</h2><br>
-          <table width="100%" border="0" cellspacing="0" cellpadding="0">
-            <tbody>
-              <tr>
-                <td>Shipper Name</td>
-                <td>:</td>
-                <td><?php echo $shipment['consignee_name'] ?></td>
-              </tr>
-              <tr>
-                <td>Address</td>
-                <td>:</td>
-                <td><?php echo $shipment['consignee_address'] ?></td>
-              </tr>
-              <tr>
-                <td>City</td>
-                <td>:</td>
-                <td><?php echo $shipment['consignee_city'] ?></td>
-              </tr>
-              <tr>
-                <td>Country</td>
-                <td>:</td>
-                <td><?php echo $shipment['consignee_country'] ?></td>
-              </tr>
-              <tr>
-                <td>Postcode</td>
-                <td>:</td>
-                <td><?php echo $shipment['consignee_postcode'] ?></td>
-              </tr>
-              <tr>
-                <td>Contact Person</td>
-                <td>:</td>
-                <td><?php echo $shipment['consignee_contact_person'] ?></td>
-              </tr>
-              <tr>
-                <td>Phone Number</td>
-                <td>:</td>
-                <td><?php echo $shipment['consignee_phone_number'] ?></td>
-              </tr>
-              <tr>
-                <td>Email</td>
-                <td>:</td>
-                <td><?php echo $shipment['consignee_email'] ?></td>
-              </tr>
-            </tbody>
-          </table>
-          <br>
+        <td rowspan="4">
+          <b>Shipper</b><br>
+          <?php echo $shipment['shipper_name'] ?><br>
+          <?php echo $shipment['shipper_address'] ?>
         </td>
       </tr>
       <tr>
-        <td class="br" width="50%">
-          <h2>Shipment Information</h2><br>
-          <table class="td-valign-top" width="100%" border="0" cellspacing="0" cellpadding="0">
-            <tbody>
-              <tr>
-                <td>Incoterms</td>
-                <td>:</td>
-                <td><?php echo $shipment['incoterms'] ?></td>
-              </tr>
-              <tr>
-                <td>Insurance</td>
-                <td>:</td>
-                <td><?php echo $shipment['insurance'] ?></td>
-              </tr>
-              <tr>
-                <td>Description of Goods</td>
-                <td>:</td>
-                <td><?php echo $shipment['description_of_goods'] ?></td>
-              </tr>
-              <tr>
-                <td>HSCode</td>
-                <td>:</td>
-                <td><?php echo $shipment['hscode'] ?></td>
-              </tr>
-              <tr>
-                <td>COO (Country of Origin)</td>
-                <td>:</td>
-                <td><?php echo $shipment['coo'] ?></td>
-              </tr>
-              <tr>
-                <td>Declared Value</td>
-                <td>:</td>
-                <td><?php echo $shipment['declared_value'] ?></td>
-              </tr>
-              <tr>
-                <td>Currency</td>
-                <td>:</td>
-                <td><?php echo $shipment['currency'] ?></td>
-              </tr>
-              <tr>
-                <td>Ref No.</td>
-                <td>:</td>
-                <td><?php echo $shipment['ref_no'] ?></td>
-              </tr>
-              <tr>
-                <td>Act. Weight</td>
-                <td>:</td>
-                <td><?php echo round($total_act_weight, 2, PHP_ROUND_HALF_UP) ?> Kg</td>
-              </tr>
-              <tr>
-                <td>Vol. Weight</td>
-                <td>:</td>
-                <td><?php echo round($total_vol_weight, 2, PHP_ROUND_HALF_UP) ?> Kg</td>
-              </tr>
-              <tr>
-                <td>Measurement</td>
-                <td>:</td>
-                <td><?php echo round($total_measurement, 2, PHP_ROUND_HALF_UP) ?> M<sup>3</sup></td>
-              </tr>
-            </tbody>
-          </table>
-          <br>
-        </td>
-        <td class="bl" width="50%">
-          <h2>Service Information</h2><br>
-          <table class="td-valign-top" width="100%" border="0" cellspacing="0" cellpadding="0">
-            <tbody>
-              <tr>
-                <td>Type of Shipment</td>
-                <td>:</td>
-                <td><?php echo $shipment['type_of_shipment'] ?></td>
-              </tr>
-              <tr>
-                <td>Type of Mode</td>
-                <td>:</td>
-                <td><?php echo $shipment['type_of_mode'] ?> <?php echo (!isset($data_input['sea']) ? "" : "(" . $data_input['sea'] . ")") ?></td>
-              </tr>
-            </tbody>
+        <td>
+          <table border="0" width="100%" cellspacing="0" cellpadding="0">
+            <tr>
+              <td><b>Type of Service</b></td>
+              <td class="text-right">-</td>
+            </tr>
           </table>
         </td>
       </tr>
       <tr>
-        <td class="br" width="50%">
-          <h2>Billing Details</h2><br>
-          <table class="td-valign-top" width="100%" border="0" cellspacing="0" cellpadding="0">
-            <tbody>
-              <tr>
-                <td>XPDC Account No.</td>
-                <td>:</td>
-                <td><?php echo $shipment['billing_account'] ?></td>
-              </tr>
-              <tr>
-                <td>Name</td>
-                <td>:</td>
-                <td><?php echo $shipment['billing_name'] ?></td>
-              </tr>
-              <tr>
-                <td>Address</td>
-                <td>:</td>
-                <td><?php echo $shipment['billing_address'] ?></td>
-              </tr>
-              <tr>
-                <td>City</td>
-                <td>:</td>
-                <td><?php echo $shipment['billing_city'] ?></td>
-              </tr>
-              <tr>
-                <td>Country</td>
-                <td>:</td>
-                <td><?php echo $shipment['billing_country'] ?></td>
-              </tr>
-              <tr>
-                <td>Postcode</td>
-                <td>:</td>
-                <td><?php echo $shipment['billing_postcode'] ?></td>
-              </tr>
-              <tr>
-                <td>Contact Person</td>
-                <td>:</td>
-                <td><?php echo $shipment['billing_contact_person'] ?></td>
-              </tr>
-              <tr>
-                <td>Phone Number</td>
-                <td>:</td>
-                <td><?php echo $shipment['billing_phone_number'] ?></td>
-              </tr>
-              <tr>
-                <td>Email</td>
-                <td>:</td>
-                <td><?php echo $shipment['billing_email'] ?></td>
-              </tr>
-            </tbody>
+        <td>
+          <table border="0" width="100%" cellspacing="0" cellpadding="0">
+            <tr>
+              <td><b>Type of Shipment</b></td>
+              <td class="text-right"><?php echo $shipment['type_of_shipment'] ?></td>
+            </tr>
           </table>
-          <br>
         </td>
-        <td class="bl" width="50%">
-          <h2>Pick Up Information</h2><br>
-          <table class="td-valign-top" width="100%" border="0" cellspacing="0" cellpadding="0">
-            <tbody>
-              <tr>
-                <td>Status Pickup</td>
-                <td>:</td>
-                <td><?php echo $shipment['status_pickup'] ?></td>
-              </tr>
-              <?php if ($shipment['status_pickup'] != 'Dropoff') : ?>
-              <tr>
-                <td>Name</td>
-                <td>:</td>
-                <td><?php echo $shipment['pickup_name'] ?></td>
-              </tr>
-              <tr>
-                <td>Address</td>
-                <td>:</td>
-                <td><?php echo $shipment['pickup_address'] ?></td>
-              </tr>
-              <tr>
-                <td>City</td>
-                <td>:</td>
-                <td><?php echo $shipment['pickup_city'] ?></td>
-              </tr>
-              <tr>
-                <td>Country</td>
-                <td>:</td>
-                <td><?php echo $shipment['pickup_country'] ?></td>
-              </tr>
-              <tr>
-                <td>Postcode</td>
-                <td>:</td>
-                <td><?php echo $shipment['pickup_postcode'] ?></td>
-              </tr>
-              <tr>
-                <td>Contact Person</td>
-                <td>:</td>
-                <td><?php echo $shipment['pickup_contact_person'] ?></td>
-              </tr>
-              <tr>
-                <td>Phone Number</td>
-                <td>:</td>
-                <td><?php echo $shipment['pickup_phone_number'] ?></td>
-              </tr>
-              <tr>
-                <td>Email</td>
-                <td>:</td>
-                <td><?php echo $shipment['pickup_email'] ?></td>
-              </tr>
-              <tr>
-                <td>Pick Up Date Time</td>
-                <td>:</td>
-                <td><?php echo $shipment['pickup_date'] ?> <?php echo $shipment['pickup_time'] ?> <?php echo ($shipment['pickup_date'].$shipment['pickup_time'] == $shipment['pickup_date'].$shipment['pickup_time'] ? "" : " - ".$shipment['pickup_date_to']." ".$shipment['pickup_time_to'])  ?></td>
-              </tr>
-              <tr>
-                <td>Notes</td>
-                <td>:</td>
-                <td><?php echo $shipment['pickup_email'] ?></td>
-              </tr>
-              <?php endif; ?>
-            </tbody>
+      </tr>
+      <tr>
+        <td>
+          <table border="0" width="100%" cellspacing="0" cellpadding="0">
+            <tr>
+              <td><b>Type of Mode</b></td>
+              <td class="text-right"><?php echo $shipment['type_of_mode'] ?></td>
+            </tr>
           </table>
-          <br>
+        </td>
+      </tr>
+      <tr>
+        <td>
+          <table border="0" width="100%" cellspacing="0" cellpadding="0">
+            <tr>
+              <td><b>Origin</b></td>
+              <td class="text-right"><?php echo $shipment['shipper_city'] ?>, <?php echo $shipment['shipper_country'] ?></td>
+            </tr>
+          </table>
+        </td>
+        <td rowspan="4">
+          <b>Consignee</b><br>
+          <?php echo $shipment['consignee_name'] ?><br>
+          <?php echo $shipment['consignee_address'] ?>
+        </td>
+      </tr>
+      <tr>
+        <td>
+          <table border="0" width="100%" cellspacing="0" cellpadding="0">
+            <tr>
+              <td><b>Destination</b></td>
+              <td class="text-right"><?php echo $shipment['consignee_city'] ?>, <?php echo $shipment['consignee_country'] ?></td>
+            </tr>
+          </table>
+        </td>
+      </tr>
+      <tr>
+        <td>
+          <table border="0" width="100%" cellspacing="0" cellpadding="0">
+            <tr>
+              <td><b>Chargeable Weight</b></td>
+              <td class="text-right"><?php echo $shipment['type_of_shipment'] ?></td>
+            </tr>
+          </table>
+        </td>
+      </tr>
+      <tr>
+        <td>
+          <table border="0" width="100%" cellspacing="0" cellpadding="0">
+            <tr>
+              <td><b>Measurement</b></td>
+              <td class="text-right"><?php echo $shipment['type_of_mode'] ?></td>
+            </tr>
+          </table>
         </td>
       </tr>
     </tbody>
   </table>
-  <table class="table td-valign-top text-center" width="100%" border="1" cellspacing="0" cellpadding="6">
+  <br>
+  <table class="text-center" border="1" width="100%" cellspacing="0" cellpadding="3">
     <thead>
       <tr>
-        <th>Qty.</th>
-        <th>Package Type</th>
-        <th>Length(cm)</th>
-        <th>Width(cm)</th>
-        <th>Height(cm)</th>
-        <th>Weight(kg)</th>
+        <th>No</th>
+        <th>Description</th>
+        <th>Qty</th>
+        <th>Unit Price</th>
+        <th>Sub Amount</th>
+        <th>Exc. Rate</th>
+        <th>Amount</th>
       </tr>
     </thead>
     <tbody>
-      <?php foreach ($shipment['qty'] as $key => $value) : ?>
+      <?php 
+        $subtotal = 0;
+        foreach ($costumer as $key => $value) : 
+          $subtotal = $subtotal + ($value['qty']*$value['unit_price']*$value['exchange_rate']);
+      ?>
       <tr>
-        <td><?php echo $shipment['qty'][$key] ?></td>
-        <td><?php echo $shipment['piece_type'][$key] ?></td>
-        <td><?php echo $shipment['length'][$key]+0 ?></td>
-        <td><?php echo $shipment['width'][$key]+0 ?></td>
-        <td><?php echo $shipment['height'][$key]+0 ?></td>
-        <td><?php echo $shipment['weight'][$key]+0 ?></td>
+        <td><?php echo $key+1 ?></td>
+        <td><?php echo $value['description'] ?></td>
+        <td><?php echo $value['qty'] ?></td>
+        <td><?php echo $value['currency']." ".$value['unit_price'] ?></td>
+        <td><?php echo $value['currency']." ".($value['qty']*$value['unit_price']) ?></td>
+        <td><?php echo $value['exchange_rate'] ?></td>
+        <td><?php echo "IDR ".($value['qty']*$value['unit_price']*$value['exchange_rate']) ?></td>
       </tr>
       <?php endforeach;  ?>
+      <tr>
+        <td colspan="5"></td>
+        <td>SUB TOTAL</td>
+        <td><?php echo "IDR ".($subtotal) ?></td>
+      </tr>
+      <tr>
+        <td colspan="5"></td>
+        <td>VAT</td>
+        <td><?php echo "IDR ".($subtotal - $invoice['vat']) ?></td>
+      </tr>
+      <tr>
+        <td colspan="5"></td>
+        <td>TOTAL</td>
+        <td><?php echo "IDR ".($subtotal) ?></td>
+      </tr>
+      <tr>
+        <td colspan="5"></td>
+        <td>DISCOUNT</td>
+        <td><?php echo "IDR ".($subtotal) ?></td>
+      </tr>
+      <tr>
+        <td colspan="5"></td>
+        <td>GRAND TOTAL</td>
+        <td><?php echo "IDR ".($subtotal) ?></td>
+      </tr>
     </tbody>
   </table>
 </body>

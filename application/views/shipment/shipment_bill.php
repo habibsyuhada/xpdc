@@ -85,6 +85,7 @@
               </div>
               <div class="row clearfix">
                 <div class="col-md text-right">
+                  <a href="<?php echo base_url() ?>shipment/shipment_invoice_pdf/<?php echo $invoice['id_shipment'] ?>" target="_blank" class="btn btn-danger" title="Export Invoice">PDF</a>
                   <button type="submit" class="btn btn-primary">Update</button>
                 </div>
               </div>

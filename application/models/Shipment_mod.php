@@ -161,7 +161,6 @@ class Shipment_mod extends CI_Model
     $query = $this->db->get('shipment');
 
     $query1_result = $query->result_array();
-    return $query1_result;
 
     if ($query1_result) {
       $batch_no_gen = str_pad($query1_result[0]["tracking_no"] + 1, 10, '0', STR_PAD_LEFT);
@@ -169,7 +168,7 @@ class Shipment_mod extends CI_Model
       $batch_no_gen = "0000000001";
     }
 
-    // return $batch_no_gen;
+    return $batch_no_gen;
   }
 
   public function shipment_generate_invoice_no_db($where = NULL)

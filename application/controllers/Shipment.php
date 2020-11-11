@@ -149,7 +149,6 @@ class Shipment extends CI_Controller
 	{
 		$post = $this->input->post();
 		$tracking_no = $this->shipment_mod->shipment_generate_tracking_no_db();
-		test_var($tracking_no);
 		$tracking_no = "XPDC" . $tracking_no;
 
 		// if ($post['status_pickup'] == 'Dropoff') {

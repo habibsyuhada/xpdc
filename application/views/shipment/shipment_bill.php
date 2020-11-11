@@ -120,9 +120,9 @@
                       <input type="text" class="form-control" name="description[]" required>
                       <input type="hidden" class="form-control" name="id_cost[]">
                     </td>
-                    <td><input type="number" class="form-control" value="0" oninput="get_total(this)" name="qty[]"></td>
+                    <td><input type="number" step="any" class="form-control" value="0" oninput="get_total(this)" name="qty[]"></td>
                     <td>
-                      <select class="form-control" name="uom[]" required>
+                      <select class="form-control" name="uom[]" required onchange="get_total(this)">
                         <option value="">-- Select One --</option>
                         <option value="Kg">Kg</option>
                         <option value="M3">M3</option>
@@ -152,10 +152,10 @@
                         <option value="USD">USD</option>
                       </select>
                     </td>
-                    <td><input type="number" class="form-control" value="0" oninput="get_total(this)" name="unit_price[]"></td>
-                    <td><input type="number" class="form-control" value="0" name="subtotal[]" readonly></td>
-                    <td><input type="number" class="form-control" value="0" oninput="get_total(this)"name="exchange_rate[]"></td>
-                    <td><input type="number" class="form-control" value="0" name="total[]" readonly></td>
+                    <td><input type="number" step="any" class="form-control" value="0" oninput="get_total(this)" name="unit_price[]"></td>
+                    <td><input type="number" step="any" class="form-control" value="0" name="subtotal[]" readonly></td>
+                    <td><input type="number" step="any" class="form-control" value="0" oninput="get_total(this)"name="exchange_rate[]"></td>
+                    <td><input type="number" step="any" class="form-control" value="0" name="total[]" readonly></td>
                     <td><textarea class="form-control" name="remarks[]" placeholder="..."></textarea></td>
                     <td>
                       <button type="button" class="btn btn-primary" onclick="addrow(this)"><i class="fas fa-plus m-0"></i></button>
@@ -171,9 +171,9 @@
                       <input type="text" class="form-control" name="description[]" value="<?php echo $value['description'] ?>" required>
                       <input type="hidden" class="form-control" name="id_cost[]" value="<?php echo $value['id'] ?>">
                     </td>
-                    <td><input type="number" class="form-control" value="<?php echo $value['qty'] ?>" oninput="get_total(this)" name="qty[]"></td>
+                    <td><input type="number" step="any" class="form-control" value="<?php echo $value['qty'] ?>" oninput="get_total(this)" name="qty[]"></td>
                     <td>
-                      <select class="form-control" name="uom[]" required>
+                      <select class="form-control" name="uom[]" required onchange="get_total(this)">
                         <option value="">-- Select One --</option>
                         <option value="Kg" <?php echo ($value['uom'] == "Kg" ? 'selected' : '') ?>>Kg</option>
                         <option value="M3" <?php echo ($value['uom'] == "M3" ? 'selected' : '') ?>>M3</option>
@@ -203,10 +203,10 @@
                         <option value="USD" <?php echo ($value['currency'] == "USD" ? 'selected' : '') ?>>USD</option>
                       </select>
                     </td>
-                    <td><input type="number" class="form-control" value="<?php echo $value['unit_price'] ?>" oninput="get_total(this)" name="unit_price[]"></td>
-                    <td><input type="number" class="form-control" value="<?php echo $value['qty']*$value['unit_price'] ?>" name="subtotal[]" readonly></td>
-                    <td><input type="number" class="form-control" value="<?php echo $value['exchange_rate'] ?>" oninput="get_total(this)"name="exchange_rate[]"></td>
-                    <td><input type="number" class="form-control" value="<?php echo $value['qty']*$value['unit_price']*$value['exchange_rate'] ?>" name="total[]" readonly></td>
+                    <td><input type="number" step="any" class="form-control" value="<?php echo $value['unit_price'] ?>" oninput="get_total(this)" name="unit_price[]"></td>
+                    <td><input type="number" step="any" class="form-control" value="<?php echo $value['qty']*$value['unit_price'] ?>" name="subtotal[]" readonly></td>
+                    <td><input type="number" step="any" class="form-control" value="<?php echo $value['exchange_rate'] ?>" oninput="get_total(this)"name="exchange_rate[]"></td>
+                    <td><input type="number" step="any" class="form-control" value="<?php echo $value['qty']*$value['unit_price']*$value['exchange_rate'] ?>" name="total[]" readonly></td>
                     <td><textarea class="form-control" name="remarks[]" placeholder="..."><?php echo $value['remarks'] ?></textarea></td>
                     <td>
                       <?php if ($key == 0) : ?>
@@ -255,8 +255,12 @@
 
   function get_total(input) {
     var row = $(input).closest('tr');
-    var qty = $(row).find("input[name='qty[]']").val();
     var unit_price = $(row).find("input[name='unit_price[]']").val();
+    var qty = $(row).find("input[name='qty[]']").val();
+    var uom = $(row).find("select[name='uom[]']").val();
+    if(uom == "Persentage"){
+      qty = qty/100;
+    }
     var subtotal = qty * unit_price;
     $(row).find("input[name='subtotal[]']").val(subtotal);
 

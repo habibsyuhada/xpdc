@@ -628,6 +628,38 @@ class Shipment extends CI_Controller
 
 	public function shipment_bill_process(){
 		$post = $this->input->post();
+
+		if($post['id_invoice'] == ""){
+			$invoice_no = $this->shipment_mod->shipment_generate_invoice_no_db();
+			$invoice_no = $invoice_no."/BTH-FH"."/".date("Y");
+			$form_data = array(
+				'id_shipment' 		=> $post['id'],
+				'invoice_no' 			=> $invoice_no,
+				'invoice_date' 		=> date("Y-m-d"),
+				'create_by' 			=> $this->session->userdata('id'),
+			);
+			$id_shipment = $this->shipment_mod->shipment_invoice_create_process_db($form_data);
+	
+			$form_data = array(
+				'status_bill' 		=> 1,
+			);
+			$where['id_shipment'] = $post['id'];
+			$this->shipment_mod->shipment_detail_update_process_db($form_data, $where);
+		}
+		else{
+			$form_data = array(
+				'payment_terms' 		=> $post['payment_terms'],
+				'vat' 							=> $post['vat'],
+				'discount' 					=> $post['discount'],
+				'notes' 						=> $post['notes'],
+				'beneficiary_name'	=> $post['beneficiary_name'],
+				'acc_no'						=> $post['acc_no'],
+				'bank_name'					=> $post['bank_name'],
+			);
+			$where['id'] = $post['id_invoice'];
+			$this->shipment_mod->shipment_invoice_update_process_db($form_data, $where);
+		}
+
 		foreach ($post['unit_price'] as $key => $value) {
 			if($value != "" && $value != "0"){
 				unset($where);
@@ -665,7 +697,8 @@ class Shipment extends CI_Controller
 	}
 
 	public function shipment_invoice_create_process($id){
-		$invoice_no = "INVOICE".$this->shipment_mod->shipment_generate_invoice_no_db();
+		$invoice_no = $this->shipment_mod->shipment_generate_invoice_no_db();
+		$invoice_no = $invoice_no."/BTH-FH"."/".date("Y");
 		$form_data = array(
 			'id_shipment' 		=> $id,
 			'invoice_no' 			=> $invoice_no,

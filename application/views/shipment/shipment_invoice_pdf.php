@@ -114,7 +114,7 @@
             </tr>
           </table>
         </td>
-        <td rowspan="4">
+        <td rowspan="2">
           <b>Shipper</b><br>
           <?php echo $shipment['shipper_name'] ?><br>
           <?php echo $shipment['shipper_address'] ?>
@@ -125,7 +125,7 @@
           <table border="0" width="100%" cellspacing="0" cellpadding="0">
             <tr>
               <td><b>Type of Service</b></td>
-              <td class="text-right">-</td>
+              <td class="text-right">Freight Handling</td>
             </tr>
           </table>
         </td>
@@ -139,27 +139,7 @@
             </tr>
           </table>
         </td>
-      </tr>
-      <tr>
-        <td>
-          <table border="0" width="100%" cellspacing="0" cellpadding="0">
-            <tr>
-              <td><b>Type of Mode</b></td>
-              <td class="text-right"><?php echo $shipment['type_of_mode'] ?></td>
-            </tr>
-          </table>
-        </td>
-      </tr>
-      <tr>
-        <td>
-          <table border="0" width="100%" cellspacing="0" cellpadding="0">
-            <tr>
-              <td><b>Origin</b></td>
-              <td class="text-right"><?php echo $shipment['shipper_city'] ?>, <?php echo $shipment['shipper_country'] ?></td>
-            </tr>
-          </table>
-        </td>
-        <td rowspan="4">
+        <td rowspan="2">
           <b>Consignee</b><br>
           <?php echo $shipment['consignee_name'] ?><br>
           <?php echo $shipment['consignee_address'] ?>
@@ -169,27 +149,7 @@
         <td>
           <table border="0" width="100%" cellspacing="0" cellpadding="0">
             <tr>
-              <td><b>Destination</b></td>
-              <td class="text-right"><?php echo $shipment['consignee_city'] ?>, <?php echo $shipment['consignee_country'] ?></td>
-            </tr>
-          </table>
-        </td>
-      </tr>
-      <tr>
-        <td>
-          <table border="0" width="100%" cellspacing="0" cellpadding="0">
-            <tr>
-              <td><b>Chargeable Weight</b></td>
-              <td class="text-right"><?php echo $shipment['type_of_shipment'] ?></td>
-            </tr>
-          </table>
-        </td>
-      </tr>
-      <tr>
-        <td>
-          <table border="0" width="100%" cellspacing="0" cellpadding="0">
-            <tr>
-              <td><b>Measurement</b></td>
+              <td><b>Type of Mode</b></td>
               <td class="text-right"><?php echo $shipment['type_of_mode'] ?></td>
             </tr>
           </table>
@@ -204,6 +164,7 @@
         <th>No</th>
         <th>Description</th>
         <th>Qty</th>
+        <th>UOM</th>
         <th>Unit Price</th>
         <th>Sub Amount</th>
         <th>Exc. Rate</th>
@@ -220,6 +181,7 @@
         <td><?php echo $key+1 ?></td>
         <td><?php echo $value['description'] ?></td>
         <td><?php echo $value['qty'] ?></td>
+        <td><?php echo $value['uom'] ?></td>
         <td><?php echo $value['currency']." ".number_format($value['unit_price'], 2) ?></td>
         <td><?php echo $value['currency']." ".number_format(($value['qty']*$value['unit_price']), 2) ?></td>
         <td><?php echo $value['exchange_rate'] ?></td>
@@ -227,7 +189,7 @@
       </tr>
       <?php endforeach;  ?>
       <tr>
-        <td colspan="5" rowspan="5" style="border-left: 0px; border-bottom: 0px; text-align: left;">
+        <td colspan="6" rowspan="5" style="border-left: 0px; border-bottom: 0px; text-align: left;">
           Notes:<br>
           <?php echo $invoice['notes'] ?>
         </td>

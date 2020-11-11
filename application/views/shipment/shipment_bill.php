@@ -25,77 +25,42 @@
             <hr class="mb-0">
           </div>
         </div>
-        <div class="card">
-          <div class="card-body overflow-auto">
-            <?php if(!isset($invoice)): ?>
-              <a href="<?php echo base_url() ?>shipment/shipment_invoice_create_process/<?php echo $shipment_list['id']; ?>" class="btn btn-success">Generate Invoice</a>
-            <?php else: ?>
-            <h6 class="font-weight-bold border-bottom">Invoice Detail</h6>
-            <form action="<?php echo base_url() ?>shipment/shipment_invoice_update_process" method="POST">
-            <input type="hidden" name="id" value="<?php echo $invoice['id']; ?>">
+        <form action="<?php echo base_url() ?>shipment/shipment_bill_process" method="POST">
+          <div class="card">
+            <div class="card-body overflow-auto">
+              <h6 class="font-weight-bold border-bottom">Invoice Detail</h6>
+              <input type="hidden" name="id_invoice" value="<?php echo @$invoice['id']; ?>">
               <div class="row clearfix">
                 <div class="col-md-6">
                   <div class="form-group">
                     <label>Invoice No.</label>
-                    <input type="text" class="form-control" name="invoice_no" value="<?php echo $invoice['invoice_no'] ?>" placeholder="Invoice No." readonly required>
+                    <input type="text" class="form-control" name="invoice_no" value="<?php echo @$invoice['invoice_no'] ?>" placeholder="Invoice No." readonly required>
                   </div>
                   <div class="form-group">
                     <label>Payment Terms</label>
                     <select class="form-control" name="payment_terms" required>
                       <option value="">- Select One -</option>
-                      <option value="Cash In Advance" <?= ($invoice['payment_terms'] == 'Cash In Advance') ? 'selected' : ''; ?>>Cash In Advance</option>
-                      <option value="Cash In Delivery" <?= ($invoice['payment_terms'] == 'Cash In Delivery') ? 'selected' : ''; ?>>Cash In Delivery</option>
-                      <option value="15 Days" <?= ($invoice['payment_terms'] == '15 Days') ? 'selected' : ''; ?>>15 Days</option>
-                      <option value="30 Days" <?= ($invoice['payment_terms'] == '30 Days') ? 'selected' : ''; ?>>30 Days</option>
-                      <option value="45 Days" <?= ($invoice['payment_terms'] == '45 Days') ? 'selected' : ''; ?>>45 Days</option>
-                      <option value="60 Days" <?= ($invoice['payment_terms'] == '60 Days') ? 'selected' : ''; ?>>60 Days</option>
+                      <option value="Cash In Advance" <?= (@$invoice['payment_terms'] == 'Cash In Advance') ? 'selected' : ''; ?>>Cash In Advance</option>
+                      <option value="Cash In Delivery" <?= (@$invoice['payment_terms'] == 'Cash In Delivery') ? 'selected' : ''; ?>>Cash In Delivery</option>
+                      <option value="15 Days" <?= (@$invoice['payment_terms'] == '15 Days') ? 'selected' : ''; ?>>15 Days</option>
+                      <option value="30 Days" <?= (@$invoice['payment_terms'] == '30 Days') ? 'selected' : ''; ?>>30 Days</option>
+                      <option value="45 Days" <?= (@$invoice['payment_terms'] == '45 Days') ? 'selected' : ''; ?>>45 Days</option>
+                      <option value="60 Days" <?= (@$invoice['payment_terms'] == '60 Days') ? 'selected' : ''; ?>>60 Days</option>
                     </select>
-                  </div>
-                  <div class="form-group">
-                    <label>Acc. No.</label>
-                    <input type="text" class="form-control" name="acc_no" value="<?php echo $invoice['acc_no'] ?>" placeholder="Acc. No." required>
-                  </div>
-                  <div class="form-group">
-                    <label>VAT</label>
-                    <input type="text" class="form-control" name="vat" value="<?php echo $invoice['vat'] ?>" placeholder="VAT" required>
-                  </div>
-                  <div class="form-group">
-                    <label>Notes</label>
-                    <textarea class="form-control" name="notes"><?php echo $invoice['notes'] ?></textarea>
                   </div>
                 </div>
                 <div class="col-md-6">
                   <div class="form-group">
                     <label>Invoice Date</label>
-                    <input type="text" class="form-control" name="invoice_date" value="<?php echo $invoice['invoice_date'] ?>" placeholder="Invoice Date" readonly required>
-                  </div>
-                  <div class="form-group">
-                    <label>Beneficiary Name</label>
-                    <input type="text" class="form-control" name="beneficiary_name" value="<?php echo $invoice['beneficiary_name'] ?>" placeholder="Beneficiary Name" required>
-                  </div>
-                  <div class="form-group">
-                    <label>Bank Name</label>
-                    <input type="text" class="form-control" name="bank_name" value="<?php echo $invoice['bank_name'] ?>" placeholder="Bank Name" required>
-                  </div>
-                  <div class="form-group">
-                    <label>Discount</label>
-                    <input type="text" class="form-control" name="discount" value="<?php echo $invoice['discount'] ?>" placeholder="Discount" required>
+                    <input type="text" class="form-control" name="invoice_date" value="<?php echo @$invoice['invoice_date'] ?>" placeholder="Invoice Date" readonly required>
                   </div>
                 </div>
               </div>
-              <div class="row clearfix">
-                <div class="col-md text-right">
-                  <a href="<?php echo base_url() ?>shipment/shipment_invoice_pdf/<?php echo $invoice['id_shipment'] ?>" target="_blank" class="btn btn-danger" title="Export Invoice">PDF</a>
-                  <button type="submit" class="btn btn-primary">Update</button>
-                </div>
-              </div>
-            </form>
-            <?php
-              $total_all = 0;
-            ?>
-            <br>
-            <h6 class="font-weight-bold border-bottom">Detail Information</h6>
-            <form action="<?php echo base_url() ?>shipment/shipment_bill_process" method="POST">
+              <?php
+                $total_all = 0;
+              ?>
+              <br>
+              <h6 class="font-weight-bold border-bottom">Detail Information</h6>
               <input type="hidden" class="form-control" name="id" value="<?php echo $shipment_list['id']; ?>">
               <input type="hidden" class="form-control" name="category" value="costumer">
               <table class="table text-center">
@@ -166,7 +131,7 @@
                     foreach ($costumer as $key => $value) : 
                       $total_all += $value['qty']*$value['unit_price']*$value['exchange_rate'];
                   ?>
-                    <tr>
+                  <tr>
                     <td>
                       <input type="text" class="form-control" name="description[]" value="<?php echo $value['description'] ?>" required>
                       <input type="hidden" class="form-control" name="id_cost[]" value="<?php echo $value['id'] ?>">
@@ -220,18 +185,58 @@
                 </tbody>
               </table>
               <div class="row clearfix">
+                <div class="col-md-6">
+                  <div class="form-group">
+                    <label>VAT</label>
+                    <input type="number" class="form-control" name="vat" value="<?php echo @$invoice['vat']+0 ?>" placeholder="VAT" required>
+                  </div>
+                </div>
+                <div class="col-md-6">
+                  <div class="form-group">
+                    <label>Discount</label>
+                    <input type="number" class="form-control" name="discount" value="<?php echo @$invoice['discount']+0 ?>" placeholder="Discount" required>
+                  </div>
+                </div>
+              </div>
+              <div class="row clearfix">
                 <div class="col-md">
                   <h5 class="font-weight-bold">Total All : IDR <span name="total_all"><?php echo $total_all ?></span></h5>
                 </div>
+              </div>
+              <br>
+              <h6 class="font-weight-bold border-bottom">Pay Information</h6>
+              <div class="row clearfix">
+                <div class="col-md-6">
+                  <div class="form-group">
+                    <label>Beneficiary Name</label>
+                    <input type="text" class="form-control" name="beneficiary_name" value="<?php echo @$invoice['beneficiary_name'] ?>" placeholder="Beneficiary Name" required>
+                  </div>
+                  <div class="form-group">
+                    <label>Bank Name</label>
+                    <input type="text" class="form-control" name="bank_name" value="<?php echo @$invoice['bank_name'] ?>" placeholder="Bank Name" required>
+                  </div>
+                </div>
+                <div class="col-md-6">
+                  <div class="form-group">
+                    <label>Acc. No.</label>
+                    <input type="text" class="form-control" name="acc_no" value="<?php echo @$invoice['acc_no'] ?>" placeholder="Acc. No." required>
+                  </div>
+                  <div class="form-group">
+                    <label>Notes</label>
+                    <textarea class="form-control" name="notes"><?php echo @$invoice['notes'] ?></textarea>
+                  </div>
+                </div>
+              </div>
+              <div class="row clearfix">
                 <div class="col-md text-right">
+                  <a href="<?php echo base_url() ?>shipment/shipment_invoice_pdf/<?php echo @$invoice['id_shipment'] ?>" target="_blank" class="btn btn-danger"   title="Export Invoice">PDF</a>
                   <button type="submit" class="btn btn-success">Submit</button>
                 </div>
               </div>
-            </form>
-            <?php endif; ?>
-            
+              
+            </div>
           </div>
-        </div>
+        </form>
 
       </div>
     </div>
@@ -253,20 +258,22 @@
     $(btn).closest("tr").remove();
   }
 
-  function get_total(input) {
-    var row = $(input).closest('tr');
-    var unit_price = $(row).find("input[name='unit_price[]']").val();
-    var qty = $(row).find("input[name='qty[]']").val();
-    var uom = $(row).find("select[name='uom[]']").val();
-    if(uom == "Persentage"){
-      qty = qty/100;
-    }
-    var subtotal = qty * unit_price;
-    $(row).find("input[name='subtotal[]']").val(subtotal);
+  function get_total(input = "") {
+    if(input == ""){
+      var row = $(input).closest('tr');
+      var unit_price = $(row).find("input[name='unit_price[]']").val();
+      var qty = $(row).find("input[name='qty[]']").val();
+      var uom = $(row).find("select[name='uom[]']").val();
+      if(uom == "Persentage"){
+        qty = qty/100;
+      }
+      var subtotal = qty * unit_price;
+      $(row).find("input[name='subtotal[]']").val(subtotal);
 
-    var exchange_rate = $(row).find("input[name='exchange_rate[]']").val();
-    var total = subtotal * exchange_rate;
-    $(row).find("input[name='total[]']").val(total);
+      var exchange_rate = $(row).find("input[name='exchange_rate[]']").val();
+      var total = subtotal * exchange_rate;
+      $(row).find("input[name='total[]']").val(total);
+    }
 
     var total_all = 0;
     $("input[name='total[]']").each(function(index, value) {
@@ -274,7 +281,9 @@
       total_all = total_all + total_row + 0;
     });
 
-    $(input).closest('form').find("span[name=total_all]").text(total_all);
+    var vat = $("input[name=vat]").val();
+    var discount = $("input[name=discount]").val();
+    $(input).closest('form').find("span[name=total_all]").text(total_all + vat - discount);
     // $("#total_all").text(total_all);
   }
 

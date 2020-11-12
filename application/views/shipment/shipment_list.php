@@ -169,14 +169,16 @@
                       <td><a target="_blank" class="font-weight-bold" href="<?php echo base_url() ?>shipment/shipment_tracking/<?php echo $value['id'] ?>"><?php echo $value['status'] ?></a></td>
                       <?php if($page_permission[6] == 1): ?>
                       <td>
-                        <?php if($value['status_cost'] == 1): ?>
+                        <!-- <?php if($value['status_cost'] == 1): ?>
                         <span class="badge badge-sm badge-success mb-1">Paid</span>
                         <?php else: ?>
                         <span class="badge badge-sm badge-danger mb-1">Unpaid</span>
                         <?php endif; ?>
-                        <br>
+                        <br> -->
                         <?php if($value['status_bill'] == 1): ?>
-                        <span class="badge badge-sm badge-success mb-1">Billed</span>
+                        <span class="badge badge-sm badge-warning mb-1">Billed</span>
+                        <?php elseif($value['status_bill'] == 2): ?>
+                        <span class="badge badge-sm badge-success mb-1">Paid</span>
                         <?php else: ?>
                         <span class="badge badge-sm badge-danger mb-1">Unbilled</span>
                         <?php endif; ?>

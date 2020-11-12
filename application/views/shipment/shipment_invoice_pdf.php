@@ -75,9 +75,9 @@
           <b>Bill To</b><br>
           <?php echo $shipment['billing_name'] ?><br>
           <?php echo $shipment['billing_address'] ?><br>
+          <?php echo $shipment['billing_city'] ?>, <?php echo $shipment['billing_country'] ?><br>
           <br>
-          <b>Attn. to</b><br>
-          <?php echo $shipment['billing_contact_person'] ?><br>
+          <b>Attn. to</b> <?php echo $shipment['billing_contact_person'] ?><br>
           <?php echo $shipment['billing_phone_number'] ?>
         </td>
         <td class="nowrap">
@@ -85,7 +85,7 @@
           <?php echo $invoice['invoice_no'] ?><br>
           <br>
           <b>Invoice Date</b><br>
-          <?php echo $invoice['invoice_date'] ?><br>
+          <?php echo date("d-m-Y", strtotime($invoice['invoice_date'])) ?><br>
           <br>
           <b>Payment Terms</b><br>
           <?php echo $invoice['payment_terms'] ?>
@@ -117,7 +117,8 @@
         <td rowspan="2">
           <b>Shipper</b><br>
           <?php echo $shipment['shipper_name'] ?><br>
-          <?php echo $shipment['shipper_address'] ?>
+          <?php echo $shipment['shipper_address'] ?><br>
+          <?php echo $shipment['shipper_city'] ?>, <?php echo $shipment['shipper_country'] ?>
         </td>
       </tr>
       <tr>
@@ -142,7 +143,8 @@
         <td rowspan="2">
           <b>Consignee</b><br>
           <?php echo $shipment['consignee_name'] ?><br>
-          <?php echo $shipment['consignee_address'] ?>
+          <?php echo $shipment['consignee_address'] ?><br>
+          <?php echo $shipment['consignee_city'] ?>, <?php echo $shipment['consignee_country'] ?>
         </td>
       </tr>
       <tr>
@@ -150,7 +152,7 @@
           <table border="0" width="100%" cellspacing="0" cellpadding="0">
             <tr>
               <td><b>Type of Mode</b></td>
-              <td class="text-right"><?php echo $shipment['type_of_mode'] ?></td>
+              <td class="text-right"><?php echo $shipment['type_of_mode'] ?> (<?php echo $shipment['sea'] ?>)</td>
             </tr>
           </table>
         </td>

@@ -134,11 +134,18 @@
 							</div>
 							<?php endif; ?>
 							<?php if($side_permission[8] == 1): ?>
-							<div class="nav-item has-sub">
+								<div class="nav-item has-sub">
 								<a href="javascript:void(0)"><i class="fas fa-user"></i><span>User</span></a>
 								<div class="submenu-content">
 									<a href="<?php echo base_url() ?>user/user_list" class="menu-item">User List</a>
 									<a href="<?php echo base_url() ?>user/user_create" class="menu-item">Create User</a>
+								</div>
+							</div>
+							<div class="nav-item has-sub">
+								<a href="javascript:void(0)"><i class="fas fa-code-branch"></i><span>Branch</span></a>
+								<div class="submenu-content">
+									<a href="<?php echo base_url() ?>branch/branch_list" class="menu-item">Branch List</a>
+									<a href="<?php echo base_url() ?>branch/branch_create" class="menu-item">Create Branch</a>
 								</div>
 							</div>
 							<?php endif; ?>

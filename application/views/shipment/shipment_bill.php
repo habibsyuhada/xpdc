@@ -34,7 +34,7 @@
                 <div class="col-md-6">
                   <div class="form-group">
                     <label>Invoice No.</label>
-                    <input type="text" class="form-control" name="invoice_no" value="<?php echo @$invoice['invoice_no'] ?>" placeholder="Invoice No." readonly required>
+                    <input type="text" class="form-control" name="invoice_no" value="<?php echo @$invoice['invoice_no'] ?>" placeholder="Invoice No." <?php echo ((@$invoice['invoice_no'] !== NULL) ? "" : "readonly" ) ?> required>
                   </div>
                   <div class="form-group">
                     <label>Payment Terms</label>
@@ -52,7 +52,7 @@
                 <div class="col-md-6">
                   <div class="form-group">
                     <label>Invoice Date</label>
-                    <input type="text" class="form-control" name="invoice_date" value="<?php echo @$invoice['invoice_date'] ?>" placeholder="Invoice Date" readonly required>
+                    <input type="date" class="form-control" name="invoice_date" value="<?php echo ((@$invoice['invoice_date'] !== NULL) ? @$invoice['invoice_date'] : date("Y-m-d")) ?>" placeholder="Invoice Date" required>
                   </div>
                   <?php if (isset($invoice['invoice_no'])) : ?>
                   <div class="form-group">
@@ -62,6 +62,8 @@
                       <option value="2" <?= (@$shipment_list['status_bill'] == '2') ? 'selected' : ''; ?>>Paid</option>
                     </select>
                   </div>
+                  <?php else: ?>.
+                    <input type="text" class="form-control" name="branch" value="<?php echo @$shipment_list['branch'] ?>" readonly required>
                   <?php endif; ?>
                 </div>
               </div>

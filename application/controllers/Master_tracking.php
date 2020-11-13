@@ -193,6 +193,7 @@ class Master_tracking extends CI_Controller {
 		}
 		
 		$data['shipment'] 			= $shipment;
+		$data['master_tracking']= $master_tracking;
 		$data['subview'] 				= 'master_tracking/master_tracking_update';
 		$data['meta_title'] 		= 'Master Tracking Update';
 		$this->load->view('index', $data);

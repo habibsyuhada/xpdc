@@ -16,16 +16,16 @@
 <div class="main-content">
   <div class="container-fluid">
     <form action="<?php echo base_url(); ?>master_tracking/master_tracking_update_process" method="POST" class="forms-sample">
-      <input type="hidden" name="id" value="<?php echo $shipment['id'] ?>">
-      <input type="hidden" name="tracking_no" value="<?php echo $shipment['tracking_no'] ?>">
-      <input type="hidden" name="master_tracking" value="<?php echo $shipment['master_tracking'] ?>">
+      <input type="hidden" name="id" value="<?php echo @$shipment['id'] ?>">
+      <input type="hidden" name="tracking_no" value="<?php echo @$shipment['tracking_no'] ?>">
+      <input type="hidden" name="master_tracking" value="<?php echo $master_tracking ?>">
       <div class="row clearfix">
         <div class="col-md-12">
           <div class="card">
             <div class="card-body">
               <hr class="mt-0">
               <p class="m-0 text-center">Master Tracking Number</p>
-              <h1 class="font-weight-bold m-0 text-center"><?php echo $shipment['master_tracking'] ?></h1>
+              <h1 class="font-weight-bold m-0 text-center"><?php echo @$shipment['master_tracking'] ?></h1>
               <hr class="mb-0">
             </div>
           </div>
@@ -51,82 +51,82 @@
                       <h6 class="font-weight-bold">Main Agent</h6>
                       <div class="form-group">
                         <label>Agent Name</label>
-                        <input type="text" class="form-control" name="main_agent_name" placeholder="Main Agent Name" value="<?= $shipment['main_agent_name'] ?>">
+                        <input type="text" class="form-control" name="main_agent_name" placeholder="Main Agent Name" value="<?= @$shipment['main_agent_name'] ?>">
                       </div>
                       <div class="form-group">
                         <label>MAWB / MBL</label>
-                        <input type="text" class="form-control" name="main_agent_mawb_mbl" placeholder="MAWB / MBL" value="<?= $shipment['main_agent_mawb_mbl'] ?>">
+                        <input type="text" class="form-control" name="main_agent_mawb_mbl" placeholder="MAWB / MBL" value="<?= @$shipment['main_agent_mawb_mbl'] ?>">
                       </div>
                       <div class="form-group">
                         <label>Carrier</label>
-                        <input type="text" class="form-control" name="main_agent_carrier" placeholder="Carrier" value="<?= $shipment['main_agent_carrier'] ?>">
+                        <input type="text" class="form-control" name="main_agent_carrier" placeholder="Carrier" value="<?= @$shipment['main_agent_carrier'] ?>">
                       </div>
                       <div class="form-group">
                         <label>Voyage/Flight No.</label>
-                        <input type="text" class="form-control" name="main_agent_voyage_flight_no" placeholder="Voyage/Flight No." value="<?= $shipment['main_agent_voyage_flight_no'] ?>">
+                        <input type="text" class="form-control" name="main_agent_voyage_flight_no" placeholder="Voyage/Flight No." value="<?= @$shipment['main_agent_voyage_flight_no'] ?>">
                       </div>
                       <div class="form-group">
                         <label>Voyage/Flight Date</label>
-                        <input type="date" class="form-control" name="main_agent_voyage_flight_date" placeholder="Voyage/Flight Date" value="<?= @$shipment['main_agent_voyage_flight_date'] ?>">
+                        <input type="date" class="form-control" name="main_agent_voyage_flight_date" placeholder="Voyage/Flight Date" value="<?= @@$shipment['main_agent_voyage_flight_date'] ?>">
                       </div>
                       <!-- <div class="form-group">
                         <label>Cost</label>
-                        <input type="number" class="form-control" name="main_agent_cost" placeholder="Cost" value="<?= @$shipment['main_agent_cost'] ?>">
+                        <input type="number" class="form-control" name="main_agent_cost" placeholder="Cost" value="<?= @@$shipment['main_agent_cost'] ?>">
                       </div> -->
                     </div>
                     <div class="col-md-6">
                       <h6 class="font-weight-bold">Secondary Agent</h6>
                       <div class="form-group">
                         <label>Agent Name</label>
-                        <input type="text" class="form-control" name="secondary_agent_name" placeholder="Secondary Agent Name" value="<?= $shipment['secondary_agent_name'] ?>">
+                        <input type="text" class="form-control" name="secondary_agent_name" placeholder="Secondary Agent Name" value="<?= @$shipment['secondary_agent_name'] ?>">
                       </div>
                       <div class="form-group">
                         <label>MAWB / MBL</label>
-                        <input type="text" class="form-control" name="secondary_agent_mawb_mbl" placeholder="MAWB / MBL" value="<?= $shipment['secondary_agent_mawb_mbl'] ?>">
+                        <input type="text" class="form-control" name="secondary_agent_mawb_mbl" placeholder="MAWB / MBL" value="<?= @$shipment['secondary_agent_mawb_mbl'] ?>">
                       </div>
                       <div class="form-group">
                         <label>Carrier</label>
-                        <input type="text" class="form-control" name="secondary_agent_carrier" placeholder="Carrier" value="<?= $shipment['secondary_agent_carrier'] ?>">
+                        <input type="text" class="form-control" name="secondary_agent_carrier" placeholder="Carrier" value="<?= @$shipment['secondary_agent_carrier'] ?>">
                       </div>
                       <div class="form-group">
                         <label>Voyage/Flight No.</label>
-                        <input type="text" class="form-control" name="secondary_agent_voyage_flight_no" placeholder="Voyage/Flight No." value="<?= $shipment['secondary_agent_voyage_flight_no'] ?>">
+                        <input type="text" class="form-control" name="secondary_agent_voyage_flight_no" placeholder="Voyage/Flight No." value="<?= @$shipment['secondary_agent_voyage_flight_no'] ?>">
                       </div>
                       <div class="form-group">
                         <label>Voyage/Flight Date</label>
-                        <input type="date" class="form-control" name="secondary_agent_voyage_flight_date" placeholder="Voyage/Flight No." value="<?= @$shipment['secondary_agent_voyage_flight_date'] ?>">
+                        <input type="date" class="form-control" name="secondary_agent_voyage_flight_date" placeholder="Voyage/Flight No." value="<?= @@$shipment['secondary_agent_voyage_flight_date'] ?>">
                       </div>
                       <!-- <div class="form-group">
                         <label>Cost</label>
-                        <input type="number" class="form-control" name="secondary_agent_cost" placeholder="Cost" value="<?= @$shipment['secondary_agent_cost'] ?>">
+                        <input type="number" class="form-control" name="secondary_agent_cost" placeholder="Cost" value="<?= @@$shipment['secondary_agent_cost'] ?>">
                       </div> -->
                     </div>
                     <div class="col-md-6">
                       <div class="form-group">
                         <label>Port of Loading</label>
-                        <input type="text" class="form-control" name="port_of_loading" placeholder="Port of Loading" value="<?= $shipment['port_of_loading'] ?>">
+                        <input type="text" class="form-control" name="port_of_loading" placeholder="Port of Loading" value="<?= @$shipment['port_of_loading'] ?>">
                       </div>
                       <div class="form-group">
                         <label>Port of Discharge</label>
-                        <input type="text" class="form-control" name="port_of_discharge" placeholder="Port of Discharge" value="<?= $shipment['port_of_discharge'] ?>">
+                        <input type="text" class="form-control" name="port_of_discharge" placeholder="Port of Discharge" value="<?= @$shipment['port_of_discharge'] ?>">
                       </div>
                       <div class="form-group">
                         <label>Container No</label>
-                        <input type="text" class="form-control" name="container_no" placeholder="Container No." value="<?= $shipment['container_no'] ?>">
+                        <input type="text" class="form-control" name="container_no" placeholder="Container No." value="<?= @$shipment['container_no'] ?>">
                       </div>
                     </div>
                     <div class="col-md-6">
                       <div class="form-group">
                         <label>Seal No.</label>
-                        <input type="text" class="form-control" name="seal_no" placeholder="Seal No." value="<?= $shipment['seal_no'] ?>">
+                        <input type="text" class="form-control" name="seal_no" placeholder="Seal No." value="<?= @$shipment['seal_no'] ?>">
                       </div>
                       <div class="form-group">
                         <label>CIPL No.</label>
-                        <input type="text" class="form-control" name="cipl_no" placeholder="CIPL No." value="<?= $shipment['cipl_no'] ?>">
+                        <input type="text" class="form-control" name="cipl_no" placeholder="CIPL No." value="<?= @$shipment['cipl_no'] ?>">
                       </div>
                       <div class="form-group">
                         <label>Permit No.</label>
-                        <input type="text" class="form-control" name="permit_no" placeholder="Permit No." value="<?= $shipment['permit_no'] ?>">
+                        <input type="text" class="form-control" name="permit_no" placeholder="Permit No." value="<?= @$shipment['permit_no'] ?>">
                       </div>
                     </div>
                   </div>
@@ -170,8 +170,8 @@
                         <label>Branch</label>
                         <select class="form-control" name="assign_branch">
                           <option value="">-- Select One --</option>
-                          <option value="BATAM" <?php echo ($shipment['assign_branch'] == "BATAM" ? 'selected' : '') ?>>BATAM</option>
-                          <option value="JAKARTA" <?php echo ($shipment['assign_branch'] == "JAKARTA" ? 'selected' : '') ?>>JAKARTA</option>
+                          <option value="BATAM" <?php echo (@$shipment['assign_branch'] == "BATAM" ? 'selected' : '') ?>>BATAM</option>
+                          <option value="JAKARTA" <?php echo (@$shipment['assign_branch'] == "JAKARTA" ? 'selected' : '') ?>>JAKARTA</option>
                         </select>
                       </div>
                       <div class="form-group">

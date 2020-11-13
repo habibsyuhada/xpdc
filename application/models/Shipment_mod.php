@@ -177,7 +177,7 @@ class Shipment_mod extends CI_Model
       $query = $this->db->where($where);
     }
     $query = $this->db->select('LEFT(invoice_no, 4) AS invoice_no');
-    $query = $this->db->order_by('invoice_no', 'DESC');
+    $query = $this->db->order_by("invoice_no", 'DESC');
     $query = $this->db->limit("1");
     $query = $this->db->get('shipment_invoice');
 
@@ -186,7 +186,7 @@ class Shipment_mod extends CI_Model
     if ($query1_result) {
       $batch_no_gen = str_pad($query1_result[0]["invoice_no"] + 1, 4, '0', STR_PAD_LEFT);
     } else {
-      $batch_no_gen = "0000000001";
+      $batch_no_gen = "0001";
     }
 
     return $batch_no_gen;

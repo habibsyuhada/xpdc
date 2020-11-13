@@ -631,12 +631,25 @@ class Shipment extends CI_Controller
 		// test_var($post);
 
 		if($post['id_invoice'] == ""){
-			$invoice_no = $this->shipment_mod->shipment_generate_invoice_no_db();
-			$invoice_no = $invoice_no."/BTH-FH"."/".date("Y");
+			$where['name'] = $post['branch'];
+			$branch = $this->home_mod->branch_list($where);
+			unset($where);
+			if(count($branch) < 1){
+				$this->session->set_flashdata('danger', 'Branch Not Found!');
+				redirect($_SERVER['HTTP_REFERER']);
+				return false;
+			}
+			$branch = $branch[0];
+
+			$where['YEAR(create_date)'] = date("Y");
+			$where["SUBSTRING_INDEX(SUBSTRING_INDEX(invoice_no,'-',1), '/', -1) = '".$branch['code']."'"] = NULL;
+			$invoice_no = $this->shipment_mod->shipment_generate_invoice_no_db($where);
+			unset($where);
+			$invoice_no = $invoice_no."/".$branch['code']."-FH"."/".date("Y");
 			$form_data = array(
 				'id_shipment' 		=> $post['id'],
 				'invoice_no' 			=> $invoice_no,
-				'invoice_date' 		=> date("Y-m-d"),
+				'invoice_date' 		=> $post['invoice_date'],
 				'create_by' 			=> $this->session->userdata('id'),
 
 				'payment_terms' 		=> $post['payment_terms'],
@@ -657,6 +670,8 @@ class Shipment extends CI_Controller
 		}
 		else{
 			$form_data = array(
+				'invoice_no' 				=> $post['invoice_no'],
+				'invoice_date' 			=> $post['invoice_date'],
 				'payment_terms' 		=> $post['payment_terms'],
 				'vat' 							=> $post['vat'],
 				'discount' 					=> $post['discount'],
@@ -709,27 +724,6 @@ class Shipment extends CI_Controller
 		}
 
 		$this->session->set_flashdata('success', 'Your Shipment data has been Updated!');
-		redirect($_SERVER['HTTP_REFERER']);
-	}
-
-	public function shipment_invoice_create_process($id){
-		$invoice_no = $this->shipment_mod->shipment_generate_invoice_no_db();
-		$invoice_no = $invoice_no."/BTH-FH"."/".date("Y");
-		$form_data = array(
-			'id_shipment' 		=> $id,
-			'invoice_no' 			=> $invoice_no,
-			'invoice_date' 		=> date("Y-m-d"),
-			'create_by' 			=> $this->session->userdata('id'),
-		);
-		$id_shipment = $this->shipment_mod->shipment_invoice_create_process_db($form_data);
-
-		$form_data = array(
-			'status_bill' 		=> 1,
-		);
-		$where['id_shipment'] = $id;
-		$this->shipment_mod->shipment_detail_update_process_db($form_data, $where);
-
-		$this->session->set_flashdata('success', 'Your Invoice data has been Created!');
 		redirect($_SERVER['HTTP_REFERER']);
 	}
 

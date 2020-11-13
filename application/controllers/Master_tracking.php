@@ -192,6 +192,13 @@ class Master_tracking extends CI_Controller {
 			$shipment = array();
 		}
 		
+		$datadb 	= $this->home_mod->branch_list();
+		$branch_list = [];
+		foreach ($datadb as $key => $value) {
+			$branch_list[$value['name']] = $value;
+		}
+		$data['branch_list'] 	= $branch_list;
+		
 		$data['shipment'] 			= $shipment;
 		$data['master_tracking']= $master_tracking;
 		$data['subview'] 				= 'master_tracking/master_tracking_update';

@@ -151,7 +151,7 @@
                             <option value="Set">Set</option>
                             <option value="Trip">Trip</option>
                             <option value="Pallet">Pallet</option>
-                            <option value="Persentage">Persentage</option>
+                            <option value="%">%</option>
                           </select>
                         </td>
                         <td>
@@ -175,9 +175,15 @@
                           </select>
                         </td>
                         <td><input type="number" step="any" class="form-control" value="0" oninput="get_total(this)" name="unit_price[]"></td>
-                        <td><input type="number" step="any" class="form-control" value="0" name="subtotal[]" readonly></td>
+                        <td>
+                          <input type="text" step="any" class="form-control" value="0" name="subtotal_view[]" readonly>
+                          <input type="hidden" step="any" class="form-control" value="0" name="subtotal[]" readonly>
+                        </td>
                         <td><input type="number" step="any" class="form-control" value="0" oninput="get_total(this)"name="exchange_rate[]"></td>
-                        <td><input type="number" step="any" class="form-control" value="0" name="total[]" readonly></td>
+                        <td>
+                          <input type="text" step="any" class="form-control" value="0" name="total_view[]" readonly>
+                          <input type="hidden" step="any" class="form-control" value="0" name="total[]" readonly>
+                        </td>
                         <td><textarea class="form-control" name="remarks[]" placeholder="..."></textarea></td>
                         <td>
                           <button type="button" class="btn btn-primary" onclick="addrow(this)"><i class="fas fa-plus m-0"></i></button>
@@ -186,7 +192,11 @@
                       <?php endif; ?>
                       <?php 
                         foreach ($main_agent as $key => $value) : 
-                          $total_all += $value['qty']*$value['unit_price']*$value['exchange_rate'];
+                          $persen = 1;
+                          if($value['uom'] == "%"){
+                            $persen = 100;
+                          }
+                          $total_all +=  ($value['qty'] / $persen)*$value['unit_price']*$value['exchange_rate'];
                       ?>
                         <tr>
                         <td>
@@ -202,7 +212,7 @@
                             <option value="Set" <?php echo ($value['uom'] == "Set" ? 'selected' : '') ?>>Set</option>
                             <option value="Trip" <?php echo ($value['uom'] == "Trip" ? 'selected' : '') ?>>Trip</option>
                             <option value="Pallet" <?php echo ($value['uom'] == "Pallet" ? 'selected' : '') ?>>Pallet</option>
-                            <option value="Persentage" <?php echo ($value['uom'] == "Persentage" ? 'selected' : '') ?>>Persentage</option>
+                            <option value="%" <?php echo ($value['uom'] == "%" ? 'selected' : '') ?>>%</option>
                           </select>
                         </td>
                         <td>
@@ -226,9 +236,15 @@
                           </select>
                         </td>
                         <td><input type="number" step="any" class="form-control" value="<?php echo $value['unit_price'] ?>" oninput="get_total(this)" name="unit_price[]"></td>
-                        <td><input type="number" step="any" class="form-control" value="<?php echo $value['qty']*$value['unit_price'] ?>" name="subtotal[]" readonly></td>
+                        <td>
+                          <input type="text" step="any" class="form-control" value="<?php echo number_format(($value['qty'] / $persen)*$value['unit_price'], 2) ?>" name="subtotal_view[]" readonly>
+                          <input type="hidden" step="any" class="form-control" value="<?php echo ($value['qty'] / $persen)*$value['unit_price'] ?>" name="subtotal[]" readonly>
+                        </td>
                         <td><input type="number" step="any" class="form-control" value="<?php echo $value['exchange_rate'] ?>" oninput="get_total(this)"name="exchange_rate[]"></td>
-                        <td><input type="number" step="any" class="form-control" value="<?php echo $value['qty']*$value['unit_price']*$value['exchange_rate'] ?>" name="total[]" readonly></td>
+                        <td>
+                          <input type="text" step="any" class="form-control" value="<?php echo number_format(($value['qty'] / $persen)*$value['unit_price']*$value['exchange_rate'], 2) ?>" name="total_view[]" readonly>
+                          <input type="hidden" step="any" class="form-control" value="<?php echo ($value['qty'] / $persen)*$value['unit_price']*$value['exchange_rate'] ?>" name="total[]" readonly>
+                        </td>
                         <td><textarea class="form-control" name="remarks[]" placeholder="..."><?php echo $value['remarks'] ?></textarea></td>
                         <td>
                           <?php if ($key == 0) : ?>
@@ -243,7 +259,7 @@
                   </table>
                   <div class="row clearfix">
                     <div class="col-md">
-                      <h5 class="font-weight-bold">Total All : IDR <span name="total_all"><?php echo $total_all ?></span></h5>
+                      <h5 class="font-weight-bold">Total All : IDR <span name="total_all"><?php echo number_format($total_all, 2) ?></span></h5>
                     </div>
                     <div class="col-md text-right">
                       <button type="submit" class="btn btn-success">Submit</button>
@@ -365,7 +381,7 @@
                             <option value="Set">Set</option>
                             <option value="Trip">Trip</option>
                             <option value="Pallet">Pallet</option>
-                            <option value="Persentage">Persentage</option>
+                            <option value="%">%</option>
                           </select>
                         </td>
                         <td>
@@ -389,9 +405,15 @@
                           </select>
                         </td>
                         <td><input type="number" step="any" class="form-control" value="0" oninput="get_total(this)" name="unit_price[]"></td>
-                        <td><input type="number" step="any" class="form-control" value="0" name="subtotal[]" readonly></td>
+                        <td>
+                          <input type="text" step="any" class="form-control" value="0" name="subtotal_view[]" readonly>
+                          <input type="hidden" step="any" class="form-control" value="0" name="subtotal[]" readonly>
+                        </td>
                         <td><input type="number" step="any" class="form-control" value="0" oninput="get_total(this)"name="exchange_rate[]"></td>
-                        <td><input type="number" step="any" class="form-control" value="0" name="total[]" readonly></td>
+                        <td>
+                          <input type="text" step="any" class="form-control" value="0" name="total_view[]" readonly>
+                          <input type="hidden" step="any" class="form-control" value="0" name="total[]" readonly>
+                        </td>
                         <td><textarea class="form-control" name="remarks[]" placeholder="..."></textarea></td>
                         <td>
                           <button type="button" class="btn btn-primary" onclick="addrow(this)"><i class="fas fa-plus m-0"></i></button>
@@ -400,7 +422,11 @@
                       <?php endif; ?>
                       <?php 
                         foreach ($secondary_agent as $key => $value) : 
-                          $total_all += $value['qty']*$value['unit_price']*$value['exchange_rate'];
+                          $persen = 1;
+                          if($value['uom'] == "%"){
+                            $persen = 100;
+                          }
+                          $total_all +=  ($value['qty'] / $persen)*$value['unit_price']*$value['exchange_rate'];
                       ?>
                         <tr>
                         <td>
@@ -416,7 +442,7 @@
                             <option value="Set" <?php echo ($value['uom'] == "Set" ? 'selected' : '') ?>>Set</option>
                             <option value="Trip" <?php echo ($value['uom'] == "Trip" ? 'selected' : '') ?>>Trip</option>
                             <option value="Pallet" <?php echo ($value['uom'] == "Pallet" ? 'selected' : '') ?>>Pallet</option>
-                            <option value="Persentage" <?php echo ($value['uom'] == "Persentage" ? 'selected' : '') ?>>Persentage</option>
+                            <option value="%" <?php echo ($value['uom'] == "%" ? 'selected' : '') ?>>%</option>
                           </select>
                         </td>
                         <td>
@@ -440,9 +466,15 @@
                           </select>
                         </td>
                         <td><input type="number" step="any" class="form-control" value="<?php echo $value['unit_price'] ?>" oninput="get_total(this)" name="unit_price[]"></td>
-                        <td><input type="number" step="any" class="form-control" value="<?php echo $value['qty']*$value['unit_price'] ?>" name="subtotal[]" readonly></td>
+                        <td>
+                          <input type="text" step="any" class="form-control" value="<?php echo number_format(($value['qty'] / $persen)*$value['unit_price'], 2) ?>" name="subtotal_view[]" readonly>
+                          <input type="hidden" step="any" class="form-control" value="<?php echo ($value['qty'] / $persen)*$value['unit_price'] ?>" name="subtotal[]" readonly>
+                        </td>
                         <td><input type="number" step="any" class="form-control" value="<?php echo $value['exchange_rate'] ?>" oninput="get_total(this)"name="exchange_rate[]"></td>
-                        <td><input type="number" step="any" class="form-control" value="<?php echo $value['qty']*$value['unit_price']*$value['exchange_rate'] ?>" name="total[]" readonly></td>
+                        <td>
+                          <input type="text" step="any" class="form-control" value="<?php echo number_format(($value['qty'] / $persen)*$value['unit_price']*$value['exchange_rate'], 2) ?>" name="total[]" readonly>
+                          <input type="hidden" step="any" class="form-control" value="<?php echo ($value['qty'] / $persen)*$value['unit_price']*$value['exchange_rate'] ?>" name="total[]" readonly>
+                        </td>
                         <td><textarea class="form-control" name="remarks[]" placeholder="..."><?php echo $value['remarks'] ?></textarea></td>
                         <td>
                           <?php if ($key == 0) : ?>
@@ -457,7 +489,7 @@
                   </table>
                   <div class="row clearfix">
                     <div class="col-md">
-                      <h5 class="font-weight-bold">Total All : IDR <span name="total_all"><?php echo $total_all ?></span></h5>
+                      <h5 class="font-weight-bold">Total All : IDR <span name="total_all"><?php echo number_format($total_all, 2) ?></span></h5>
                     </div>
                     <div class="col-md text-right">
                       <button type="submit" class="btn btn-success">Submit</button>
@@ -493,25 +525,28 @@
     var row = $(input).closest('tr');
     var qty = $(row).find("input[name='qty[]']").val();
     var uom = $(row).find("select[name='uom[]']").val();
-    if(uom == "Persentage"){
+    if(uom == "%"){
       qty = qty/100;
     }
     var unit_price = $(row).find("input[name='unit_price[]']").val();
     
     var subtotal = qty * unit_price;
+    $(row).find("input[name='subtotal_view[]']").val(subtotal.toLocaleString('en-US', {maximumFractionDigits:2, minimumFractionDigits: 2}));
     $(row).find("input[name='subtotal[]']").val(subtotal);
 
     var exchange_rate = $(row).find("input[name='exchange_rate[]']").val();
     var total = subtotal * exchange_rate;
+    $(row).find("input[name='total_view[]']").val(total.toLocaleString('en-US', {maximumFractionDigits:2, minimumFractionDigits: 2}));
     $(row).find("input[name='total[]']").val(total);
 
     var total_all = 0;
     $("input[name='total[]']").each(function(index, value) {
-      var total_row = parseInt($(this).val());
+      var total_row = parseFloat($(this).val());
       total_all = total_all + total_row + 0;
     });
 
-    $(input).closest('form').find("span[name=total_all]").text(total_all);
+    // $(input).closest('form').find("span[name=total_all]").text(total_all);
+    $(input).closest('form').find("span[name=total_all]").text(total_all.toLocaleString('en-US', {maximumFractionDigits:2, minimumFractionDigits: 2}));
     // $("#total_all").text(total_all);
   }
 

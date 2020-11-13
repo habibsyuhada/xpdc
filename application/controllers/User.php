@@ -39,6 +39,13 @@ class User extends CI_Controller
   }
 
 	public function user_create(){
+		$datadb 	= $this->home_mod->branch_list();
+		$branch_list = [];
+		foreach ($datadb as $key => $value) {
+			$branch_list[$value['name']] = $value;
+		}
+		$data['branch_list'] 	= $branch_list;
+
     $data['subview'] 				= 'user/user_create';
 		$data['meta_title'] 		= 'User Create';
 		$this->load->view('index', $data);
@@ -75,6 +82,13 @@ class User extends CI_Controller
 			redirect("user/user_list");
 		}
 		$data['user_list'] 	= $user_list[0];
+
+		$datadb 	= $this->home_mod->branch_list();
+		$branch_list = [];
+		foreach ($datadb as $key => $value) {
+			$branch_list[$value['name']] = $value;
+		}
+		$data['branch_list'] 	= $branch_list;
 
     $data['subview'] 				= 'user/user_update';
 		$data['meta_title'] 		= 'User Update';

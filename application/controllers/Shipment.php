@@ -461,6 +461,13 @@ class Shipment extends CI_Controller
 			redirect("shipment/shipment_list");
 		}
 
+		$datadb 	= $this->home_mod->branch_list();
+		$branch_list = [];
+		foreach ($datadb as $key => $value) {
+			$branch_list[$value['name']] = $value;
+		}
+		$data['branch_list'] 	= $branch_list;
+		
 		$data['country'] = json_decode(file_get_contents("./assets/country/country.json"), true);
 		
 		$data['shipment'] 			= $shipment_list[0];

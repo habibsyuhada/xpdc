@@ -31,8 +31,9 @@
                     <select class="form-control" name="branch" required>
                       <option value="">-- Select Branch --</option>
                       <option value="NONE" <?php echo ($user_list['branch'] == "NONE" ? 'selected' : '') ?>>NONE</option>
-                      <option value="BATAM" <?php echo ($user_list['branch'] == "BATAM" ? 'selected' : '') ?>>BATAM</option>
-                      <option value="JAKARTA" <?php echo ($user_list['branch'] == "JAKARTA" ? 'selected' : '') ?>>JAKARTA</option>
+                      <?php foreach ($branch_list as $key => $value) : ?>
+                      <option value="<?php echo $key ?>" <?php echo ($user_list['branch'] == $key ? 'selected' : '') ?>><?php echo $key ?></option>
+                      <?php endforeach; ?>
                     </select>
                   </div>
                 </div>

@@ -65,8 +65,9 @@
                     <label>Branch</label>
                     <select class="form-control" name="assign_branch">
                       <option value="">-- Select One --</option>
-                      <option value="BATAM" <?php echo ($shipment['assign_branch'] == "BATAM" ? 'selected' : '') ?>>BATAM</option>
-                      <option value="JAKARTA" <?php echo ($shipment['assign_branch'] == "JAKARTA" ? 'selected' : '') ?>>JAKARTA</option>
+                      <?php foreach ($branch_list as $key => $value) : ?>
+                      <option value="<?php echo $key ?>"><?php echo $key ?></option>
+                      <?php endforeach; ?>
                     </select>
                   </div>
                   <div class="form-group">

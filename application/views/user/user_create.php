@@ -31,8 +31,9 @@
                     <select class="form-control" name="branch" required>
                       <option value="">-- Select Branch --</option>
                       <option value="NONE">NONE</option>
-                      <option value="BATAM">BATAM</option>
-                      <option value="JAKARTA">JAKARTA</option>
+                      <?php foreach ($branch_list as $key => $value) : ?>
+                      <option value="<?php echo $key ?>"><?php echo $key ?></option>
+                      <?php endforeach; ?>
                     </select>
                   </div>
                 </div>

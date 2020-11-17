@@ -51,7 +51,7 @@
                 <div class="form-group row m-0">
                   <label class="col-sm-3 col-form-label">Total Vol. Weight</label>
                   <div class="col-sm-9">
-                    <label class="col-form-label font-weight-bold">: <?php echo $summary_total['total_vol_weight'] ?></label>
+                    <label class="col-form-label font-weight-bold">: <?php echo ($summary_total['total_vol_weight']) ?></label>
                   </div>
                 </div>
               </div>

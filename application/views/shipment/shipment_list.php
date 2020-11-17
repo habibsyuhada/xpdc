@@ -38,8 +38,8 @@
                     <label>Type of Shipment</label>
                     <select class="form-control" name="type_of_shipment">
                       <option value="">-- Select One --</option>
-                      <option <?php echo ($this->input->get('type_of_shipment') == 'International' ? 'selected' : '') ?> value="International">International</option>
-                      <option <?php echo ($this->input->get('type_of_shipment') == 'Domestic' ? 'selected' : '') ?> value="Domestic">Domestic</option>
+                      <option <?php echo ($this->input->get('type_of_shipment') == 'International Shipping' ? 'selected' : '') ?> value="International Shipping">International Shipping</option>
+                      <option <?php echo ($this->input->get('type_of_shipment') == 'Domestic Shipping' ? 'selected' : '') ?> value="Domestic Shipping">Domestic Shipping</option>
                     </select>
                   </div>
                   <div class="form-group">

@@ -63,8 +63,8 @@
                         <label>Type of Shipment</label>
                         <select class="form-control" name="type_of_shipment" required>
                           <option value="">-- Select One --</option>
-                          <option value="International" <?= ($shipment['type_of_shipment'] == 'International') ? 'selected' : ''; ?>>International</option>
-                          <option value="Domestic" <?= ($shipment['type_of_shipment'] == 'Domestic') ? 'selected' : ''; ?>>Domestic</option>
+                          <option value="International Shipping" <?= ($shipment['type_of_shipment'] == 'International Shipping') ? 'selected' : ''; ?>>International Shipping</option>
+                          <option value="Domestic Shipping" <?= ($shipment['type_of_shipment'] == 'Domestic Shipping') ? 'selected' : ''; ?>>Domestic Shipping</option>
                         </select>
                       </div>
                     </div>
@@ -86,10 +86,18 @@
                     <div class="col-md-6">
                       <div class="form-group" style="<?php echo ($shipment['type_of_mode'] == 'Sea Transport' ? '' : 'display: none;') ?>">
                         <label>Sea</label>
-                        <select class="form-control" name="sea" required <?php echo ($shipment['type_of_mode'] == 'Sea Transport' ? '' : 'disabled') ?>>
+                        <select class="form-control" name="sea" title="sea" required <?php echo ($shipment['type_of_mode'] == 'Sea Transport' ? '' : 'disabled') ?>>
                           <option value="">- Select Sea -</option>
                           <option value="LCL" <?= ($shipment['sea'] == 'LCL') ? 'selected' : ''; ?>>LCL</option>
                           <option value="FCL" <?= ($shipment['sea'] == 'FCL') ? 'selected' : ''; ?>>FCL</option>
+                        </select>
+                      </div>
+                      <div class="form-group" style="<?php echo ($shipment['type_of_mode'] == 'Air Freight' ? '' : 'display: none;') ?>">
+                        <label>Sea</label>
+                        <select class="form-control" name="sea" title="air" required <?php echo ($shipment['type_of_mode'] == 'Air Freight' ? '' : 'disabled') ?>>
+                          <option value="">- Select Sea -</option>
+                          <option value="Express" <?= ($shipment['sea'] == 'Express') ? 'selected' : ''; ?>>Express</option>
+                          <option value="Reguler" <?= ($shipment['sea'] == 'Reguler') ? 'selected' : ''; ?>>Reguler</option>
                         </select>
                       </div>
                     </div>
@@ -685,12 +693,15 @@
 
   $("select[name=type_of_mode]").on("change", function() {
     var value = $(this).val();
+    $("select[name=sea]").closest('.form-group').slideUp();
+    $("select[name=sea]").attr("disabled", "disabled");
     if (value == 'Sea Transport') {
-      $("select[name=sea]").closest('.form-group').slideDown();
-      $("select[name=sea]").removeAttr("disabled");
-    } else {
-      $("select[name=sea]").closest('.form-group').slideUp();
-      $("select[name=sea]").attr("disabled", "disabled");
+      $("select[name=sea][title=sea]").closest('.form-group').slideDown();
+      $("select[name=sea][title=sea]").removeAttr("disabled");
+    } 
+    else if (value == 'Air Freight') {
+      $("select[name=sea][title=air]").closest('.form-group').slideDown();
+      $("select[name=sea][title=air]").removeAttr("disabled");
     }
     $("select[name=sea]").val('');
   });
@@ -814,9 +825,9 @@
       total_measurement += measurement;
     });
 
-    $("#act_weight").html((Number(total_act_weight)).toFixed(2));
-    $("#vol_weight").html((Number(total_vol_weight)).toFixed(2));
-    $("#measurement").html((Number(total_measurement)).toFixed(2));
+    $("#act_weight").html(total_act_weight.toLocaleString('en-US', {maximumFractionDigits:2, minimumFractionDigits: 2}));
+    $("#vol_weight").html(total_vol_weight.toLocaleString('en-US', {maximumFractionDigits:2, minimumFractionDigits: 2}));
+    $("#measurement").html(total_measurement.toLocaleString('en-US', {maximumFractionDigits:2, minimumFractionDigits: 2}));
 
   }
 

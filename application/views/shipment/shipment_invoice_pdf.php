@@ -152,7 +152,7 @@
           <table border="0" width="100%" cellspacing="0" cellpadding="0">
             <tr>
               <td><b>Type of Mode</b></td>
-              <td class="text-right"><?php echo $shipment['type_of_mode'] ?> (<?php echo $shipment['sea'] ?>)</td>
+              <td class="text-right"><?php echo $shipment['type_of_mode'] ?> <?php echo ($shipment['sea'] == "" ? "" : "(" . $shipment['sea'] . ")") ?></td>
             </tr>
           </table>
         </td>

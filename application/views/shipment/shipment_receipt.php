@@ -216,19 +216,19 @@
                   <div class="form-group row m-0">
                     <label class="col-sm-3 col-form-label">Act. Weight</label>
                     <div class="col-sm-9">
-                      <label class="col-form-label">: <?php echo round($total_act_weight, 2, PHP_ROUND_HALF_UP) ?></label>
+                      <label class="col-form-label">: <?php echo number_format($total_act_weight, 2) ?></label>
                     </div>
                   </div>
                   <div class="form-group row m-0">
                     <label class="col-sm-3 col-form-label">Vol. Weight</label>
                     <div class="col-sm-9">
-                      <label class="col-form-label">: <?php echo round($total_vol_weight, 2, PHP_ROUND_HALF_UP) ?></label>
+                      <label class="col-form-label">: <?php echo number_format($total_vol_weight, 2) ?></label>
                     </div>
                   </div>
                   <div class="form-group row m-0">
                     <label class="col-sm-3 col-form-label">Measurement</label>
                     <div class="col-sm-9">
-                      <label class="col-form-label">: <?php echo round($total_measurement, 2, PHP_ROUND_HALF_UP) ?></label>
+                      <label class="col-form-label">: <?php echo number_format($total_measurement, 2) ?></label>
                     </div>
                   </div>
                 </div>

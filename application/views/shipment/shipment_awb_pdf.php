@@ -44,8 +44,8 @@
   }
   foreach ($packages_list as $key => $value){
     $total_qty += $value['qty'];
-    $total_weight += $value['weight'];
-    $total_vol_weight = $total_vol_weight + (($value['length'] * $value['width'] * $value['height']) / $per);
+    $total_weight += $value['weight'] * $value['qty'];
+    $total_vol_weight = $total_vol_weight + ($value['qty'] * ($value['length'] * $value['width'] * $value['height']) / $per);
   } 
 ?>
 <body>
@@ -60,7 +60,7 @@
           <b style="margin-top: 5px;"><?php echo $shipment['tracking_no'] ?></b>
         </td>
         <td>
-          Shipment Date: <?php echo date("Y-m-d", strtotime($shipment['created_date'])) ?>
+          Shipment Date: <?php echo date("d-m-Y", strtotime($shipment['created_date'])) ?>
         </td>
         <td>
           Content: <?php echo $shipment['description_of_goods'] ?>
@@ -85,10 +85,10 @@
           Quantity: <?php echo $total_qty ?> <?php echo $shipment['piece_type'] ?> <!--  1 Pallet -->
         </td>
         <td>
-          Weight: <?php echo $total_weight ?> Kg<!--  100 Kg -->
+          Weight: <?php echo number_format($total_weight, 2) ?> Kg<!--  100 Kg -->
         </td>
         <td>
-          Declared Value: <?php echo $shipment['currency'] ?> <?php echo round($shipment['declared_value'], 2, PHP_ROUND_HALF_UP); ?><!--  100 Kg -->
+          Declared Value: <?php echo $shipment['currency'] ?> <?php echo number_format($shipment['declared_value'], 2); ?><!--  100 Kg -->
         </td>
       </tr>
     </tbody>

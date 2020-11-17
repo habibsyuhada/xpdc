@@ -27,6 +27,7 @@ class Master_tracking extends CI_Controller {
 		cek_login();
 		$this->load->model('master_tracking_mod');
 		$this->load->model('shipment_mod');
+		$this->load->model('home_mod');
 	}
 
 	public function index(){
@@ -135,10 +136,10 @@ class Master_tracking extends CI_Controller {
 		}
 		
 		$data['summary_total'] 		= array(
-			"total_value" => $currency." ".$total_value,
-			"total_act_weight" => $total_act_weight,
-			"total_vol_weight" => $total_vol_weight,
-			"total_measurement" => $total_measurement,
+			"total_value" => $currency." ".number_format($total_value, 2),
+			"total_act_weight" => number_format($total_act_weight, 2),
+			"total_vol_weight" => number_format($total_vol_weight, 2),
+			"total_measurement" => number_format($total_measurement, 2),
 		);
 		$data['master_tracking'] 	= $master_tracking;
 		$data['subview'] 				  = 'master_tracking/master_tracking_detail';
@@ -168,7 +169,7 @@ class Master_tracking extends CI_Controller {
 		// test_var($this->input->post());
 	}
 
-	public function master_tracking_update($master_tracking){
+	public function master_tracking_edit($master_tracking){
 		$where['master_tracking'] 	= $master_tracking;
 		$shipment_list 							= $this->shipment_mod->shipment_list_db($where);
 
@@ -192,21 +193,14 @@ class Master_tracking extends CI_Controller {
 			$shipment = array();
 		}
 		
-		$datadb 	= $this->home_mod->branch_list();
-		$branch_list = [];
-		foreach ($datadb as $key => $value) {
-			$branch_list[$value['name']] = $value;
-		}
-		$data['branch_list'] 	= $branch_list;
-		
 		$data['shipment'] 			= $shipment;
 		$data['master_tracking']= $master_tracking;
-		$data['subview'] 				= 'master_tracking/master_tracking_update';
-		$data['meta_title'] 		= 'Master Tracking Update';
+		$data['subview'] 				= 'master_tracking/master_tracking_edit';
+		$data['meta_title'] 		= 'Master Tracking Shipping Information';
 		$this->load->view('index', $data);
 	}
 
-	public function master_tracking_update_process(){
+	public function master_tracking_edit_process(){
 		$post = $this->input->post();
 
 		$form_data = array(
@@ -245,6 +239,57 @@ class Master_tracking extends CI_Controller {
 		$this->shipment_mod->shipment_detail_update_process_db($form_data, $where2);
 
 		$this->session->set_flashdata('success', 'Your Shipment data has been Updated!');
-		redirect('master_tracking/master_tracking_update/'.$post['master_tracking']);
+		redirect($_SERVER['HTTP_REFERER']);
+	}
+
+	public function master_tracking_assign($master_tracking){
+		$where['master_tracking'] 	= $master_tracking;
+		$shipment_list 							= $this->shipment_mod->shipment_list_db($where);
+
+		if (count($shipment_list) <= 0) {
+			$this->session->set_flashdata('error', 'Shipment not Found!');
+			redirect("master_tracking/master_tracking_list");
+		}
+
+		$all_same = true;
+		$first = $shipment_list[0]['main_agent_name'].$shipment_list[0]['main_agent_mawb_mbl'].$shipment_list[0]['main_agent_carrier'].$shipment_list[0]['main_agent_voyage_flight_no'].$shipment_list[0]['main_agent_voyage_flight_date'].$shipment_list[0]['secondary_agent_name'].$shipment_list[0]['secondary_agent_mawb_mbl'].$shipment_list[0]['secondary_agent_carrier'].$shipment_list[0]['secondary_agent_voyage_flight_no'].$shipment_list[0]['secondary_agent_voyage_flight_date'].$shipment_list[0]['port_of_loading'].$shipment_list[0]['port_of_discharge'].$shipment_list[0]['container_no'].$shipment_list[0]['seal_no'].$shipment_list[0]['cipl_no'].$shipment_list[0]['permit_no'].$shipment_list[0]['assign_branch'];
+		foreach ($shipment_list as $key => $value) {
+			$new = $value['main_agent_name'].$value['main_agent_mawb_mbl'].$value['main_agent_carrier'].$value['main_agent_voyage_flight_no'].$value['main_agent_voyage_flight_date'].$value['secondary_agent_name'].$value['secondary_agent_mawb_mbl'].$value['secondary_agent_carrier'].$value['secondary_agent_voyage_flight_no'].$value['secondary_agent_voyage_flight_date'].$value['port_of_loading'].$value['port_of_discharge'].$value['container_no'].$value['seal_no'].$value['cipl_no'].$value['permit_no'].$value['assign_branch'];
+			if($first != $new){
+				$all_same = false;
+			}
+		}
+		if($all_same == true){
+			$shipment = $shipment_list[0];
+		}
+		else{
+			$shipment = array();
+		}
+		
+		$datadb 	= $this->home_mod->branch_list();
+		$branch_list = [];
+		foreach ($datadb as $key => $value) {
+			$branch_list[$value['name']] = $value;
+		}
+		$data['branch_list'] 	= $branch_list;
+		
+		$data['shipment'] 			= $shipment;
+		$data['master_tracking']= $master_tracking;
+		$data['subview'] 				= 'master_tracking/master_tracking_assign';
+		$data['meta_title'] 		= 'Master Tracking Assign';
+		$this->load->view('index', $data);
+	}
+
+	public function master_tracking_assign_process(){
+		$post = $this->input->post();
+
+		$form_data = array(
+			'assign_branch'					=> $post['assign_branch'],
+		);
+		$where['master_tracking'] = $post['master_tracking'];
+		$this->shipment_mod->shipment_update_process_db($form_data, $where);
+
+		$this->session->set_flashdata('success', 'Your Shipment data has been Updated!');
+		redirect($_SERVER['HTTP_REFERER']);
 	}
 }

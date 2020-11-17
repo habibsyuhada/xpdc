@@ -233,17 +233,17 @@
               <tr>
                 <td>Act. Weight</td>
                 <td>:</td>
-                <td><?php echo round($total_act_weight, 2, PHP_ROUND_HALF_UP) ?> Kg</td>
+                <td><?php echo number_format($total_act_weight, 2) ?> Kg</td>
               </tr>
               <tr>
                 <td>Vol. Weight</td>
                 <td>:</td>
-                <td><?php echo round($total_vol_weight, 2, PHP_ROUND_HALF_UP) ?> Kg</td>
+                <td><?php echo number_format($total_vol_weight, 2) ?> Kg</td>
               </tr>
               <tr>
                 <td>Measurement</td>
                 <td>:</td>
-                <td><?php echo round($total_measurement, 2, PHP_ROUND_HALF_UP) ?> M<sup>3</sup></td>
+                <td><?php echo number_format($total_measurement, 2) ?> M<sup>3</sup></td>
               </tr>
             </tbody>
           </table>

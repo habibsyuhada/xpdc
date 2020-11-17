@@ -15,16 +15,17 @@
 </style>
 <div class="main-content">
   <div class="container-fluid">
-    <form action="<?php echo base_url(); ?>shipment/shipment_assign_process" method="POST" class="forms-sample">
-      <input type="hidden" name="id" value="<?php echo $shipment['id'] ?>">
-      <input type="hidden" name="tracking_no" value="<?php echo $shipment['tracking_no'] ?>">
+    <form action="<?php echo base_url(); ?>master_tracking/master_tracking_assign_process" method="POST" class="forms-sample">
+      <input type="hidden" name="id" value="<?php echo @$shipment['id'] ?>">
+      <input type="hidden" name="tracking_no" value="<?php echo @$shipment['tracking_no'] ?>">
+      <input type="hidden" name="master_tracking" value="<?php echo $master_tracking ?>">
       <div class="row clearfix">
         <div class="col-md-12">
           <div class="card">
             <div class="card-body">
               <hr class="mt-0">
-              <p class="m-0 text-center">Shipment Number</p>
-              <h1 class="font-weight-bold m-0 text-center"><?php echo $shipment['tracking_no'] ?></h1>
+              <p class="m-0 text-center">Master Tracking Number</p>
+              <h1 class="font-weight-bold m-0 text-center"><?php echo @$shipment['master_tracking'] ?></h1>
               <hr class="mb-0">
             </div>
           </div>
@@ -34,7 +35,6 @@
         <div class="col-md-12">
           <div class="card">
             <div class="card-body">
-              
               <br>
               <div class="row clearfix">
                 <div class="col-md-12">
@@ -80,7 +80,7 @@
               </div>
               <div class="mt-2 row">
                 <div class="text-left col-6">
-                  <!-- <span class="btn btn-danger previous-tab">Back</span> -->
+                  <a href="<?php echo base_url() ?>master_tracking/master_tracking_list" class="btn btn-secondary">Back</a>
                 </div>
                 <div class="text-right col-6">
                   <button type="submit" class="btn btn-success" onclick="return confirm('Apakah Anda Yakin?')">Submit</button>

@@ -210,13 +210,13 @@
                           </div>
                         </div>
                         <div class="col-md-6">
-                            <div class="form-group">
-                                <label>Insurance</label>
-                                <select class="form-control" name="insurance" required>
-                                    <option value="Yes">Yes</option>
-                                    <option value="No">No</option>
-                                </select>
-                            </div>
+                          <div class="form-group">
+                            <label>Insurance</label>
+                            <select class="form-control" name="insurance" required>
+                              <option value="No">No</option>
+                              <option value="Yes">Yes</option>
+                            </select>
+                          </div>
                         </div>
                       </div>
                     </div>
@@ -227,7 +227,8 @@
                       </div>
                       <div class="form-group">
                         <label>HSCode</label>
-                        <input type="text" class="form-control" name="hscode" placeholder="HSCode" required>
+                        <input type="text" class="form-control" name="hscode" placeholder="HSCode" data-inputmask='"mask": "9999.99.99", "type": "reverse"' value="0000.00.00" data-mask>
+                        <!-- <input type="text" class="form-control" name="hscode" placeholder="HSCode" required> -->
                       </div>
                       <div class="form-group">
                         <label>COO (Country of Origin)</label>
@@ -393,7 +394,7 @@
                       </div>
                       <div class="form-group">
                         <label>Email</label>
-                        <input type="email" class="form-control" name="pickup_email" placeholder="Email" readonly >
+                        <input type="email" class="form-control" name="pickup_email" placeholder="Email" readonly>
                       </div>
                       <div class="row clearfix">
                         <div class="col-md-6">
@@ -403,7 +404,7 @@
                           </div>
                           <div class="form-group">
                             <label>Pick Up Time From</label>
-                            <input type="time" class="form-control" name="pickup_time" placeholder="Pick Up Time" readonly required>
+                            <input type="text" class="form-control datetimepicker-input" id="pickup_from" data-toggle="datetimepicker" data-target="#pickup_from" name="pickup_time" placeholder="Pick Up Time" readonly required>
                           </div>
                         </div>
                         <div class="col-md-6">
@@ -413,7 +414,7 @@
                           </div>
                           <div class="form-group">
                             <label>Pick Up Time To</label>
-                            <input type="time" class="form-control" name="pickup_time_to" placeholder="Pick Up Time" readonly required>
+                            <input type="text" class="form-control datetimepicker-input" id="pickup_to" data-toggle="datetimepicker" data-target="#pickup_to" name="pickup_time_to" placeholder="Pick Up Time" readonly required>
                           </div>
                         </div>
                       </div>
@@ -439,7 +440,7 @@
                       <h6 class="font-weight-bold">Billing Details</h6>
                     </div>
                     <div class="col-md-6">
-                      
+
                       <div class="form-group">
                         <label>XPDC Account No.</label>
                         <input type="text" class="form-control" name="billing_account" placeholder="XPDC Account No. (if any)">
@@ -719,7 +720,7 @@
 
       $('input[name=pickup_account]').attr('readonly', true);
       $('textarea[name=pickup_address]').attr('readonly', true);
-      if(status_pickup == "Picked Up"){
+      if (status_pickup == "Picked Up") {
         $('input[name=pickup_date], input[name=pickup_date_to], input[name=pickup_time], input[name=pickup_time_to]').attr('readonly', false);
       }
       same_as_billing_detail();
@@ -796,8 +797,7 @@
     if (value == 'Sea Transport') {
       $("select[name=sea][title=sea]").closest('.form-group').slideDown();
       $("select[name=sea][title=sea]").removeAttr("disabled");
-    } 
-    else if (value == 'Air Freight') {
+    } else if (value == 'Air Freight') {
       $("select[name=sea][title=air]").closest('.form-group').slideDown();
       $("select[name=sea][title=air]").removeAttr("disabled");
     }
@@ -923,11 +923,30 @@
       total_measurement += measurement;
     });
 
-    $("#act_weight").html(total_act_weight.toLocaleString('en-US', {maximumFractionDigits:2, minimumFractionDigits: 2}));
-    $("#vol_weight").html(total_vol_weight.toLocaleString('en-US', {maximumFractionDigits:2, minimumFractionDigits: 2}));
-    $("#measurement").html(total_measurement.toLocaleString('en-US', {maximumFractionDigits:2, minimumFractionDigits: 2}));
+    $("#act_weight").html(total_act_weight.toLocaleString('en-US', {
+      maximumFractionDigits: 2,
+      minimumFractionDigits: 2
+    }));
+    $("#vol_weight").html(total_vol_weight.toLocaleString('en-US', {
+      maximumFractionDigits: 2,
+      minimumFractionDigits: 2
+    }));
+    $("#measurement").html(total_measurement.toLocaleString('en-US', {
+      maximumFractionDigits: 2,
+      minimumFractionDigits: 2
+    }));
 
   }
+
+  $(function() {
+    $('#pickup_from').datetimepicker({
+      format: 'HH:mm'
+    });
+    $('#pickup_to').datetimepicker({
+      format: 'HH:mm'
+    });
+    $('[data-mask]').inputmask();
+  });
 
   /**** JQuery *******/
   $('.next-tab').click(function() {

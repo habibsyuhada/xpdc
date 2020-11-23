@@ -44,6 +44,7 @@
   <script src="<?php echo base_url(); ?>assets/plugins/moment/moment.js"></script>
   <script src="<?php echo base_url(); ?>assets/plugins/tempusdominus-bootstrap-4/build/js/tempusdominus-bootstrap-4.min.js"></script>
   <script src="<?php echo base_url(); ?>assets/plugins/jquery-toast-plugin/dist/jquery.toast.min.js"></script>
+  <script src="<?php echo base_url(); ?>assets/plugins/inputmask/min/jquery.inputmask.bundle.min.js"></script>
   <script src="<?php echo base_url(); ?>assets/dist/js/theme.min.js"></script>
   <script src="<?php echo base_url(); ?>assets/js/alerts.js?v=2"></script>
   <!-- <script src="<?php echo base_url(); ?>assets/js/datatables.js"></script> -->

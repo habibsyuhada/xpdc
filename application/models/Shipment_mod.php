@@ -208,26 +208,29 @@ class Shipment_mod extends CI_Model
       }
     }
     $query = "SELECT 
-    SUM(IF(status = 'Booked', 1, 0)) as 'Booked', 
-    SUM(IF(status = 'Booking Confirmed', 1, 0)) as 'Booking Confirmed', 
-    SUM(IF(status = 'Picked up', 1, 0)) as 'Picked up', 
-    SUM(IF(status = 'Pending Payment', 1, 0)) as 'Pending Payment', 
-    SUM(IF(status = 'Service Center', 1, 0)) as 'Service Center', 
-    SUM(IF(status = 'Departed', 1, 0)) as 'Departed', 
-    SUM(IF(status = 'Arrived', 1, 0)) as 'Arrived', 
-    SUM(IF(status = 'In Transit', 1, 0)) as 'In Transit', 
-    SUM(IF(status = 'Returned', 1, 0)) as 'Returned', 
-    SUM(IF(status = 'Clearance Event', 1, 0)) as 'Clearance Event', 
-    SUM(IF(status = 'Clearance Complete', 1, 0)) as 'Clearance Complete', 
-    SUM(IF(status = 'With Courier', 1, 0)) as 'With Courier', 
-    SUM(IF(status = 'Delivered', 1, 0)) as 'Delivered', 
-    SUM(IF(status = 'On Hold', 1, 0)) as 'On Hold', 
-    SUM(IF(status = 'Cancelled', 1, 0)) as 'Cancelled',
-    SUM(IF(status_driver_pickup = '1' AND driver_pickup = '".$this->session->userdata('id')."', 1, 0)) as 'Outstanding Pickup',
-    SUM(IF(status_driver_pickup = '2' AND driver_pickup = '".$this->session->userdata('id')."', 1, 0)) as 'Done Pickup',
-    SUM(IF(status_driver_deliver = '1' AND driver_deliver = '".$this->session->userdata('id')."', 1, 0)) as 'Outstanding Deliver',
-    SUM(IF(status_driver_deliver = '2' AND driver_deliver = '".$this->session->userdata('id')."', 1, 0)) as 'Done Deliver'
-    FROM shipment";
+    SUM(IF(shipment.status = 'Booked', 1, 0)) as 'Booked', 
+    SUM(IF(shipment.status = 'Booking Confirmed', 1, 0)) as 'Booking Confirmed', 
+    SUM(IF(shipment.status = 'Picked up', 1, 0)) as 'Picked up', 
+    SUM(IF(shipment.status = 'Pending Payment', 1, 0)) as 'Pending Payment', 
+    SUM(IF(shipment.status = 'Service Center', 1, 0)) as 'Service Center', 
+    SUM(IF(shipment.status = 'Departed', 1, 0)) as 'Departed', 
+    SUM(IF(shipment.status = 'Arrived', 1, 0)) as 'Arrived', 
+    SUM(IF(shipment.status = 'In Transit', 1, 0)) as 'In Transit', 
+    SUM(IF(shipment.status = 'Returned', 1, 0)) as 'Returned', 
+    SUM(IF(shipment.status = 'Clearance Event', 1, 0)) as 'Clearance Event', 
+    SUM(IF(shipment.status = 'Clearance Complete', 1, 0)) as 'Clearance Complete', 
+    SUM(IF(shipment.status = 'With Courier', 1, 0)) as 'With Courier', 
+    SUM(IF(shipment.status = 'Delivered', 1, 0)) as 'Delivered', 
+    SUM(IF(shipment.status = 'On Hold', 1, 0)) as 'On Hold', 
+    SUM(IF(shipment.status = 'Cancelled', 1, 0)) as 'Cancelled',
+    SUM(IF(shipment.status_driver_pickup = '1', 1, 0)) as 'Outstanding Pickup',
+    SUM(IF(shipment.status_driver_pickup = '2', 1, 0)) as 'Done Pickup',
+    SUM(IF(shipment.status_driver_deliver = '1', 1, 0)) as 'Outstanding Deliver',
+    SUM(IF(shipment.status_driver_deliver = '2', 1, 0)) as 'Done Deliver',
+    SUM(IF(shipment_detail.status_bill = '0', 1, 0)) as 'Unbilled',
+    SUM(IF(shipment_detail.status_bill = '1', 1, 0)) as 'Billed',
+    SUM(IF(shipment_detail.status_bill = '2', 1, 0)) as 'Paid'
+    FROM shipment JOIN shipment_detail ON shipment.id = shipment_detail.id_shipment";
     if (count($where_str) > 0) {
       $query .= " WHERE " . join(" AND ", $where_str);
     }

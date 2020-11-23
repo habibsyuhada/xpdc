@@ -69,10 +69,10 @@ class Home extends CI_Controller {
 		}
 		// redirect('shipment/shipment_list');
 
-		$where['status_delete'] 	= 1;
+		$where['shipment.status_delete'] 	= 1;
 		if($this->session->userdata('branch')){
 			if($this->session->userdata('branch') != "NONE"){
-				$where["(assign_branch LIKE '%".$this->session->userdata('branch')."%' OR branch LIKE '%".$this->session->userdata('branch')."%')"] 	= NULL;
+				$where["(shipment.assign_branch LIKE '%".$this->session->userdata('branch')."%' OR shipment.branch LIKE '%".$this->session->userdata('branch')."%')"] 	= NULL;
 			}
 		}
 		else{
@@ -80,7 +80,7 @@ class Home extends CI_Controller {
 		}
 
 		if($this->session->userdata('role') == "Driver"){
-			$where["(driver_pickup = ".$this->session->userdata('id')." OR driver_deliver = ".$this->session->userdata('id').")"] 	= NULL;
+			$where["(shipment.driver_pickup = ".$this->session->userdata('id')." OR shipment.driver_deliver = ".$this->session->userdata('id').")"] 	= NULL;
 		}
 
 		$summary_list 					= $this->shipment_mod->summary_per_status($where);

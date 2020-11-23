@@ -57,6 +57,7 @@ class Branch extends CI_Controller
     $form_data = array(
 			'name' 				=> $post['name'],
 			'code' 				=> $post['code'],
+			'no_telp' 		=> $post['no_telp'],
 			'address' 		=> $post['address'],
 		);
 		$id_branch = $this->branch_mod->branch_create_process_db($form_data);
@@ -85,6 +86,7 @@ class Branch extends CI_Controller
     $form_data = array(
 			'name' 				=> $post['name'],
 			'code' 				=> $post['code'],
+			'no_telp' 		=> $post['no_telp'],
 			'address' 		=> $post['address'],
 		);
 		$where['id'] = $id;

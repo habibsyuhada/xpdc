@@ -148,6 +148,9 @@
 									<a href="<?php echo base_url() ?>branch/branch_create" class="menu-item">Create Branch</a>
 								</div>
 							</div>
+							<div class="nav-item">
+								<a href="<?php echo base_url() ?>report/summary_report"><i class="fas fa-share-alt"></i> <span>Summary Report</span></a>
+							</div>
 							<?php endif; ?>
 							<?php endif;//Not Guest ?>
 						</nav>

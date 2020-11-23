@@ -1,8 +1,9 @@
 <?php
   $role = $this->session->userdata('role');
   $page_permission = array(
-    0 => ( in_array($role, array("Super Admin", "Operator", "Finance")) ? 1 : 0), //Dashboard not Driver
+    0 => ( in_array($role, array("Super Admin", "Operator")) ? 1 : 0), //Dashboard not Driver
     1 => ( in_array($role, array("Driver")) ? 1 : 0), //Dashboard Driver
+    2 => ( in_array($role, array("Super Admin", "Finance")) ? 1 : 0), //Dashboard Finance
   );
 ?>
 <style>
@@ -419,6 +420,67 @@
       </div>
     </div>
     <?php endif; ?>
+    <?php if($page_permission[2] == 1): ?>
+    <div class="row justify-content-center clearfix">
+      <div class="col-xl-4 col-lg-4 col-md-4 col-sm-12">
+        <div class="widget status-bill">
+          <div class="widget-body">
+            <div class="d-flex justify-content-between align-items-center">
+              <div class="state">
+                <h6 name="0">Unbilled</h6>
+                <h2><?php echo $summary_list['Unbilled']+0 ?></h2>
+              </div>
+              <div class="icon">
+                <i class="fas fa-times"></i>
+              </div>
+            </div>
+            <!-- <small class="text-small mt-10 d-block">6% higher than last month</small> -->
+          </div>
+          <div class="progress progress-sm">
+            <div class="progress-bar bg-danger" role="progressbar" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100" style="width: 100%;"></div>
+          </div>
+        </div>
+      </div>
+      <div class="col-xl-4 col-lg-4 col-md-4 col-sm-12">
+        <div class="widget status-bill">
+          <div class="widget-body">
+            <div class="d-flex justify-content-between align-items-center">
+              <div class="state">
+                <h6 name="1">Billed</h6>
+                <h2><?php echo $summary_list['Billed']+0 ?></h2>
+              </div>
+              <div class="icon">
+                <i class="fas fa-file-invoice-dollar"></i>
+              </div>
+            </div>
+            <!-- <small class="text-small mt-10 d-block">6% higher than last month</small> -->
+          </div>
+          <div class="progress progress-sm">
+            <div class="progress-bar bg-warning" role="progressbar" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100" style="width: 100%;"></div>
+          </div>
+        </div>
+      </div>
+      <div class="col-xl-4 col-lg-4 col-md-4 col-sm-12">
+        <div class="widget status-bill">
+          <div class="widget-body">
+            <div class="d-flex justify-content-between align-items-center">
+              <div class="state">
+                <h6 name="2">Paid</h6>
+                <h2><?php echo $summary_list['Paid']+0 ?></h2>
+              </div>
+              <div class="icon">
+                <i class="fas fa-coins"></i>
+              </div>
+            </div>
+            <!-- <small class="text-small mt-10 d-block">6% higher than last month</small> -->
+          </div>
+          <div class="progress progress-sm">
+            <div class="progress-bar bg-success" role="progressbar" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100" style="width: 100%;"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <?php endif; ?>
 	</div>
 </div>
 <script>
@@ -429,5 +491,9 @@
   $('.widget.status-driver').on('click', function() {
     var status = $(this).find('h6').attr("name");
 		window.location = "<?php echo base_url() ?>shipment/shipment_list?status_driver="+status;
+  });
+  $('.widget.status-bill').on('click', function() {
+    var status = $(this).find('h6').attr("name");
+		window.location = "<?php echo base_url() ?>shipment/shipment_list?status_bill="+status;
   });
 </script>

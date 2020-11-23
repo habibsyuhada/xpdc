@@ -17,6 +17,10 @@
                     <input type="text" class="form-control" name="code" value="<?php echo $branch_list['code'] ?>" placeholder="Code" required>
                   </div>
                   <div class="form-group">
+                    <label>No. Telp.</label>
+                    <input type="text" class="form-control" name="no_telp" value="<?php echo $branch_list['no_telp'] ?>" placeholder="No. Telp." required>
+                  </div>
+                  <div class="form-group">
                     <label>Address</label>
                     <textarea class="form-control" name="address" placeholder="Address" rows="4"><?php echo $branch_list['address'] ?></textarea required>
                   </div>

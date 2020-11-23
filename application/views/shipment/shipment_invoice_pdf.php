@@ -92,11 +92,8 @@
         </td>
         <td class="bl nowrap">
           <b>PT. XENA PRANADIPA DHIA CAKRA</b><br>
-          Warna Jaya Business Park B2-07<br>
-          Jl. Jendral Sudirman Kel. Taman Baloi<br>
-          Kec. Batam Kota Batam 29413<br>
-          Kepulauan Riau - Indonesia<br>
-          Telephone : (+62) 778 4089 918<br>
+          <?php echo str_replace("\n", "<br/>", $branch['address']); ?><br>
+          Telephone : <?php echo $branch['no_telp'] ?><br>
           Website : www.xpdcid.com
         </td>
       </tr>

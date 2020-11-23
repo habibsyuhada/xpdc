@@ -38,9 +38,8 @@ class Shipment extends CI_Controller
 		if($this->input->get('status_driver')){
 			$where["(driver_".$this->input->get('status_driver')." = ".$this->session->userdata('id')." OR driver_".$this->input->get('status_driver')." = ".$this->session->userdata('id').")"] 	= NULL;
 		}
-		
 		foreach ($this->input->get() as $key => $value) {
-			if ($this->input->get($key)) {
+			if ($this->input->get($key) || $value == 0) {
 				$exc_filter = array("status_driver");
 				if(!in_array($key, $exc_filter)){
 					$where[$key." LIKE '%".$value."%'"] 	= NULL;
@@ -777,6 +776,12 @@ class Shipment extends CI_Controller
 		}
 		$data['costumer'] 				= $costumer;
 
+		unset($where);
+		$where['name'] 		= $shipment['branch'];
+		$branch_list 			= $this->home_mod->branch_list($where);
+		$branch 					= $branch_list[0];
+		// test_var($branch);
+		$data['branch'] 	= $branch;
 
 		$data['logo'] 	= base64_encode(file_get_contents("assets/img/logo-big-xpdc.png"));
 		

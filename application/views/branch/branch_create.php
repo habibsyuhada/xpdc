@@ -17,6 +17,10 @@
                     <input type="text" class="form-control" name="code" placeholder="Code" required>
                   </div>
                   <div class="form-group">
+                    <label>No. Telp.</label>
+                    <input type="text" class="form-control" name="no_telp" placeholder="No. Telp." required>
+                  </div>
+                  <div class="form-group">
                     <label>Address</label>
                     <textarea class="form-control" name="address" placeholder="Address" rows="4"></textarea required>
                   </div>

@@ -558,8 +558,16 @@ class Shipment extends CI_Controller
 			}
 		}
 
+		$tab = "";
+		if($post['category'] == 'main-agent'){
+			$tab = "?t=m";
+		}
+		elseif($post['category'] == 'secondary-agent'){
+			$tab = "?t=s";
+		}
+
 		$this->session->set_flashdata('success', 'Your Shipment data has been Updated!');
-		redirect($_SERVER['HTTP_REFERER']);
+		redirect($_SERVER['HTTP_REFERER'].$tab);
 	}
 
 	public function shipment_update_invoice_process(){

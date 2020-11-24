@@ -70,12 +70,12 @@
                       <?php endforeach; ?>
                     </select>
                   </div>
-                  <div class="form-group">
+                  <!-- <div class="form-group">
                     <label>Driver</label>
                     <select class="form-control" name="assign_driver">
                       <option value="">-- Select One --</option>
                     </select>
-                  </div>
+                  </div> -->
                 </div>
               </div>
               <div class="mt-2 row">

@@ -10,6 +10,7 @@
 		6 => ( in_array($role, array("Super Admin", "Operator")) ? 1 : 0), //Share Link
 		7 => ( in_array($role, array("Driver", "Super Admin")) ? 1 : 0), //Driver
 		8 => ( in_array($role, array("Super Admin")) ? 1 : 0), //User Management
+		9 => ( in_array($role, array("Super Admin", "Finance")) ? 1 : 0), //Finance Report
 	);
 ?>
 <body>
@@ -148,8 +149,10 @@
 									<a href="<?php echo base_url() ?>branch/branch_create" class="menu-item">Create Branch</a>
 								</div>
 							</div>
+							<?php endif; ?>
+							<?php if($side_permission[9] == 1): ?>
 							<div class="nav-item">
-								<a href="<?php echo base_url() ?>report/summary_report"><i class="fas fa-share-alt"></i> <span>Summary Report</span></a>
+								<a href="<?php echo base_url() ?>report/summary_report"><i class="fas fa-file-alt"></i> <span>Summary Report</span></a>
 							</div>
 							<?php endif; ?>
 							<?php endif;//Not Guest ?>

@@ -30,15 +30,15 @@
             
             <ul class="nav nav-tabs" id="myTab" role="tablist">
               <li class="nav-item">
-                <a class="nav-link active" id="main-agent-tab" data-toggle="tab" href="#main-agent" role="tab" aria-controls="main-agent" aria-selected="true">Main Agent Cost</a>
+                <a class="nav-link <?php echo (@$this->input->get('t') != "s" ? "active" : "") ?>" id="main-agent-tab" data-toggle="tab" href="#main-agent" role="tab" aria-controls="main-agent" aria-selected="<?php echo (@$this->input->get('t') != "s" ? "true" : "false") ?>">Main Agent Cost</a>
               </li>
               <li class="nav-item">
-                <a class="nav-link" id="secondary-agent-tab" data-toggle="tab" href="#secondary-agent" role="tab" aria-controls="secondary-agent" aria-selected="false">Secondary Agent Cost</a>
+                <a class="nav-link <?php echo (@$this->input->get('t') == "s" ? "active" : "") ?>" id="secondary-agent-tab" data-toggle="tab" href="#secondary-agent" role="tab" aria-controls="secondary-agent" aria-selected="<?php echo (@$this->input->get('t') == "s" ? "true" : "false") ?>">Secondary Agent Cost</a>
               </li>
             </ul>
             <br>
             <div class="tab-content" id="myTabContent">
-              <div class="tab-pane fade show active" id="main-agent" role="tabpanel" aria-labelledby="main-agent-tab">
+              <div class="tab-pane fade <?php echo (@$this->input->get('t') != "s" ? "show active" : "") ?>" id="main-agent" role="tabpanel" aria-labelledby="main-agent-tab">
                 <h6 class="font-weight-bold border-bottom">Main Agent Detail</h6>
                 <div class="row">
                   <div class="col-md">
@@ -268,7 +268,7 @@
                 </form>
                 
               </div>
-              <div class="tab-pane fade" id="secondary-agent" role="tabpanel" aria-labelledby="secondary-agent-tab">
+              <div class="tab-pane fade <?php echo (@$this->input->get('t') == "s" ? "show active" : "") ?>" id="secondary-agent" role="tabpanel" aria-labelledby="secondary-agent-tab">
                 <h6 class="font-weight-bold border-bottom">Secondary Agent Detail</h6>
                 <div class="row">
                   <div class="col-md">

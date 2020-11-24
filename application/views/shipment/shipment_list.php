@@ -8,6 +8,7 @@
     4 => ( in_array($role, array("Super Admin", "Operator")) ? 1 : 0), //master_tracking
     5 => ( in_array($role, array("Super Admin", "Operator")) ? 1 : 0), //assign_driver
     6 => ( in_array($role, array("Super Admin", "Finance")) ? 1 : 0), //shipment cost
+    7 => ( in_array($role, array("Super Admin", "Finance")) ? 1 : 0), //alert for hipment that not costed
   );
 ?>
 <style>
@@ -158,7 +159,7 @@
                   </thead>
                   <tbody>
                     <?php foreach ($shipment_list as $key => $value): ?>
-                    <tr class="<?php echo ((($value['main_agent_name'] != "" && $value['main_agent_invoice'] == "") || ($value['secondary_agent_name'] != "" && $value['secondary_agent_invoice'] == "")) && $value['status'] == "Delivered" ? "alert-warning" : "") ?>">
+                    <tr class="<?php echo ((($value['main_agent_name'] != "" && $value['main_agent_invoice'] == "") || ($value['secondary_agent_name'] != "" && $value['secondary_agent_invoice'] == "")) && $value['status'] == "Delivered" && $page_permission[7] == 1 ? "alert-warning" : "") ?>">
                       <td><input type="checkbox" class="checkbox-20" value="<?php echo $value['id'] ?>" onclick="save_checkbox(this)"></td>
                       <td><a target="_blank" class="font-weight-bold" href="<?php echo base_url() ?>shipment/shipment_receipt/<?php echo $value['id'] ?>"><?php echo $value['tracking_no'] ?></a></td>
                       <td><?php echo $value['master_tracking'] ?></td>

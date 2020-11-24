@@ -69,6 +69,7 @@ class Driver extends CI_Controller
 		$form_data = array(
 			'driver_'.$post['status'] 	=> $post['driver'],
 			'status_driver_'.$post['status'] 	=> 1,
+			'assign_driver_date' 	=> date("Y-m-d H:i:s"),
 		);
 		$where['id IN ('.$post['id'].')'] = NULL;
 		$this->shipment_mod->shipment_update_process_db($form_data, $where);

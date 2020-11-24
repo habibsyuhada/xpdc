@@ -49,8 +49,11 @@ class Shipment extends CI_Controller
 
 		// $summary_list 					= $this->shipment_mod->summary_per_status($where);
 		// $data['summary_list'] 	= $summary_list[0];
-
-		$data['shipment_list'] 	= $this->shipment_mod->shipment_list_db($where);
+		$order_by = NULL;
+		if($this->session->userdata('role') == "Driver"){
+			$order_by["assign_driver_date"] = "DESC";
+		}
+		$data['shipment_list'] 	= $this->shipment_mod->shipment_list_db($where, null, $order_by);
 		// test_var($data['shipment_list']);
 
 		unset($where);
@@ -576,17 +579,20 @@ class Shipment extends CI_Controller
 			return false;
 		}
 		
+		$tab = "";
 		if($post['main_agent_invoice']){
 			$form_data = array(
 				'main_agent_invoice'				=> $post['main_agent_invoice'],
 				'main_agent_invoice_attc'		=> $this->upload->data('file_name'),
 			);
+			$tab = "?t=m";
 		}
 		elseif($post['secondary_agent_invoice']){
 			$form_data = array(
 				'secondary_agent_invoice'				=> $post['secondary_agent_invoice'],
 				'secondary_agent_invoice_attc'		=> $this->upload->data('file_name'),
 			);
+			$tab = "?t=s";
 		}
 		if($post['status_cost'] != 1){
 			$form_data['status_cost'] = 1;
@@ -596,7 +602,7 @@ class Shipment extends CI_Controller
 		$this->shipment_mod->shipment_detail_update_process_db($form_data, $where2);
 
 		$this->session->set_flashdata('success', 'Your Shipment data has been Updated!');
-		redirect($_SERVER['HTTP_REFERER']);
+		redirect($_SERVER['HTTP_REFERER'].$tab);
 	}
 
 	public function shipment_bill($id){

@@ -34,7 +34,7 @@ class Shipment_mod extends CI_Model
     $this->db->update('shipment_detail', $data);
   }
 
-  function shipment_list_db($where = null, $show_all = 0)
+  function shipment_list_db($where = null, $show_all = 0, $order_by = null)
   {
     if (isset($where)) {
       $this->db->where($where);
@@ -45,8 +45,15 @@ class Shipment_mod extends CI_Model
     $this->db->select('*');
     $this->db->from('shipment');
     $this->db->join('shipment_detail', 'shipment.id = shipment_detail.id_shipment');
-    $query = $this->db->order_by("shipment.created_date", "DESC");
-    $query = $this->db->order_by("shipment.tracking_no", "DESC");
+    if(isset($order_by)){
+      foreach ($order_by as $key => $value) {
+        $query = $this->db->order_by($key, $value);
+      }
+    }
+    else{
+      $query = $this->db->order_by("shipment.created_date", "DESC");
+      $query = $this->db->order_by("shipment.tracking_no", "DESC");
+    }
     $query = $this->db->get();
     return $query->result_array();
   }

@@ -19,8 +19,12 @@
               <input type="hidden" class="form-control" name="history_time" value="<?php echo date("H:i") ?>" required readonly>
               <input type="hidden" class="form-control" name="history_date" value="<?php echo date("Y-m-d") ?>" required readonly>
               <div class="form-group">
-                <label>Location</label>
-                <input type="text" class="form-control" name="history_location" required>
+                <label>City</label>
+                <input type="text" class="form-control" name="city_history_location" required>
+              </div>
+              <div class="form-group">
+                <label>Country</label>
+                <input type="text" class="form-control" name="country_history_location" required>
               </div>
               <div class="form-group">
                 <label>Status</label>

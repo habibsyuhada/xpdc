@@ -179,9 +179,9 @@ class Master_tracking extends CI_Controller {
 		}
 
 		$all_same = true;
-		$first = $shipment_list[0]['main_agent_name'].$shipment_list[0]['main_agent_mawb_mbl'].$shipment_list[0]['main_agent_carrier'].$shipment_list[0]['main_agent_voyage_flight_no'].$shipment_list[0]['main_agent_voyage_flight_date'].$shipment_list[0]['secondary_agent_name'].$shipment_list[0]['secondary_agent_mawb_mbl'].$shipment_list[0]['secondary_agent_carrier'].$shipment_list[0]['secondary_agent_voyage_flight_no'].$shipment_list[0]['secondary_agent_voyage_flight_date'].$shipment_list[0]['port_of_loading'].$shipment_list[0]['port_of_discharge'].$shipment_list[0]['container_no'].$shipment_list[0]['seal_no'].$shipment_list[0]['cipl_no'].$shipment_list[0]['permit_no'].$shipment_list[0]['assign_branch'];
+		$first = $shipment_list[0]['main_agent_name'].$shipment_list[0]['main_agent_mawb_mbl'].$shipment_list[0]['main_agent_carrier'].$shipment_list[0]['main_agent_voyage_flight_no'].$shipment_list[0]['main_agent_voyage_flight_date'].$shipment_list[0]['secondary_agent_name'].$shipment_list[0]['secondary_agent_mawb_mbl'].$shipment_list[0]['secondary_agent_carrier'].$shipment_list[0]['secondary_agent_voyage_flight_no'].$shipment_list[0]['secondary_agent_voyage_flight_date'].$shipment_list[0]['main_agent_port_of_loading'].$shipment_list[0]['main_agent_port_of_discharge'].$shipment_list[0]['secondary_agent_port_of_loading'].$shipment_list[0]['secondary_agent_port_of_discharge'].$shipment_list[0]['container_no'].$shipment_list[0]['seal_no'].$shipment_list[0]['cipl_no'].$shipment_list[0]['permit_no'];
 		foreach ($shipment_list as $key => $value) {
-			$new = $value['main_agent_name'].$value['main_agent_mawb_mbl'].$value['main_agent_carrier'].$value['main_agent_voyage_flight_no'].$value['main_agent_voyage_flight_date'].$value['secondary_agent_name'].$value['secondary_agent_mawb_mbl'].$value['secondary_agent_carrier'].$value['secondary_agent_voyage_flight_no'].$value['secondary_agent_voyage_flight_date'].$value['port_of_loading'].$value['port_of_discharge'].$value['container_no'].$value['seal_no'].$value['cipl_no'].$value['permit_no'].$value['assign_branch'];
+			$new = $value['main_agent_name'].$value['main_agent_mawb_mbl'].$value['main_agent_carrier'].$value['main_agent_voyage_flight_no'].$value['main_agent_voyage_flight_date'].$value['secondary_agent_name'].$value['secondary_agent_mawb_mbl'].$value['secondary_agent_carrier'].$value['secondary_agent_voyage_flight_no'].$value['secondary_agent_voyage_flight_date'].$value['main_agent_port_of_loading'].$value['main_agent_port_of_discharge'].$value['secondary_agent_port_of_loading'].$value['secondary_agent_port_of_discharge'].$value['container_no'].$value['seal_no'].$value['cipl_no'].$value['permit_no'];
 			if($first != $new){
 				$all_same = false;
 			}
@@ -221,15 +221,17 @@ class Master_tracking extends CI_Controller {
 			'main_agent_carrier'										=> $post['main_agent_carrier'],
 			'main_agent_voyage_flight_no'						=> $post['main_agent_voyage_flight_no'],
 			'main_agent_voyage_flight_date'					=> $post['main_agent_voyage_flight_date'],
+			'main_agent_port_of_loading'						=> $post['main_agent_port_of_loading'],
+			'main_agent_port_of_discharge'					=> $post['main_agent_port_of_discharge'],
 			// 'main_agent_cost'												=> $post['main_agent_cost'],
 			'secondary_agent_name'									=> $post['secondary_agent_name'],
 			'secondary_agent_mawb_mbl'							=> $post['secondary_agent_mawb_mbl'],
 			'secondary_agent_carrier'								=> $post['secondary_agent_carrier'],
 			'secondary_agent_voyage_flight_no'			=> $post['secondary_agent_voyage_flight_no'],
 			'secondary_agent_voyage_flight_date'		=> $post['secondary_agent_voyage_flight_date'],
+			'secondary_agent_port_of_loading'				=> $post['secondary_agent_port_of_loading'],
+			'secondary_agent_port_of_discharge'			=> $post['secondary_agent_port_of_discharge'],
 			// 'secondary_agent_cost'									=> $post['secondary_agent_cost'],
-			'port_of_loading'												=> $post['port_of_loading'],
-			'port_of_discharge'											=> $post['port_of_discharge'],
 			'container_no'													=> $post['container_no'],
 			'seal_no'																=> $post['seal_no'],
 			'cipl_no'																=> $post['cipl_no'],
@@ -252,9 +254,9 @@ class Master_tracking extends CI_Controller {
 		}
 
 		$all_same = true;
-		$first = $shipment_list[0]['main_agent_name'].$shipment_list[0]['main_agent_mawb_mbl'].$shipment_list[0]['main_agent_carrier'].$shipment_list[0]['main_agent_voyage_flight_no'].$shipment_list[0]['main_agent_voyage_flight_date'].$shipment_list[0]['secondary_agent_name'].$shipment_list[0]['secondary_agent_mawb_mbl'].$shipment_list[0]['secondary_agent_carrier'].$shipment_list[0]['secondary_agent_voyage_flight_no'].$shipment_list[0]['secondary_agent_voyage_flight_date'].$shipment_list[0]['port_of_loading'].$shipment_list[0]['port_of_discharge'].$shipment_list[0]['container_no'].$shipment_list[0]['seal_no'].$shipment_list[0]['cipl_no'].$shipment_list[0]['permit_no'].$shipment_list[0]['assign_branch'];
+		$first = $shipment_list[0]['assign_branch'];
 		foreach ($shipment_list as $key => $value) {
-			$new = $value['main_agent_name'].$value['main_agent_mawb_mbl'].$value['main_agent_carrier'].$value['main_agent_voyage_flight_no'].$value['main_agent_voyage_flight_date'].$value['secondary_agent_name'].$value['secondary_agent_mawb_mbl'].$value['secondary_agent_carrier'].$value['secondary_agent_voyage_flight_no'].$value['secondary_agent_voyage_flight_date'].$value['port_of_loading'].$value['port_of_discharge'].$value['container_no'].$value['seal_no'].$value['cipl_no'].$value['permit_no'].$value['assign_branch'];
+			$new = $value['assign_branch'];
 			if($first != $new){
 				$all_same = false;
 			}

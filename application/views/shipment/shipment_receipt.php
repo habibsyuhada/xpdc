@@ -500,15 +500,15 @@
                   <div class="form-group row m-0">
                     <label class="col-sm-3 col-form-label">Port of Loading</label>
                     <div class="col-sm-9">
-                      <label class="col-form-label">: <?php echo $data_input['port_of_loading'] ?></label>
-                      <input type="hidden" name="port_of_loading" value="<?php echo $data_input['port_of_loading'] ?>">
+                      <label class="col-form-label">: <?php echo $data_input['main_agent_port_of_loading'] ?></label>
+                      <input type="hidden" name="main_agent_port_of_loading" value="<?php echo $data_input['main_agent_port_of_loading'] ?>">
                     </div>
                   </div>
                   <div class="form-group row m-0">
                     <label class="col-sm-3 col-form-label">Port of Discharge</label>
                     <div class="col-sm-9">
-                      <label class="col-form-label">: <?php echo $data_input['port_of_discharge'] ?></label>
-                      <input type="hidden" name="port_of_discharge" value="<?php echo $data_input['port_of_discharge'] ?>">
+                      <label class="col-form-label">: <?php echo $data_input['main_agent_port_of_discharge'] ?></label>
+                      <input type="hidden" name="main_agent_port_of_discharge" value="<?php echo $data_input['main_agent_port_of_discharge'] ?>">
                     </div>
                   </div>
                   <div class="form-group row m-0">
@@ -516,6 +516,13 @@
                     <div class="col-sm-9">
                       <label class="col-form-label">: <?php echo $data_input['container_no'] ?></label>
                       <input type="hidden" name="container_no" value="<?php echo $data_input['container_no'] ?>">
+                    </div>
+                  </div>
+                  <div class="form-group row m-0">
+                    <label class="col-sm-3 col-form-label">Seal No.</label>
+                    <div class="col-sm-9">
+                      <label class="col-form-label">: <?php echo $data_input['seal_no'] ?></label>
+                      <input type="hidden" name="seal_no" value="<?php echo $data_input['seal_no'] ?>">
                     </div>
                   </div>
                 </div>
@@ -557,10 +564,17 @@
                     </div>
                   </div>
                   <div class="form-group row m-0">
-                    <label class="col-sm-3 col-form-label">Seal No.</label>
+                    <label class="col-sm-3 col-form-label">Port of Loading</label>
                     <div class="col-sm-9">
-                      <label class="col-form-label">: <?php echo $data_input['seal_no'] ?></label>
-                      <input type="hidden" name="seal_no" value="<?php echo $data_input['seal_no'] ?>">
+                      <label class="col-form-label">: <?php echo $data_input['secondary_agent_port_of_loading'] ?></label>
+                      <input type="hidden" name="secondary_agent_port_of_loading" value="<?php echo $data_input['secondary_agent_port_of_loading'] ?>">
+                    </div>
+                  </div>
+                  <div class="form-group row m-0">
+                    <label class="col-sm-3 col-form-label">Port of Discharge</label>
+                    <div class="col-sm-9">
+                      <label class="col-form-label">: <?php echo $data_input['secondary_agent_port_of_discharge'] ?></label>
+                      <input type="hidden" name="secondary_agent_port_of_discharge" value="<?php echo $data_input['secondary_agent_port_of_discharge'] ?>">
                     </div>
                   </div>
                   <div class="form-group row m-0">

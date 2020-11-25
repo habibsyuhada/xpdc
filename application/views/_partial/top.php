@@ -149,6 +149,13 @@
 									<a href="<?php echo base_url() ?>branch/branch_create" class="menu-item">Create Branch</a>
 								</div>
 							</div>
+							<div class="nav-item has-sub">
+								<a href="javascript:void(0)"><i class="fas fa-user-secret"></i><span>Agent</span></a>
+								<div class="submenu-content">
+									<a href="<?php echo base_url() ?>agent/agent_list" class="menu-item">Agent List</a>
+									<a href="<?php echo base_url() ?>agent/agent_create" class="menu-item">Create Agent</a>
+								</div>
+							</div>
 							<?php endif; ?>
 							<?php if($side_permission[9] == 1): ?>
 							<div class="nav-item">

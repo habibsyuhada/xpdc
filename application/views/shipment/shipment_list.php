@@ -1,10 +1,10 @@
 <?php
   $role = $this->session->userdata('role');
   $page_permission = array(
-    0 => ( in_array($role, array("Super Admin", "Operator", "Driver")) ? 1 : 0), //Driver
+    0 => ( in_array($role, array("Super Admin", "Driver")) ? 1 : 0), //Driver
     1 => ( in_array($role, array("Super Admin", "Operator")) ? 1 : 0), //Update
     2 => ( in_array($role, array("Super Admin", "Operator", "Finance")) ? 1 : 0), //Print
-    3 => ( in_array($role, array("Super Admin", "Operator")) ? 1 : 0), //Delete
+    3 => ( in_array($role, array("Super Admin")) ? 1 : 0), //Delete
     4 => ( in_array($role, array("Super Admin", "Operator")) ? 1 : 0), //master_tracking
     5 => ( in_array($role, array("Super Admin", "Operator")) ? 1 : 0), //assign_driver
     6 => ( in_array($role, array("Super Admin", "Finance")) ? 1 : 0), //shipment cost

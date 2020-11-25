@@ -47,9 +47,17 @@
                 <input type="hidden" name="tracking_no" value="<?php echo $shipment['tracking_no'] ?>" required>
                 <div class="row">
                   <div class="col-md-6">
-                    <div class="form-group">
+                    <!-- <div class="form-group">
                       <label>Location</label>
                       <input type="text" class="form-control" name="history_location" required>
+                    </div> -->
+                    <div class="form-group">
+                      <label>City</label>
+                      <input type="text" class="form-control" name="city_history_location" required>
+                    </div>
+                    <div class="form-group">
+                      <label>Country</label>
+                      <input type="text" class="form-control" name="country_history_location" required>
                     </div>
                     <div class="form-group">
                       <label>Status</label>

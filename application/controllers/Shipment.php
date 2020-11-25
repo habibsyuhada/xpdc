@@ -431,15 +431,19 @@ class Shipment extends CI_Controller
 			'main_agent_carrier'										=> $post['main_agent_carrier'],
 			'main_agent_voyage_flight_no'						=> $post['main_agent_voyage_flight_no'],
 			'main_agent_voyage_flight_date'					=> $post['main_agent_voyage_flight_date'],
+			'main_agent_port_of_loading'						=> $post['main_agent_port_of_loading'],
+			'main_agent_port_of_discharge'					=> $post['main_agent_port_of_discharge'],
 			// 'main_agent_cost'												=> $post['main_agent_cost'],
 			'secondary_agent_name'									=> $post['secondary_agent_name'],
 			'secondary_agent_mawb_mbl'							=> $post['secondary_agent_mawb_mbl'],
 			'secondary_agent_carrier'								=> $post['secondary_agent_carrier'],
 			'secondary_agent_voyage_flight_no'			=> $post['secondary_agent_voyage_flight_no'],
 			'secondary_agent_voyage_flight_date'		=> $post['secondary_agent_voyage_flight_date'],
+			'secondary_agent_port_of_loading'				=> $post['secondary_agent_port_of_loading'],
+			'secondary_agent_port_of_discharge'			=> $post['secondary_agent_port_of_discharge'],
 			// 'secondary_agent_cost'									=> $post['secondary_agent_cost'],
-			'port_of_loading'												=> $post['port_of_loading'],
-			'port_of_discharge'											=> $post['port_of_discharge'],
+			// 'port_of_loading'												=> $post['port_of_loading'],
+			// 'port_of_discharge'											=> $post['port_of_discharge'],
 			'container_no'													=> $post['container_no'],
 			'seal_no'																=> $post['seal_no'],
 			'cipl_no'																=> $post['cipl_no'],
@@ -933,6 +937,7 @@ class Shipment extends CI_Controller
 	public function shipment_history_update_process()
 	{
 		$post = $this->input->post();
+		$history_location = $post['city_history_location'].", ".$post['country_history_location'];
 		$where['tracking_no'] 	= $post['tracking_no'];
 		$shipment_list 					= $this->shipment_mod->shipment_list_db($where);
 		if (count($shipment_list) == 0) {
@@ -955,7 +960,7 @@ class Shipment extends CI_Controller
 				'id_shipment' 	=> $value['id'],
 				'date' 					=> $post['history_date'],
 				'time' 					=> $post['history_time'],
-				'location' 			=> $post['history_location'],
+				'location' 			=> $history_location,
 				'status' 				=> $post['history_status'],
 				'remarks' 			=> $post['history_remarks'],
 			);

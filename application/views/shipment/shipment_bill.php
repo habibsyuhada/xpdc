@@ -63,7 +63,7 @@
                     </select>
                   </div>
                   <?php else: ?>.
-                    <input type="text" class="form-control" name="branch" value="<?php echo @$shipment_list['branch'] ?>" readonly required>
+                    <input type="text" class="form-control" name="branch" value="<?php echo @$this->session->userdata('branch') ?>" readonly required>
                   <?php endif; ?>
                 </div>
               </div>

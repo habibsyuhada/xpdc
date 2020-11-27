@@ -22,27 +22,26 @@ class Shipment extends CI_Controller
 		// test_var($this->input->get());
 		$where = array();
 		$where['status_delete'] 	= 1;
-		if($this->session->userdata('branch')){
-			if($this->session->userdata('branch') != "NONE"){
-				$where["(assign_branch LIKE '%".$this->session->userdata('branch')."%' OR branch LIKE '%".$this->session->userdata('branch')."%')"] 	= NULL;
+		if ($this->session->userdata('branch')) {
+			if ($this->session->userdata('branch') != "NONE") {
+				$where["(assign_branch LIKE '%" . $this->session->userdata('branch') . "%' OR branch LIKE '%" . $this->session->userdata('branch') . "%')"] 	= NULL;
 			}
-		}
-		else{
+		} else {
 			redirect('home/logout');
 		}
 
-		if($this->session->userdata('role') == "Driver"){
-			$where["(driver_pickup = ".$this->session->userdata('id')." OR driver_deliver = ".$this->session->userdata('id').")"] 	= NULL;
+		if ($this->session->userdata('role') == "Driver") {
+			$where["(driver_pickup = " . $this->session->userdata('id') . " OR driver_deliver = " . $this->session->userdata('id') . ")"] 	= NULL;
 		}
 
-		if($this->input->get('status_driver')){
-			$where["(driver_".$this->input->get('status_driver')." = ".$this->session->userdata('id')." OR driver_".$this->input->get('status_driver')." = ".$this->session->userdata('id').")"] 	= NULL;
+		if ($this->input->get('status_driver')) {
+			$where["(driver_" . $this->input->get('status_driver') . " = " . $this->session->userdata('id') . " OR driver_" . $this->input->get('status_driver') . " = " . $this->session->userdata('id') . ")"] 	= NULL;
 		}
 		foreach ($this->input->get() as $key => $value) {
 			if ($this->input->get($key) || $value == 0) {
 				$exc_filter = array("status_driver");
-				if(!in_array($key, $exc_filter)){
-					$where[$key." LIKE '%".$value."%'"] 	= NULL;
+				if (!in_array($key, $exc_filter)) {
+					$where[$key . " LIKE '%" . $value . "%'"] 	= NULL;
 				}
 			}
 		}
@@ -50,7 +49,7 @@ class Shipment extends CI_Controller
 		// $summary_list 					= $this->shipment_mod->summary_per_status($where);
 		// $data['summary_list'] 	= $summary_list[0];
 		$order_by = NULL;
-		if($this->session->userdata('role') == "Driver"){
+		if ($this->session->userdata('role') == "Driver") {
 			$order_by["assign_driver_date"] = "DESC";
 		}
 		$data['shipment_list'] 	= $this->shipment_mod->shipment_list_db($where, null, $order_by);
@@ -58,15 +57,15 @@ class Shipment extends CI_Controller
 
 		unset($where);
 		$where['role'] 				= "Driver";
-		if($this->session->userdata('branch')){
-			if($this->session->userdata('branch') != "NONE"){
+		if ($this->session->userdata('branch')) {
+			if ($this->session->userdata('branch') != "NONE") {
 				$where["branch"] 	= $this->session->userdata('branch');
 			}
 		}
 		$data['driver_list'] 	= $this->home_mod->user_list($where);
 
 		$data['country'] = json_decode(file_get_contents("./assets/country/country.json"), true);
-		
+
 		$data['subview'] 				= 'shipment/shipment_list';
 		$data['meta_title'] 		= 'Shipment List';
 		$this->load->view('index', $data);
@@ -87,7 +86,7 @@ class Shipment extends CI_Controller
 		// test_var(count($post), 1);
 		// test_var($post);
 
-		if($id){
+		if ($id) {
 			$where['shipment.id'] 	= $id;
 			$data_post 							= $this->shipment_mod->shipment_list_db($where);
 			unset($where);
@@ -98,13 +97,12 @@ class Shipment extends CI_Controller
 			unset($where);
 			foreach ($packages_list as $key => $value) {
 				foreach ($value as $key2 => $value2) {
-					if(!in_array($key2, array('id', 'id_shipment', 'create_date', 'status_delete')))
-					$data_post[$key2][] = $value2;
+					if (!in_array($key2, array('id', 'id_shipment', 'create_date', 'status_delete')))
+						$data_post[$key2][] = $value2;
 				}
 			}
 			$post = $data_post;
-		}
-		else{
+		} else {
 			$post = $this->input->post();
 		}
 
@@ -118,7 +116,7 @@ class Shipment extends CI_Controller
 	{
 		// test_var(count($post), 1);
 		// test_var($post);
-		if($id){
+		if ($id) {
 			$where['shipment.id'] 	= $id;
 			$data_post 							= $this->shipment_mod->shipment_list_db($where);
 			unset($where);
@@ -129,16 +127,15 @@ class Shipment extends CI_Controller
 			unset($where);
 			foreach ($packages_list as $key => $value) {
 				foreach ($value as $key2 => $value2) {
-					if(!in_array($key2, array('id', 'id_shipment', 'create_date', 'status_delete')))
-					$data_post[$key2][] = $value2;
+					if (!in_array($key2, array('id', 'id_shipment', 'create_date', 'status_delete')))
+						$data_post[$key2][] = $value2;
 				}
 			}
 			$post = $data_post;
-		}
-		else{
+		} else {
 			$post = $this->input->post();
 		}
-		
+
 		$data['post'] = $post;
 
 		$this->load->library('pdf');
@@ -158,7 +155,11 @@ class Shipment extends CI_Controller
 		// } else if ($post['status_pickup'] == 'Picked Up') {
 		// 	$status = 'Booked';
 		// }
-		$status = 'Booked';
+		if ($this->session->userdata('role') == 'Commercial') {
+			$status = 'Need Approval';
+		} else {
+			$status = 'Booked';
+		}
 		$sea = '';
 
 		if (isset($post['sea'])) {
@@ -254,7 +255,7 @@ class Shipment extends CI_Controller
 			'id_shipment' 			=> $id_shipment,
 			'date' 					=> date("Y-m-d"),
 			'time' 					=> date("H:i:s"),
-			'location' 				=> $post['shipper_city'].", ".$post['shipper_country'],
+			'location' 				=> $post['shipper_city'] . ", " . $post['shipper_country'],
 			'status' 				=> $status,
 			'remarks' 				=> "",
 		);
@@ -296,7 +297,7 @@ class Shipment extends CI_Controller
 		}
 
 		$data['country'] = json_decode(file_get_contents("./assets/country/country.json"), true);
-		
+
 		$data['shipment'] 			= $shipment_list[0];
 		$data['packages_list'] 	= $packages_list;
 		$data['history_list'] 	= $history_list;
@@ -413,7 +414,7 @@ class Shipment extends CI_Controller
 		}
 
 		$data['country'] = json_decode(file_get_contents("./assets/country/country.json"), true);
-		
+
 		$data['shipment'] 			= $shipment_list[0];
 		$data['t'] 							= 'g';
 		$data['subview'] 				= 'shipment/shipment_edit';
@@ -473,9 +474,9 @@ class Shipment extends CI_Controller
 			$branch_list[$value['name']] = $value;
 		}
 		$data['branch_list'] 	= $branch_list;
-		
+
 		$data['country'] = json_decode(file_get_contents("./assets/country/country.json"), true);
-		
+
 		$data['shipment'] 			= $shipment_list[0];
 		$data['t'] 							= 'g';
 		$data['subview'] 				= 'shipment/shipment_assign';
@@ -496,7 +497,8 @@ class Shipment extends CI_Controller
 		redirect($_SERVER['HTTP_REFERER']);
 	}
 
-	public function shipment_cost($id){
+	public function shipment_cost($id)
+	{
 		$where['id'] 						= $id;
 		$shipment_list 					= $this->shipment_mod->shipment_list_db($where);
 		$data['shipment_list'] 	= $shipment_list[0];
@@ -509,13 +511,11 @@ class Shipment extends CI_Controller
 		$secondary_agent				= array();
 		$costumer								= array();
 		foreach ($cost_list as $key => $value) {
-			if($value['category'] == "main-agent"){
+			if ($value['category'] == "main-agent") {
 				$main_agent[] = $value;
-			}
-			elseif($value['category'] == "secondary-agent"){
+			} elseif ($value['category'] == "secondary-agent") {
 				$secondary_agent[] = $value;
-			}
-			elseif($value['category'] == "costumer"){
+			} elseif ($value['category'] == "costumer") {
 				$costumer[] = $value;
 			}
 		}
@@ -528,10 +528,11 @@ class Shipment extends CI_Controller
 		$this->load->view('index', $data);
 	}
 
-	public function shipment_cost_process(){
+	public function shipment_cost_process()
+	{
 		$post = $this->input->post();
 		foreach ($post['unit_price'] as $key => $value) {
-			if($value != "" && $value != "0"){
+			if ($value != "" && $value != "0") {
 				unset($where);
 				if ($post['id_cost'][$key] == "") {
 					$form_data = array(
@@ -563,22 +564,22 @@ class Shipment extends CI_Controller
 		}
 
 		$tab = "";
-		if($post['category'] == 'main-agent'){
+		if ($post['category'] == 'main-agent') {
 			$tab = "?t=m";
-		}
-		elseif($post['category'] == 'secondary-agent'){
+		} elseif ($post['category'] == 'secondary-agent') {
 			$tab = "?t=s";
 		}
 
 		$this->session->set_flashdata('success', 'Your Shipment data has been Updated!');
-		redirect($_SERVER['HTTP_REFERER'].$tab);
+		redirect($_SERVER['HTTP_REFERER'] . $tab);
 	}
 
-	public function shipment_update_invoice_process(){
+	public function shipment_update_invoice_process()
+	{
 		$post = $this->input->post();
 
 		$config['upload_path']          = 'file/invoice/';
-		$config['file_name']            = 'invoice_'.$post['category'].'_'.$post['id'].'_'.date('YmsHis');
+		$config['file_name']            = 'invoice_' . $post['category'] . '_' . $post['id'] . '_' . date('YmsHis');
 		$config['allowed_types']        = '*';
 		$config['overwrite'] 						= TRUE;
 
@@ -590,34 +591,34 @@ class Shipment extends CI_Controller
 			redirect($_SERVER['HTTP_REFERER']);
 			return false;
 		}
-		
+
 		$tab = "";
-		if($post['main_agent_invoice']){
+		if ($post['main_agent_invoice']) {
 			$form_data = array(
 				'main_agent_invoice'				=> $post['main_agent_invoice'],
 				'main_agent_invoice_attc'		=> $this->upload->data('file_name'),
 			);
 			$tab = "?t=m";
-		}
-		elseif($post['secondary_agent_invoice']){
+		} elseif ($post['secondary_agent_invoice']) {
 			$form_data = array(
 				'secondary_agent_invoice'				=> $post['secondary_agent_invoice'],
 				'secondary_agent_invoice_attc'		=> $this->upload->data('file_name'),
 			);
 			$tab = "?t=s";
 		}
-		if($post['status_cost'] != 1){
+		if ($post['status_cost'] != 1) {
 			$form_data['status_cost'] = 1;
 		}
-		
+
 		$where2['id_shipment'] = $post['id'];
 		$this->shipment_mod->shipment_detail_update_process_db($form_data, $where2);
 
 		$this->session->set_flashdata('success', 'Your Shipment data has been Updated!');
-		redirect($_SERVER['HTTP_REFERER'].$tab);
+		redirect($_SERVER['HTTP_REFERER'] . $tab);
 	}
 
-	public function shipment_bill($id){
+	public function shipment_bill($id)
+	{
 		$where['id'] 						= $id;
 		$shipment_list 					= $this->shipment_mod->shipment_list_db($where);
 		$data['shipment_list'] 	= $shipment_list[0];
@@ -625,7 +626,7 @@ class Shipment extends CI_Controller
 		unset($where);
 		$where['id_shipment'] 	= $id;
 		$shipment_invoice 			= $this->shipment_mod->shipment_invoice_list_db($where);
-		if(count($shipment_invoice) > 0){
+		if (count($shipment_invoice) > 0) {
 			$data['invoice'] 				= $shipment_invoice[0];
 		}
 
@@ -637,7 +638,7 @@ class Shipment extends CI_Controller
 		$secondary_agent				= array();
 		$costumer								= array();
 		foreach ($cost_list as $key => $value) {
-			if($value['category'] == "costumer"){
+			if ($value['category'] == "costumer") {
 				$costumer[] = $value;
 			}
 		}
@@ -650,15 +651,16 @@ class Shipment extends CI_Controller
 		$this->load->view('index', $data);
 	}
 
-	public function shipment_bill_process(){
+	public function shipment_bill_process()
+	{
 		$post = $this->input->post();
 		// test_var($post);
 
-		if($post['id_invoice'] == ""){
+		if ($post['id_invoice'] == "") {
 			$where['name'] = $post['branch'];
 			$branch = $this->home_mod->branch_list($where);
 			unset($where);
-			if(count($branch) < 1){
+			if (count($branch) < 1) {
 				$this->session->set_flashdata('danger', 'Branch Not Found!');
 				redirect($_SERVER['HTTP_REFERER']);
 				return false;
@@ -666,10 +668,10 @@ class Shipment extends CI_Controller
 			$branch = $branch[0];
 
 			$where['YEAR(create_date)'] = date("Y");
-			$where["SUBSTRING_INDEX(SUBSTRING_INDEX(invoice_no,'-',1), '/', -1) = '".$branch['code']."'"] = NULL;
+			$where["SUBSTRING_INDEX(SUBSTRING_INDEX(invoice_no,'-',1), '/', -1) = '" . $branch['code'] . "'"] = NULL;
 			$invoice_no = $this->shipment_mod->shipment_generate_invoice_no_db($where);
 			unset($where);
-			$invoice_no = $invoice_no."/".$branch['code']."-FH"."/".date("Y");
+			$invoice_no = $invoice_no . "/" . $branch['code'] . "-FH" . "/" . date("Y");
 			$form_data = array(
 				'id_shipment' 		=> $post['id'],
 				'invoice_no' 			=> $invoice_no,
@@ -685,14 +687,13 @@ class Shipment extends CI_Controller
 				'bank_name'					=> $post['bank_name'],
 			);
 			$id_shipment = $this->shipment_mod->shipment_invoice_create_process_db($form_data);
-	
+
 			$form_data = array(
 				'status_bill' 		=> 1,
 			);
 			$where['id_shipment'] = $post['id'];
 			$this->shipment_mod->shipment_detail_update_process_db($form_data, $where);
-		}
-		else{
+		} else {
 			$form_data = array(
 				'invoice_no' 				=> $post['invoice_no'],
 				'invoice_date' 			=> $post['invoice_date'],
@@ -716,7 +717,7 @@ class Shipment extends CI_Controller
 		}
 
 		foreach ($post['unit_price'] as $key => $value) {
-			if($value != "" && $value != "0"){
+			if ($value != "" && $value != "0") {
 				unset($where);
 				if ($post['id_cost'][$key] == "") {
 					$form_data = array(
@@ -788,7 +789,7 @@ class Shipment extends CI_Controller
 		$cost_list 							= $this->shipment_mod->shipment_cost_list_db($where);
 		$costumer								= array();
 		foreach ($cost_list as $key => $value) {
-			if($value['category'] == "costumer"){
+			if ($value['category'] == "costumer") {
 				$costumer[] = $value;
 			}
 		}
@@ -802,7 +803,7 @@ class Shipment extends CI_Controller
 		$data['branch'] 	= $branch;
 
 		$data['logo'] 	= base64_encode(file_get_contents("assets/img/logo-big-xpdc.png"));
-		
+
 		$this->load->library('pdf');
 		$this->pdf->setPaper('A4', 'potrait');
 		$this->pdf->filename = "Invoice-" . $shipment['tracking_no'] . ".pdf";
@@ -820,11 +821,23 @@ class Shipment extends CI_Controller
 		redirect('shipment/shipment_list');
 	}
 
-	public function shipment_history_delete_db($id, $id_shipment){
+	public function shipment_approve_process($id)
+	{
+		$form_data = array(
+			'status'	=> 'Booked',
+		);
+		$where['id'] = $id;
+		$this->shipment_mod->shipment_update_process_db($form_data, $where);
+		$this->session->set_flashdata('success', 'Your Shipment data has been update to Booked!');
+		redirect('shipment/shipment_list');
+	}
+
+	public function shipment_history_delete_db($id, $id_shipment)
+	{
 		$where['id'] = $id;
 		$this->shipment_mod->shipment_history_delete($where, 'shipment_history');
 
-		redirect("shipment/shipment_tracking/".$id_shipment);
+		redirect("shipment/shipment_tracking/" . $id_shipment);
 	}
 
 	public function shipment_history_delete_process($id_shipment, $id)
@@ -880,7 +893,7 @@ class Shipment extends CI_Controller
 		// echo $id;
 		$where['id_shipment'] 	= $id;
 		$history_list 					= $this->shipment_mod->shipment_history_list_db($where);
-		
+
 		$data['shipment'] 			= $shipment_list[0];
 		$data['history_list'] 	= $history_list;
 		$data['subview'] 				= 'shipment/shipment_track';
@@ -897,7 +910,7 @@ class Shipment extends CI_Controller
 		unset($where);
 		// $this->load->view('shipment/shipment_pdf', $data);
 		$total_label = 0;
-		foreach ($shipment_list as $key => $shipment){
+		foreach ($shipment_list as $key => $shipment) {
 			$total_label = $total_label + $shipment['qty'];
 		}
 		$data['total_label'] 	= $total_label;
@@ -907,7 +920,7 @@ class Shipment extends CI_Controller
 		$data['logo'] 	= base64_encode(file_get_contents("assets/img/logo-big-xpdc.png"));
 
 		// $this->load->view('shipment/shipment_pdf', $data);
-		
+
 		$this->load->library('pdf');
 		$this->pdf->setPaper('A6', 'potrait');
 		$this->pdf->filename = "Label-" . $shipment['tracking_no'] . ".pdf";
@@ -937,7 +950,7 @@ class Shipment extends CI_Controller
 	public function shipment_history_update_process()
 	{
 		$post = $this->input->post();
-		$history_location = $post['city_history_location'].", ".$post['country_history_location'];
+		$history_location = $post['city_history_location'] . ", " . $post['country_history_location'];
 		$where['tracking_no'] 	= $post['tracking_no'];
 		$shipment_list 					= $this->shipment_mod->shipment_list_db($where);
 		if (count($shipment_list) == 0) {
@@ -949,9 +962,8 @@ class Shipment extends CI_Controller
 				echo "Error : Tracking Number Not Found!";
 				return false;
 			}
-		}
-		elseif($post['history_date'] > date("Y-m-d") || ($post['history_date'] == date("Y-m-d") && $post['history_time'] > date("H:i"))){
-			echo "Error : You cannot submit for a future date!<br>Current time : ".date("Y-m-d H:i");
+		} elseif ($post['history_date'] > date("Y-m-d") || ($post['history_date'] == date("Y-m-d") && $post['history_time'] > date("H:i"))) {
+			echo "Error : You cannot submit for a future date!<br>Current time : " . date("Y-m-d H:i");
 			return false;
 		}
 
@@ -1059,7 +1071,7 @@ class Shipment extends CI_Controller
 				'id_shipment' 		=> $id_shipment,
 				'date' 						=> date("Y-m-d"),
 				'time' 						=> date("H:i:s"),
-				'location' 				=> $post['shipper_city'][$key].", ".$post['shipper_country'][$key],
+				'location' 				=> $post['shipper_city'][$key] . ", " . $post['shipper_country'][$key],
 				'status' 					=> "Booked",
 				'remarks' 				=> "",
 			);
@@ -1085,7 +1097,8 @@ class Shipment extends CI_Controller
 		$this->pdf->load_view('shipment/shipment_pdf', $data);
 	}
 
-	public function shipment_link_share(){
+	public function shipment_link_share()
+	{
 		$data['subview'] 				= 'shipment/shipment_share_link';
 		$data['meta_title'] 		= 'Share Link Shipment';
 		$this->load->view('index', $data);

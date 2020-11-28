@@ -40,10 +40,25 @@ class Master_tracking extends CI_Controller {
 		$where['(master_tracking IS NOT NULL OR master_tracking != "")'] = NULL;
 		$shipment_list 					= $this->shipment_mod->shipment_list_db($where);
 		$shipment 							= array();
+		$id_shipment 						= [];
+		$master_per_shipment 		= [];
 		foreach ($shipment_list as $key => $value) {
-			$shipment[$value['master_tracking']][] = $value;
+			if($value['master_tracking'] != ""){
+				@$shipment[$value['master_tracking']] += 1;
+				$id_shipment[] = $value['id'];
+				$master_per_shipment[$value['id']] = $value['master_tracking'];
+			}
 		}
 		$data['shipment'] 			= $shipment;
+
+		unset($where);
+		$where['id_shipment IN ('.join(", ", $id_shipment).')'] 	= NULL;
+		$packages_list 					= $this->shipment_mod->shipment_packages_list_db($where);
+		$packages 							= [];
+		foreach ($packages_list as $key => $value) {
+			@$packages[$master_per_shipment[$value['id_shipment']]] += $value['qty'];
+		}
+		$data['packages'] 			= $packages;
 
 		$data['subview'] 				= 'master_tracking/master_tracking_list';
 		$data['meta_title'] 		= 'Master Tracking List';

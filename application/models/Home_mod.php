@@ -33,5 +33,15 @@ class Home_mod extends CI_Model {
 		$query = $this->db->get();
 		return $query->result_array();
 	}
+  
+  function agent_list($where = null){
+		if(isset($where)){
+			$this->db->where($where);
+    }
+    $this->db->select('*');
+    $this->db->from('agent');
+		$query = $this->db->get();
+		return $query->result_array();
+	}
 
 }

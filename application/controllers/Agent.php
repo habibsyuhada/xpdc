@@ -56,6 +56,8 @@ class Agent extends CI_Controller
 
     $form_data = array(
 			'name' 				=> $post['name'],
+			'email' 			=> $post['email'],
+			'pic' 				=> $post['pic'],
 			'no_telp' 		=> $post['no_telp'],
 			'address' 		=> $post['address'],
 		);
@@ -84,6 +86,8 @@ class Agent extends CI_Controller
 
     $form_data = array(
 			'name' 				=> $post['name'],
+			'email' 			=> $post['email'],
+			'pic' 				=> $post['pic'],
 			'no_telp' 		=> $post['no_telp'],
 			'address' 		=> $post['address'],
 		);

@@ -13,6 +13,14 @@
                     <input type="text" class="form-control" name="name" value="<?php echo $agent_list['name'] ?>" placeholder="Name" readonly>
                   </div>
                   <div class="form-group">
+                    <label>E-Mail</label>
+                    <input type="email" class="form-control" name="email" value="<?php echo $agent_list['email'] ?>" placeholder="E-Mail" required>
+                  </div>
+                  <div class="form-group">
+                    <label>PIC</label>
+                    <input type="text" class="form-control" name="pic" value="<?php echo $agent_list['pic'] ?>" placeholder="PIC" required>
+                  </div>
+                  <div class="form-group">
                     <label>No. Telp.</label>
                     <input type="text" class="form-control" name="no_telp" value="<?php echo $agent_list['no_telp'] ?>" placeholder="No. Telp." required>
                   </div>

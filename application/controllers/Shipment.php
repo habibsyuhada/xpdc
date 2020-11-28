@@ -412,6 +412,13 @@ class Shipment extends CI_Controller
 			redirect("shipment/shipment_list");
 		}
 
+		$datadb 	= $this->home_mod->agent_list();
+		$agent_list = [];
+		foreach ($datadb as $key => $value) {
+			$agent_list[$value['name']] = $value;
+		}
+		$data['agent_list'] 	= $agent_list;
+
 		$data['country'] = json_decode(file_get_contents("./assets/country/country.json"), true);
 		
 		$data['shipment'] 			= $shipment_list[0];
@@ -710,6 +717,7 @@ class Shipment extends CI_Controller
 			unset($where);
 			$form_data = array(
 				'status_bill' 		=> $post['status_bill'],
+				'date_paid' 			=> $post['date_paid'],
 			);
 			$where['id_shipment'] = $post['id'];
 			$this->shipment_mod->shipment_detail_update_process_db($form_data, $where);

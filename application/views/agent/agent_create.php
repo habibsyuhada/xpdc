@@ -13,6 +13,14 @@
                     <input type="text" class="form-control" name="name" placeholder="Name" required>
                   </div>
                   <div class="form-group">
+                    <label>E-Mail</label>
+                    <input type="email" class="form-control" name="email" placeholder="E-Mail" required>
+                  </div>
+                  <div class="form-group">
+                    <label>PIC</label>
+                    <input type="text" class="form-control" name="pic" placeholder="PIC" required>
+                  </div>
+                  <div class="form-group">
                     <label>No. Telp.</label>
                     <input type="text" class="form-control" name="no_telp" placeholder="No. Telp." required>
                   </div>

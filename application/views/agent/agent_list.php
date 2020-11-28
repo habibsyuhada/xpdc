@@ -13,6 +13,8 @@
                   <thead>
                     <tr class="bg-info">
                       <th class="text-white font-weight-bold">Name</th>
+                      <th class="text-white font-weight-bold">E-Mail</th>
+                      <th class="text-white font-weight-bold">PIC</th>
                       <th class="text-white font-weight-bold">No. Telp.</th>
                       <th class="text-white font-weight-bold">Address</th>
                       <th class="text-white font-weight-bold"></th>
@@ -22,6 +24,8 @@
                     <?php foreach ($agent_list as $key => $value): ?>
                     <tr>
                       <td><?php echo $value['name'] ?></td>
+                      <td><?php echo $value['email'] ?></td>
+                      <td><?php echo $value['pic'] ?></td>
                       <td><?php echo $value['no_telp'] ?></td>
                       <td><?php echo $value['address'] ?></td>
                       <td>

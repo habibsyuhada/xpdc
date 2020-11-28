@@ -25,7 +25,7 @@
                 <h4 class="font-weight-bold text-center"><?php echo $shipment['tracking_no'] ?></h4>
               </div>
             </div>
-            <div class="row">
+            <!-- <div class="row">
               <div class="col-md-6">
                 <p class="m-0 py-3 border-bottom"><b>SHIPPER ADDRESS</b></p>
                 <p class="m-0 py-3"><b>Country : </b><?php echo $shipment['shipper_country'] ?></p>
@@ -37,7 +37,7 @@
             </div>
             <div class="mb-4 alert alert-dark text-center" role="alert">
               <b>SHIPMENT STATUS: <?php echo strtoupper($shipment['status']) ?></b>
-            </div>
+            </div> -->
 
             <?php if($page_permission[0] == 1): ?>
             <p class="mt-4 pt-4 border-bottom"><b>UPDATE SHIPMENT HISTORY</b></p>

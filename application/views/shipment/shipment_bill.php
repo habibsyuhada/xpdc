@@ -54,18 +54,28 @@
                     <label>Invoice Date</label>
                     <input type="date" class="form-control" name="invoice_date" value="<?php echo ((@$invoice['invoice_date'] !== NULL) ? @$invoice['invoice_date'] : date("Y-m-d")) ?>" placeholder="Invoice Date" required>
                   </div>
-                  <?php if (isset($invoice['invoice_no'])) : ?>
                   <div class="form-group">
-                    <label>Status<?= (@$shipment_list['status_bill']); ?></label>
+                    <label>Branch</label>
+                    <input type="text" class="form-control" name="branch" value="<?php echo @$this->session->userdata('branch') ?>" readonly required>
+                  </div>
+                </div>
+                <?php if(@$invoice['invoice_no'] != ""):?>
+                <div class="col-md-6">
+                  <div class="form-group">
+                    <label>Status</label>
                     <select class="form-control" name="status_bill" required>
                       <option value="1" <?= (@$shipment_list['status_bill'] == '1') ? 'selected' : ''; ?>>Billed</option>
                       <option value="2" <?= (@$shipment_list['status_bill'] == '2') ? 'selected' : ''; ?>>Paid</option>
                     </select>
                   </div>
-                  <?php else: ?>.
-                    <input type="text" class="form-control" name="branch" value="<?php echo @$this->session->userdata('branch') ?>" readonly required>
-                  <?php endif; ?>
                 </div>
+                <div class="col-md-6">
+                  <div class="form-group">
+                    <label>Date Paid</label>
+                    <input type="date" class="form-control" name="date_paid" value="<?php echo @$invoice['date_paid'] ?>" required>
+                  </div>
+                </div>
+                <?php endif; ?>
               </div>
               <?php
                 $total_all = 0;
@@ -230,7 +240,7 @@
               </div>
               <div class="row clearfix">
                 <div class="col-md">
-                  <h5 class="font-weight-bold text-right">Total All : IDR <span id="total_all" name="total_all"><?php echo number_format($total_all, 2) ?></span></h5>
+                  <h5 class="font-weight-bold text-right">Total All : IDR <span id="total_all" name="total_all"><?php echo number_format($total_all, 0).".00" ?></span></h5>
                 </div>
               </div>
               <br>
@@ -323,7 +333,7 @@
     total_all = total_all - discount + 0;
     console.log(total_all);
     // $(input).closest('form').find("span[name=total_all]").text(total_all);
-    $("#total_all").text(total_all.toLocaleString('en-US', {maximumFractionDigits:2, minimumFractionDigits: 2}));
+    $("#total_all").text(total_all.toLocaleString('en-US', {maximumFractionDigits:0}) + ".00");
   }
 
   function deletecost(id, btn) {

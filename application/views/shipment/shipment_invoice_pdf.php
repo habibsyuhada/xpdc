@@ -213,7 +213,7 @@
       </tr>
       <tr>
         <td>GRAND TOTAL</td>
-        <td><?php echo "IDR ".number_format(($subtotal + $invoice['vat'] - $invoice['discount']), 2) ?></td>
+        <td><?php echo "IDR ".number_format(($subtotal + $invoice['vat'] - $invoice['discount']), 0).".00" ?></td>
       </tr>
     </tbody>
   </table>

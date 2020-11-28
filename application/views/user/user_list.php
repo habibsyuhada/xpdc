@@ -4,7 +4,7 @@
       <div class="col-md-12">
         <div class="card">
           <div class="card-header">
-            <h3>Master Tracking List</h3>
+            <h3>User List</h3>
           </div>
           <div class="card-body">
             <div class="row">

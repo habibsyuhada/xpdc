@@ -1,8 +1,8 @@
 <?php
 	$role = $this->session->userdata('role');
 	$side_permission = array(
-		0 => ( in_array($role, array("Super Admin", "Operator", "Finance")) ? 1 : 0), //Shipment List
-		1 => ( in_array($role, array("Super Admin", "Operator")) ? 1 : 0), //Create Shipment
+		0 => ( in_array($role, array("Super Admin", "Operator", "Finance", "Commercial")) ? 1 : 0), //Shipment List
+		1 => ( in_array($role, array("Super Admin", "Operator", "Commercial")) ? 1 : 0), //Create Shipment
 		2 => ( in_array($role, array("Super Admin", "Operator")) ? 1 : 0), //Import Shipment
 		3 => ( in_array($role, array("Super Admin", "Operator")) ? 1 : 0), //Operation
 		4 => ( in_array($role, array("Super Admin", "Operator")) ? 1 : 0), //Master Tracking List
@@ -11,6 +11,7 @@
 		7 => ( in_array($role, array("Driver", "Super Admin")) ? 1 : 0), //Driver
 		8 => ( in_array($role, array("Super Admin")) ? 1 : 0), //User Management
 		9 => ( in_array($role, array("Super Admin", "Finance")) ? 1 : 0), //Finance Report
+		10 => ( in_array($role, array("Super Admin", "Commercial")) ? 1 : 0), //Commercial Customer
 	);
 ?>
 <body>
@@ -160,6 +161,15 @@
 							<?php if($side_permission[9] == 1): ?>
 							<div class="nav-item">
 								<a href="<?php echo base_url() ?>report/summary_report"><i class="fas fa-file-alt"></i> <span>Summary Report</span></a>
+							</div>
+							<?php endif; ?>
+							<?php if($side_permission[10] == 1): ?>
+							<div class="nav-item has-sub">
+								<a href="javascript:void(0)"><i class="fas fa-address-card"></i><span>Commercial</span></a>
+								<div class="submenu-content">
+									<a href="<?php echo base_url() ?>commercial/customer_list" class="menu-item">Customer List</a>
+									<a href="<?php echo base_url() ?>commercial/customer_create" class="menu-item">Create Customer</a>
+								</div>
 							</div>
 							<?php endif; ?>
 							<?php endif;//Not Guest ?>

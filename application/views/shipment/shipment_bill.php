@@ -33,8 +33,22 @@
               <div class="row clearfix">
                 <div class="col-md-6">
                   <div class="form-group">
+                    <label>Bill To</label>
+                    <textarea class="form-control" rows="3" readonly><?php echo $shipment_list['billing_name'] ?>&#13;&#10;<?php echo $shipment_list['billing_address'] ?>&#13;&#10;<?php echo $shipment_list['billing_city'] ?>, <?php echo $shipment_list['billing_country'] ?></textarea>
+                  </div>
+                  <div class="form-group">
+                    <label>Attn. to</label>
+                    <textarea class="form-control" rows="2" readonly><?php echo $shipment_list['billing_contact_person'] ?>&#13;&#10;<?php echo $shipment_list['billing_phone_number'] ?></textarea>
+                  </div>
+                </div>
+                <div class="col-md-6">
+                  <div class="form-group">
                     <label>Invoice No.</label>
                     <input type="text" class="form-control" name="invoice_no" value="<?php echo @$invoice['invoice_no'] ?>" placeholder="Invoice No." <?php echo ((@$invoice['invoice_no'] !== NULL) ? "" : "readonly" ) ?> required>
+                  </div>
+                  <div class="form-group">
+                    <label>Invoice Date</label>
+                    <input type="date" class="form-control" name="invoice_date" value="<?php echo ((@$invoice['invoice_date'] !== NULL) ? @$invoice['invoice_date'] : date("Y-m-d")) ?>" placeholder="Invoice Date" required>
                   </div>
                   <div class="form-group">
                     <label>Payment Terms</label>
@@ -48,16 +62,12 @@
                       <option value="60 Days" <?= (@$invoice['payment_terms'] == '60 Days') ? 'selected' : ''; ?>>60 Days</option>
                     </select>
                   </div>
-                </div>
-                <div class="col-md-6">
-                  <div class="form-group">
-                    <label>Invoice Date</label>
-                    <input type="date" class="form-control" name="invoice_date" value="<?php echo ((@$invoice['invoice_date'] !== NULL) ? @$invoice['invoice_date'] : date("Y-m-d")) ?>" placeholder="Invoice Date" required>
-                  </div>
+                  <?php if(@$invoice['invoice_no'] == ""):?>
                   <div class="form-group">
                     <label>Branch</label>
                     <input type="text" class="form-control" name="branch" value="<?php echo @$this->session->userdata('branch') ?>" readonly required>
                   </div>
+                  <?php endif; ?>
                 </div>
                 <?php if(@$invoice['invoice_no'] != ""):?>
                 <div class="col-md-6">
@@ -80,6 +90,73 @@
               <?php
                 $total_all = 0;
               ?>
+
+              <br>
+              <table class="table table-bordered" style="font-size: 13px;">
+                <tbody>
+                  <tr>
+                    <td>
+                      <div class="row">
+                        <div class="col">
+                          <b>Tracking No.</b>
+                        </div>
+                        <div class="col text-right">
+                          <?php echo $shipment_list['tracking_no'] ?>
+                        </div>
+                      </div>
+                    </td>
+                    <td rowspan="2">
+                      <b>Shipper</b><br>
+                      <?php echo $shipment_list['shipper_name'] ?><br>
+                      <?php echo $shipment_list['shipper_address'] ?><br>
+                      <?php echo $shipment_list['shipper_city'] ?>, <?php echo $shipment_list['shipper_country'] ?>
+                    </td>
+                  </tr>
+                  <tr>
+                    <td>
+                      <div class="row">
+                        <div class="col">
+                          <b>Type of Service</b>
+                        </div>
+                        <div class="col text-right">
+                          Freight Handling
+                        </div>
+                      </div>
+                    </td>
+                  </tr>
+                  <tr>
+                    <td>
+                      <div class="row">
+                        <div class="col">
+                          <b>Type of Shipment</b>
+                        </div>
+                        <div class="col text-right">
+                          <?php echo $shipment_list['type_of_shipment'] ?>
+                        </div>
+                      </div>
+                    </td>
+                    <td rowspan="2">
+                      <b>Consignee</b><br>
+                      <?php echo $shipment_list['consignee_name'] ?><br>
+                      <?php echo $shipment_list['consignee_address'] ?><br>
+                      <?php echo $shipment_list['consignee_city'] ?>, <?php echo $shipment_list['consignee_country'] ?>
+                    </td>
+                  </tr>
+                  <tr>
+                    <td>
+                      <div class="row">
+                        <div class="col">
+                          <b>Type of Mode</b>
+                        </div>
+                        <div class="col text-right">
+                          <?php echo $shipment_list['type_of_mode'] ?> <?php echo ($shipment_list['sea'] == "" ? "" : "(" . $shipment_list['sea'] . ")") ?>
+                        </div>
+                      </div>
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+
               <br>
               <h6 class="font-weight-bold border-bottom">Detail Information</h6>
               <input type="hidden" class="form-control" name="id" value="<?php echo $shipment_list['id']; ?>">

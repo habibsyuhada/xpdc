@@ -23,6 +23,11 @@
 			$('.file-upload-default').on('change', function() {
 				$(this).parent().find('.form-control').val($(this).val().replace(/C:\\fakepath\\/i, ''));
 			});
+			$(document).on('blur', "input[type=text], textarea:not([readonly], [disabled])", function () {
+    		$(this).val(function (_, val) {
+        	return val.toUpperCase();
+    		});
+			});
 		</script>
 	</body>	
 </html>		

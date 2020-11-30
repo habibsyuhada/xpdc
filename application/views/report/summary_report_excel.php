@@ -35,15 +35,15 @@
       <td><?php echo $shipment['consignee_address'] ?></td>
       <td><?php echo $shipment['status'] ?></td>
       <td><?php echo $shipment['main_agent_name'] ?></td>
-      <td><?php echo number_format(@$total[$shipment['id']]['main-agent'], 2) ?></td>
+      <td><?php echo number_format(@$total[$shipment['id']]['main-agent'], 0).".00" ?></td>
       <td><?php echo $shipment['secondary_agent_name'] ?></td>
-      <td><?php echo number_format(@$total[$shipment['id']]['secondary-agent'], 2) ?></td>
+      <td><?php echo number_format(@$total[$shipment['id']]['secondary-agent'], 0).".00" ?></td>
       <td><?php echo @$invoice[$shipment['id']]['invoice_no'] ?></td>
       <td><?php echo @$invoice[$shipment['id']]['invoice_date'] ?></td>
       <td><?php echo @$invoice[$shipment['id']]['payment_terms'] ?></td>
       <td><?php echo @$invoice[$shipment['id']]['vat'] ?></td>
       <td><?php echo @$invoice[$shipment['id']]['discount'] ?></td>
-      <td><?php echo number_format(@$total[$shipment['id']]['costumer'], 2) ?></td>
+      <td><?php echo number_format(@$total[$shipment['id']]['costumer'], 0).".00" ?></td>
     </tr>
     <?php endforeach; ?>
   </tbody>

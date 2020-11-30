@@ -186,9 +186,9 @@
         <td><?php echo $value['qty'] ?></td>
         <td><?php echo $value['uom'] ?></td>
         <td><?php echo $value['currency']." ".number_format($value['unit_price'], 2) ?></td>
-        <td><?php echo $value['currency']." ".number_format((($value['qty'] / $persen)*$value['unit_price']), 2) ?></td>
+        <td><?php echo $value['currency']." ".number_format((($value['qty'] / $persen)*$value['unit_price']), 0).".00" ?></td>
         <td><?php echo $value['exchange_rate'] ?></td>
-        <td><?php echo "IDR ".number_format((($value['qty'] / $persen)*$value['unit_price']*$value['exchange_rate']), 2) ?></td>
+        <td><?php echo "IDR ".number_format((($value['qty'] / $persen)*$value['unit_price']*$value['exchange_rate']), 0).".00" ?></td>
       </tr>
       <?php endforeach;  ?>
       <tr>
@@ -197,7 +197,7 @@
           <?php echo $invoice['notes'] ?>
         </td>
         <td>SUB TOTAL</td>
-        <td><?php echo "IDR ".number_format(($subtotal), 2) ?></td>
+        <td><?php echo "IDR ".number_format(($subtotal), 0).".00" ?></td>
       </tr>
       <tr>
         <td>VAT</td>
@@ -205,7 +205,7 @@
       </tr>
       <tr>
         <td>TOTAL</td>
-        <td><?php echo "IDR ".number_format(($subtotal + $invoice['vat']), 2) ?></td>
+        <td><?php echo "IDR ".number_format(($subtotal + $invoice['vat']), 0).".00" ?></td>
       </tr>
       <tr>
         <td>DISCOUNT</td>

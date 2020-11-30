@@ -82,7 +82,7 @@
                 <div class="col-md-6">
                   <div class="form-group">
                     <label>Date Paid</label>
-                    <input type="date" class="form-control" name="date_paid" value="<?php echo @$invoice['date_paid'] ?>" required>
+                    <input type="date" class="form-control" name="date_paid" value="<?php echo @$shipment_list['date_paid'] ?>" required>
                   </div>
                 </div>
                 <?php endif; ?>
@@ -279,12 +279,12 @@
                       </td>
                       <td><input type="number" step="any" class="form-control" value="<?php echo $value['unit_price'] ?>" oninput="get_total(this)" name="unit_price[]"></td>
                       <td>
-                        <input type="text" step="any" class="form-control" value="<?php echo number_format((($value['qty'] / $persen)*$value['unit_price']), 2) ?>" name="subtotal_view[]" readonly>
+                        <input type="text" step="any" class="form-control" value="<?php echo number_format((($value['qty'] / $persen)*$value['unit_price']), 0).".00" ?>" name="subtotal_view[]" readonly>
                         <input type="hidden" step="any" class="form-control" value="<?php echo (($value['qty'] / $persen)*$value['unit_price']) ?>" name="subtotal[]" readonly>
                       </td>
                       <td><input type="number" step="any" class="form-control" value="<?php echo $value['exchange_rate'] ?>" oninput="get_total(this)" name="exchange_rate[]"></td>
                       <td>
-                        <input type="text" step="any" class="form-control" value="<?php echo number_format((($value['qty'] / $persen)*$value['unit_price']*$value ['exchange_rate']), 2) ?>" name="total_view[]" readonly>
+                        <input type="text" step="any" class="form-control" value="<?php echo number_format((($value['qty'] / $persen)*$value['unit_price']*$value ['exchange_rate']), 0).".00" ?>" name="total_view[]" readonly>
                         <input type="hidden" step="any" class="form-control" value="<?php echo (($value['qty'] / $persen)*$value['unit_price']*$value['exchange_rate']) ?>" name="total[]" readonly>
                       </td>
                       <td><textarea class="form-control" name="remarks[]" placeholder="..."><?php echo $value['remarks'] ?></textarea></td>
@@ -388,12 +388,12 @@
       }
       var subtotal = qty * unit_price;
       $(row).find("input[name='subtotal[]']").val(subtotal);
-      $(row).find("input[name='subtotal_view[]']").val(subtotal.toLocaleString('en-US', {maximumFractionDigits:2, minimumFractionDigits: 2}));
+      $(row).find("input[name='subtotal_view[]']").val(subtotal.toLocaleString('en-US', {maximumFractionDigits:0}) + ".00");
 
       var exchange_rate = $(row).find("input[name='exchange_rate[]']").val();
       var total = subtotal * exchange_rate;
       $(row).find("input[name='total[]']").val(total);
-      $(row).find("input[name='total_view[]']").val(total.toLocaleString('en-US', {maximumFractionDigits:2, minimumFractionDigits: 2}));
+      $(row).find("input[name='total_view[]']").val(total.toLocaleString('en-US', {maximumFractionDigits:0}) + ".00");
     }
 
     var total_all = 0;

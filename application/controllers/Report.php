@@ -62,18 +62,20 @@ class Report extends CI_Controller
 
       unset($where);
       $where["id_shipment IN (".join(", ", $id_shipment).")"] 	= NULL;
+      $where["status_delete"] 	= 1;
       $cost_list 							= $this->shipment_mod->shipment_cost_list_db($where);
+      // test_var($cost_list);
       $total = array();
       foreach ($cost_list as $key => $value) {
         $persen = 1;
-        if($value['uom'] = '%'){
+        if($value['uom'] == '%'){
           $persen = 100;
         }
         if(isset($total[$value['id_shipment']][$value['category']])){
-          $total[$value['id_shipment']][$value['category']] += ($value['qty'] / $persen) + $value['unit_price'] + $value['exchange_rate'];
+          $total[$value['id_shipment']][$value['category']] += ($value['qty'] / $persen) * $value['unit_price'] * $value['exchange_rate'];
         }
         else{
-          $total[$value['id_shipment']][$value['category']] = ($value['qty'] / $persen) + $value['unit_price'] + $value['exchange_rate'];
+          $total[$value['id_shipment']][$value['category']] = ($value['qty'] / $persen) * $value['unit_price'] * $value['exchange_rate'];
         }
       }
       $data['total'] 			= $total;

@@ -1,6 +1,7 @@
 <div class="main-content">
   <div class="container-fluid">
     <form action="<?php echo base_url(); ?>commercial/customer_update_process/<?php echo $customer_list['id'] ?>" method="POST" class="forms-sample">
+      <input type="hidden" name="customer_id" value="<?php echo $customer_list['customer_id'] ?>" required>
       <div class="row clearfix">
         <div class="col-md-12">
           <div class="card">
@@ -9,20 +10,24 @@
               <div class="row clearfix">
                 <div class="col-md-6">
                   <div class="form-group">
+                    <label>Account No.</label>
+                    <input type="text" class="form-control" name="account_no" placeholder="Account No." value="<?php echo $customer_list['account_no'] ?>" readonly>
+                  </div>
+                  <div class="form-group">
                     <label>Name</label>
                     <input type="text" class="form-control" name="name" placeholder="Name" value="<?php echo $customer_list['name'] ?>" required>
                   </div>
                   <div class="form-group">
                     <label>E-Mail</label>
-                    <input type="email" class="form-control" name="email" placeholder="E-Mail" value="<?php echo $customer_list['email'] ?>" required>
-                  </div>
-                  <div class="form-group">
-                    <label>Address</label>
-                    <textarea class="form-control" name="address" placeholder="Address" required><?php echo $customer_list['address'] ?></textarea>
+                    <input type="email" class="form-control" name="email" placeholder="E-Mail" value="<?php echo $customer_list['email'] ?>" required readonly>
                   </div>
                   <div class="form-group">
                     <label>City</label>
                     <input type="text" class="form-control" name="city" placeholder="City" value="<?php echo $customer_list['city'] ?>" required>
+                  </div>
+                  <div class="form-group">
+                    <label>Address</label>
+                    <textarea class="form-control" name="address" placeholder="Address" required><?php echo $customer_list['address'] ?></textarea>
                   </div>
                 </div>
                 <div class="col-md-6">

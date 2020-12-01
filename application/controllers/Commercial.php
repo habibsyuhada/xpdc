@@ -29,7 +29,7 @@ class Commercial extends CI_Controller
 
     public function index()
     {
-        redirect("agent/agent_list");
+        redirect("commercial/custumer_list");
     }
 
     public function customer_list()
@@ -61,24 +61,27 @@ class Commercial extends CI_Controller
             redirect("commercial/customer_create");
         }
 
-        $form_data = array(
-            'name'                 => $post['name'],
-            'email'             => $post['email'],
-            'password'         => MD5("customerxpdc"),
-            'role'                 => "Customer",
-            'branch'             => "NONE",
-        );
-        $id_user = $this->commercial_mod->customer_create_process_db($form_data);
+        // $form_data = array(
+        //     'name'                 => $post['name'],
+        //     'email'             => $post['email'],
+        //     'password'         => MD5("customerxpdc"),
+        //     'role'                 => "Customer",
+        //     'branch'             => "NONE",
+        // );
+        // $id_user = $this->commercial_mod->customer_create_process_db($form_data);
 
         $form_detail_data = array(
-            'customer_id' => $id_user,
-            'address' => $post['address'],
-            'city' => $post['city'],
-            'country' => $post['country'],
-            'postcode' => $post['postcode'],
-            'contact_person' => $post['contact_person'],
-            'phone_number' => $post['phone_number'],
-            'status_delete' => 1
+            // 'customer_id' => $id_user,
+            'name'              => $post['name'],
+            'email'             => $post['email'],
+            'address'           => $post['address'],
+            'city'              => $post['city'],
+            'country'           => $post['country'],
+            'postcode'          => $post['postcode'],
+            'contact_person'    => $post['contact_person'],
+            'phone_number'      => $post['phone_number'],
+            'create_by'         => $this->session->userdata('id'),
+            'status_delete'     => 1
         );
 
         $id_detail = $this->commercial_mod->customer_detail_create_process_db($form_detail_data);
@@ -89,7 +92,7 @@ class Commercial extends CI_Controller
 
     public function customer_update($id)
     {
-        $where['user.id']   = $id;
+        $where['id']   = $id;
         $user_list             = $this->commercial_mod->customer_list_db($where);
         if (count($user_list) < 1) {
             $this->session->set_flashdata('error', 'Customer Not Found!');
@@ -108,13 +111,13 @@ class Commercial extends CI_Controller
         $post = $this->input->post();
 
         $form_data = array(
-            'name'               => $post['name'],
-            'email'              => $post['email']
+            'name'               => $post['name']
         );
-        $where['id'] = $id;
+        $where['id'] = $post['customer_id'];
         $id_user = $this->commercial_mod->customer_update_process_db($form_data, $where);
 
         $form_detail_data = array(
+            'name'              => $post['name'],
             'address'           => $post['address'],
             'city'              => $post['city'],
             'country'           => $post['country'],
@@ -122,7 +125,7 @@ class Commercial extends CI_Controller
             'contact_person'    => $post['contact_person'],
             'phone_number'      => $post['phone_number']
         );
-        $where_detail['customer_id'] = $id;
+        $where_detail['id'] = $id;
         $id_detail_customer = $this->commercial_mod->customer_detail_update_process_db($form_detail_data, $where_detail);
 
         $this->session->set_flashdata('success', 'Your Customer data has been Updated!');
@@ -147,5 +150,48 @@ class Commercial extends CI_Controller
 
 		$this->session->set_flashdata('success', 'Your Customer data has been Deleted!');
 		redirect('commercial/customer_list');
-	}
+    }
+    
+    public function customer_approval_process($id){
+        $where['id'] = $id;
+        $customer_list      = $this->commercial_mod->customer_list_db($where);
+        if (count($customer_list) < 1) {
+            $this->session->set_flashdata('error', 'Customer Not Found!');
+            redirect("commercial/customer_list");
+        }
+        $customer_list = $customer_list[0];
+        
+        $where = [
+            'email'             => $customer_list['email'],
+        ];
+        $user_list = $this->home_mod->user_list($where);
+        if (count($user_list) > 0) {
+            $this->session->set_flashdata('error', 'Duplicate Customer Account!');
+            redirect("commercial/customer_list");
+        }
+
+        $where = [
+            "account_no != ''"             => NULL,
+        ];
+        $account_no = $this->commercial_mod->customer_generate_account_no_db($where);
+
+        $form_data = array(
+            'name'              => $customer_list['name'],
+            'email'             => $customer_list['email'],
+            'password'          => MD5("customerxpdc"),
+            'role'              => "Customer",
+            'branch'            => "NONE",
+        );
+        $id_user = $this->commercial_mod->customer_create_process_db($form_data);
+
+        $form_detail_data = array(
+            'account_no'        => "XPDC-CUSTOMER-".$account_no,
+            'customer_id'       => $id_user,
+            'status_approval'   => 1,
+        );
+        $where_detail['id']     = $id;
+        $id_detail_customer     = $this->commercial_mod->customer_detail_update_process_db($form_detail_data, $where_detail);
+        $this->session->set_flashdata('success', 'This Customer Has Been Approved!<br>Password Account: customerxpdc');
+        redirect('commercial/customer_list');
+    }
 }

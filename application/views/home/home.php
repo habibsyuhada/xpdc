@@ -309,7 +309,7 @@
           <div class="widget-body">
             <div class="d-flex justify-content-between align-items-center">
               <div class="state">
-                <h6 name="pickup">(Outstanding) Picked Up</h6>
+                <h6 name="pickup_1">(Outstanding) Picked Up</h6>
                 <h2><?php echo $summary_list['Outstanding Pickup']+0 ?></h2>
               </div>
               <div class="icon">
@@ -328,7 +328,7 @@
           <div class="widget-body">
             <div class="d-flex justify-content-between align-items-center">
               <div class="state">
-                <h6 name="pickup">(Done) Picked Up</h6>
+                <h6 name="pickup_2">(Done) Picked Up</h6>
                 <h2><?php echo $summary_list['Done Pickup']+0 ?></h2>
               </div>
               <div class="icon">
@@ -366,7 +366,7 @@
           <div class="widget-body">
             <div class="d-flex justify-content-between align-items-center">
               <div class="state">
-                <h6 name="deliver">(Outstanding) Deliver</h6>
+                <h6 name="deliver_1">(Outstanding) Deliver</h6>
                 <h2><?php echo $summary_list['Outstanding Deliver']+0 ?></h2>
               </div>
               <div class="icon">
@@ -385,7 +385,7 @@
           <div class="widget-body">
             <div class="d-flex justify-content-between align-items-center">
               <div class="state">
-                <h6 name="deliver">(Done) Delivered</h6>
+                <h6 name="deliver_2">(Done) Delivered</h6>
                 <h2><?php echo $summary_list['Done Deliver']+0 ?></h2>
               </div>
               <div class="icon">

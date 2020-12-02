@@ -131,8 +131,23 @@ $page_permission = array(
       <div class="col-md-12">
         <div class="card">
           <div class="card-header">
-            <?php if ($this->input->get('status_driver')) : ?>
-              <h3 class="text-capitalize"><?php echo $this->input->get('status_driver') ?> List</h3>
+            <?php 
+              if ($this->input->get('status_driver')) : 
+                $status_driver = explode("_", $this->input->get('status_driver'));
+            ?>
+              <h3 class="text-capitalize">
+                <?php echo $status_driver[0] ?> List
+                <?php 
+                  if(count($status_driver) > 1){
+                    if($status_driver[1] == 1){
+                      echo "(Outstanding)";
+                    }
+                    else{
+                      echo "(Done)";
+                    }
+                  }
+                ?>
+              </h3>
             <?php else : ?>
               <h3>Shipment List <?php echo ($this->input->get('status') ? '(' . $this->input->get('status') . ')' : '') ?></h3>
             <?php endif; ?>
@@ -161,7 +176,12 @@ $page_permission = array(
                     <?php foreach ($shipment_list as $key => $value) : ?>
                       <tr class="<?php echo ((($value['main_agent_name'] != "" && $value['main_agent_invoice'] == "") || ($value['secondary_agent_name'] != "" && $value['secondary_agent_invoice'] == "")) && $value['status'] == "Delivered" && $page_permission[7] == 1 ? "alert-warning" : "") ?>">
                         <td><input type="checkbox" class="checkbox-20" value="<?php echo $value['id'] ?>" onclick="save_checkbox(this)"></td>
-                        <td><a target="_blank" class="font-weight-bold" href="<?php echo base_url() ?>shipment/shipment_receipt/<?php echo $value['id'] ?>"><?php echo $value['tracking_no'] ?></a></td>
+                        <td nowrap>
+                          <a target="_blank" class="font-weight-bold" href="<?php echo base_url() ?>shipment/shipment_receipt/<?php echo $value['id'] ?>"><?php echo $value['tracking_no'] ?></a> 
+                          <?php if($value['sea'] == "Express" && $value['status'] != "Delivered"): ?>
+                            <i class="fas fa-plane text-danger" title="Express"></i>
+                          <?php endif; ?>
+                        </td>
                         <td><?php echo $value['master_tracking'] ?></td>
                         <td><?php echo $value['type_of_shipment'] ?></td>
                         <td><?php echo $value['type_of_mode'] ?></td>

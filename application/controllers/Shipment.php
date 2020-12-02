@@ -35,7 +35,14 @@ class Shipment extends CI_Controller
 		}
 
 		if ($this->input->get('status_driver')) {
-			$where["(driver_" . $this->input->get('status_driver') . " = " . $this->session->userdata('id') . " OR driver_" . $this->input->get('status_driver') . " = " . $this->session->userdata('id') . ")"] 	= NULL;
+			$status_driver = explode("_", $this->input->get('status_driver'));
+			if(count($status_driver) > 1){
+				$where["(status_driver_" . $status_driver[0] . " = " . $status_driver[1] . ")"] 	= NULL;
+			}
+			else{
+				$where["(status_driver_" . $status_driver[0] . " IN (1, 2) )"] 	= NULL;
+			}
+			
 		}
 		foreach ($this->input->get() as $key => $value) {
 			if ($this->input->get($key) || $value == 0) {
@@ -52,7 +59,18 @@ class Shipment extends CI_Controller
 		if ($this->session->userdata('role') == "Driver") {
 			$order_by["assign_driver_date"] = "DESC";
 		}
-		$data['shipment_list'] 	= $this->shipment_mod->shipment_list_db($where, null, $order_by);
+		$datadb 				= $this->shipment_mod->shipment_list_db($where, null, $order_by);
+		$shipment_list 	= [];
+		$express_list 	= [];
+		foreach ($datadb as $key => $value) {
+			if($value['sea'] == "Express" && $value['status'] != "Delivered"){
+				$express_list[] = $value;
+			}
+			else{
+				$shipment_list[] = $value;
+			}
+		}
+		$data['shipment_list'] 	= array_merge($express_list, $shipment_list);
 		// test_var($data['shipment_list']);
 
 		unset($where);
@@ -976,6 +994,11 @@ class Shipment extends CI_Controller
 		}
 
 		foreach ($shipment_list as $key => $value) {
+			if($post['history_status'] == "Departed" && $value['main_agent_name'] == ""){
+				echo "Error : You cannot depart shipment before fill up Shipping Information (".$value['tracking_no'].")";
+				return false;
+				exit;
+			}
 			$form_data = array(
 				'id_shipment' 	=> $value['id'],
 				'date' 					=> $post['history_date'],

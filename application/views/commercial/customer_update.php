@@ -1,3 +1,9 @@
+<?php
+$role = $this->session->userdata('role');
+$page_permission = array(
+  0 => (in_array($role, array("Super Admin")) ? 1 : 0), //Update
+);
+?>
 <div class="main-content">
   <div class="container-fluid">
     <form action="<?php echo base_url(); ?>commercial/customer_update_process/<?php echo $customer_list['id'] ?>" method="POST" class="forms-sample">
@@ -54,11 +60,62 @@
                   </div>
                 </div>
               </div>
+
+              <div class="row clearfix">
+                <div class="col-md-6">
+                  <div class="form-group">
+                    <label>Payment Terms</label>
+                    <select class="form-control" name="payment_terms" required>
+                      <option value="">- Select One -</option>
+                      <option value="Cash In Advance" <?= (@$customer_list['payment_terms'] == 'Cash In Advance') ? 'selected' : ''; ?>>Cash In Advance</option>
+                      <option value="Cash In Delivery" <?= (@$customer_list['payment_terms'] == 'Cash In Delivery') ? 'selected' : ''; ?>>Cash In Delivery</option>
+                      <option value="15 Days" <?= (@$customer_list['payment_terms'] == '15 Days') ? 'selected' : ''; ?>>15 Days</option>
+                      <option value="30 Days" <?= (@$customer_list['payment_terms'] == '30 Days') ? 'selected' : ''; ?>>30 Days</option>
+                      <option value="45 Days" <?= (@$customer_list['payment_terms'] == '45 Days') ? 'selected' : ''; ?>>45 Days</option>
+                      <option value="60 Days" <?= (@$customer_list['payment_terms'] == '60 Days') ? 'selected' : ''; ?>>60 Days</option>
+                    </select>
+                  </div>
+                  <div class="form-group">
+                    <label>Discount</label>
+                    <input type="number" class="form-control" name="discount" value="<?php echo @$customer_list['vat']+0 ?>" placeholder="Discount" required>
+                  </div>
+                </div>
+                <div class="col-md-6">
+                  <div class="form-group">
+                    <label>Tax Registration</label>
+                    <input type="number" class="form-control" name="vat" value="<?php echo @$customer_list['discount']+0 ?>" placeholder="Tax Registration" required>
+                  </div>
+                </div>
+              </div>
+
+              <h6 class="font-weight-bold border-bottom">Accounting Contact</h6>
+              <div class="row clearfix">
+                <div class="col-md-6">
+                  <div class="form-group">
+                    <label>Name</label>
+                    <input type="text" class="form-control" name="account_name" value="<?php echo @$customer_list['account_name'] ?>" placeholder="Name" required>
+                  </div>
+                  <div class="form-group">
+                    <label>E-Mail</label>
+                    <input type="email" class="form-control" name="account_email" value="<?php echo @$customer_list['account_email'] ?>" placeholder="E-Mail" required>
+                  </div>
+                </div>
+                <div class="col-md-6">
+                  <div class="form-group">
+                    <label>Phone Number</label>
+                    <input type="text" class="form-control" name="account_phone_number" value="<?php echo @$customer_list['account_phone_number'] ?>" placeholder="Phone Number" required>
+                  </div>
+                </div>
+              </div>
+              
+              <?php if($page_permission[0] == 1): ?>
               <div class="mt-2 row">
                 <div class="col-12">
                   <button type="submit" class="btn btn-success">Submit</button>
                 </div>
               </div>
+              <?php endif; ?>
+
             </div>
           </div>
         </div>

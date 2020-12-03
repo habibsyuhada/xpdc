@@ -2,8 +2,8 @@
 $role = $this->session->userdata('role');
 $page_permission = array(
   0 => (in_array($role, array("Super Admin")) ? 1 : 0), //Approval
-  1 => (in_array($role, array("Super Admin", "Commercial")) ? 1 : 0), //Update
-  2 => (in_array($role, array("Super Admin", "Commercial")) ? 1 : 0), //Reset
+  1 => (in_array($role, array("Super Admin", "Commercial")) ? 1 : 0), //View Detail
+  2 => (in_array($role, array("Super Admin")) ? 1 : 0), //Reset
 );
 ?>
 <div class="main-content">
@@ -59,7 +59,7 @@ $page_permission = array(
                       <td>
                         <?php if($value['status_approval'] == 1): ?>
                           <?php if($page_permission[1] == 1): ?>
-                            <a href="<?php echo base_url() ?>commercial/customer_update/<?php echo $value['id'] ?>" class="btn btn-primary" title="Update"><i class="fas fa-edit m-0"></i></a>
+                            <a href="<?php echo base_url() ?>commercial/customer_update/<?php echo $value['id'] ?>" class="btn btn-primary" title="Update"><i class="fas fa-eye m-0"></i></a>
                           <?php endif; ?>
                           <?php if($page_permission[2] == 1): ?>
                             <a href="<?php echo base_url() ?>commercial/customer_rest_password/<?php echo $value['customer_id'] ?>" class="btn btn-success" title="Reset" onclick="return confirm('Are You Sure?')"><i class="fas fa-redo-alt"></i></a>

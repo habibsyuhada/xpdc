@@ -34,7 +34,10 @@ class Commercial extends CI_Controller
 
     public function customer_list()
     {
-        $data['customer_list']     = $this->commercial_mod->customer_list_db();
+        if ($this->session->userdata('role') == "Commercial") {
+            $where["create_by"] 	= $this->session->userdata('id');
+        }
+        $data['customer_list']     = $this->commercial_mod->customer_list_db($where);
 
         $data['subview']            = 'commercial/customer_list';
         $data['meta_title']         = 'Customer List';
@@ -80,6 +83,14 @@ class Commercial extends CI_Controller
             'postcode'          => $post['postcode'],
             'contact_person'    => $post['contact_person'],
             'phone_number'      => $post['phone_number'],
+
+            'payment_terms'         => $post['payment_terms'],
+            'discount'              => $post['discount'],
+            'vat'                   => $post['vat'],
+            'account_name'          => $post['account_name'],
+            'account_email'         => $post['account_email'],
+            'account_phone_number'  => $post['account_phone_number'],
+
             'create_by'         => $this->session->userdata('id'),
             'status_delete'     => 1
         );
@@ -123,7 +134,14 @@ class Commercial extends CI_Controller
             'country'           => $post['country'],
             'postcode'          => $post['postcode'],
             'contact_person'    => $post['contact_person'],
-            'phone_number'      => $post['phone_number']
+            'phone_number'      => $post['phone_number'],
+
+            'payment_terms'         => $post['payment_terms'],
+            'discount'              => $post['discount'],
+            'vat'                   => $post['vat'],
+            'account_name'          => $post['account_name'],
+            'account_email'         => $post['account_email'],
+            'account_phone_number'  => $post['account_phone_number'],
         );
         $where_detail['id'] = $id;
         $id_detail_customer = $this->commercial_mod->customer_detail_update_process_db($form_detail_data, $where_detail);
@@ -188,10 +206,10 @@ class Commercial extends CI_Controller
             $random_no = rand(0,9999);
             $random_no = str_pad($random_no, 4, '0', STR_PAD_LEFT);
             if($this->session->userdata('branch') == 'TANGERANG'){
-                $random_no = "24".$random_no;
+                $random_no = "21".$random_no;
             }
             elseif($this->session->userdata('branch') == 'BATAM'){
-                $random_no = "76".$random_no;
+                $random_no = "78".$random_no;
             }
             else{
                 $random_no = "00".$random_no;

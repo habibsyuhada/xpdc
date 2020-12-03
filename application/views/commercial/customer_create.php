@@ -49,6 +49,52 @@
                   </div>
                 </div>
               </div>
+              <div class="row clearfix">
+                <div class="col-md-6">
+                  <div class="form-group">
+                    <label>Payment Terms</label>
+                    <select class="form-control" name="payment_terms" required>
+                      <option value="">- Select One -</option>
+                      <option value="Cash In Advance">Cash In Advance</option>
+                      <option value="Cash In Delivery">Cash In Delivery</option>
+                      <option value="15 Days">15 Days</option>
+                      <option value="30 Days">30 Days</option>
+                      <option value="45 Days">45 Days</option>
+                      <option value="60 Days">60 Days</option>
+                    </select>
+                  </div>
+                  <div class="form-group">
+                    <label>Discount</label>
+                    <input type="number" class="form-control" name="discount" placeholder="Discount" required>
+                  </div>
+                </div>
+                <div class="col-md-6">
+                  <div class="form-group">
+                    <label>Tax Registration</label>
+                    <input type="number" class="form-control" name="vat" placeholder="Tax Registration" required>
+                  </div>
+                </div>
+              </div>
+
+              <h6 class="font-weight-bold border-bottom">Accounting Contact</h6>
+              <div class="row clearfix">
+                <div class="col-md-6">
+                  <div class="form-group">
+                    <label>Name</label>
+                    <input type="text" class="form-control" name="account_name" placeholder="Name" required>
+                  </div>
+                  <div class="form-group">
+                    <label>E-Mail</label>
+                    <input type="email" class="form-control" name="account_email" placeholder="E-Mail" required>
+                  </div>
+                </div>
+                <div class="col-md-6">
+                  <div class="form-group">
+                    <label>Phone Number</label>
+                    <input type="text" class="form-control" name="account_phone_number" placeholder="Phone Number" required>
+                  </div>
+                </div>
+              </div>
               <div class="mt-2 row">
                 <div class="col-12">
                   <button type="submit" class="btn btn-success">Submit</button>

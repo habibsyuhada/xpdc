@@ -188,27 +188,33 @@ class Commercial extends CI_Controller
             redirect("commercial/customer_list");
         }
 
+        // $where = [
+        //     "account_no != ''"             => NULL,
+        // ];
+        // $account_no = $this->commercial_mod->customer_generate_account_no_db($where);
+
         $where = [
-            "account_no != ''"             => NULL,
+            'id'             => $customer_list['create_by'],
         ];
-        $account_no = $this->commercial_mod->customer_generate_account_no_db($where);
+        $user_list = $this->home_mod->user_list($where);
+        $user_list = $user_list[0];
 
         $form_data = array(
             'name'              => $customer_list['name'],
             'email'             => $customer_list['email'],
             'password'          => MD5("customerxpdc"),
             'role'              => "Customer",
-            'branch'            => "NONE",
+            'branch'            => $user_list['branch'],
         );
         $id_user = $this->commercial_mod->customer_create_process_db($form_data);
         
         do {
             $random_no = rand(0,9999);
             $random_no = str_pad($random_no, 4, '0', STR_PAD_LEFT);
-            if($this->session->userdata('branch') == 'TANGERANG'){
+            if($user_list['branch'] == 'TANGERANG'){
                 $random_no = "21".$random_no;
             }
-            elseif($this->session->userdata('branch') == 'BATAM'){
+            elseif($user_list['branch'] == 'BATAM'){
                 $random_no = "78".$random_no;
             }
             else{
@@ -217,7 +223,7 @@ class Commercial extends CI_Controller
         } while(count($this->commercial_mod->customer_check_account_no($random_no)) > 0);
 
         $form_detail_data = array(
-            'account_no'        => "XPDC-CUSTOMER-".$account_no,
+            'account_no'        => "XPDC-CUSTOMER-".$random_no,
             'customer_id'       => $id_user,
             'status_approval'   => 1,
         );

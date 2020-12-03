@@ -14,7 +14,7 @@ $page_permission = array(
           <div class="card-header">
             <h3>Customer List</h3>
           </div>
-          <div class="card-body">
+          <div class="card-body overflow-auto">
             <div class="row">
               <div class="col-md-12">
                 <table class="table data_table">

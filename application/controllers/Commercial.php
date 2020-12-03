@@ -183,6 +183,20 @@ class Commercial extends CI_Controller
             'branch'            => "NONE",
         );
         $id_user = $this->commercial_mod->customer_create_process_db($form_data);
+        
+        do {
+            $random_no = rand(0,9999);
+            $random_no = str_pad($random_no, 4, '0', STR_PAD_LEFT);
+            if($this->session->userdata('branch') == 'TANGERANG'){
+                $random_no = "24".$random_no;
+            }
+            elseif($this->session->userdata('branch') == 'BATAM'){
+                $random_no = "76".$random_no;
+            }
+            else{
+                $random_no = "00".$random_no;
+            }
+        } while(count($this->commercial_mod->customer_check_account_no($random_no)) > 0);
 
         $form_detail_data = array(
             'account_no'        => "XPDC-CUSTOMER-".$account_no,

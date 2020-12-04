@@ -476,7 +476,7 @@
                       
                       <div class="form-group">
                         <label>XPDC Account No.</label>
-                        <input type="text" class="form-control" name="billing_account" value="<?php echo $shipment['billing_account'] ?>" placeholder="XPDC Account No. (if any)">
+                        <input type="text" class="form-control" name="billing_account" value="<?php echo $shipment['billing_account'] ?>" placeholder="XPDC Account No. (if any)" oninput="check_custumer(this);">
                       </div>
                       <div class="form-group">
                         <label>Same as</label>
@@ -883,4 +883,56 @@
   $(document).ready(function (){
     get_vol_weight();
   });
+
+  var settime_billing_account;
+  function check_custumer(input) {
+    clearTimeout(settime_billing_account);
+    settime_billing_account = setTimeout(function(){ 
+      var billing_account = $(input).val();
+      $.ajax({
+        url: '<?php echo base_url() ?>shipment/check_custumer',
+        type: 'POST',
+        data:{
+          account_no: billing_account,
+        },
+        success: function (data) {
+          if(data.includes("Error")){
+            $(input).addClass('is-invalid');
+            var invalid_elem = '<div class="invalid-feedback">'+data+'</div>';
+            $('.invalid-feedback').remove();
+            $(invalid_elem).insertAfter(input);
+            showDangerToast(data);
+
+            $("input[name=billing_name]").val('');
+            $("input[name=billing_account]").val('');
+            $("textarea[name=billing_address]").val('');
+            $("input[name=billing_city]").val('');
+            $("select[name=billing_country_view]").val('').trigger('change');
+            $("input[name=billing_country]").val('');
+            $("input[name=billing_postcode]").val('');
+            $("input[name=billing_contact_person]").val('');
+            $("input[name=billing_phone_number]").val('');
+            $("input[name=billing_email]").val('');
+          }
+          else{
+            data = JSON. parse(data);
+            $(input).removeClass('is-invalid');
+            $(input).addClass('is-valid');
+            $('.invalid-feedback').remove();
+            console.log(data);
+
+            $("input[name=billing_name]").val(data.name);
+            $("textarea[name=billing_address]").val(data.address);
+            $("input[name=billing_city]").val(data.city);
+            $("select[name=billing_country_view]").val(data.country).trigger('change');
+            $("input[name=billing_country]").val(data.country);
+            $("input[name=billing_postcode]").val(data.postcode);
+            $("input[name=billing_contact_person]").val(data.contact_person);
+            $("input[name=billing_phone_number]").val(data.phone_number);
+            $("input[name=billing_email]").val(data.email);
+          }
+        }
+      }); 
+    }, 2000);
+  }
 </script>

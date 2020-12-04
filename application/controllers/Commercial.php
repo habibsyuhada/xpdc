@@ -223,7 +223,7 @@ class Commercial extends CI_Controller
         } while(count($this->commercial_mod->customer_check_account_no($random_no)) > 0);
 
         $form_detail_data = array(
-            'account_no'        => "XPDC-CUSTOMER-".$random_no,
+            'account_no'        => $random_no,
             'customer_id'       => $id_user,
             'status_approval'   => 1,
         );

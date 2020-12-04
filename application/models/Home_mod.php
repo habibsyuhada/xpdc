@@ -43,5 +43,14 @@ class Home_mod extends CI_Model {
 		$query = $this->db->get();
 		return $query->result_array();
 	}
+  
+  function customer_list($where = null){
+    if(isset($where)){
+      $this->db->where($where);
+    }
+    $this->db->from('customer');
+    $query = $this->db->get();
+    return $query->result_array();
+  }
 
 }

@@ -33,6 +33,19 @@ class Shipment extends CI_Controller
 		if ($this->session->userdata('role') == "Driver") {
 			$where["(driver_pickup = " . $this->session->userdata('id') . " OR driver_deliver = " . $this->session->userdata('id') . ")"] 	= NULL;
 		}
+		elseif ($this->session->userdata('role') == "Commercial") {
+			$datadb 	= $this->home_mod->customer_list(array("status_delete" => 1, "create_by" => $this->session->userdata('id')));
+			$customer_list = [];
+			foreach ($datadb as $key => $value) {
+				if($value['account_no'] != ""){
+					$customer_list[] = $value['account_no'];
+				}
+			}
+			if(count($customer_list) == 0){
+				$customer_list[] = "0";
+			}
+			$where["shipment_detail.billing_account IN ('".join("', '", $customer_list)."')"] 	= NULL;
+		}
 
 		if ($this->input->get('status_driver')) {
 			$status_driver = explode("_", $this->input->get('status_driver'));
@@ -1133,5 +1146,22 @@ class Shipment extends CI_Controller
 		$data['subview'] 				= 'shipment/shipment_share_link';
 		$data['meta_title'] 		= 'Share Link Shipment';
 		$this->load->view('index', $data);
+	}
+
+	public function check_custumer(){
+		$post = $this->input->post();
+		$where = [
+			"status_delete" => 1,
+			"account_no" 		=> $post['account_no'],
+		];
+		$datadb 	= $this->home_mod->customer_list($where);
+		if(count($datadb) > 0){
+			$customer = $datadb[0];
+			echo json_encode($customer);
+		}
+		else{
+			echo "Error: Account Number ".$post['account_no']." Not Found!";
+			exit;
+		}
 	}
 }

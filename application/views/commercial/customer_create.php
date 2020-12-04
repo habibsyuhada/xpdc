@@ -65,13 +65,13 @@
                   </div>
                   <div class="form-group">
                     <label>Discount</label>
-                    <input type="number" class="form-control" name="discount" placeholder="Discount" required>
+                    <input type="number" class="form-control" name="discount" step="0.01" placeholder="Discount" required>
                   </div>
                 </div>
                 <div class="col-md-6">
                   <div class="form-group">
                     <label>Tax Registration</label>
-                    <input type="number" class="form-control" name="vat" placeholder="Tax Registration" required>
+                    <input type="text" class="form-control" name="vat" placeholder="Tax Registration" required>
                   </div>
                 </div>
               </div>

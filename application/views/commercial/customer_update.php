@@ -77,13 +77,13 @@ $page_permission = array(
                   </div>
                   <div class="form-group">
                     <label>Discount</label>
-                    <input type="number" class="form-control" name="discount" value="<?php echo @$customer_list['vat']+0 ?>" placeholder="Discount" required>
+                    <input type="number" class="form-control" name="discount" value="<?php echo @$customer_list['discount']+0 ?>" step="0.01" placeholder="Discount" required>
                   </div>
                 </div>
                 <div class="col-md-6">
                   <div class="form-group">
                     <label>Tax Registration</label>
-                    <input type="number" class="form-control" name="vat" value="<?php echo @$customer_list['discount']+0 ?>" placeholder="Tax Registration" required>
+                    <input type="text" class="form-control" name="vat" value="<?php echo @$customer_list['vat'] ?>" placeholder="Tax Registration" required>
                   </div>
                 </div>
               </div>

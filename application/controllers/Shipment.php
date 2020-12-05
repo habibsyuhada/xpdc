@@ -186,11 +186,7 @@ class Shipment extends CI_Controller
 		// } else if ($post['status_pickup'] == 'Picked Up') {
 		// 	$status = 'Booked';
 		// }
-		if ($this->session->userdata('role') == 'Commercial') {
-			$status = 'Need Approval';
-		} else {
-			$status = 'Booked';
-		}
+		$status = 'Booked';
 		$sea = '';
 
 		if (isset($post['sea'])) {

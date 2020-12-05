@@ -101,6 +101,10 @@ class Driver extends CI_Controller
 		$data['shipment'] 			= $shipment_list[0];
 
 		unset($where);
+		$where['id_shipment'] 	= $id;
+		$data['packages_list'] 	= $this->shipment_mod->shipment_packages_list_db($where);
+
+		unset($where);
 		$where['role'] 					= "Driver";
 		$data['driver_list'] 		= user_data(array($data['shipment']['driver_pickup']));
 
@@ -111,10 +115,12 @@ class Driver extends CI_Controller
 
 	public function driver_update_process(){
 		$post = $this->input->post();
+		$upload_path = 'file/driver/';
 
-		$config['upload_path']          = 'file/driver/';
+		$config['upload_path']          = $upload_path;
 		$config['file_name']            = 'img_'.$post['status'].'_'.$post['id'].'_'. date('YmsHis');
 		$config['allowed_types']        = 'gif|jpg|png|jpeg';
+		$config['max_size']      				= 500;
 		$config['overwrite'] 						= TRUE;
 
 		$this->load->library('upload', $config);
@@ -124,6 +130,22 @@ class Driver extends CI_Controller
 			$this->session->set_flashdata('error', $this->upload->display_errors());
 			redirect("driver/driver_update/".$post['id']);
 			return false;
+		}
+
+		$gbr = $this->upload->data();
+		//Compress Image
+		unset($config);
+		$config['image_library']	= 'gd2';
+		$config['source_image']		= $upload_path.$gbr['file_name'];
+		// $config['create_thumb']		= FALSE;
+		$config['maintain_ratio']	= TRUE;
+		$config['quality']				= '50%';
+		$config['width']					= 500;
+		// $config['height']					= 400;
+		$config['new_image']			= $upload_path.$gbr['file_name'];
+		$this->load->library('image_lib', $config);
+		if (!$this->image_lib->resize()) {
+			echo $this->image_lib->display_errors();
 		}
 
 		$form_data = array(

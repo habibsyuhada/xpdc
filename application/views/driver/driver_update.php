@@ -43,6 +43,7 @@
   }
    
 </style>
+
 <div class="main-content">
   <div class="container-fluid">
     <div class="row clearfix">
@@ -60,18 +61,21 @@
                 <h4 class="font-weight-bold text-center"><?php echo $shipment['tracking_no'] ?></h4>
               </div>
             </div>
-            <br>
-            <br>
-            <br>
-            <div class="row justify-content-center">
+          </div>
+        </div>
+        <div class="card">
+          <div class="card-header">
+            <h3>Driver Detail Information</h3>
+            <div class="card-header-right">
+              <ul class="list-unstyled card-option">
+                <li><i class="ik minimize-card ik-plus"></i></li>
+              </ul>
             </div>
+          </div>
+          <div class="card-body" style="display: none;">
             <div class="row">
               <div class="col-md-6">
-                <h6 class="font-weight-bold">PickUp Detail</h6>
-                <hr>
-                <div class="form-group row m-0">
-                  <label class="col-sm-12 col-form-label font-weight-bold">Pickup Information</label>
-                </div>
+                <h6 class="font-weight-bold border-bottom">Pickup Information</h6>
                 <div class="form-group row m-0">
                   <label class="col-sm-3 col-form-label">Name</label>
                   <div class="col-sm-9">
@@ -120,6 +124,94 @@
                     <label class="col-form-label">: <?php echo $shipment['pickup_email'] ?></label>
                   </div>
                 </div>
+              </div>
+              <div class="col-md-6">
+                <h6 class="font-weight-bold border-bottom">Consignee Information</h6>
+                <div class="form-group row m-0">
+                  <label class="col-sm-3 col-form-label">Name</label>
+                  <div class="col-sm-9">
+                    <label class="col-form-label">: <?php echo $shipment['consignee_name'] ?></label>
+                  </div>
+                </div>
+                <div class="form-group row m-0">
+                  <label class="col-sm-3 col-form-label">Address</label>
+                  <div class="col-sm-9">
+                    <label class="col-form-label">: <?php echo $shipment['consignee_address'] ?></label>
+                  </div>
+                </div>
+                <div class="form-group row m-0">
+                  <label class="col-sm-3 col-form-label">City</label>
+                  <div class="col-sm-9">
+                    <label class="col-form-label">: <?php echo $shipment['consignee_city'] ?></label>
+                  </div>
+                </div>
+                <div class="form-group row m-0">
+                  <label class="col-sm-3 col-form-label">Country</label>
+                  <div class="col-sm-9">
+                    <label class="col-form-label">: <?php echo $shipment['consignee_country'] ?></label>
+                  </div>
+                </div>
+                <div class="form-group row m-0">
+                  <label class="col-sm-3 col-form-label">Postcode</label>
+                  <div class="col-sm-9">
+                    <label class="col-form-label">: <?php echo $shipment['consignee_postcode'] ?></label>
+                  </div>
+                </div>
+                <div class="form-group row m-0">
+                  <label class="col-sm-3 col-form-label">Contact Person</label>
+                  <div class="col-sm-9">
+                    <label class="col-form-label">: <?php echo $shipment['consignee_contact_person'] ?></label>
+                  </div>
+                </div>
+                <div class="form-group row m-0">
+                  <label class="col-sm-3 col-form-label">Phone Number</label>
+                  <div class="col-sm-9">
+                    <label class="col-form-label">: <?php echo $shipment['consignee_phone_number'] ?></label>
+                  </div>
+                </div>
+                <div class="form-group row m-0">
+                  <label class="col-sm-3 col-form-label">Email</label>
+                  <div class="col-sm-9">
+                    <label class="col-form-label">: <?php echo $shipment['consignee_email'] ?></label>
+                  </div>
+                </div>
+              </div>
+              <br>
+              <br>
+              <div class="col-md-12">
+                <table class="table table-bordered td-valign-top text-center">
+                  <thead>
+                    <tr class="bg-info">
+                      <th class="text-white">Qty.</th>
+                      <th class="text-white">Package Type</th>
+                      <th class="text-white">Length(cm)</th>
+                      <th class="text-white">Width(cm)</th>
+                      <th class="text-white">Height(cm)</th>
+                      <th class="text-white">Weight(kg)</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <?php foreach ($packages_list as $key => $value) : ?>
+                    <tr>
+                      <td><?php echo $value['qty'] ?></td>
+                      <td><?php echo $value['piece_type'] ?></td>
+                      <td><?php echo $value['length']+0 ?></td>
+                      <td><?php echo $value['width']+0 ?></td>
+                      <td><?php echo $value['height']+0 ?></td>
+                      <td><?php echo $value['weight']+0 ?></td>
+                    </tr>
+                    <?php endforeach;  ?>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="card">
+          <div class="card-body">
+            <div class="row">
+              <div class="col-md-6">
+                <h6 class="font-weight-bold">PickUp Detail</h6>
                 <hr>
                 <div class="form-group">
                   <label>Dirver</label>
@@ -145,7 +237,7 @@
                   </div>
                   <div class="form-group">
                     <label>Note</label>
-                    <textarea class="form-control" name="notes_driver_pickup" placeholder="Notes" required></textarea>
+                    <textarea class="form-control" name="notes_driver_pickup" placeholder="Notes" required>Received by </textarea>
                   </div>
 
                   <div id="signature" style="width: 100%"></div>
@@ -202,7 +294,7 @@
                   </div>
                   <div class="form-group">
                     <label>Note</label>
-                    <textarea class="form-control" name="notes_driver_deliver" placeholder="Notes" required></textarea>
+                    <textarea class="form-control" name="notes_driver_deliver" placeholder="Notes" required>Received by </textarea>
                   </div>
 
                   <div id="signature2" style="width: 100%"></div>

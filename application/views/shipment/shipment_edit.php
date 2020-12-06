@@ -15,7 +15,7 @@
 </style>
 <div class="main-content">
   <div class="container-fluid">
-    <form action="<?php echo base_url(); ?>shipment/shipment_edit_process" method="POST" class="forms-sample">
+    <form action="<?php echo base_url(); ?>shipment/shipment_edit_process" method="POST" class="forms-sample" enctype="multipart/form-data">
       <input type="hidden" name="id" value="<?php echo $shipment['id'] ?>">
       <input type="hidden" name="tracking_no" value="<?php echo $shipment['tracking_no'] ?>">
       <div class="row clearfix">
@@ -54,6 +54,19 @@
                   <div class="form-group">
                     <label>MAWB / MBL</label>
                     <input type="text" class="form-control" name="main_agent_mawb_mbl" placeholder="MAWB / MBL" value="<?= $shipment['main_agent_mawb_mbl'] ?>">
+                  </div>
+                  <div class="form-group">
+                    <label>MAWB / MBL Attachment</label>
+                    <input type="file" name="main_agent_mawb_mbl_atc" class="file-upload-default">
+                    <div class="input-group col-xs-12">
+                      <input type="text" class="form-control file-upload-info" disabled placeholder="Upload Image">
+                      <span class="input-group-append">
+                        <button class="file-upload-browse btn btn-info" type="button">Upload</button>
+                      </span>
+                    </div>
+                    <?php if($shipment['main_agent_mawb_mbl_atc'] != ""): ?>
+                    <img height="150px" src="<?php echo base_url()."file/agent/".$shipment['main_agent_mawb_mbl_atc'] ?>">
+                    <?php endif; ?>
                   </div>
                   <div class="form-group">
                     <label>Carrier</label>
@@ -100,6 +113,19 @@
                     <input type="text" class="form-control" name="secondary_agent_mawb_mbl" placeholder="MAWB / MBL" value="<?= $shipment['secondary_agent_mawb_mbl'] ?>">
                   </div>
                   <div class="form-group">
+                    <label>MAWB / MBL Attachment</label>
+                    <input type="file" name="secondary_agent_mawb_mbl_atc" class="file-upload-default">
+                    <div class="input-group col-xs-12">
+                      <input type="text" class="form-control file-upload-info" disabled placeholder="Upload Image">
+                      <span class="input-group-append">
+                        <button class="file-upload-browse btn btn-info" type="button">Upload</button>
+                      </span>
+                    </div>
+                    <?php if($shipment['secondary_agent_mawb_mbl_atc'] != ""): ?>
+                    <img height="150px" src="<?php echo base_url()."file/agent/".$shipment['secondary_agent_mawb_mbl_atc'] ?>">
+                    <?php endif; ?>
+                  </div>
+                  <div class="form-group">
                     <label>Carrier</label>
                     <input type="text" class="form-control" name="secondary_agent_carrier" placeholder="Carrier" value="<?= $shipment['secondary_agent_carrier'] ?>">
                   </div>
@@ -119,10 +145,6 @@
                     <label>Port of Discharge</label>
                     <input type="text" class="form-control" name="secondary_agent_port_of_discharge" placeholder="Port of Discharge" value="<?= $shipment['secondary_agent_port_of_discharge'] ?>">
                   </div>
-                  <!-- <div class="form-group">
-                    <label>Cost</label>
-                    <input type="number" class="form-control" name="secondary_agent_cost" placeholder="Cost" value="<?= @$shipment['secondary_agent_cost'] ?>">
-                  </div> -->
                 </div>
               </div>
               <br>
@@ -137,6 +159,10 @@
                     <label>Seal No.</label>
                     <input type="text" class="form-control" name="seal_no" placeholder="Seal No." value="<?= $shipment['seal_no'] ?>">
                   </div>
+                  <div class="form-group">
+                    <label>Permit No.</label>
+                    <input type="text" class="form-control" name="permit_no" placeholder="Permit No." value="<?= $shipment['permit_no'] ?>">
+                  </div>
                 </div>
                 <div class="col-md-6">
                   <div class="form-group">
@@ -144,8 +170,17 @@
                     <input type="text" class="form-control" name="cipl_no" placeholder="CIPL No." value="<?= $shipment['cipl_no'] ?>">
                   </div>
                   <div class="form-group">
-                    <label>Permit No.</label>
-                    <input type="text" class="form-control" name="permit_no" placeholder="Permit No." value="<?= $shipment['permit_no'] ?>">
+                    <label>CIPL No. Files</label>
+                    <input type="file" name="cipl_no_atc" class="file-upload-default">
+                    <div class="input-group col-xs-12">
+                      <input type="text" class="form-control file-upload-info" disabled placeholder="Upload Image">
+                      <span class="input-group-append">
+                        <button class="file-upload-browse btn btn-info" type="button">Upload</button>
+                      </span>
+                    </div>
+                    <?php if($shipment['cipl_no_atc'] != ""): ?>
+                    <img height="150px" src="<?php echo base_url()."file/agent/".$shipment['cipl_no_atc'] ?>">
+                    <?php endif; ?>
                   </div>
                 </div>
               </div>

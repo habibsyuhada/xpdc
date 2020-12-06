@@ -504,7 +504,7 @@
                       <span class="btn btn-danger previous-tab">Back</span>
                     </div>
                     <div class="text-right col-6">
-                      <button type="submit" class="btn btn-success" onclick="return confirm('Apakah Anda Yakin?')">Submit</button>
+                      <button type="submit" class="btn btn-success" onclick="$('input, select, textarea').removeClass('is-invalid'); return confirm('Apakah Anda Yakin?')">Submit</button>
                     </div>
                   </div>
                 </div>
@@ -638,18 +638,17 @@
   </div>
 </div>
 <script type="text/javascript">
-  var input_invalid = 0;
-  $("form").on("submit", function() {
-    input_invalid = 0;
+  var settime_invalid_cek;
+  $("form input, form select, form textarea").on("invalid", function() {
+    $(this).addClass("is-invalid");
+    put_alert_if_invalid();
   });
-
-  $("form input").on("invalid", function() {
-    if (input_invalid < 1) {
-      var element = $(this).closest('.tab-pane').attr('id');
-      $('#' + element + '-tab').trigger('click');
-      input_invalid = 1;
-    }
-  });
+  function put_alert_if_invalid() {
+    clearTimeout(settime_invalid_cek);
+    settime_invalid_cek = setTimeout(function(){ 
+      alert("Please Check all input in each tab to make sure you inputed them correctly.");
+    }, 1000);
+  }
 
   function same_as(input) {
     var same_as = $(input).val();

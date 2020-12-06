@@ -8,7 +8,9 @@ class User_mod extends CI_Model {
    
   function user_list_db($where = null){
 		if(isset($where)){
-			$this->db->where($where);
+      if(count($where) > 0){
+        $this->db->where($where);
+      }
 		}
 		$this->db->order_by("created_date", "DESC");
 		$query = $this->db->get('user');

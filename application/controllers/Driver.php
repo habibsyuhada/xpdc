@@ -120,7 +120,7 @@ class Driver extends CI_Controller
 		$config['upload_path']          = $upload_path;
 		$config['file_name']            = 'img_'.$post['status'].'_'.$post['id'].'_'. date('YmsHis');
 		$config['allowed_types']        = 'gif|jpg|png|jpeg';
-		$config['max_size']      				= 500;
+		// $config['max_size']      				= 500;
 		$config['overwrite'] 						= TRUE;
 
 		$this->load->library('upload', $config);
@@ -145,7 +145,9 @@ class Driver extends CI_Controller
 		$config['new_image']			= $upload_path.$gbr['file_name'];
 		$this->load->library('image_lib', $config);
 		if (!$this->image_lib->resize()) {
-			echo $this->image_lib->display_errors();
+			$this->session->set_flashdata('error', $this->image_lib->display_errors());
+			redirect("driver/driver_update/".$post['id']);
+			return false;
 		}
 
 		$form_data = array(

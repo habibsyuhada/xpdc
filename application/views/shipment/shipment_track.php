@@ -3,6 +3,7 @@
   $page_permission = array(
     0 => ( in_array($role, array("Super Admin", "Operator")) ? 1 : 0), //Create
     1 => ( in_array($role, array("Super Admin", "Operator")) ? 1 : 0), //Delete
+    2 => ( in_array($role, array("Super Admin")) ? 1 : 0), //Edit
   );
 ?>
 <div class="main-content">
@@ -125,16 +126,16 @@
               <tbody>
                 <?php foreach ($history_list as $key => $value): ?>
                 <tr>
-                  <td><?php echo $value['date'] ?></td>
-                  <td><?php echo date("H:i", strtotime($value['time'])) ?></td>
-                  <td><?php echo $value['location'] ?></td>
-                  <td><?php echo $value['status'] ?></td>
-                  <td><?php echo $value['remarks'] ?></td>
+                <td <?php if($page_permission[2] == 1){ ?> contenteditable onfocus="save_last_text_process($(this).text());" onblur="history_update(this, <?php echo $value['id'] ?>, 'date')"<?php } ?>><?php echo $value['date'] ?></td>
+                <td <?php if($page_permission[2] == 1){ ?> contenteditable onfocus="save_last_text_process($(this).text());" onblur="history_update(this, <?php echo $value['id'] ?>, 'time')"<?php } ?>><?php echo date("H:i", strtotime($value['time'])) ?></td>
+                <td <?php if($page_permission[2] == 1){ ?> contenteditable onfocus="save_last_text_process($(this).text());" onblur="history_update(this, <?php echo $value['id'] ?>, 'location')"<?php } ?>><?php echo $value['location'] ?></td>
+                <td <?php if($page_permission[2] == 1){ ?> contenteditable onfocus="save_last_text_process($(this).text());" onblur="history_update(this, <?php echo $value['id'] ?>, 'status')"<?php } ?>><?php echo $value['status'] ?></td>
+                <td <?php if($page_permission[2] == 1){ ?> contenteditable onfocus="save_last_text_process($(this).text());" onblur="history_update(this, <?php echo $value['id'] ?>, 'remarks')"<?php } ?>><?php echo $value['remarks'] ?></td>
                   <?php if($page_permission[1] == 1): ?>
                   <td><a class="btn btn-danger btn-sm" onclick="return confirm('Are you sure?')" href="<?=base_url()?>shipment/shipment_history_delete_db/<?php echo $value['id']?>/<?php echo $value['id_shipment']?>"><i class="fa fa-trash"></i></a></td>
                   <?php endif; ?>
                 </tr>
-                <?php endforeach; ?>
+                <?php endforeach; $id_shipment = $value['id_shipment']; ?>
               </tbody>
             </table>
           </div>
@@ -144,6 +145,42 @@
   </div>
 </div>
 <script type="text/javascript">
+  var save_last_text;
+  function save_last_text_process(text) {
+    save_last_text = text;
+  }
+
+  function history_update(td, id, column) {
+    var text = $(td).text();
+    if(save_last_text == text){
+      return false;
+    }
+
+    if(confirm('Are you sure to change this data?') == true){
+      $.ajax({
+        type: "POST",
+        url: "<?php echo base_url() ?>shipment/column_history_update_process",
+        data: {
+          text: text,
+          id: id,
+          column: column,
+          id_shipment: <?php echo $id_shipment ?>,
+        },
+        success: function(data){
+          if(data.includes('Error') == true){
+            showDangerToast(data);
+          }
+          else{
+            showSuccessToast('Your Data has been updated to '+text+'!');
+          }
+        }
+      });
+    }
+    else{
+      $(td).text(save_last_text);
+    }
+  }
+
   $('#table_history').DataTable({
     order: [[0, "desc"], [1, "desc"]]
   });

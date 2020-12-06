@@ -24,7 +24,7 @@
             <div class="card-body">
               <hr class="mt-0">
               <p class="m-0 text-center">Shipment Number</p>
-              <h1 class="font-weight-bold m-0 text-center"><?php echo $shipment['tracking_no'] ?></h1>
+              <h1 class="font-weight-bold m-0 text-center"><?php echo $shipment['tracking_no'] ?> <?php echo ($t) ?></h1>
               <hr class="mb-0">
             </div>
           </div>
@@ -36,13 +36,13 @@
             <div class="card-body">
               <ul class="nav nav-tabs" id="myTab" role="tablist">
                 <li class="nav-item">
-                  <a class="nav-link active" id="service-tab" data-toggle="tab" href="#service" role="tab" aria-controls="service" aria-selected="true">Service Information</a>
+                  <a class="nav-link <?php echo ($t == "sein" ? "active" : "") ?>" id="service-tab" data-toggle="tab" href="#service" role="tab" aria-controls="service" aria-selected="<?php echo ($t == "sein" ? "true" : "false") ?>">Service Information</a>
                 </li>
                 <li class="nav-item">
                   <a class="nav-link" id="shipper-consignee-tab" data-toggle="tab" href="#shipper-consignee" role="tab" aria-controls="shipper-consignee" aria-selected="false">Shipper & Consignee Information</a>
                 </li>
                 <li class="nav-item">
-                  <a class="nav-link" id="shipment-info-tab" data-toggle="tab" href="#shipment-info" role="tab" aria-controls="shipment-info" aria-selected="false">Shipment Information</a>
+                  <a class="nav-link <?php echo ($t == "shin" ? "active" : "") ?>" id="shipment-info-tab" data-toggle="tab" href="#shipment-info" role="tab" aria-controls="shipment-info" aria-selected="<?php echo ($t == "shin" ? "true" : "false") ?>">Shipment Information</a>
                 </li>
                 <li class="nav-item">
                   <a class="nav-link" id="pickup-info-tab" data-toggle="tab" href="#pickup-info" role="tab" aria-controls="pickup-info" aria-selected="false">Pick Up Information</a>
@@ -52,7 +52,7 @@
                 </li>
               </ul>
               <div class="tab-content" id="myTabContent">
-                <div class="tab-pane fade show active" id="service" role="tabpanel" aria-labelledby="service-tab">
+                <div class="tab-pane fade <?php echo ($t == "sein" ? "show active" : "") ?>" id="service" role="tabpanel" aria-labelledby="service-tab">
                   <br>
                   <div class="row clearfix">
                     <div class="col-md-12">
@@ -201,7 +201,7 @@
                     </div>
                   </div>
                 </div>
-                <div class="tab-pane fade" id="shipment-info" role="tabpanel" aria-labelledby="shipment-info-tab">
+                <div class="tab-pane fade <?php echo ($t == "shin" ? "show active" : "") ?>" id="shipment-info" role="tabpanel" aria-labelledby="shipment-info-tab">
                   <br>
                   <div class="row clearfix">
                     <div class="col-md-12">
@@ -353,11 +353,24 @@
                       Measurement : <span id="measurement">0</span> M<sup>3</sup>
                     </div>
                   </div>
+                  <br>
                   <div class="mt-2 row">
-                    <div class="text-left col-6">
+                    <div class="text-left col">
                       <span class="btn btn-danger previous-tab">Back</span>
                     </div>
-                    <div class="text-right col-6">
+                    <?php if($shipment['status'] == "Picked up"): ?>
+                    <div class="col-auto">
+                      <div class="form-inline text-right">
+                        <div class="form-check mx-sm-2">
+                          <label class="custom-control custom-checkbox">
+                            <input type="checkbox" name="has_updated_packages" class="custom-control-input">
+                            <span class="custom-control-label">&nbsp; Update and change status to Service Center</span>
+                          </label>
+                        </div>
+                      </div>
+                    </div>
+                    <?php endif; ?>
+                    <div class="text-right col-auto">
                       <span class="btn btn-info next-tab">Next</span>
                     </div>
                   </div>
@@ -537,7 +550,7 @@
                       <span class="btn btn-danger previous-tab">Back</span>
                     </div>
                     <div class="text-right col-6">
-                      <button type="submit" class="btn btn-success" onclick="return confirm('Apakah Anda Yakin?')">Submit</button>
+                      <button type="submit" class="btn btn-success" onclick="$('input, select, textarea').removeClass('is-invalid');return confirm('Apakah Anda Yakin?')">Submit</button>
                     </div>
                   </div>
                 </div>
@@ -551,18 +564,17 @@
   </div>
 </div>
 <script type="text/javascript">
-  var input_invalid = 0;
-  $("form").on("submit", function() {
-    input_invalid = 0;
+  var settime_invalid_cek;
+  $("form input, form select, form textarea").on("invalid", function() {
+    $(this).addClass("is-invalid");
+    put_alert_if_invalid();
   });
-
-  $("form input").on("invalid", function() {
-    if (input_invalid < 1) {
-      var element = $(this).closest('.tab-pane').attr('id');
-      $('#' + element + '-tab').trigger('click');
-      input_invalid = 1;
-    }
-  });
+  function put_alert_if_invalid() {
+    clearTimeout(settime_invalid_cek);
+    settime_invalid_cek = setTimeout(function(){ 
+      alert("Please Check all input in each tab to make sure you inputed them correctly.");
+    }, 1000);
+  }
 
   function same_as(input) {
     var same_as = $(input).val();

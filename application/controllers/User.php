@@ -31,7 +31,21 @@ class User extends CI_Controller
 	}
 
 	public function user_list(){
-    $data['user_list'] 	= $this->user_mod->user_list_db();
+		$where = array();
+		if($this->input->get("branch")){
+			$where['branch'] 	= $this->input->get("branch");
+		}
+		if($this->input->get("role")){
+			$where['role'] 	= $this->input->get("role");
+		}
+		$data['user_list'] 	= $this->user_mod->user_list_db($where);
+		
+		$datadb 	= $this->home_mod->branch_list();
+		$branch_list = [];
+		foreach ($datadb as $key => $value) {
+			$branch_list[$value['name']] = $value;
+		}
+		$data['branch_list'] 	= $branch_list;
 
     $data['subview'] 				= 'user/user_list';
 		$data['meta_title'] 		= 'User List';

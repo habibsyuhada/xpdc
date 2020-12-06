@@ -323,12 +323,18 @@ class Shipment extends CI_Controller
 			redirect("shipment/shipment_list");
 		}
 
+		$t = 'sein';
+		if($this->input->get('t')){
+			$t = $this->input->get('t');
+		}
+		$data['t'] = $t;
+
 		$data['country'] = json_decode(file_get_contents("./assets/country/country.json"), true);
 
 		$data['shipment'] 			= $shipment_list[0];
 		$data['packages_list'] 	= $packages_list;
 		$data['history_list'] 	= $history_list;
-		$data['t'] 							= 'g';
+		// $data['t'] 							= 'g';
 		$data['subview'] 				= 'shipment/shipment_update';
 		$data['meta_title'] 		= 'Shipment Update';
 		$this->load->view('index', $data);
@@ -365,6 +371,9 @@ class Shipment extends CI_Controller
 			'currency'					=> $post['currency'],
 			'ref_no'					=> $post['ref_no'],
 		);
+		if(isset($post['has_updated_packages'])){
+			$form_data['has_updated_packages'] = 1;
+		}
 		$where['id'] = $post['id'];
 		$this->shipment_mod->shipment_update_process_db($form_data, $where);
 
@@ -425,6 +434,19 @@ class Shipment extends CI_Controller
 			}
 		}
 
+		if(isset($post['has_updated_packages'])){
+			$form_data = array(
+				'id_shipment' 	=> $post['id'],
+				'date' 					=> date("Y-m-d"),
+				'time' 					=> date("H:i:s"),
+				'location' 			=> $post['shipper_city'].", ".$post['shipper_country'],
+				'status' 				=> "Service Center",
+				'remarks' 			=> "",
+			);
+			$id_history = $this->shipment_mod->shipment_history_create_process_db($form_data);
+			$this->shipment_update_last_history($post['id']);
+		}
+
 		$this->session->set_flashdata('success', 'Your Shipment data has been Updated!');
 		redirect('shipment/shipment_update/' . $post['id']);
 	}
@@ -459,7 +481,7 @@ class Shipment extends CI_Controller
 	public function shipment_edit_process()
 	{
 		$post = $this->input->post();
-
+		
 		$form_data = array(
 			'main_agent_name'												=> $post['main_agent_name'],
 			'main_agent_mawb_mbl'										=> $post['main_agent_mawb_mbl'],
@@ -484,6 +506,123 @@ class Shipment extends CI_Controller
 			'cipl_no'																=> $post['cipl_no'],
 			'permit_no'															=> $post['permit_no']
 		);
+		$this->load->library('upload');
+		$this->load->library('image_lib');
+		if (!empty($_FILES['main_agent_mawb_mbl_atc']['name'])) {
+			$upload_path = 'file/agent/';
+			$config = [
+				'upload_path' 		=> $upload_path,
+				'file_name' 			=> 'img_main_agent_mawb_mbl_atc_'.$post['id'].'_'. date('YmsHis'),
+				'allowed_types' 	=> 'gif|jpg|png|jpeg',
+				// 'max_size'				=> 500,
+				'overwrite' 			=> TRUE,
+			];
+			$this->upload->initialize($config);
+
+			if (!$this->upload->do_upload('main_agent_mawb_mbl_atc')) {
+				$this->session->set_flashdata('error', $this->upload->display_errors());
+				redirect($_SERVER['HTTP_REFERER']);
+				return false;
+			}
+
+			$gbr = $this->upload->data();
+			unset($config);
+			$config = [
+				'image_library'		=> 'gd2',
+				'source_image'		=> $upload_path.$gbr['file_name'],
+				// 'create_thumb'		=> FALSE,
+				'maintain_ratio'	=> TRUE,
+				'quality'					=> '50%',
+				'width'						=> 500,
+				// 'height'					=> 400,
+				'new_image'				=> $upload_path.$gbr['file_name'],
+			];
+
+			$this->image_lib->initialize($config);
+			if (!$this->image_lib->resize()) {
+				$this->session->set_flashdata('error', $this->image_lib->display_errors());
+				redirect($_SERVER['HTTP_REFERER']);
+				return false;
+			}
+			$form_data['main_agent_mawb_mbl_atc'] = $gbr['file_name'];
+		}
+		if (!empty($_FILES['secondary_agent_mawb_mbl_atc']['name'])) {
+			$upload_path = 'file/agent/';
+			$config = [
+				'upload_path' 		=> $upload_path,
+				'file_name' 			=> 'img_secondary_agent_mawb_mbl_atc_'.$post['id'].'_'. date('YmsHis'),
+				'allowed_types' 	=> 'gif|jpg|png|jpeg',
+				// 'max_size'				=> 500,
+				'overwrite' 			=> TRUE,
+			];
+			$this->upload->initialize($config);
+
+			if (!$this->upload->do_upload('secondary_agent_mawb_mbl_atc')) {
+				$this->session->set_flashdata('error', $this->upload->display_errors());
+				redirect($_SERVER['HTTP_REFERER']);
+				return false;
+			}
+
+			$gbr = $this->upload->data();
+			unset($config);
+			$config = [
+				'image_library'		=> 'gd2',
+				'source_image'		=> $upload_path.$gbr['file_name'],
+				// 'create_thumb'		=> FALSE,
+				'maintain_ratio'	=> TRUE,
+				'quality'					=> '50%',
+				'width'						=> 500,
+				// 'height'					=> 400,
+				'new_image'				=> $upload_path.$gbr['file_name'],
+			];
+
+			$this->image_lib->initialize($config);
+			if (!$this->image_lib->resize()) {
+				$this->session->set_flashdata('error', $this->image_lib->display_errors());
+				redirect($_SERVER['HTTP_REFERER']);
+				return false;
+			}
+			$form_data['secondary_agent_mawb_mbl_atc'] = $gbr['file_name'];
+		}
+		if (!empty($_FILES['cipl_no_atc']['name'])) {
+			$upload_path = 'file/agent/';
+			$config = [
+				'upload_path' 		=> $upload_path,
+				'file_name' 			=> 'img_cipl_no_atc_'.$post['id'].'_'. date('YmsHis'),
+				'allowed_types' 	=> 'gif|jpg|png|jpeg',
+				// 'max_size'				=> 500,
+				'overwrite' 			=> TRUE,
+			];
+			$this->upload->initialize($config);
+
+			if (!$this->upload->do_upload('cipl_no_atc')) {
+				$this->session->set_flashdata('error', $this->upload->display_errors());
+				redirect($_SERVER['HTTP_REFERER']);
+				return false;
+			}
+
+			$gbr = $this->upload->data();
+			unset($config);
+			$config = [
+				'image_library'		=> 'gd2',
+				'source_image'		=> $upload_path.$gbr['file_name'],
+				// 'create_thumb'		=> FALSE,
+				'maintain_ratio'	=> TRUE,
+				'quality'					=> '50%',
+				'width'						=> 500,
+				// 'height'					=> 400,
+				'new_image'				=> $upload_path.$gbr['file_name'],
+			];
+
+			$this->image_lib->initialize($config);
+			if (!$this->image_lib->resize()) {
+				$this->session->set_flashdata('error', $this->image_lib->display_errors());
+				redirect($_SERVER['HTTP_REFERER']);
+				return false;
+			}
+			$form_data['cipl_no_atc'] = $gbr['file_name'];
+		}
+
 		$where2['id_shipment'] = $post['id'];
 		$this->shipment_mod->shipment_detail_update_process_db($form_data, $where2);
 
@@ -1008,6 +1147,11 @@ class Shipment extends CI_Controller
 				return false;
 				exit;
 			}
+			elseif ($post['history_status'] == "Service Center" && $value['status'] == "Picked up" && $value['has_updated_packages'] != 1) {
+				echo "Error : You need to edit shipment information / packages first to change status Service Center from Picked up (".$value['tracking_no'].")";
+				return false;
+				exit;
+			}
 			$form_data = array(
 				'id_shipment' 	=> $value['id'],
 				'date' 					=> $post['history_date'],
@@ -1025,6 +1169,21 @@ class Shipment extends CI_Controller
 		$output['id'] = $id_history;
 
 		echo json_encode($output);
+	}
+
+	public function column_history_update_process(){
+		$post = $this->input->post();
+		$form_data = [
+			$post['column'] => $post['text']
+		];
+		$where = [
+			'id' => $post['id']
+		];
+		$this->shipment_mod->shipment_history_update_process_db($form_data, $where);
+
+		if(in_array($post['column'], array('date', 'time'))){
+			$this->shipment_update_last_history($post['id_shipment']);
+		}
 	}
 
 	public function shipment_import()

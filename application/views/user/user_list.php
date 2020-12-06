@@ -4,6 +4,56 @@
       <div class="col-md-12">
         <div class="card">
           <div class="card-header">
+            <h3>Filter</h3>
+            <div class="card-header-right">
+              <ul class="list-unstyled card-option">
+                <li><i class="ik minimize-card ik-minus"></i></li>
+              </ul>
+            </div>
+          </div>
+          <div class="card-body">
+            <form id="form_filter" action="" method="GET">
+              <div class="row clearfix">
+                <div class="col-md-6">
+                  <div class="form-group">
+                    <label>Branch</label>
+                    <select class="form-control" name="branch">
+                      <option value="">-- Select One --</option>
+                      <?php foreach ($branch_list as $key => $value) : ?>
+                        <option <?php echo ($this->input->get('branch') == $key ? 'selected' : '') ?> value="<?php echo $key ?>"><?php echo $key ?></option>
+                      <?php endforeach; ?>
+                    </select>
+                  </div>
+                </div>
+                <div class="col-md-6">
+                  <div class="form-group">
+                    <label>Role</label>
+                    <select class="form-control" name="role">
+                      <option value="">-- Select One --</option>
+                      <option <?php echo ($this->input->get('role') == 'Super Admin' ? 'selected' : '') ?> value="Super Admin">Super Admin</option>
+                      <option <?php echo ($this->input->get('role') == 'Operator' ? 'selected' : '') ?> value="Operator">Operator</option>
+                      <option <?php echo ($this->input->get('role') == 'Driver' ? 'selected' : '') ?> value="Driver">Driver</option>
+                      <option <?php echo ($this->input->get('role') == 'Finance' ? 'selected' : '') ?> value="Finance">Finance</option>
+                      <option <?php echo ($this->input->get('role') == 'Commercial' ? 'selected' : '') ?> value="Commercial">Commercial</option>
+                      <option <?php echo ($this->input->get('role') == 'Customer' ? 'selected' : '') ?> value="Customer">Customer</option>
+                    </select>
+                  </div>
+                </div>
+              </div>
+              <div class="row clearfix">
+                <div class="col-md text-right">
+                  <button type="submit" class="btn btn-info"><i class="fas fa-search"></i> Search</button>
+                </div>
+              </div>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="row clearfix">
+      <div class="col-md-12">
+        <div class="card">
+          <div class="card-header">
             <h3>User List</h3>
           </div>
           <div class="card-body">

@@ -602,7 +602,7 @@ class Shipment extends CI_Controller
 			$config = [
 				'upload_path' 		=> $upload_path,
 				'file_name' 			=> 'img_main_agent_mawb_mbl_atc_'.$post['id'].'_'. date('YmsHis'),
-				'allowed_types' 	=> 'gif|jpg|png|jpeg',
+				'allowed_types' 	=> '*',
 				// 'max_size'				=> 500,
 				'overwrite' 			=> TRUE,
 			];
@@ -640,7 +640,7 @@ class Shipment extends CI_Controller
 			$config = [
 				'upload_path' 		=> $upload_path,
 				'file_name' 			=> 'img_secondary_agent_mawb_mbl_atc_'.$post['id'].'_'. date('YmsHis'),
-				'allowed_types' 	=> 'gif|jpg|png|jpeg',
+				'allowed_types' 	=> '*',
 				// 'max_size'				=> 500,
 				'overwrite' 			=> TRUE,
 			];
@@ -678,7 +678,7 @@ class Shipment extends CI_Controller
 			$config = [
 				'upload_path' 		=> $upload_path,
 				'file_name' 			=> 'img_cipl_no_atc_'.$post['id'].'_'. date('YmsHis'),
-				'allowed_types' 	=> 'gif|jpg|png|jpeg',
+				'allowed_types' 	=> '*',
 				// 'max_size'				=> 500,
 				'overwrite' 			=> TRUE,
 			];

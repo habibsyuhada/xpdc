@@ -214,7 +214,7 @@
                 <h6 class="font-weight-bold">PickUp Detail</h6>
                 <hr>
                 <div class="form-group">
-                  <label>Dirver</label>
+                  <label>Driver</label>
                   <input type="text" class="form-control" name="driver_pickup" value="<?php echo (@$driver_list[$shipment["driver_pickup"]]['name'] == "" ? "Not Assigned" : @$driver_list[$shipment["driver_pickup"]]['name']) ?>" readonly>
                 </div>
                 <?php if($shipment['status_driver_pickup'] == 1): ?>
@@ -271,7 +271,7 @@
                 <h6 class="font-weight-bold">Deliver Detail</h6>
                 <hr>
                 <div class="form-group">
-                  <label>Dirver</label>
+                  <label>Driver</label>
                   <input type="text" class="form-control" name="driver_deliver" value="<?php echo (@$driver_list[$shipment["driver_deliver"]]['name'] == "" ? "Not Assigned" : @$driver_list[$shipment["driver_deliver"]]['name']) ?>" readonly>
                 </div>
                 <?php if($shipment['status_driver_deliver'] == 1): ?>

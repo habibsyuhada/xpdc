@@ -9,7 +9,7 @@ $page_permission = array(
   5 => (in_array($role, array("Super Admin", "Operator")) ? 1 : 0), //assign_driver
   6 => (in_array($role, array("Super Admin", "Finance")) ? 1 : 0), //shipment cost
   7 => (in_array($role, array("Super Admin", "Finance")) ? 1 : 0), //alert for hipment that not costed
-  8 => (in_array($role, array("Super Admin", "Finance")) ? 1 : 0), //alert for hipment that not costed
+  8 => (in_array($role, array("Commercial")) ? 1 : 0), //alert for hipment that not costed
 );
 ?>
 <style>
@@ -236,6 +236,12 @@ $page_permission = array(
                             <div class="dropdown-menu">
                               <a class="dropdown-item" target="_blank" href="<?php echo base_url() ?>shipment/shipment_tracking_label_pdf/<?php echo $value['id'] ?>">Label</a>
                               <a class="dropdown-item" target="_blank" href="<?php echo base_url() ?>shipment/shipment_awb_pdf/<?php echo $value['id'] ?>">WayBill</a>
+                              <a class="dropdown-item" target="_blank" href="<?php echo base_url() ?>shipment/shipment_receipt_pdf/<?php echo $value['id'] ?>">Receipt</a>
+                            </div>
+                          <?php endif; ?>
+                          <?php if ($page_permission[8] == 1) : ?>
+                            <button type="button" class="btn btn btn-warning dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><i class="fas fa-print m-0"></i> <i class="ik ik-chevron-down m-0"></i></button>
+                            <div class="dropdown-menu">
                               <a class="dropdown-item" target="_blank" href="<?php echo base_url() ?>shipment/shipment_receipt_pdf/<?php echo $value['id'] ?>">Receipt</a>
                             </div>
                           <?php endif; ?>

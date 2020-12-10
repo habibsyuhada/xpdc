@@ -24,7 +24,7 @@
             <div class="card-body">
               <hr class="mt-0">
               <p class="m-0 text-center">Shipment Number</p>
-              <h1 class="font-weight-bold m-0 text-center"><?php echo $shipment['tracking_no'] ?> <?php echo ($t) ?></h1>
+              <h1 class="font-weight-bold m-0 text-center"><?php echo $shipment['tracking_no'] ?></h1>
               <hr class="mb-0">
             </div>
           </div>
@@ -358,18 +358,6 @@
                     <div class="text-left col">
                       <span class="btn btn-danger previous-tab">Back</span>
                     </div>
-                    <?php if($shipment['status'] == "Picked up"): ?>
-                    <div class="col-auto">
-                      <div class="form-inline text-right">
-                        <div class="form-check mx-sm-2">
-                          <label class="custom-control custom-checkbox">
-                            <input type="checkbox" name="has_updated_packages" class="custom-control-input">
-                            <span class="custom-control-label">&nbsp; Update and change status to Service Center</span>
-                          </label>
-                        </div>
-                      </div>
-                    </div>
-                    <?php endif; ?>
                     <div class="text-right col-auto">
                       <span class="btn btn-info next-tab">Next</span>
                     </div>

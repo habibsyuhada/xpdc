@@ -34,17 +34,7 @@ class Shipment extends CI_Controller
 			$where["(driver_pickup = " . $this->session->userdata('id') . " OR driver_deliver = " . $this->session->userdata('id') . ")"] 	= NULL;
 		}
 		elseif ($this->session->userdata('role') == "Commercial") {
-			$datadb 	= $this->home_mod->customer_list(array("status_delete" => 1, "create_by" => $this->session->userdata('id')));
-			$customer_list = [];
-			foreach ($datadb as $key => $value) {
-				if($value['account_no'] != ""){
-					$customer_list[] = $value['account_no'];
-				}
-			}
-			if(count($customer_list) == 0){
-				$customer_list[] = "0";
-			}
-			$where["shipment_detail.billing_account IN ('".join("', '", $customer_list)."')"] 	= NULL;
+			$where["created_by"] 	= $this->session->userdata('id');
 		}
 
 		if ($this->input->get('status_driver')) {
@@ -75,12 +65,16 @@ class Shipment extends CI_Controller
 		$datadb 				= $this->shipment_mod->shipment_list_db($where, null, $order_by);
 		$shipment_list 	= [];
 		$express_list 	= [];
+		$created_by 	= [];
 		foreach ($datadb as $key => $value) {
 			if($value['sea'] == "Express" && $value['status'] != "Delivered"){
 				$express_list[] = $value;
 			}
 			else{
 				$shipment_list[] = $value;
+			}
+			if(!in_array($value['created_by'], $created_by)){
+				$created_by[] = $value['created_by'];
 			}
 		}
 		$data['shipment_list'] 	= array_merge($express_list, $shipment_list);
@@ -94,6 +88,17 @@ class Shipment extends CI_Controller
 			}
 		}
 		$data['driver_list'] 	= $this->home_mod->user_list($where);
+
+		$created_by_list = [];
+		if(count($created_by) > 0){
+			unset($where);
+			$where["id IN ('".join("', '", $created_by)."')"] 	= NULL;
+			$datadb 	= $this->home_mod->user_list($where);
+			foreach ($datadb as $key => $value) {
+				$created_by_list[$value['id']] = $value['name'];
+			}
+		}
+		$data['created_by_list'] = $created_by_list;
 
 		$data['country'] = json_decode(file_get_contents("./assets/country/country.json"), true);
 
@@ -223,7 +228,7 @@ class Shipment extends CI_Controller
 			'ref_no'					=> $post['ref_no'],
 			'status'					=> $status,
 			'status_delete'				=> 1,
-			'created_by'				=> $this->session->userdata('email'),
+			'created_by'				=> $this->session->userdata('id'),
 			'branch'				=> $this->session->userdata('branch'),
 		);
 		$id_shipment = $this->shipment_mod->shipment_create_process_db($form_data);
@@ -451,6 +456,90 @@ class Shipment extends CI_Controller
 		redirect('shipment/shipment_update/' . $post['id']);
 	}
 
+	public function shipment_package_detail($id)
+	{
+		$where['id'] 						= $id;
+		$shipment_list 					= $this->shipment_mod->shipment_list_db($where);
+
+		unset($where);
+		$where['id_shipment'] 	= $id;
+		$packages_list 					= $this->shipment_mod->shipment_packages_list_db($where);
+
+		if (count($shipment_list) <= 0) {
+			$this->session->set_flashdata('error', 'Shipment not Found!');
+			redirect("shipment/shipment_list");
+		}
+
+		$data['shipment'] 			= $shipment_list[0];
+		$data['packages_list'] 	= $packages_list;
+		$data['country'] = json_decode(file_get_contents("./assets/country/country.json"), true);
+		$data['subview'] 				= 'shipment/shipment_package_detail';
+		$data['meta_title'] 		= 'Shipment Package Detail';
+		$this->load->view('index', $data);
+	}
+
+	public function shipment_package_detail_process()
+	{
+		$post = $this->input->post();
+		$form_data = array(
+			'incoterms' 						=> $post['incoterms'],
+			'description_of_goods'	=> $post['description_of_goods'],
+			'hscode'								=> $post['hscode'],
+			'coo'										=> $post['coo'],
+			'declared_value'				=> $post['declared_value'],
+			'currency'							=> $post['currency'],
+			'ref_no'								=> $post['ref_no'],
+		);
+		if(isset($post['has_updated_packages'])){
+			$form_data['has_updated_packages'] = 1;
+		}
+		$where['id'] = $post['id'];
+		$this->shipment_mod->shipment_update_process_db($form_data, $where);
+
+		foreach ($post['qty'] as $key => $value) {
+			unset($where);
+			if ($post['id_detail'][$key] == "") {
+				$form_data = array(
+					'id_shipment' 					=> $post['id'],
+					'qty' 							=> $post['qty'][$key],
+					'piece_type' 					=> $post['piece_type'][$key],
+					'length' 						=> $post['length'][$key],
+					'width' 						=> $post['width'][$key],
+					'height' 						=> $post['height'][$key],
+					'weight' 						=> $post['weight'][$key],
+				);
+				$this->shipment_mod->shipment_packages_create_process_db($form_data);
+			} else {
+				$form_data = array(
+					'qty' 							=> $post['qty'][$key],
+					'piece_type' 					=> $post['piece_type'][$key],
+					'length' 						=> $post['length'][$key],
+					'width' 						=> $post['width'][$key],
+					'height' 						=> $post['height'][$key],
+					'weight' 						=> $post['weight'][$key],
+				);
+				$where['id'] = $post['id_detail'][$key];
+				$this->shipment_mod->shipment_packages_update_process_db($form_data, $where);
+			}
+		}
+
+		if(isset($post['has_updated_packages'])){
+			$form_data = array(
+				'id_shipment' 	=> $post['id'],
+				'date' 					=> date("Y-m-d"),
+				'time' 					=> date("H:i:s"),
+				'location' 			=> $post['shipper_city'].", ".$post['shipper_country'],
+				'status' 				=> "Service Center",
+				'remarks' 			=> "",
+			);
+			$id_history = $this->shipment_mod->shipment_history_create_process_db($form_data);
+			$this->shipment_update_last_history($post['id']);
+		}
+
+		$this->session->set_flashdata('success', 'Your Shipment data has been Updated!');
+		redirect("shipment/shipment_list?status=Picked up");
+	}
+
 	public function shipment_edit($id)
 	{
 		$where['id'] 						= $id;
@@ -507,7 +596,7 @@ class Shipment extends CI_Controller
 			'permit_no'															=> $post['permit_no']
 		);
 		$this->load->library('upload');
-		$this->load->library('image_lib');
+		// $this->load->library('image_lib');
 		if (!empty($_FILES['main_agent_mawb_mbl_atc']['name'])) {
 			$upload_path = 'file/agent/';
 			$config = [
@@ -526,24 +615,24 @@ class Shipment extends CI_Controller
 			}
 
 			$gbr = $this->upload->data();
-			unset($config);
-			$config = [
-				'image_library'		=> 'gd2',
-				'source_image'		=> $upload_path.$gbr['file_name'],
-				// 'create_thumb'		=> FALSE,
-				'maintain_ratio'	=> TRUE,
-				'quality'					=> '50%',
-				'width'						=> 500,
-				// 'height'					=> 400,
-				'new_image'				=> $upload_path.$gbr['file_name'],
-			];
+			// unset($config);
+			// $config = [
+			// 	'image_library'		=> 'gd2',
+			// 	'source_image'		=> $upload_path.$gbr['file_name'],
+			// 	// 'create_thumb'		=> FALSE,
+			// 	'maintain_ratio'	=> TRUE,
+			// 	'quality'					=> '50%',
+			// 	'width'						=> 500,
+			// 	// 'height'					=> 400,
+			// 	'new_image'				=> $upload_path.$gbr['file_name'],
+			// ];
 
-			$this->image_lib->initialize($config);
-			if (!$this->image_lib->resize()) {
-				$this->session->set_flashdata('error', $this->image_lib->display_errors());
-				redirect($_SERVER['HTTP_REFERER']);
-				return false;
-			}
+			// $this->image_lib->initialize($config);
+			// if (!$this->image_lib->resize()) {
+			// 	$this->session->set_flashdata('error', $this->image_lib->display_errors());
+			// 	redirect($_SERVER['HTTP_REFERER']);
+			// 	return false;
+			// }
 			$form_data['main_agent_mawb_mbl_atc'] = $gbr['file_name'];
 		}
 		if (!empty($_FILES['secondary_agent_mawb_mbl_atc']['name'])) {
@@ -564,24 +653,24 @@ class Shipment extends CI_Controller
 			}
 
 			$gbr = $this->upload->data();
-			unset($config);
-			$config = [
-				'image_library'		=> 'gd2',
-				'source_image'		=> $upload_path.$gbr['file_name'],
-				// 'create_thumb'		=> FALSE,
-				'maintain_ratio'	=> TRUE,
-				'quality'					=> '50%',
-				'width'						=> 500,
-				// 'height'					=> 400,
-				'new_image'				=> $upload_path.$gbr['file_name'],
-			];
+			// unset($config);
+			// $config = [
+			// 	'image_library'		=> 'gd2',
+			// 	'source_image'		=> $upload_path.$gbr['file_name'],
+			// 	// 'create_thumb'		=> FALSE,
+			// 	'maintain_ratio'	=> TRUE,
+			// 	'quality'					=> '50%',
+			// 	'width'						=> 500,
+			// 	// 'height'					=> 400,
+			// 	'new_image'				=> $upload_path.$gbr['file_name'],
+			// ];
 
-			$this->image_lib->initialize($config);
-			if (!$this->image_lib->resize()) {
-				$this->session->set_flashdata('error', $this->image_lib->display_errors());
-				redirect($_SERVER['HTTP_REFERER']);
-				return false;
-			}
+			// $this->image_lib->initialize($config);
+			// if (!$this->image_lib->resize()) {
+			// 	$this->session->set_flashdata('error', $this->image_lib->display_errors());
+			// 	redirect($_SERVER['HTTP_REFERER']);
+			// 	return false;
+			// }
 			$form_data['secondary_agent_mawb_mbl_atc'] = $gbr['file_name'];
 		}
 		if (!empty($_FILES['cipl_no_atc']['name'])) {
@@ -601,25 +690,25 @@ class Shipment extends CI_Controller
 				return false;
 			}
 
-			$gbr = $this->upload->data();
-			unset($config);
-			$config = [
-				'image_library'		=> 'gd2',
-				'source_image'		=> $upload_path.$gbr['file_name'],
-				// 'create_thumb'		=> FALSE,
-				'maintain_ratio'	=> TRUE,
-				'quality'					=> '50%',
-				'width'						=> 500,
-				// 'height'					=> 400,
-				'new_image'				=> $upload_path.$gbr['file_name'],
-			];
+			// $gbr = $this->upload->data();
+			// unset($config);
+			// $config = [
+			// 	'image_library'		=> 'gd2',
+			// 	'source_image'		=> $upload_path.$gbr['file_name'],
+			// 	// 'create_thumb'		=> FALSE,
+			// 	'maintain_ratio'	=> TRUE,
+			// 	'quality'					=> '50%',
+			// 	'width'						=> 500,
+			// 	// 'height'					=> 400,
+			// 	'new_image'				=> $upload_path.$gbr['file_name'],
+			// ];
 
-			$this->image_lib->initialize($config);
-			if (!$this->image_lib->resize()) {
-				$this->session->set_flashdata('error', $this->image_lib->display_errors());
-				redirect($_SERVER['HTTP_REFERER']);
-				return false;
-			}
+			// $this->image_lib->initialize($config);
+			// if (!$this->image_lib->resize()) {
+			// 	$this->session->set_flashdata('error', $this->image_lib->display_errors());
+			// 	redirect($_SERVER['HTTP_REFERER']);
+			// 	return false;
+			// }
 			$form_data['cipl_no_atc'] = $gbr['file_name'];
 		}
 
@@ -1257,7 +1346,8 @@ class Shipment extends CI_Controller
 				'currency'									=> $post['currency'][$key],
 				'ref_no'										=> $post['ref_no'][$key],
 				'status'										=> "Booked",
-				'status_delete'							=> 1
+				'status_delete'							=> 1,
+				'created_by'								=> $this->session->userdata('id'),
 			);
 			$id_shipment = $this->shipment_mod->shipment_create_process_db($form_data);
 

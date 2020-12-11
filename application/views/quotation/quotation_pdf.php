@@ -84,26 +84,26 @@
   <table class="td-valign-top" width="100%" cellspacing="0" cellpadding="2">
     <tbody>
       <tr>
-        <td rowspan="5" class="auto-fit"><b>Customer Name :</b></td>
+        <td rowspan="5" class="auto-fit"><b>Customer Name :</b><br><?php echo $quotation['customer_name'] ?></td>
         <td rowspan="5"></td>
         <td class="auto-fit border">Quotation No.</td>
-        <td class="border"></td>
+        <td class="border"><?php echo $quotation['quotation_no'] ?></td>
       </tr>
       <tr>
         <td class="auto-fit border">Date</td>
-        <td class="border"></td>
+        <td class="border"><?php echo $quotation['date'] ?></td>
       </tr>
       <tr>
         <td class="auto-fit border">Exp. Date</td>
-        <td class="border"></td>
+        <td class="border"><?php echo $quotation['exp_date'] ?></td>
       </tr>
       <tr>
         <td class="auto-fit border">Prepared By</td>
-        <td class="border">-</td>
+        <td class="border"><?php echo $quotation['created_by'] ?></td>
       </tr>
       <tr>
         <td class="auto-fit border">Payment Terms</td>
-        <td class="border"> Days</td>
+        <td class="border"><?php echo $quotation['payment_terms'] ?></td>
       </tr>
     </tbody>
   </table>
@@ -115,12 +115,12 @@
       <tr>
         <td class="auto-fit">Attn.</td>
         <td class="auto-fit"> : </td>
-        <td></td>
+        <td><?php echo $quotation['attn'] ?></td>
       </tr>
       <tr>
         <td class="auto-fit">Subject</td>
         <td class="auto-fit"> : </td>
-        <td>Quotation for door to door by Airfreight</td>
+        <td><?php echo $quotation['subject'] ?></td>
       </tr>
     </tbody>
   </table>

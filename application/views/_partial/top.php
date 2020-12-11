@@ -12,6 +12,7 @@
 		8 => ( in_array($role, array("Super Admin")) ? 1 : 0), //User Management
 		9 => ( in_array($role, array("Super Admin", "Finance")) ? 1 : 0), //Finance Report
 		10 => ( in_array($role, array("Super Admin", "Commercial")) ? 1 : 0), //Commercial Customer
+		11 => ( in_array($role, array("Super Admin", "Commercial")) ? 1 : 0), //Quotation
 	);
 ?>
 <body>
@@ -170,6 +171,15 @@
 								<div class="submenu-content">
 									<a href="<?php echo base_url() ?>commercial/customer_list" class="menu-item">Customer List</a>
 									<a href="<?php echo base_url() ?>commercial/customer_create" class="menu-item">Create Customer</a>
+								</div>
+							</div>
+							<?php endif; ?>
+							<?php if($side_permission[11] == 1): ?>
+							<div class="nav-item has-sub">
+								<a href="javascript:void(0)"><i class="fas fa-address-card"></i><span>Quotation</span></a>
+								<div class="submenu-content">
+									<a href="<?php echo base_url() ?>quotation/quotation_list" class="menu-item">Quotation List</a>
+									<a href="<?php echo base_url() ?>quotation/quotation_create" class="menu-item">Create Quotation</a>
 								</div>
 							</div>
 							<?php endif; ?>

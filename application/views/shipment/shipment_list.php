@@ -9,7 +9,8 @@ $page_permission = array(
   5 => (in_array($role, array("Super Admin", "Operator")) ? 1 : 0), //assign_driver
   6 => (in_array($role, array("Super Admin", "Finance")) ? 1 : 0), //shipment cost
   7 => (in_array($role, array("Super Admin", "Finance")) ? 1 : 0), //alert for hipment that not costed
-  8 => (in_array($role, array("Commercial")) ? 1 : 0), //alert for hipment that not costed
+  8 => (in_array($role, array("Super Admin", "Commercial")) ? 1 : 0), //alert for hipment that not costed
+  9 => (in_array($role, array("Super Admin")) ? 1 : 0), //show who created
 );
 ?>
 <style>
@@ -166,7 +167,9 @@ $page_permission = array(
                       <th class="text-white font-weight-bold">Type of Mode</th>
                       <th class="text-white font-weight-bold">Shipper Name</th>
                       <th class="text-white font-weight-bold">Receiver Name</th>
+                      <?php if ($page_permission[9] == 1) : ?>
                       <th class="text-white font-weight-bold">Created by</th>
+                      <?php endif; ?>
                       <th class="text-white font-weight-bold">Status</th>
                       <?php if ($page_permission[6] == 1) : ?>
                         <th class="text-white font-weight-bold">Status Finance</th>
@@ -189,7 +192,9 @@ $page_permission = array(
                         <td><?php echo $value['type_of_mode'] ?></td>
                         <td><?php echo $value['shipper_name'] ?></td>
                         <td><?php echo $value['consignee_name'] ?></td>
+                        <?php if ($page_permission[9] == 1) : ?>
                         <td><?php echo @$created_by_list[$value['created_by']] ?></td>
+                        <?php endif; ?>
                         <td><a target="_blank" class="font-weight-bold" href="<?php echo base_url() ?>shipment/shipment_tracking/<?php echo $value['id'] ?>"><?php echo $value['status'] ?></a></td>
                         <?php if ($page_permission[6] == 1) : ?>
                           <td>

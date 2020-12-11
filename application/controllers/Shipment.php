@@ -90,7 +90,7 @@ class Shipment extends CI_Controller
 		$data['driver_list'] 	= $this->home_mod->user_list($where);
 
 		$created_by_list = [];
-		if(count($created_by) > 0){
+		if(count($created_by) > 0 && $this->session->userdata('role') == "Super Admin"){
 			unset($where);
 			$where["id IN ('".join("', '", $created_by)."')"] 	= NULL;
 			$datadb 	= $this->home_mod->user_list($where);

@@ -120,6 +120,13 @@ class Quotation extends CI_Controller
 			redirect("quotation/quotation_list");
 		}
 
+		unset($where);
+		$where["id"] 	= $quotation_list[0]['created_by'];
+		$user_list 		= $this->home_mod->user_list($where);
+		$user_list  	= $user_list[0]['name'];
+		
+		$data['user_list'] = $user_list;
+
 		$data['country'] = json_decode(file_get_contents("./assets/country/country.json"), true);
 
 		$data['quotation'] 			= $quotation_list[0];
@@ -241,20 +248,26 @@ class Quotation extends CI_Controller
     $where['id'] 						= $id;
 		$quotation_list 				= $this->quotation_mod->quotation_list_db($where);
 
+		if (count($quotation_list) <= 0) {
+			$this->session->set_flashdata('error', 'Quotation not Found!');
+			redirect("quotation/quotation_list");
+		}
+
 		unset($where);
 		$where['id_quotation'] 	= $id;
 		$cargo_list 						= $this->quotation_mod->quotation_cargo_list_db($where);
 		$where['id_quotation'] 	= $id;
 		$charges_list 					= $this->quotation_mod->quotation_charges_list_db($where);
 
-		if (count($quotation_list) <= 0) {
-			$this->session->set_flashdata('error', 'Quotation not Found!');
-			redirect("quotation/quotation_list");
-		}
+		unset($where);
+		$where["id"] 	= $quotation_list[0]['created_by'];
+		$user_list 		= $this->home_mod->user_list($where);
+		$user_list  	= $user_list[0]['name'];
 
 		$data['quotation'] 			= $quotation_list[0];
 		$data['cargo_list'] 		= $cargo_list;
 		$data['charges_list'] 	= $charges_list;
+		$data['user_list'] 			= $user_list;
 
     $this->load->library('pdf');
 		$this->pdf->setPaper('A4', 'potrait');

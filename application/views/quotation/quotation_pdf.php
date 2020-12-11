@@ -99,7 +99,7 @@
       </tr>
       <tr>
         <td class="auto-fit border">Prepared By</td>
-        <td class="border"><?php echo $quotation['created_by'] ?></td>
+        <td class="border"><?php echo $user_list ?></td>
       </tr>
       <tr>
         <td class="auto-fit border">Payment Terms</td>
@@ -134,16 +134,16 @@
         <td colspan="2" class="header bg-orange"><b>Shipment Information</b></td>
       </tr>
       <tr>
-        <td><b>Type of Service :</b> Door to Door</td>
-        <td><b>Type of Transport :</b> Airfreight</td>
+        <td><b>Type of Service :</b> <?php echo $quotation['type_of_service'] ?></td>
+        <td><b>Type of Transport :</b> <?php echo $quotation['type_of_transport'] ?></td>
       </tr>
       <tr>
-        <td><b>Origin :</b> Batam (BTH)</td>
-        <td><b>Destination :</b> Jakarta (CGK)</td>
+        <td><b>Origin :</b> <?php echo $quotation['shipper_city'].", ".$quotation['shipper_country'] ?></td>
+        <td><b>Destination :</b> <?php echo $quotation['consignee_city'].", ".$quotation['consignee_country'] ?></td>
       </tr>
       <tr>
-        <td><b>Shipper :</b><br><br><br><br></td>
-        <td><b>Consignee :</b><br><br><br><br></td>
+        <td><b>Shipper :</b><br><?php echo $quotation['shipper_address'] ?></td>
+        <td><b>Consignee :</b><br><?php echo $quotation['consignee_address'] ?></td>
       </tr>
     </tbody>
   </table>
@@ -163,14 +163,16 @@
         <td class="header">Measurement</td>
         <td class="header">Dimension</td>
       </tr>
+      <?php foreach ($cargo_list as $key => $value) : ?>
       <tr>
-        <td>1.</td>
-        <td>Survey Meter</td>
-        <td></td>
-        <td></td>
-        <td>NA</td>
-        <td>NA</td>
+        <td><?php echo ($key + 1)."." ?></td>
+        <td><?php echo $value['content']; ?></td>
+        <td><?php echo $value['qty']; ?></td>
+        <td><?php echo $value['weight']; ?></td>
+        <td><?php echo $value['measurement']; ?></td>
+        <td><?php echo $value['dimension']; ?></td>
       </tr>
+      <?php endforeach; ?>
     </tbody>
   </table>
   
@@ -188,34 +190,15 @@
         <td class="header">UOM</td>
         <td class="header">Remarks</td>
       </tr>
+      <?php foreach ($charges_list as $key => $value) : ?>
       <tr>
-        <td>1.</td>
-        <td></td>
-        <td></td>
-        <td></td>
-        <td></td>
+        <td><?php echo ($key + 1)."." ?></td>
+        <td><?php echo $value['charges']; ?></td>
+        <td><?php echo $value['rate']; ?></td>
+        <td><?php echo $value['uom']; ?></td>
+        <td><?php echo $value['remarks']; ?></td>
       </tr>
-      <tr>
-        <td>2.</td>
-        <td></td>
-        <td></td>
-        <td></td>
-        <td></td>
-      </tr>
-      <tr>
-        <td>3.</td>
-        <td></td>
-        <td></td>
-        <td></td>
-        <td></td>
-      </tr>
-      <tr>
-        <td>4.</td>
-        <td></td>
-        <td></td>
-        <td></td>
-        <td></td>
-      </tr>
+      <?php endforeach; ?>
     </tbody>
   </table>
   <span style="padding-left: 6px;">Terms and Conditions :</span>
@@ -241,7 +224,7 @@
       <tr>
         <td></td>
         <td></td>
-        <td class="auto-fit">For and behalf of <b>PT. xxxxx</b></td>
+        <td class="auto-fit">For and behalf of <b>PT. <?php echo $quotation['customer_name'] ?></b></td>
         <td><br><br><br><br></td>
       </tr>
       <tr>

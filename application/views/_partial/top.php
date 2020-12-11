@@ -176,7 +176,7 @@
 							<?php endif; ?>
 							<?php if($side_permission[11] == 1): ?>
 							<div class="nav-item has-sub">
-								<a href="javascript:void(0)"><i class="fas fa-address-card"></i><span>Quotation</span></a>
+								<a href="javascript:void(0)"><i class="fas fa-hand-holding-usd"></i><span>Quotation</span></a>
 								<div class="submenu-content">
 									<a href="<?php echo base_url() ?>quotation/quotation_list" class="menu-item">Quotation List</a>
 									<a href="<?php echo base_url() ?>quotation/quotation_create" class="menu-item">Create Quotation</a>

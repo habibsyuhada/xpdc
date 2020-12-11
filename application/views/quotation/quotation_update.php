@@ -55,7 +55,7 @@
                   </div>
                   <div class="form-group">
                     <label>Prepared By</label>
-                    <input type="text" class="form-control" name="created_by" value="<?php echo $quotation['created_by'] ?>" placeholder="Prepared By" value="<?php echo $this->session->userdata('name') ?>" disabled>
+                    <input type="text" class="form-control" name="created_by" value="<?php echo $user_list ?>" placeholder="Prepared By" value="<?php echo $this->session->userdata('name') ?>" disabled>
                   </div>
                 </div>
               </div>

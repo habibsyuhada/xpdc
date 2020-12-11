@@ -65,7 +65,8 @@
                       </span>
                     </div>
                     <?php if($shipment['main_agent_mawb_mbl_atc'] != ""): ?>
-                    <img height="150px" src="<?php echo base_url()."file/agent/".$shipment['main_agent_mawb_mbl_atc'] ?>">
+                    <!-- <img height="150px" src="<?php echo base_url()."file/agent/".$shipment['main_agent_mawb_mbl_atc'] ?>"> -->
+                    <a href="<?php echo base_url()."file/agent/".$shipment['main_agent_mawb_mbl_atc'] ?>" target="_blank" class="btn btn-danger btn-flat">Atc</a>
                     <?php endif; ?>
                   </div>
                   <div class="form-group">
@@ -122,7 +123,8 @@
                       </span>
                     </div>
                     <?php if($shipment['secondary_agent_mawb_mbl_atc'] != ""): ?>
-                    <img height="150px" src="<?php echo base_url()."file/agent/".$shipment['secondary_agent_mawb_mbl_atc'] ?>">
+                    <!-- <img height="150px" src="<?php echo base_url()."file/agent/".$shipment['secondary_agent_mawb_mbl_atc'] ?>"> -->
+                    <a href="<?php echo base_url()."file/agent/".$shipment['secondary_agent_mawb_mbl_atc'] ?>" target="_blank" class="btn btn-danger btn-flat">Atc</a>
                     <?php endif; ?>
                   </div>
                   <div class="form-group">
@@ -179,7 +181,8 @@
                       </span>
                     </div>
                     <?php if($shipment['cipl_no_atc'] != ""): ?>
-                    <img height="150px" src="<?php echo base_url()."file/agent/".$shipment['cipl_no_atc'] ?>">
+                    <!-- <img height="150px" src="<?php echo base_url()."file/agent/".$shipment['cipl_no_atc'] ?>"> -->
+                    <a href="<?php echo base_url()."file/agent/".$shipment['cipl_no_atc'] ?>" target="_blank" class="btn btn-danger btn-flat">Atc</a>
                     <?php endif; ?>
                   </div>
                 </div>

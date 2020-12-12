@@ -50,7 +50,12 @@ class Quotation extends CI_Controller
 		$post = $this->input->post();
 		$form_data = array(
 			'quotation_no' 							=> $post['quotation_no'],
+			'customer_account' 					=> $post['customer_account'],
 			'customer_name' 						=> $post['customer_name'],
+			'customer_contact_person' 	=> $post['customer_contact_person'],
+			'customer_phone_number' 		=> $post['customer_phone_number'],
+			'customer_email' 						=> $post['customer_email'],
+			'customer_address' 					=> $post['customer_address'],
 			'attn' 											=> $post['attn'],
 			'subject' 									=> $post['subject'],
 			'date' 											=> $post['date'],

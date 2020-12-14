@@ -99,4 +99,25 @@ class Quotation_mod extends CI_Model {
     $this->db->delete('quotation_charges');
   }
 
+  public function quotation_generate_no_db($where = NULL)
+  {
+    if ($where) {
+      $query = $this->db->where($where);
+    }
+    $query = $this->db->select('LEFT(quotation_no, 4) AS quotation_no');
+    $query = $this->db->order_by("quotation_no", 'DESC');
+    $query = $this->db->limit("1");
+    $query = $this->db->get('quotation');
+
+    $query1_result = $query->result_array();
+
+    if ($query1_result) {
+      $batch_no_gen = str_pad($query1_result[0]["quotation_no"] + 1, 4, '0', STR_PAD_LEFT);
+    } else {
+      $batch_no_gen = "0001";
+    }
+
+    return $batch_no_gen;
+  }
+
 }

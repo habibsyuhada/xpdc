@@ -48,8 +48,33 @@ class Quotation extends CI_Controller
 
 	public function quotation_create_process(){
 		$post = $this->input->post();
+		$quotation_no = "";
+		if(!isset($post['sea'])){
+			$post['sea'] = "";
+		}
+
+		$where = [
+			'name' => $this->session->userdata('branch'),
+		];
+		$branch = $this->home_mod->branch_list($where);
+		if (count($branch) < 1) {
+			$this->session->set_flashdata('danger', 'Branch Not Found!');
+			redirect($_SERVER['HTTP_REFERER']);
+			return false;
+		}
+		$branch = $branch[0];
+
+		$where = [
+			'branch' 													=> $this->session->userdata('branch'),
+			'type_of_service' 								=> $post['type_of_service'],
+			"YEAR(date) = '".date('n')."'" 		=> NULL,
+			"MOTNH(date) = '".date('Y')."'" 	=> NULL,
+		];
+		$quotation_no = $this->quotation_mod->quotation_generate_no_db($where);
+		$quotation_no = $quotation_no."/".$branch['code']."-".$post['type_of_service']."/".date('m')."/".date('Y');
+
 		$form_data = array(
-			'quotation_no' 							=> $post['quotation_no'],
+			'quotation_no' 							=> $quotation_no,
 			'customer_account' 					=> $post['customer_account'],
 			'customer_name' 						=> $post['customer_name'],
 			'customer_contact_person' 	=> $post['customer_contact_person'],
@@ -63,6 +88,8 @@ class Quotation extends CI_Controller
 			'payment_terms' 						=> $post['payment_terms'],
 			'type_of_service' 					=> $post['type_of_service'],
 			'type_of_transport' 				=> $post['type_of_mode'],
+			'sea' 											=> $post['sea'],
+			'incoterms' 								=> $post['incoterms'],
 			'shipper_name' 							=> $post['shipper_name'],
 			'shipper_address' 					=> $post['shipper_address'],
 			'shipper_city' 							=> $post['shipper_city'],
@@ -79,29 +106,35 @@ class Quotation extends CI_Controller
 			'consignee_contact_person' 	=> $post['consignee_contact_person'],
 			'consignee_phone_number' 		=> $post['consignee_phone_number'],
 			'consignee_email' 					=> $post['consignee_email'],
+			'term_condition' 						=> $post['term_condition'],
+			'branch' 										=> $this->session->userdata('branch'),
 			'created_by' 								=> $this->session->userdata('id'),
 		);
 		$id_quotation = $this->quotation_mod->quotation_create_process_db($form_data);
 
-		foreach ($post['qty'] as $key => $value) {
+		foreach ($post['cargo_qty'] as $key => $value) {
 			$form_data = array(
 				'id_quotation' 			=> $id_quotation,
-				'content' 					=> $post['content'][$key],
-				'qty' 							=> $post['qty'][$key],
-				'weight' 						=> $post['weight'][$key],
-				'measurement' 			=> $post['measurement'][$key],
-				'dimension' 				=> $post['dimension'][$key],
+				'qty' 							=> $post['cargo_qty'][$key],
+				'piece_type' 				=> $post['cargo_piece_type'][$key],
+				'length' 						=> $post['cargo_length'][$key],
+				'width' 						=> $post['cargo_width'][$key],
+				'height' 						=> $post['cargo_height'][$key],
+				'weight' 						=> $post['cargo_weight'][$key],
 			);
 			$this->quotation_mod->quotation_cargo_create_process_db($form_data);
 		}
 
-		foreach ($post['charges'] as $key => $value) {
+		foreach ($post['charges_description'] as $key => $value) {
 			$form_data = array(
 				'id_quotation' 			=> $id_quotation,
-				'charges' 					=> $post['charges'][$key],
-				'rate' 							=> $post['rate'][$key],
-				'uom' 							=> $post['uom'][$key],
-				'remarks' 					=> $post['remarks'][$key],
+				'description' 			=> $post['charges_description'][$key],
+				'qty' 							=> $post['charges_qty'][$key],
+				'uom' 							=> $post['charges_uom'][$key],
+				'currency' 					=> $post['charges_currency'][$key],
+				'unit_price' 				=> $post['charges_unit_price'][$key],
+				'exchange_rate' 		=> $post['charges_exchange_rate'][$key],
+				'remarks' 					=> $post['charges_remarks'][$key],
 			);
 			$this->quotation_mod->quotation_charges_create_process_db($form_data);
 		}

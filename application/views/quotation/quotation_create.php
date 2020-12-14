@@ -71,7 +71,7 @@
                   </div> -->
                   <div class="form-group">
                     <label>Date</label>
-                    <input type="date" class="form-control" name="date" placeholder="Date" value="<?php date("Y-m-d") ?>" readonly required>
+                    <input type="date" class="form-control" name="date" placeholder="Date" value="<?php echo date("Y-m-d") ?>" readonly required>
                   </div>
                   <div class="form-group">
                     <label>Exp. Date</label>
@@ -260,9 +260,9 @@
                     </thead>
                     <tbody>
                       <tr>
-                        <td><input type="number" class="form-control" step="any" name="qty[]" oninput="get_vol_weight()"></td>
+                        <td><input type="number" class="form-control" step="any" name="cargo_qty[]" oninput="get_vol_weight()"></td>
                         <td>
-                          <select class="form-control" name="piece_type[]">
+                          <select class="form-control" name="cargo_piece_type[]">
                             <option value="">-- Select One --</option>
                             <option value="Pallet">Pallet</option>
                             <option value="Carton">Carton</option>
@@ -273,10 +273,10 @@
                             <option value="Others">Others</option>
                           </select>
                         </td>
-                        <td><input type="number" class="form-control" step="any" name="length[]" value="0" oninput="get_vol_weight()"></td>
-                        <td><input type="number" class="form-control" step="any" name="width[]" value="0" oninput="get_vol_weight()"></td>
-                        <td><input type="number" class="form-control" step="any" name="height[]" value="0" oninput="get_vol_weight()"></td>
-                        <td><input type="number" class="form-control" step="any" name="weight[]" value="0" oninput="get_vol_weight()"></td>
+                        <td><input type="number" class="form-control" step="any" name="cargo_length[]" value="0" oninput="get_vol_weight()"></td>
+                        <td><input type="number" class="form-control" step="any" name="cargo_width[]" value="0" oninput="get_vol_weight()"></td>
+                        <td><input type="number" class="form-control" step="any" name="cargo_height[]" value="0" oninput="get_vol_weight()"></td>
+                        <td><input type="number" class="form-control" step="any" name="cargo_weight[]" value="0" oninput="get_vol_weight()"></td>
                         <td><button type="button" class="btn btn-primary" onclick="addrow(this)"><i class="fas fa-plus m-0"></i></button></td>
                       </tr>
                     </tbody>
@@ -318,12 +318,11 @@
                     <tbody>
                       <tr>
                         <td>
-                          <input type="text" class="form-control" name="description[]" required>
-                          <input type="hidden" class="form-control" name="id_cost[]">
+                          <input type="text" class="form-control" name="charges_description[]" required>
                         </td>
-                        <td><input type="number" step="any" class="form-control" value="0" oninput="get_total(this)" name="qty[]"></td>
+                        <td><input type="number" step="any" class="form-control" value="0" oninput="get_total(this)" name="charges_qty[]"></td>
                         <td>
-                          <select class="form-control" name="uom[]" required onchange="get_total(this)">
+                          <select class="form-control" name="charges_uom[]" required onchange="get_total(this)">
                             <option value="">-- Select One --</option>
                             <option value="Kg">Kg</option>
                             <option value="M3">M3</option>
@@ -334,7 +333,7 @@
                           </select>
                         </td>
                         <td>
-                          <select class="form-control" name="currency[]" required>
+                          <select class="form-control" name="charges_currency[]" required>
                             <option value="">-- Select One --</option>
                             <option value="AED">AED</option>
                             <option value="AUD">AUD</option>
@@ -353,17 +352,17 @@
                             <option value="USD">USD</option>
                           </select>
                         </td>
-                        <td><input type="number" step="any" class="form-control" value="0" oninput="get_total(this)" name="unit_price[]"></td>
+                        <td><input type="number" step="any" class="form-control" value="0" oninput="get_total(this)" name="charges_unit_price[]"></td>
                         <td>
-                          <input type="text" step="any" class="form-control" value="0" name="subtotal_view[]" readonly>
-                          <input type="hidden" step="any" class="form-control" value="0" name="subtotal[]" readonly>
+                          <input type="text" step="any" class="form-control" value="0" name="charges_subtotal_view[]" readonly>
+                          <input type="hidden" step="any" class="form-control" value="0" name="charges_subtotal[]" readonly>
                         </td>
-                        <td><input type="number" step="any" class="form-control" value="0" oninput="get_total(this)"name="exchange_rate[]"></td>
+                        <td><input type="number" step="any" class="form-control" value="0" oninput="get_total(this)"name="charges_exchange_rate[]"></td>
                         <td>
-                          <input type="text" step="any" class="form-control" value="0" name="total_view[]" readonly>
-                          <input type="hidden" step="any" class="form-control" value="0" name="total[]" readonly>
+                          <input type="text" step="any" class="form-control" value="0" name="charges_total_view[]" readonly>
+                          <input type="hidden" step="any" class="form-control" value="0" name="charges_total[]" readonly>
                         </td>
-                        <td><textarea class="form-control" name="remarks[]" placeholder="..."></textarea></td>
+                        <td><textarea class="form-control" name="charges_remarks[]" placeholder="..."></textarea></td>
                         <td>
                           <button type="button" class="btn btn-primary" onclick="addrow(this)"><i class="fas fa-plus m-0"></i></button>
                         </td>
@@ -381,7 +380,7 @@
                 <div class="col-md-12">
                   <div class="form-group">
                     <label>Terms and Conditions:</label>
-                    <textarea rows="5" class="form-control" name="customer_address" placeholder="Customer Address" required>1.	Above rate exclude duties and taxes
+                    <textarea rows="5" class="form-control" name="term_condition" placeholder="Terms and Conditions" required>1.	Above rate exclude duties and taxes
 2.	Above rate exclude cargo insurance
 3.	Both shipper and consignee must provide valid related required documents for customs clearance
 4.	Any discrepancy between CIPL and actual shipment will be burden to customer.
@@ -497,31 +496,31 @@
       per = 5000;
     }
 
-    $("input[name='length[]']").each(function(index, value) {
+    $("input[name='cargo_length[]']").each(function(index, value) {
       var length_detail = $(this).val();
 
       length_array.push(length_detail);
     });
 
-    $("input[name='width[]']").each(function(index, value) {
+    $("input[name='cargo_width[]']").each(function(index, value) {
       var width_detail = $(this).val();
 
       width_array.push(width_detail);
     });
 
-    $("input[name='height[]']").each(function(index, value) {
+    $("input[name='cargo_height[]']").each(function(index, value) {
       var height_detail = $(this).val();
 
       height_array.push(height_detail);
     });
 
-    $("input[name='weight[]']").each(function(index, value) {
+    $("input[name='cargo_weight[]']").each(function(index, value) {
       var weight_detail = $(this).val();
 
       weight_array.push(weight_detail);
     });
 
-    $("input[name='qty[]']").each(function(index, value) {
+    $("input[name='cargo_qty[]']").each(function(index, value) {
       var qty_detail = $(this).val();
 
       qty_array.push(qty_detail);

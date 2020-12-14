@@ -40,6 +40,10 @@
       font-size: 14px;
     }
 
+    .table-bordered th, .table-bordered td{
+      border: 1px solid #000;
+    }
+
     .text-center {
       text-align: center;
     }
@@ -153,24 +157,26 @@
   <table class="td-valign-top" border="1" width="100%" cellspacing="0" cellpadding="2">
     <tbody>
       <tr>
-        <td colspan="6" class="header bg-orange"><b>Cargo Information</b></td>
+        <td colspan="7" class="header bg-orange"><b>Cargo Information</b></td>
       </tr>
       <tr>
         <td class="header">No</td>
-        <td class="header">Content</td>
-        <td class="header">Quantity</td>
-        <td class="header">Weight</td>
-        <td class="header">Measurement</td>
-        <td class="header">Dimension</td>
+        <th class="header">Qty.</th>
+        <th class="header">Package Type</th>
+        <th class="header">Length(cm)</th>
+        <th class="header">Width(cm)</th>
+        <th class="header">Height(cm)</th>
+        <th class="header">Weight(kg)</th>
       </tr>
       <?php foreach ($cargo_list as $key => $value) : ?>
       <tr>
         <td><?php echo ($key + 1)."." ?></td>
-        <td><?php echo $value['content']; ?></td>
         <td><?php echo $value['qty']; ?></td>
+        <td><?php echo $value['piece_type']; ?></td>
+        <td><?php echo $value['length']; ?></td>
+        <td><?php echo $value['width']; ?></td>
+        <td><?php echo $value['height']; ?></td>
         <td><?php echo $value['weight']; ?></td>
-        <td><?php echo $value['measurement']; ?></td>
-        <td><?php echo $value['dimension']; ?></td>
       </tr>
       <?php endforeach; ?>
     </tbody>
@@ -178,27 +184,47 @@
   
   <br>
 
-  <table class="td-valign-top" border="1" width="100%" cellspacing="0" cellpadding="2">
+  <table class="td-valign-top table-bordered" width="100%" cellspacing="0" cellpadding="2">
     <tbody>
       <tr>
-        <td colspan="5" class="header bg-orange"><b>Charges Description</b></td>
+        <td colspan="8" class="header bg-orange"><b>Charges Description</b></td>
       </tr>
       <tr>
         <td class="header">No</td>
-        <td class="header">Charges</td>
-        <td class="header">Rate</td>
-        <td class="header">UOM</td>
-        <td class="header">Remarks</td>
+        <th class="header">Description</th>
+        <th class="header">Qty</th>
+        <th class="header">UOM</th>
+        <th class="header">Unit Price</th>
+        <th class="header">Sub Amount</th>
+        <th class="header">Exc. Rate</th>
+        <th class="header">Amount</th>
       </tr>
-      <?php foreach ($charges_list as $key => $value) : ?>
+      <?php 
+        $subtotal = 0;
+        foreach ($charges_list as $key => $value) : 
+          $persen = 1;
+          if($value['uom'] == "%"){
+            $persen = 100;
+          }
+          $subtotal = $subtotal + (($value['qty'] / $persen)*$value['unit_price']*$value['exchange_rate']);
+      ?>
       <tr>
         <td><?php echo ($key + 1)."." ?></td>
-        <td><?php echo $value['charges']; ?></td>
-        <td><?php echo $value['rate']; ?></td>
-        <td><?php echo $value['uom']; ?></td>
-        <td><?php echo $value['remarks']; ?></td>
+        <td><?php echo $value['description'] ?></td>
+        <td><?php echo $value['qty'] ?></td>
+        <td><?php echo $value['uom'] ?></td>
+        <td><?php echo $value['currency']." ".number_format($value['unit_price'], 2) ?></td>
+        <td><?php echo $value['currency']." ".number_format((($value['qty'] / $persen)*$value['unit_price']), 0).".00" ?></td>
+        <td><?php echo $value['exchange_rate'] ?></td>
+        <td><?php echo "IDR ".number_format((($value['qty'] / $persen)*$value['unit_price']*$value['exchange_rate']), 0).".00" ?></td>
       </tr>
       <?php endforeach; ?>
+      <tr>
+        <td colspan="6" style="border-left: 0px; border-bottom: 0px; text-align: left;">
+        </td>
+        <td>TOTAL</td>
+        <td><?php echo "IDR ".number_format(($subtotal), 0).".00" ?></td>
+      </tr>
     </tbody>
   </table>
   <span style="padding-left: 6px;">Terms and Conditions :</span>
@@ -224,8 +250,8 @@
       <tr>
         <td></td>
         <td></td>
-        <td class="auto-fit">For and behalf of <b>PT. <?php echo $quotation['customer_name'] ?></b></td>
-        <td><br><br><br><br></td>
+        <td>For and behalf of <b>PT. <?php echo $quotation['customer_name'] ?></b></td>
+        <td><br><br><br><br><br><br><br></td>
       </tr>
       <tr>
         <td class="auto-fit border-bottom"><b>PT. XENA PRANADIPA DHIA CAKRA</b></td>

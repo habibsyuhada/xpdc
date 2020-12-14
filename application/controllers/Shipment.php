@@ -408,7 +408,32 @@ class Shipment extends CI_Controller
 			'billing_contact_person' 		=> $post['billing_contact_person'],
 			'billing_phone_number' 			=> $post['billing_phone_number'],
 			'billing_email' 						=> $post['billing_email'],
+			
+			'container_no'							=> $post['container_no'],
+			'seal_no'										=> $post['seal_no'],
+			'cipl_no'										=> $post['cipl_no'],
+			'permit_no'									=> $post['permit_no']
 		);
+		if (!empty($_FILES['cipl_no_atc']['name'])) {
+			$upload_path = 'file/agent/';
+			$config = [
+				'upload_path' 		=> $upload_path,
+				'file_name' 			=> 'img_cipl_no_atc_'.$post['id'].'_'. date('YmsHis'),
+				'allowed_types' 	=> '*',
+				// 'max_size'				=> 500,
+				'overwrite' 			=> TRUE,
+			];
+			$this->upload->initialize($config);
+
+			if (!$this->upload->do_upload('cipl_no_atc')) {
+				$this->session->set_flashdata('error', $this->upload->display_errors());
+				redirect($_SERVER['HTTP_REFERER']);
+				return false;
+			}
+
+			$gbr = $this->upload->data();
+			$form_data['cipl_no_atc'] = $gbr['file_name'];
+		}
 		$where2['id_shipment'] = $post['id'];
 		$this->shipment_mod->shipment_detail_update_process_db($form_data, $where2);
 
@@ -530,7 +555,7 @@ class Shipment extends CI_Controller
 				'time' 					=> date("H:i:s"),
 				'location' 			=> $post['shipper_city'].", ".$post['shipper_country'],
 				'status' 				=> "Service Center",
-				'remarks' 			=> "",
+				'remarks' 			=> "Shipment information updated.",
 			);
 			$id_history = $this->shipment_mod->shipment_history_create_process_db($form_data);
 			$this->shipment_update_last_history($post['id']);
@@ -590,10 +615,6 @@ class Shipment extends CI_Controller
 			// 'secondary_agent_cost'									=> $post['secondary_agent_cost'],
 			// 'port_of_loading'												=> $post['port_of_loading'],
 			// 'port_of_discharge'											=> $post['port_of_discharge'],
-			'container_no'													=> $post['container_no'],
-			'seal_no'																=> $post['seal_no'],
-			'cipl_no'																=> $post['cipl_no'],
-			'permit_no'															=> $post['permit_no']
 		);
 		$this->load->library('upload');
 		// $this->load->library('image_lib');
@@ -615,24 +636,6 @@ class Shipment extends CI_Controller
 			}
 
 			$gbr = $this->upload->data();
-			// unset($config);
-			// $config = [
-			// 	'image_library'		=> 'gd2',
-			// 	'source_image'		=> $upload_path.$gbr['file_name'],
-			// 	// 'create_thumb'		=> FALSE,
-			// 	'maintain_ratio'	=> TRUE,
-			// 	'quality'					=> '50%',
-			// 	'width'						=> 500,
-			// 	// 'height'					=> 400,
-			// 	'new_image'				=> $upload_path.$gbr['file_name'],
-			// ];
-
-			// $this->image_lib->initialize($config);
-			// if (!$this->image_lib->resize()) {
-			// 	$this->session->set_flashdata('error', $this->image_lib->display_errors());
-			// 	redirect($_SERVER['HTTP_REFERER']);
-			// 	return false;
-			// }
 			$form_data['main_agent_mawb_mbl_atc'] = $gbr['file_name'];
 		}
 		if (!empty($_FILES['secondary_agent_mawb_mbl_atc']['name'])) {
@@ -653,63 +656,7 @@ class Shipment extends CI_Controller
 			}
 
 			$gbr = $this->upload->data();
-			// unset($config);
-			// $config = [
-			// 	'image_library'		=> 'gd2',
-			// 	'source_image'		=> $upload_path.$gbr['file_name'],
-			// 	// 'create_thumb'		=> FALSE,
-			// 	'maintain_ratio'	=> TRUE,
-			// 	'quality'					=> '50%',
-			// 	'width'						=> 500,
-			// 	// 'height'					=> 400,
-			// 	'new_image'				=> $upload_path.$gbr['file_name'],
-			// ];
-
-			// $this->image_lib->initialize($config);
-			// if (!$this->image_lib->resize()) {
-			// 	$this->session->set_flashdata('error', $this->image_lib->display_errors());
-			// 	redirect($_SERVER['HTTP_REFERER']);
-			// 	return false;
-			// }
 			$form_data['secondary_agent_mawb_mbl_atc'] = $gbr['file_name'];
-		}
-		if (!empty($_FILES['cipl_no_atc']['name'])) {
-			$upload_path = 'file/agent/';
-			$config = [
-				'upload_path' 		=> $upload_path,
-				'file_name' 			=> 'img_cipl_no_atc_'.$post['id'].'_'. date('YmsHis'),
-				'allowed_types' 	=> '*',
-				// 'max_size'				=> 500,
-				'overwrite' 			=> TRUE,
-			];
-			$this->upload->initialize($config);
-
-			if (!$this->upload->do_upload('cipl_no_atc')) {
-				$this->session->set_flashdata('error', $this->upload->display_errors());
-				redirect($_SERVER['HTTP_REFERER']);
-				return false;
-			}
-
-			// $gbr = $this->upload->data();
-			// unset($config);
-			// $config = [
-			// 	'image_library'		=> 'gd2',
-			// 	'source_image'		=> $upload_path.$gbr['file_name'],
-			// 	// 'create_thumb'		=> FALSE,
-			// 	'maintain_ratio'	=> TRUE,
-			// 	'quality'					=> '50%',
-			// 	'width'						=> 500,
-			// 	// 'height'					=> 400,
-			// 	'new_image'				=> $upload_path.$gbr['file_name'],
-			// ];
-
-			// $this->image_lib->initialize($config);
-			// if (!$this->image_lib->resize()) {
-			// 	$this->session->set_flashdata('error', $this->image_lib->display_errors());
-			// 	redirect($_SERVER['HTTP_REFERER']);
-			// 	return false;
-			// }
-			$form_data['cipl_no_atc'] = $gbr['file_name'];
 		}
 
 		$where2['id_shipment'] = $post['id'];

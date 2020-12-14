@@ -129,7 +129,7 @@
                 <div class="col-md-6">
                   <div class="form-group">
                     <label>Type of Mode</label>
-                    <select class="form-control" name="type_of_mode" required>
+                    <select class="form-control" name="type_of_mode" onchange="get_vol_weight()" required>
                       <option value="">- Select One -</option>
                       <option value="Sea Transport">Sea Transport</option>
                       <option value="Land Shipping">Land Shipping</option>
@@ -371,6 +371,11 @@
                   </table>
                 </div>
               </div>
+              <div class="row clearfix">
+                <div class="col-md">
+                  <h5 class="font-weight-bold text-right">Total All : IDR <span id="total_all" name="total_all">0.00</span></h5>
+                </div>
+              </div>
             </div>
           </div>
           <div class="card">
@@ -551,5 +556,41 @@
       minimumFractionDigits: 2
     }));
 
+  }
+
+  function get_total(input = "") {
+    if(input != ""){
+      var row = $(input).closest('tr');
+      var unit_price = $(row).find("input[name='charges_unit_price[]']").val();
+      var qty = $(row).find("input[name='charges_qty[]']").val();
+      var uom = $(row).find("select[name='charges_uom[]']").val();
+      if(uom == "%"){
+        qty = qty/100;
+      }
+      var subtotal = qty * unit_price;
+      $(row).find("input[name='charges_subtotal[]']").val(subtotal);
+      $(row).find("input[name='charges_subtotal_view[]']").val(subtotal.toLocaleString('en-US', {maximumFractionDigits:0}) + ".00");
+
+      var exchange_rate = $(row).find("input[name='charges_exchange_rate[]']").val();
+      var total = subtotal * exchange_rate;
+      $(row).find("input[name='charges_total[]']").val(total);
+      $(row).find("input[name='charges_total_view[]']").val(total.toLocaleString('en-US', {maximumFractionDigits:0}) + ".00");
+    }
+
+    var total_all = 0;
+    $("input[name='charges_total[]']").each(function(index, value) {
+      var total_row = parseFloat($(this).val());
+      total_all = total_all + total_row + 0;
+    });
+
+    // var vat = Number($("input[name=vat]").val());
+    // var discount = Number($("input[name=discount]").val());
+    // console.log(total_all);
+    // total_all = total_all + vat + 0;
+    // console.log(total_all);
+    // total_all = total_all - discount + 0;
+    // console.log(total_all);
+    // $(input).closest('form').find("span[name=total_all]").text(total_all);
+    $("#total_all").text(total_all.toLocaleString('en-US', {maximumFractionDigits:0}) + ".00");
   }
 </script>

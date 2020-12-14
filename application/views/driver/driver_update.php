@@ -237,7 +237,7 @@
                   </div>
                   <div class="form-group">
                     <label>Note</label>
-                    <textarea class="form-control" name="notes_driver_pickup" placeholder="Notes" required>Received by </textarea>
+                    <textarea class="form-control" name="notes_driver_pickup" placeholder="Notes" required>Handovered by </textarea>
                   </div>
 
                   <div id="signature" style="width: 100%"></div>

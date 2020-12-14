@@ -152,40 +152,7 @@
               <br>
               <h6 class="font-weight-bold border-bottom mb-3">Shipper Information Detail</h6>
               <div class="row">
-                <div class="col-md-6">
-                  <div class="form-group">
-                    <label>Container No</label>
-                    <input type="text" class="form-control" name="container_no" placeholder="Container No." value="<?= $shipment['container_no'] ?>">
-                  </div>
-                  <div class="form-group">
-                    <label>Seal No.</label>
-                    <input type="text" class="form-control" name="seal_no" placeholder="Seal No." value="<?= $shipment['seal_no'] ?>">
-                  </div>
-                  <div class="form-group">
-                    <label>Permit No.</label>
-                    <input type="text" class="form-control" name="permit_no" placeholder="Permit No." value="<?= $shipment['permit_no'] ?>">
-                  </div>
-                </div>
-                <div class="col-md-6">
-                  <div class="form-group">
-                    <label>CIPL No.</label>
-                    <input type="text" class="form-control" name="cipl_no" placeholder="CIPL No." value="<?= $shipment['cipl_no'] ?>">
-                  </div>
-                  <div class="form-group">
-                    <label>CIPL No. Files</label>
-                    <input type="file" name="cipl_no_atc" class="file-upload-default">
-                    <div class="input-group col-xs-12">
-                      <input type="text" class="form-control file-upload-info" disabled placeholder="Upload Image">
-                      <span class="input-group-append">
-                        <button class="file-upload-browse btn btn-info" type="button">Upload</button>
-                      </span>
-                    </div>
-                    <?php if($shipment['cipl_no_atc'] != ""): ?>
-                    <!-- <img height="150px" src="<?php echo base_url()."file/agent/".$shipment['cipl_no_atc'] ?>"> -->
-                    <a href="<?php echo base_url()."file/agent/".$shipment['cipl_no_atc'] ?>" target="_blank" class="btn btn-danger btn-flat">Atc</a>
-                    <?php endif; ?>
-                  </div>
-                </div>
+                
               </div>
               <div class="mt-2 row">
                 <div class="text-left col-6">

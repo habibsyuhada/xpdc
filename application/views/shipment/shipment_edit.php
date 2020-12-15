@@ -150,10 +150,6 @@
                 </div>
               </div>
               <br>
-              <h6 class="font-weight-bold border-bottom mb-3">Shipper Information Detail</h6>
-              <div class="row">
-                
-              </div>
               <div class="mt-2 row">
                 <div class="text-left col-6">
                   <!-- <span class="btn btn-danger previous-tab">Back</span> -->

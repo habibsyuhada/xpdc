@@ -228,13 +228,14 @@
     </tbody>
   </table>
   <span style="padding-left: 6px;">Terms and Conditions :</span>
-  <ol style="margin-top: 2px; margin-bottom: 2px;">
+  <!-- <ol style="margin-top: 2px; margin-bottom: 2px;">
     <li>Above rate exclude duties and taxes</li>
     <li>Above rate exclude cargo insurance</li>
     <li>Both shipper and consignee must provide valid related required documents for customs clearance</li>
     <li>Any discrepancy between CIPL and actual shipment will be burden to customer.</li>
     <li>Space is subject to space availability by the carrier.</li>
-  </ol>
+  </ol> -->
+  <p><?php echo $quotation['term_condition'] ?></p>
   <span style="padding-left: 6px;">Hopefully this quotation will meet your expectation. If there any questions, please do not hesitate to contact us.</span>
   <br>
   <br>

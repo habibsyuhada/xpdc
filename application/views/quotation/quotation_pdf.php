@@ -78,6 +78,17 @@
     .bg-orange{
       background-color: #ffc000;
     }
+
+    .px-4{
+      padding-right: 1.5rem;
+      padding-left: 1.5rem;
+    }
+    .pl-4{
+      padding-left: 1.5rem;
+    }
+    .pr-4{
+      padding-right: 1.5rem;
+    }
   </style>
 </head>
 <body>
@@ -88,26 +99,32 @@
   <table class="td-valign-top" width="100%" cellspacing="0" cellpadding="2">
     <tbody>
       <tr>
-        <td rowspan="5" class="auto-fit"><b>Customer Name :</b><br><?php echo $quotation['customer_name'] ?></td>
-        <td rowspan="5"></td>
+        <td rowspan="5">
+          <b>Customer Name : </b><?php echo $quotation['customer_name'] ?><br>
+          <b>Contact Person : </b><?php echo $quotation['customer_contact_person'] ?><br>
+          <b>Phone Number : </b><?php echo $quotation['customer_phone_number'] ?><br>
+          <b>Email : </b><?php echo $quotation['customer_email'] ?><br>
+          <b>Address : </b><?php echo $quotation['customer_address'] ?>
+        </td>
+        <td rowspan="5" class="auto-fit px-4"></td>
         <td class="auto-fit border">Quotation No.</td>
-        <td class="border"><?php echo $quotation['quotation_no'] ?></td>
+        <td class="auto-fit border pr-4"><?php echo $quotation['quotation_no'] ?></td>
       </tr>
       <tr>
         <td class="auto-fit border">Date</td>
-        <td class="border"><?php echo $quotation['date'] ?></td>
+        <td class="auto-fit border"><?php echo $quotation['date'] ?></td>
       </tr>
       <tr>
         <td class="auto-fit border">Exp. Date</td>
-        <td class="border"><?php echo $quotation['exp_date'] ?></td>
+        <td class="auto-fit border"><?php echo $quotation['exp_date'] ?></td>
       </tr>
       <tr>
         <td class="auto-fit border">Prepared By</td>
-        <td class="border"><?php echo $user_list ?></td>
+        <td class="auto-fit border"><?php echo $user_list ?></td>
       </tr>
       <tr>
         <td class="auto-fit border">Payment Terms</td>
-        <td class="border"><?php echo $quotation['payment_terms'] ?></td>
+        <td class="auto-fit border"><?php echo $quotation['payment_terms'] ?></td>
       </tr>
     </tbody>
   </table>
@@ -137,30 +154,40 @@
       <tr>
         <td colspan="2" class="header bg-orange"><b>Shipment Information</b></td>
       </tr>
+      <?php
+        $type_of_service = [
+         "FH" => "Freight Handling",
+         "CH" => "Clearance Handling",
+         "WH" => "Warehousing",
+        ];
+      ?>
       <tr>
-        <td><b>Type of Service :</b> <?php echo $quotation['type_of_service'] ?></td>
-        <td><b>Type of Transport :</b> <?php echo $quotation['type_of_transport'] ?></td>
+        <td><b>Type of Service :</b> <?php echo $type_of_service[$quotation['type_of_service']] ?></td>
+        <td><b>Incoterms :</b> <?php echo $quotation['incoterms'] ?></td>
+      </tr>
+      <tr>
+        <td><b>Type of Shipment :</b> <?php echo @$quotation['type_of_shipment'] ?></td>
+        <td><b>Type of Transport :</b> <?php echo $quotation['type_of_transport'] ?> <?php echo ($quotation['sea'] == "" ? "" : "(".$quotation['sea'].")") ?></td>
       </tr>
       <tr>
         <td><b>Origin :</b> <?php echo $quotation['shipper_city'].", ".$quotation['shipper_country'] ?></td>
         <td><b>Destination :</b> <?php echo $quotation['consignee_city'].", ".$quotation['consignee_country'] ?></td>
       </tr>
       <tr>
-        <td><b>Shipper :</b><br><?php echo $quotation['shipper_address'] ?></td>
-        <td><b>Consignee :</b><br><?php echo $quotation['consignee_address'] ?></td>
+        <td><b>Shipper :</b> <?php echo $quotation['shipper_name'] ?><br><?php echo $quotation['shipper_address'] ?></td>
+        <td><b>Consignee :</b> <?php echo $quotation['consignee_name'] ?><br><?php echo $quotation['consignee_address'] ?></td>
       </tr>
     </tbody>
   </table>
   
   <br>
 
-  <table class="td-valign-top" border="1" width="100%" cellspacing="0" cellpadding="2">
+  <table class="td-valign-top text-center" border="1" width="100%" cellspacing="0" cellpadding="2">
     <tbody>
       <tr>
-        <td colspan="7" class="header bg-orange"><b>Cargo Information</b></td>
+        <td colspan="6" class="header bg-orange"><b>Cargo Information</b></td>
       </tr>
       <tr>
-        <td class="header">No</td>
         <th class="header">Qty.</th>
         <th class="header">Package Type</th>
         <th class="header">Length(cm)</th>
@@ -168,9 +195,24 @@
         <th class="header">Height(cm)</th>
         <th class="header">Weight(kg)</th>
       </tr>
-      <?php foreach ($cargo_list as $key => $value) : ?>
+      <?php 
+        $total_act_weight = 0;
+        $total_vol_weight = 0;
+        $total_measurement = 0;
+        $per = 5000;
+        if ($quotation['type_of_transport'] == 'Air Freight') {
+          $per = 6000;
+        }
+        foreach ($cargo_list as $key => $value) : 
+          $actual_weight = $value['qty'] * $value['weight'];
+          $volume_weight = $value['qty'] * ($value['length'] * $value['width'] * $value['height']) / $per;
+          $measurement = $value['qty'] * ($value['length'] * $value['width'] * $value['height']) / 1000000;
+
+          $total_act_weight += $actual_weight;
+          $total_vol_weight += $volume_weight;
+          $total_measurement += $measurement;
+      ?>
       <tr>
-        <td><?php echo ($key + 1)."." ?></td>
         <td><?php echo $value['qty']; ?></td>
         <td><?php echo $value['piece_type']; ?></td>
         <td><?php echo $value['length']; ?></td>
@@ -181,16 +223,37 @@
       <?php endforeach; ?>
     </tbody>
   </table>
-  
+  <table class="td-valign-top" width="100%" cellspacing="0" cellpadding="2">
+    <tbody>
+      <tr>
+        <td class="auto-fit">Description of Goods</td>
+        <td class="auto-fit">:</td>
+        <td><?php echo @$quotation['description_of_goods'] ?></td>
+        <td class="auto-fit px-4"></td>
+        <td class="auto-fit">Act. Weight</td>
+        <td class="auto-fit">:</td>
+        <td><?php echo number_format($total_act_weight, 2) ?> Kg</td>
+      </tr>
+      <tr>
+        <td class="auto-fit">Vol. Weight</td>
+        <td class="auto-fit">:</td>
+        <td><?php echo number_format($total_vol_weight, 2) ?> Kg</td>
+        <td class="auto-fit px-4"></td>
+        <td class="auto-fit">Measurement</td>
+        <td class="auto-fit">:</td>
+        <td><?php echo number_format($total_measurement, 2) ?> M<sup>3</sup></td>
+      </tr>
+    </tbody>
+  </table>
+
   <br>
 
   <table class="td-valign-top table-bordered" width="100%" cellspacing="0" cellpadding="2">
     <tbody>
       <tr>
-        <td colspan="8" class="header bg-orange"><b>Charges Description</b></td>
+        <td colspan="7" class="header bg-orange"><b>Charges Description</b></td>
       </tr>
       <tr>
-        <td class="header">No</td>
         <th class="header">Description</th>
         <th class="header">Qty</th>
         <th class="header">UOM</th>
@@ -209,7 +272,6 @@
           $subtotal = $subtotal + (($value['qty'] / $persen)*$value['unit_price']*$value['exchange_rate']);
       ?>
       <tr>
-        <td><?php echo ($key + 1)."." ?></td>
         <td><?php echo $value['description'] ?></td>
         <td><?php echo $value['qty'] ?></td>
         <td><?php echo $value['uom'] ?></td>
@@ -220,7 +282,7 @@
       </tr>
       <?php endforeach; ?>
       <tr>
-        <td colspan="6" style="border-left: 0px; border-bottom: 0px; text-align: left;">
+        <td colspan="5" style="border-left: 0px; border-bottom: 0px; text-align: left;">
         </td>
         <td>TOTAL</td>
         <td><?php echo "IDR ".number_format(($subtotal), 0).".00" ?></td>
@@ -235,7 +297,7 @@
     <li>Any discrepancy between CIPL and actual shipment will be burden to customer.</li>
     <li>Space is subject to space availability by the carrier.</li>
   </ol> -->
-  <p><?php echo $quotation['term_condition'] ?></p>
+  <p style="padding-left: 18px; margin-top: 0px;"><?php echo nl2br($quotation['term_condition']) ?></p>
   <span style="padding-left: 6px;">Hopefully this quotation will meet your expectation. If there any questions, please do not hesitate to contact us.</span>
   <br>
   <br>

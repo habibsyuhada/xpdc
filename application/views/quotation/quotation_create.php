@@ -92,11 +92,25 @@
                 <div class="col-md-6">
                   <div class="form-group">
                     <label>Type of Service</label>
-                    <select class="form-control" name="type_of_service" required>
+                    <select class="form-control" name="type_of_service" onchange="change_type_of_service(this)" required>
                       <option value="">-- Select One --</option>
                       <option value="FH">Freight Handling</option>
                       <option value="CH">Clearance Handling</option>
                       <option value="WH">Warehousing</option>
+                    </select>
+                  </div>
+                </div>
+                <div class="col-md-6">
+                </div>
+              </div>
+              <div class="row clearfix">
+                <div class="col-md-6">
+                  <div class="form-group">
+                    <label>Type of Shipment</label>
+                    <select class="form-control" name="type_of_shipment" required>
+                      <option value="">-- Select One --</option>
+                      <option value="International shipping">International shipping</option>
+                      <option value="Domestic shipping">Domestic shipping</option>
                     </select>
                   </div>
                 </div>
@@ -425,6 +439,11 @@
     }
     $("select[name=sea]").val('');
   });
+
+  function change_type_of_service(sel) {
+    var text = $(sel).find("option:selected").text();
+    $("input[name=subject]").val("Quotation for "+text); 
+  }
 
   function addrow(btn) {
     var row_copy = $(btn).closest("tr").html();

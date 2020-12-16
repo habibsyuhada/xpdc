@@ -1,5 +1,6 @@
 <?php defined('BASEPATH') OR exit('No direct script access allowed'); ?>
 
+<<<<<<< Updated upstream
 ERROR - 2020-12-11 05:58:32 --> 404 Page Not Found: Assets/favicon.ico
 ERROR - 2020-12-11 05:58:41 --> 404 Page Not Found: Home/favicon.ico
 ERROR - 2020-12-11 05:58:48 --> Severity: Notice --> Undefined variable: branch_list C:\xampp\htdocs\xpdc\application\views\quotation\quotation_list.php 22
@@ -66,3 +67,25 @@ ERROR - 2020-12-11 20:22:39 --> Severity: Warning --> Invalid argument supplied 
 ERROR - 2020-12-11 20:22:40 --> 404 Page Not Found: Quotation/favicon.ico
 ERROR - 2020-12-11 21:12:46 --> Severity: Notice --> Undefined variable: where C:\xampp\htdocs\xpdc\application\controllers\Commercial.php 40
 ERROR - 2020-12-11 21:24:39 --> 404 Page Not Found: Shipment/favicon.ico
+=======
+ERROR - 2020-12-11 09:19:45 --> 404 Page Not Found: Assets/favicon.ico
+ERROR - 2020-12-11 09:19:59 --> 404 Page Not Found: Home/favicon.ico
+ERROR - 2020-12-11 09:20:12 --> Severity: Notice --> Undefined variable: branch_list C:\xampp\htdocs\xpdc\application\views\quotation\quotation_list.php 22
+ERROR - 2020-12-11 09:20:12 --> Severity: Warning --> Invalid argument supplied for foreach() C:\xampp\htdocs\xpdc\application\views\quotation\quotation_list.php 22
+ERROR - 2020-12-11 09:20:12 --> 404 Page Not Found: Quotation/favicon.ico
+ERROR - 2020-12-11 09:20:25 --> Severity: Notice --> Undefined index: quantity C:\xampp\htdocs\xpdc\application\views\quotation\quotation_pdf.php 170
+ERROR - 2020-12-11 09:20:25 --> Severity: Notice --> Undefined index: quantity C:\xampp\htdocs\xpdc\application\views\quotation\quotation_pdf.php 170
+ERROR - 2020-12-11 09:26:13 --> Severity: Notice --> Undefined variable: branch_list C:\xampp\htdocs\xpdc\application\views\quotation\quotation_list.php 22
+ERROR - 2020-12-11 09:26:13 --> Severity: Warning --> Invalid argument supplied for foreach() C:\xampp\htdocs\xpdc\application\views\quotation\quotation_list.php 22
+ERROR - 2020-12-11 09:26:25 --> Severity: Notice --> Undefined variable: branch_list C:\xampp\htdocs\xpdc\application\views\quotation\quotation_list.php 22
+ERROR - 2020-12-11 09:26:25 --> Severity: Warning --> Invalid argument supplied for foreach() C:\xampp\htdocs\xpdc\application\views\quotation\quotation_list.php 22
+ERROR - 2020-12-11 09:31:29 --> Severity: Notice --> Undefined index: create_by C:\xampp\htdocs\xpdc\application\controllers\Quotation.php 124
+ERROR - 2020-12-11 09:31:29 --> Severity: Notice --> Undefined offset: 0 C:\xampp\htdocs\xpdc\application\controllers\Quotation.php 126
+ERROR - 2020-12-11 09:31:46 --> Severity: Notice --> Undefined index: create_by C:\xampp\htdocs\xpdc\application\controllers\Quotation.php 124
+ERROR - 2020-12-11 09:31:58 --> Severity: Notice --> Undefined index: create_by C:\xampp\htdocs\xpdc\application\controllers\Quotation.php 124
+ERROR - 2020-12-11 09:32:20 --> Severity: Notice --> Undefined variable: branch_list C:\xampp\htdocs\xpdc\application\views\quotation\quotation_list.php 22
+ERROR - 2020-12-11 09:32:20 --> Severity: Warning --> Invalid argument supplied for foreach() C:\xampp\htdocs\xpdc\application\views\quotation\quotation_list.php 22
+ERROR - 2020-12-11 09:34:24 --> Severity: Notice --> Undefined variable: branch_list C:\xampp\htdocs\xpdc\application\views\quotation\quotation_list.php 22
+ERROR - 2020-12-11 09:34:24 --> Severity: Warning --> Invalid argument supplied for foreach() C:\xampp\htdocs\xpdc\application\views\quotation\quotation_list.php 22
+ERROR - 2020-12-11 09:34:28 --> Severity: Notice --> Undefined variable: user_list C:\xampp\htdocs\xpdc\application\views\quotation\quotation_pdf.php 102
+>>>>>>> Stashed changes

@@ -131,8 +131,50 @@
               <br>
               <br>
               <div class="row">
+                <div class="col-md-12">
+                  <h6 class="font-weight-bold border-bottom">Service Information</h6>
+                  <div class="form-group row m-0">
+                    <label class="col-sm-3 col-form-label">Type of Shipment</label>
+                    <div class="col-sm-9">
+                      <label class="col-form-label">: <?php echo $data_input['type_of_shipment'] ?></label>
+                      <input type="hidden" name="type_of_shipment" value="<?php echo $data_input['type_of_shipment'] ?>">
+                    </div>
+                  </div>
+                  <div class="form-group row m-0">
+                    <label class="col-sm-3 col-form-label">Type of Mode</label>
+                    <div class="col-sm-9">
+                      <label class="col-form-label">: <?php echo $data_input['type_of_mode'] ?> <?php echo (!isset($data_input['sea']) ? "" : "(" . $data_input['sea'] . ")") ?></label>
+                      <input type="hidden" name="type_of_mode" value="<?php echo $data_input['type_of_mode'] ?>">
+                      <input type="hidden" name="sea" value="<?php echo (isset($data_input['sea'])) ? $data_input['sea'] : ''; ?>">
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <br>
+              <br>
+              <h6 class="font-weight-bold border-bottom">Shipment Information</h6>
+              <?php if(isset($data_input['tracking_no'])): ?>
+              <div class="row">
                 <div class="col-md-6">
-                  <h6 class="font-weight-bold border-bottom">Shipment Information</h6>
+                  <div class="form-group row m-0">
+                    <label class="col-sm-3 col-form-label">Tracking No.</label>
+                    <div class="col-sm-9">
+                      <label class="col-form-label">: <?php echo $data_input['tracking_no'] ?></label>
+                    </div>
+                  </div>
+                </div>
+                <div class="col-md-6">
+                  <div class="form-group row m-0">
+                    <label class="col-sm-3 col-form-label">Shipment Date</label>
+                    <div class="col-sm-9">
+                      <label class="col-form-label">: <?php echo date("d-m-Y", strtotime($data_input['created_date'])) ?></label>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <?php endif; ?>
+              <div class="row">
+                <div class="col-md-6">
                   <div class="form-group row m-0">
                     <label class="col-sm-3 col-form-label">Incoterms</label>
                     <div class="col-sm-9">
@@ -162,6 +204,22 @@
                     </div>
                   </div>
                   <div class="form-group row m-0">
+                    <label class="col-sm-3 col-form-label">CIPL No.</label>
+                    <div class="col-sm-9">
+                      <label class="col-form-label">: <?php echo $data_input['cipl_no'] ?></label>
+                      <input type="hidden" name="cipl_no" value="<?php echo $data_input['cipl_no'] ?>">
+                    </div>
+                  </div>
+                  <div class="form-group row m-0">
+                    <label class="col-sm-3 col-form-label">Permit No</label>
+                    <div class="col-sm-9">
+                      <label class="col-form-label">: <?php echo $data_input['permit_no'] ?></label>
+                      <input type="hidden" name="permit_no" value="<?php echo $data_input['permit_no'] ?>">
+                    </div>
+                  </div>
+                </div>
+                <div class="col-md-6">
+                  <div class="form-group row m-0">
                     <label class="col-sm-3 col-form-label">COO (Country of Origin)</label>
                     <div class="col-sm-9">
                       <label class="col-form-label">: <?php echo $data_input['coo'] ?></label>
@@ -189,70 +247,74 @@
                       <input type="hidden" name="ref_no" value="<?php echo $data_input['ref_no'] ?>">
                     </div>
                   </div>
-                  <?php
-                    $total_act_weight = 0;
-                    $total_vol_weight = 0;
-                    $total_measurement = 0;
-                    $per = 5000;
-                    if ($data_input['type_of_mode'] == 'Air Freight') {
-                      $per = 6000;
-                    }
-                    foreach ($data_input['qty'] as $key => $value) : 
-                      $actual_weight = $data_input['qty'][$key] * $data_input['weight'][$key];
-                      $volume_weight = $data_input['qty'][$key] * ($data_input['length'][$key] * $data_input['width'][$key] * $data_input['height'][$key]) / $per;
-                      $measurement = $data_input['qty'][$key] * ($data_input['length'][$key] * $data_input['width'][$key] * $data_input['height'][$key]) / 1000000;
-
-                      $total_act_weight += $actual_weight;
-                      $total_vol_weight += $volume_weight;
-                      $total_measurement += $measurement;
-                  ?>
-                    <input type="hidden" name="qty[]" value="<?php echo $data_input['qty'][$key] ?>">
-                    <input type="hidden" name="piece_type[]" value="<?php echo $data_input['piece_type'][$key] ?>">
-                    <input type="hidden" name="length[]" value="<?php echo $data_input['length'][$key]+0 ?>">
-                    <input type="hidden" name="width[]" value="<?php echo $data_input['width'][$key]+0 ?>">
-                    <input type="hidden" name="height[]" value="<?php echo $data_input['height'][$key]+0 ?>">
-                    <input type="hidden" name="weight[]" value="<?php echo $data_input['weight'][$key]+0 ?>">
-                  <?php endforeach;  ?>
                   <div class="form-group row m-0">
-                    <label class="col-sm-3 col-form-label">Act. Weight</label>
+                    <label class="col-sm-3 col-form-label">Port of Loading</label>
                     <div class="col-sm-9">
-                      <label class="col-form-label">: <?php echo number_format($total_act_weight, 2) ?></label>
+                      <label class="col-form-label">: <?php echo $data_input['secondary_agent_port_of_loading'] ?></label>
+                      <input type="hidden" name="secondary_agent_port_of_loading" value="<?php echo $data_input['secondary_agent_port_of_loading'] ?>">
                     </div>
                   </div>
                   <div class="form-group row m-0">
-                    <label class="col-sm-3 col-form-label">Vol. Weight</label>
+                    <label class="col-sm-3 col-form-label">Port of Discharge</label>
                     <div class="col-sm-9">
-                      <label class="col-form-label">: <?php echo number_format($total_vol_weight, 2) ?></label>
-                    </div>
-                  </div>
-                  <div class="form-group row m-0">
-                    <label class="col-sm-3 col-form-label">Measurement</label>
-                    <div class="col-sm-9">
-                      <label class="col-form-label">: <?php echo number_format($total_measurement, 2) ?></label>
-                    </div>
-                  </div>
-                </div>
-                <div class="col-md-6">
-                  <h6 class="font-weight-bold border-bottom">Service Information</h6>
-                  <div class="form-group row m-0">
-                    <label class="col-sm-3 col-form-label">Type of Shipment</label>
-                    <div class="col-sm-9">
-                      <label class="col-form-label">: <?php echo $data_input['type_of_shipment'] ?></label>
-                      <input type="hidden" name="type_of_shipment" value="<?php echo $data_input['type_of_shipment'] ?>">
-                    </div>
-                  </div>
-                  <div class="form-group row m-0">
-                    <label class="col-sm-3 col-form-label">Type of Mode</label>
-                    <div class="col-sm-9">
-                      <label class="col-form-label">: <?php echo $data_input['type_of_mode'] ?> <?php echo (!isset($data_input['sea']) ? "" : "(" . $data_input['sea'] . ")") ?></label>
-                      <input type="hidden" name="type_of_mode" value="<?php echo $data_input['type_of_mode'] ?>">
-                      <input type="hidden" name="sea" value="<?php echo (isset($data_input['sea'])) ? $data_input['sea'] : ''; ?>">
+                      <label class="col-form-label">: <?php echo $data_input['secondary_agent_port_of_discharge'] ?></label>
+                      <input type="hidden" name="secondary_agent_port_of_discharge" value="<?php echo $data_input['secondary_agent_port_of_discharge'] ?>">
                     </div>
                   </div>
                 </div>
               </div>
               <br>
               <br>
+              <?php
+                $total_act_weight = 0;
+                $total_vol_weight = 0;
+                $total_measurement = 0;
+                $per = 5000;
+                if ($data_input['type_of_mode'] == 'Air Freight') {
+                  $per = 6000;
+                }
+                foreach ($data_input['qty'] as $key => $value) : 
+                  $actual_weight = $data_input['qty'][$key] * $data_input['weight'][$key];
+                  $volume_weight = $data_input['qty'][$key] * ($data_input['length'][$key] * $data_input['width'][$key] * $data_input['height'][$key]) / $per;
+                  $measurement = $data_input['qty'][$key] * ($data_input['length'][$key] * $data_input['width'][$key] * $data_input['height'][$key]) / 1000000;
+
+                  $total_act_weight += $actual_weight;
+                  $total_vol_weight += $volume_weight;
+                  $total_measurement += $measurement;
+              ?>
+                <input type="hidden" name="qty[]" value="<?php echo $data_input['qty'][$key] ?>">
+                <input type="hidden" name="piece_type[]" value="<?php echo $data_input['piece_type'][$key] ?>">
+                <input type="hidden" name="length[]" value="<?php echo $data_input['length'][$key]+0 ?>">
+                <input type="hidden" name="width[]" value="<?php echo $data_input['width'][$key]+0 ?>">
+                <input type="hidden" name="height[]" value="<?php echo $data_input['height'][$key]+0 ?>">
+                <input type="hidden" name="weight[]" value="<?php echo $data_input['weight'][$key]+0 ?>">
+              <?php endforeach;  ?>
+              <div class="row">
+                <div class="col-md">
+                  <div class="form-group row m-0">
+                    <label class="col-sm-auto col-form-label">Act. Weight</label>
+                    <div class="col-sm">
+                      <label class="col-form-label">: <?php echo number_format($total_act_weight, 2) ?></label>
+                    </div>
+                  </div>
+                </div>
+                <div class="col-md">
+                  <div class="form-group row m-0">
+                    <label class="col-sm-auto col-form-label">Vol. Weight</label>
+                    <div class="col-sm">
+                      <label class="col-form-label">: <?php echo number_format($total_vol_weight, 2) ?></label>
+                    </div>
+                  </div>
+                </div>
+                <div class="col-md">
+                  <div class="form-group row m-0">
+                    <label class="col-sm-auto col-form-label">Measurement</label>
+                    <div class="col-sm">
+                      <label class="col-form-label">: <?php echo number_format($total_measurement, 2) ?></label>
+                    </div>
+                  </div>
+                </div>
+              </div>
               <table class="table table-bordered td-valign-top text-center">
                 <thead>
                   <tr class="bg-info">
@@ -561,34 +623,6 @@
                     <div class="col-sm-9">
                       <label class="col-form-label">: <?php echo $data_input['secondary_agent_voyage_flight_date'] ?></label>
                       <input type="hidden" name="secondary_agent_voyage_flight_date" value="<?php echo $data_input['secondary_agent_voyage_flight_date'] ?>">
-                    </div>
-                  </div>
-                  <div class="form-group row m-0">
-                    <label class="col-sm-3 col-form-label">Port of Loading</label>
-                    <div class="col-sm-9">
-                      <label class="col-form-label">: <?php echo $data_input['secondary_agent_port_of_loading'] ?></label>
-                      <input type="hidden" name="secondary_agent_port_of_loading" value="<?php echo $data_input['secondary_agent_port_of_loading'] ?>">
-                    </div>
-                  </div>
-                  <div class="form-group row m-0">
-                    <label class="col-sm-3 col-form-label">Port of Discharge</label>
-                    <div class="col-sm-9">
-                      <label class="col-form-label">: <?php echo $data_input['secondary_agent_port_of_discharge'] ?></label>
-                      <input type="hidden" name="secondary_agent_port_of_discharge" value="<?php echo $data_input['secondary_agent_port_of_discharge'] ?>">
-                    </div>
-                  </div>
-                  <div class="form-group row m-0">
-                    <label class="col-sm-3 col-form-label">CIPL No.</label>
-                    <div class="col-sm-9">
-                      <label class="col-form-label">: <?php echo $data_input['cipl_no'] ?></label>
-                      <input type="hidden" name="cipl_no" value="<?php echo $data_input['cipl_no'] ?>">
-                    </div>
-                  </div>
-                  <div class="form-group row m-0">
-                    <label class="col-sm-3 col-form-label">Permit No</label>
-                    <div class="col-sm-9">
-                      <label class="col-form-label">: <?php echo $data_input['permit_no'] ?></label>
-                      <input type="hidden" name="permit_no" value="<?php echo $data_input['permit_no'] ?>">
                     </div>
                   </div>
                 </div>

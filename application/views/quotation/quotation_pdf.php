@@ -101,10 +101,9 @@
       <tr>
         <td rowspan="5">
           <b>Customer Name : </b><?php echo $quotation['customer_name'] ?><br>
-          <b>Contact Person : </b><?php echo $quotation['customer_contact_person'] ?><br>
-          <b>Phone Number : </b><?php echo $quotation['customer_phone_number'] ?><br>
-          <b>Email : </b><?php echo $quotation['customer_email'] ?><br>
-          <b>Address : </b><?php echo $quotation['customer_address'] ?>
+          <?php echo $quotation['customer_phone_number'] ?><br>
+          <?php echo $quotation['customer_email'] ?><br>
+          <?php echo $quotation['customer_address'] ?>
         </td>
         <td rowspan="5" class="auto-fit px-4"></td>
         <td class="auto-fit border">Quotation No.</td>
@@ -174,8 +173,20 @@
         <td><b>Destination :</b> <?php echo $quotation['consignee_city'].", ".$quotation['consignee_country'] ?></td>
       </tr>
       <tr>
-        <td><b>Shipper :</b> <?php echo $quotation['shipper_name'] ?><br><?php echo $quotation['shipper_address'] ?></td>
-        <td><b>Consignee :</b> <?php echo $quotation['consignee_name'] ?><br><?php echo $quotation['consignee_address'] ?></td>
+        <td>
+          <b>Shipper :</b> <?php echo $quotation['shipper_name'] ?><br>
+          <?php echo $quotation['shipper_contact_person'] ?><br>
+          <?php echo $quotation['shipper_phone_number'] ?><br>
+          <?php echo $quotation['shipper_email'] ?><br>
+          <?php echo $quotation['shipper_address'] ?>
+        </td>
+        <td>
+          <b>Consignee :</b> <?php echo $quotation['consignee_name'] ?><br>
+          <?php echo $quotation['consignee_contact_person'] ?><br>
+          <?php echo $quotation['consignee_phone_number'] ?><br>
+          <?php echo $quotation['consignee_email'] ?><br>
+          <?php echo $quotation['consignee_address'] ?>
+        </td>
       </tr>
     </tbody>
   </table>
@@ -248,7 +259,7 @@
 
   <br>
 
-  <table class="td-valign-top table-bordered" width="100%" cellspacing="0" cellpadding="2">
+  <table class="td-valign-top table-bordered text-center" width="100%" cellspacing="0" cellpadding="2">
     <tbody>
       <tr>
         <td colspan="7" class="header bg-orange"><b>Charges Description</b></td>

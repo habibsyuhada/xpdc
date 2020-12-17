@@ -190,6 +190,13 @@
           <h2>Shipment Information</h2><br>
           <table class="td-valign-top" width="100%" border="0" cellspacing="0" cellpadding="0">
             <tbody>
+              <?php if(isset($post['tracking_no'])): ?>
+              <tr>
+                <td>Shipment Date</td>
+                <td>:</td>
+                <td><?php echo date("d-m-Y", strtotime($post['created_date'])) ?></td>
+              </tr>
+              <?php endif; ?>
               <tr>
                 <td>Incoterms</td>
                 <td>:</td>

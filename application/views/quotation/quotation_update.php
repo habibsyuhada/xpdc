@@ -29,24 +29,24 @@
                     <input type="text" class="form-control" name="customer_account" value="<?php echo $quotation['customer_account'] ?>" placeholder="Account No." oninput="check_custumer(this);" required>
                   </div>
                   <div class="form-group">
-                    <label>Customer Contact Person</label>
-                    <input type="text" class="form-control" name="customer_contact_person" value="<?php echo $quotation['customer_contact_person'] ?>" placeholder="Customer Contact Person" required>
-                  </div>
-                  <div class="form-group">
-                    <label>Customer Email</label>
-                    <input type="email" class="form-control" name="customer_email" value="<?php echo $quotation['customer_email'] ?>" placeholder="Customer Email">
-                  </div>
-                  <div class="form-group">
                     <label>Customer Name</label>
                     <input type="text" class="form-control" name="customer_name" value="<?php echo $quotation['customer_name'] ?>" placeholder="Customer Name" required>
                   </div>
                   <div class="form-group">
-                    <label>Customer Phone Number</label>
+                    <label>Address</label>
+                    <textarea class="form-control" name="customer_address" placeholder="Customer Address" required><?php echo $quotation['customer_address'] ?></textarea>
+                  </div>
+                  <div class="form-group">
+                    <label>Contact Person</label>
+                    <input type="text" class="form-control" name="customer_contact_person" value="<?php echo $quotation['customer_contact_person'] ?>" placeholder="Customer Contact Person" required>
+                  </div>
+                  <div class="form-group">
+                    <label>Phone Number</label>
                     <input type="text" class="form-control" name="customer_phone_number" value="<?php echo $quotation['customer_phone_number'] ?>" placeholder="Customer Phone Number" required>
                   </div>
                   <div class="form-group">
-                    <label>Customer Address</label>
-                    <textarea class="form-control" name="customer_address" placeholder="Customer Address" required><?php echo $quotation['customer_address'] ?></textarea>
+                    <label>Email</label>
+                    <input type="email" class="form-control" name="customer_email" value="<?php echo $quotation['customer_email'] ?>" placeholder="Customer Email">
                   </div>
                 </div>
                 <div class="col-md-6">
@@ -72,7 +72,7 @@
                   </div>
                   <div class="form-group">
                     <label>Prepared By</label>
-                    <input type="text" class="form-control" name="created_by" value="<?php echo $quotation['created_by'] ?>" placeholder="Prepared By" value="<?php echo $this->session->userdata('name') ?>" disabled>
+                    <input type="text" class="form-control" name="created_by" value="<?php echo $quotation['created_by'] ?>" placeholder="Prepared By" disabled>
                   </div>
                 </div>
               </div>
@@ -84,21 +84,8 @@
               <div class="row clearfix">
                 <div class="col-md-6">
                   <div class="form-group">
-                    <label>Type of Service</label>
-                    <select class="form-control" name="type_of_service" required disabled>
-                      <option value="">-- Select One --</option>
-                      <option value="FH" <?php echo ($quotation['type_of_service'] == 'FH' ? 'selected' : '' ) ?>>Freight Handling</option>
-                      <option value="CH" <?php echo ($quotation['type_of_service'] == 'CH' ? 'selected' : '' ) ?>>Clearance Handling</option>
-                      <option value="WH" <?php echo ($quotation['type_of_service'] == 'WH' ? 'selected' : '' ) ?>>Warehousing</option>
-                    </select>
-                  </div>
-                </div>
-                <div class="col-md-6">
-                </div>
-                <div class="col-md-6">
-                  <div class="form-group">
                     <label>Type of Shipment</label>
-                    <select class="form-control" name="type_of_shipment" required disabled>
+                    <select class="form-control" name="type_of_shipment" required>
                       <option value="">-- Select One --</option>
                       <option value="International shipping" <?php echo ($quotation['type_of_shipment'] == 'International shipping' ? 'selected' : '' ) ?>>International shipping</option>
                       <option value="Domestic shipping" <?php echo ($quotation['type_of_shipment'] == 'Domestic shipping' ? 'selected' : '' ) ?>>Domestic shipping</option>
@@ -107,24 +94,12 @@
                 </div>
                 <div class="col-md-6">
                   <div class="form-group">
-                    <label>Incoterms</label>
-                    <select class="form-control" name="incoterms" required>
+                    <label>Type of Service</label>
+                    <select class="form-control" name="type_of_service" required disabled>
                       <option value="">-- Select One --</option>
-                      <option value="EXW (ExWorks)" <?php echo ($quotation['incoterms'] == "EXW (ExWorks)" ? 'selected' : '') ?>>EXW (ExWorks)</option>
-                      <option value="FCA (Free Carrier)" <?php echo ($quotation['incoterms'] == "FCA (Free Carrier)" ? 'selected' : '') ?>>FCA (Free Carrier)</option>
-                      <option value="FAS (Free Alongside Ship)" <?php echo ($quotation['incoterms'] == "FAS (Free Alongside Ship)" ? 'selected' : '') ?>>FAS (Free Alongside Ship)</option>
-                      <option value="FOB (Free On Board)" <?php echo ($quotation['incoterms'] == "FOB (Free On Board)" ? 'selected' : '') ?>>FOB (Free On Board)</option>
-                      <option value="CFR (Cost and Freight" <?php echo ($quotation['incoterms'] == "CFR (Cost and Freight" ? 'selected' : '') ?>>CFR (Cost and Freight</option>
-                      <option value="CIF (Cost Insurance Freight)" <?php echo ($quotation['incoterms'] == "CIF (Cost Insurance Freight)" ? 'selected' : '') ?>>CIF (Cost Insurance Freight)</option>
-                      <option value="CIP (Carriage and Insurance Paid)" <?php echo ($quotation['incoterms'] == "CIP (Carriage and Insurance Paid)" ? 'selected' : '') ?>>CIP (Carriage and Insurance Paid)</option>
-                      <option value="CPT (Carriage Paid To)" <?php echo ($quotation['incoterms'] == "CPT (Carriage Paid To)" ? 'selected' : '') ?>>CPT (Carriage Paid To)</option>
-                      <option value="DAF (Delivered at Frontier)" <?php echo ($quotation['incoterms'] == "DAF (Delivered at Frontier)" ? 'selected' : '') ?>>DAF (Delivered at Frontier)</option>
-                      <option value="DES (Delivered Ex Ship)" <?php echo ($quotation['incoterms'] == "DES (Delivered Ex Ship)" ? 'selected' : '') ?>>DES (Delivered Ex Ship)</option>
-                      <option value="DEQ (Delivered Ex Quay)" <?php echo ($quotation['incoterms'] == "DEQ (Delivered Ex Quay)" ? 'selected' : '') ?>>DEQ (Delivered Ex Quay)</option>
-                      <option value="DDU (Delivered Duty Unpaid)" <?php echo ($quotation['incoterms'] == "DDU (Delivered Duty Unpaid)" ? 'selected' : '') ?>>DDU (Delivered Duty Unpaid)</option>
-                      <option value="DDP (Delivered Duty Paid)" <?php echo ($quotation['incoterms'] == "DDP (Delivered Duty Paid)" ? 'selected' : '') ?>>DDP (Delivered Duty Paid)</option>
-                      <option value="DAT (Delivered At Terminal)" <?php echo ($quotation['incoterms'] == "DAT (Delivered At Terminal)" ? 'selected' : '') ?>>DAT (Delivered At Terminal)</option>
-                      <option value="DAP (Delivered At Place)" <?php echo ($quotation['incoterms'] == "DAP (Delivered At Place)" ? 'selected' : '') ?>>DAP (Delivered At Place)</option>
+                      <option value="FH" <?php echo ($quotation['type_of_service'] == 'FH' ? 'selected' : '' ) ?>>Freight Handling</option>
+                      <option value="CH" <?php echo ($quotation['type_of_service'] == 'CH' ? 'selected' : '' ) ?>>Clearance Handling</option>
+                      <option value="WH" <?php echo ($quotation['type_of_service'] == 'WH' ? 'selected' : '' ) ?>>Warehousing</option>
                     </select>
                   </div>
                 </div>
@@ -160,22 +135,41 @@
                   </div>
                 </div>
               </div>
+              <div class="row clearfix">
+                <div class="col-md-6">
+                  <div class="form-group">
+                    <label>Incoterms</label>
+                    <select class="form-control" name="incoterms" required>
+                      <option value="">-- Select One --</option>
+                      <option value="EXW (ExWorks)" <?php echo ($quotation['incoterms'] == "EXW (ExWorks)" ? 'selected' : '') ?>>EXW (ExWorks)</option>
+                      <option value="FCA (Free Carrier)" <?php echo ($quotation['incoterms'] == "FCA (Free Carrier)" ? 'selected' : '') ?>>FCA (Free Carrier)</option>
+                      <option value="FAS (Free Alongside Ship)" <?php echo ($quotation['incoterms'] == "FAS (Free Alongside Ship)" ? 'selected' : '') ?>>FAS (Free Alongside Ship)</option>
+                      <option value="FOB (Free On Board)" <?php echo ($quotation['incoterms'] == "FOB (Free On Board)" ? 'selected' : '') ?>>FOB (Free On Board)</option>
+                      <option value="CFR (Cost and Freight" <?php echo ($quotation['incoterms'] == "CFR (Cost and Freight" ? 'selected' : '') ?>>CFR (Cost and Freight</option>
+                      <option value="CIF (Cost Insurance Freight)" <?php echo ($quotation['incoterms'] == "CIF (Cost Insurance Freight)" ? 'selected' : '') ?>>CIF (Cost Insurance Freight)</option>
+                      <option value="CIP (Carriage and Insurance Paid)" <?php echo ($quotation['incoterms'] == "CIP (Carriage and Insurance Paid)" ? 'selected' : '') ?>>CIP (Carriage and Insurance Paid)</option>
+                      <option value="CPT (Carriage Paid To)" <?php echo ($quotation['incoterms'] == "CPT (Carriage Paid To)" ? 'selected' : '') ?>>CPT (Carriage Paid To)</option>
+                      <option value="DAF (Delivered at Frontier)" <?php echo ($quotation['incoterms'] == "DAF (Delivered at Frontier)" ? 'selected' : '') ?>>DAF (Delivered at Frontier)</option>
+                      <option value="DES (Delivered Ex Ship)" <?php echo ($quotation['incoterms'] == "DES (Delivered Ex Ship)" ? 'selected' : '') ?>>DES (Delivered Ex Ship)</option>
+                      <option value="DEQ (Delivered Ex Quay)" <?php echo ($quotation['incoterms'] == "DEQ (Delivered Ex Quay)" ? 'selected' : '') ?>>DEQ (Delivered Ex Quay)</option>
+                      <option value="DDU (Delivered Duty Unpaid)" <?php echo ($quotation['incoterms'] == "DDU (Delivered Duty Unpaid)" ? 'selected' : '') ?>>DDU (Delivered Duty Unpaid)</option>
+                      <option value="DDP (Delivered Duty Paid)" <?php echo ($quotation['incoterms'] == "DDP (Delivered Duty Paid)" ? 'selected' : '') ?>>DDP (Delivered Duty Paid)</option>
+                      <option value="DAT (Delivered At Terminal)" <?php echo ($quotation['incoterms'] == "DAT (Delivered At Terminal)" ? 'selected' : '') ?>>DAT (Delivered At Terminal)</option>
+                      <option value="DAP (Delivered At Place)" <?php echo ($quotation['incoterms'] == "DAP (Delivered At Place)" ? 'selected' : '') ?>>DAP (Delivered At Place)</option>
+                    </select>
+                  </div>
+                </div>
+                <div class="col-md-6">
+                  <div class="form-group">
+                    <label>Description of Goods</label>
+                    <input type="text" class="form-control" name="description_of_goods" placeholder="Description of Goods" value="<?php echo $quotation['description_of_goods'] ?>" required>
+                  </div>
+                </div>
+              </div>
               <br>
               <div class="row clearfix">
                 <div class="col-md-6">
                   <h6 class="font-weight-bold">Shipper Information</h6>
-                  <div class="form-group">
-                    <label>Shipper Name</label>
-                    <input type="text" class="form-control" name="shipper_name" value="<?php echo $quotation['shipper_name'] ?>" placeholder="Shipper Name" required>
-                  </div>
-                  <div class="form-group">
-                    <label>Address</label>
-                    <textarea class="form-control" name="shipper_address" placeholder="Address" required><?php echo $quotation['shipper_address'] ?></textarea>
-                  </div>
-                  <div class="form-group">
-                    <label>City</label>
-                    <input type="text" class="form-control" name="shipper_city" value="<?php echo $quotation['shipper_city'] ?>" placeholder="City" required>
-                  </div>
                   <div class="form-group">
                     <label>Country</label>
                     <select class="form-control select2" name="shipper_country" required>
@@ -186,8 +180,20 @@
                     </select>
                   </div>
                   <div class="form-group">
+                    <label>City</label>
+                    <input type="text" class="form-control" name="shipper_city" value="<?php echo $quotation['shipper_city'] ?>" placeholder="City" required>
+                  </div>
+                  <div class="form-group">
                     <label>Postcode</label>
                     <input type="text" class="form-control" name="shipper_postcode" value="<?php echo $quotation['shipper_postcode'] ?>" placeholder="Postcode">
+                  </div>
+                  <div class="form-group">
+                    <label>Shipper Name</label>
+                    <input type="text" class="form-control" name="shipper_name" value="<?php echo $quotation['shipper_name'] ?>" placeholder="Shipper Name" required>
+                  </div>
+                  <div class="form-group">
+                    <label>Address</label>
+                    <textarea class="form-control" name="shipper_address" placeholder="Address" required><?php echo $quotation['shipper_address'] ?></textarea>
                   </div>
                   <div class="form-group">
                     <label>Contact Person</label>
@@ -205,18 +211,6 @@
                 <div class="col-md-6">
                   <h6 class="font-weight-bold">Consignee Information</h6>
                   <div class="form-group">
-                    <label>Consignee Name</label>
-                    <input type="text" class="form-control" name="consignee_name" value="<?php echo $quotation['consignee_name'] ?>" placeholder="Receiver Name" required>
-                  </div>
-                  <div class="form-group">
-                    <label>Address</label>
-                    <textarea class="form-control" name="consignee_address" placeholder="Address" required><?php echo $quotation['consignee_address'] ?></textarea>
-                  </div>
-                  <div class="form-group">
-                    <label>City</label>
-                    <input type="text" class="form-control" name="consignee_city" value="<?php echo $quotation['consignee_city'] ?>" placeholder="City" required>
-                  </div>
-                  <div class="form-group">
                     <label>Country</label>
                     <select class="form-control select2" name="consignee_country" required>
                       <option value="">- Select One -</option>
@@ -226,8 +220,20 @@
                     </select>
                   </div>
                   <div class="form-group">
+                    <label>City</label>
+                    <input type="text" class="form-control" name="consignee_city" value="<?php echo $quotation['consignee_city'] ?>" placeholder="City" required>
+                  </div>
+                  <div class="form-group">
                     <label>Postcode</label>
                     <input type="text" class="form-control" name="consignee_postcode" value="<?php echo $quotation['consignee_postcode'] ?>" placeholder="Postcode">
+                  </div>
+                  <div class="form-group">
+                    <label>Consignee Name</label>
+                    <input type="text" class="form-control" name="consignee_name" value="<?php echo $quotation['consignee_name'] ?>" placeholder="Receiver Name" required>
+                  </div>
+                  <div class="form-group">
+                    <label>Address</label>
+                    <textarea class="form-control" name="consignee_address" placeholder="Address" required><?php echo $quotation['consignee_address'] ?></textarea>
                   </div>
                   <div class="form-group">
                     <label>Contact Person</label>

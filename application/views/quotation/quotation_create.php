@@ -28,24 +28,24 @@
                     <input type="text" class="form-control" name="customer_account" placeholder="Account No." oninput="check_custumer(this);" required>
                   </div>
                   <div class="form-group">
-                    <label>Customer Contact Person</label>
-                    <input type="text" class="form-control" name="customer_contact_person" placeholder="Customer Contact Person" required>
-                  </div>
-                  <div class="form-group">
-                    <label>Customer Email</label>
-                    <input type="email" class="form-control" name="customer_email" placeholder="Customer Email">
-                  </div>
-                  <div class="form-group">
                     <label>Customer Name</label>
                     <input type="text" class="form-control" name="customer_name" placeholder="Customer Name" required>
                   </div>
                   <div class="form-group">
-                    <label>Customer Phone Number</label>
+                    <label>Address</label>
+                    <textarea class="form-control" name="customer_address" placeholder="Customer Address" required></textarea>
+                  </div>
+                  <div class="form-group">
+                    <label>Contact Person</label>
+                    <input type="text" class="form-control" name="customer_contact_person" placeholder="Customer Contact Person" required>
+                  </div>
+                  <div class="form-group">
+                    <label>Phone Number</label>
                     <input type="text" class="form-control" name="customer_phone_number" placeholder="Customer Phone Number" required>
                   </div>
                   <div class="form-group">
-                    <label>Customer Address</label>
-                    <textarea class="form-control" name="customer_address" placeholder="Customer Address" required></textarea>
+                    <label>Email</label>
+                    <input type="email" class="form-control" name="customer_email" placeholder="Customer Email">
                   </div>
                 </div>
                 <div class="col-md-6">
@@ -83,21 +83,6 @@
               <div class="row clearfix">
                 <div class="col-md-6">
                   <div class="form-group">
-                    <label>Type of Service</label>
-                    <select class="form-control" name="type_of_service" onchange="change_type_of_service(this)" required>
-                      <option value="">-- Select One --</option>
-                      <option value="FH">Freight Handling</option>
-                      <option value="CH">Clearance Handling</option>
-                      <option value="WH">Warehousing</option>
-                    </select>
-                  </div>
-                </div>
-                <div class="col-md-6">
-                </div>
-              </div>
-              <div class="row clearfix">
-                <div class="col-md-6">
-                  <div class="form-group">
                     <label>Type of Shipment</label>
                     <select class="form-control" name="type_of_shipment" required>
                       <option value="">-- Select One --</option>
@@ -108,28 +93,15 @@
                 </div>
                 <div class="col-md-6">
                   <div class="form-group">
-                    <label>Incoterms</label>
-                    <select class="form-control" name="incoterms" required>
+                    <label>Type of Service</label>
+                    <select class="form-control" name="type_of_service" onchange="change_type_of_service(this)" required>
                       <option value="">-- Select One --</option>
-                      <option value="EXW (ExWorks)">EXW (ExWorks)</option>
-                      <option value="FCA (Free Carrier)">FCA (Free Carrier)</option>
-                      <option value="FAS (Free Alongside Ship)">FAS (Free Alongside Ship)</option>
-                      <option value="FOB (Free On Board)">FOB (Free On Board)</option>
-                      <option value="CFR (Cost and Freight">CFR (Cost and Freight</option>
-                      <option value="CIF (Cost Insurance Freight)">CIF (Cost Insurance Freight)</option>
-                      <option value="CIP (Carriage and Insurance Paid)">CIP (Carriage and Insurance Paid)</option>
-                      <option value="CPT (Carriage Paid To)">CPT (Carriage Paid To)</option>
-                      <option value="DAF (Delivered at Frontier)">DAF (Delivered at Frontier)</option>
-                      <option value="DES (Delivered Ex Ship)">DES (Delivered Ex Ship)</option>
-                      <option value="DEQ (Delivered Ex Quay)">DEQ (Delivered Ex Quay)</option>
-                      <option value="DDU (Delivered Duty Unpaid)">DDU (Delivered Duty Unpaid)</option>
-                      <option value="DDP (Delivered Duty Paid)">DDP (Delivered Duty Paid)</option>
-                      <option value="DAT (Delivered At Terminal)">DAT (Delivered At Terminal)</option>
-                      <option value="DAP (Delivered At Place)">DAP (Delivered At Place)</option>
+                      <option value="FH">Freight Handling</option>
+                      <option value="CH">Clearance Handling</option>
+                      <option value="WH">Warehousing</option>
                     </select>
                   </div>
                 </div>
-                
               </div>
               <div class="row clearfix">
                 <div class="col-md-6">
@@ -162,22 +134,41 @@
                   </div>
                 </div>
               </div>
+              <div class="row clearfix">
+                <div class="col-md-6">
+                  <div class="form-group">
+                    <label>Incoterms</label>
+                    <select class="form-control" name="incoterms" required>
+                      <option value="">-- Select One --</option>
+                      <option value="EXW (ExWorks)">EXW (ExWorks)</option>
+                      <option value="FCA (Free Carrier)">FCA (Free Carrier)</option>
+                      <option value="FAS (Free Alongside Ship)">FAS (Free Alongside Ship)</option>
+                      <option value="FOB (Free On Board)">FOB (Free On Board)</option>
+                      <option value="CFR (Cost and Freight">CFR (Cost and Freight</option>
+                      <option value="CIF (Cost Insurance Freight)">CIF (Cost Insurance Freight)</option>
+                      <option value="CIP (Carriage and Insurance Paid)">CIP (Carriage and Insurance Paid)</option>
+                      <option value="CPT (Carriage Paid To)">CPT (Carriage Paid To)</option>
+                      <option value="DAF (Delivered at Frontier)">DAF (Delivered at Frontier)</option>
+                      <option value="DES (Delivered Ex Ship)">DES (Delivered Ex Ship)</option>
+                      <option value="DEQ (Delivered Ex Quay)">DEQ (Delivered Ex Quay)</option>
+                      <option value="DDU (Delivered Duty Unpaid)">DDU (Delivered Duty Unpaid)</option>
+                      <option value="DDP (Delivered Duty Paid)">DDP (Delivered Duty Paid)</option>
+                      <option value="DAT (Delivered At Terminal)">DAT (Delivered At Terminal)</option>
+                      <option value="DAP (Delivered At Place)">DAP (Delivered At Place)</option>
+                    </select>
+                  </div>
+                </div>
+                <div class="col-md-6">
+                  <div class="form-group">
+                    <label>Description of Goods</label>
+                    <input type="text" class="form-control" name="description_of_goods" placeholder="Description of Goods" required>
+                  </div>
+                </div>
+              </div>
               <br>
               <div class="row clearfix">
                 <div class="col-md-6">
                   <h6 class="font-weight-bold">Shipper Information</h6>
-                  <div class="form-group">
-                    <label>Shipper Name</label>
-                    <input type="text" class="form-control" name="shipper_name" placeholder="Shipper Name" required>
-                  </div>
-                  <div class="form-group">
-                    <label>Address</label>
-                    <textarea class="form-control" name="shipper_address" placeholder="Address" required></textarea>
-                  </div>
-                  <div class="form-group">
-                    <label>City</label>
-                    <input type="text" class="form-control" name="shipper_city" placeholder="City" required>
-                  </div>
                   <div class="form-group">
                     <label>Country</label>
                     <select class="form-control select2" name="shipper_country" required>
@@ -188,8 +179,20 @@
                     </select>
                   </div>
                   <div class="form-group">
+                    <label>City</label>
+                    <input type="text" class="form-control" name="shipper_city" placeholder="City" required>
+                  </div>
+                  <div class="form-group">
                     <label>Postcode</label>
                     <input type="text" class="form-control" name="shipper_postcode" placeholder="Postcode">
+                  </div>
+                  <div class="form-group">
+                    <label>Shipper Name</label>
+                    <input type="text" class="form-control" name="shipper_name" placeholder="Shipper Name" required>
+                  </div>
+                  <div class="form-group">
+                    <label>Address</label>
+                    <textarea class="form-control" name="shipper_address" placeholder="Address" required></textarea>
                   </div>
                   <div class="form-group">
                     <label>Contact Person</label>
@@ -207,18 +210,6 @@
                 <div class="col-md-6">
                   <h6 class="font-weight-bold">Consignee Information</h6>
                   <div class="form-group">
-                    <label>Consignee Name</label>
-                    <input type="text" class="form-control" name="consignee_name" placeholder="Receiver Name" required>
-                  </div>
-                  <div class="form-group">
-                    <label>Address</label>
-                    <textarea class="form-control" name="consignee_address" placeholder="Address" required></textarea>
-                  </div>
-                  <div class="form-group">
-                    <label>City</label>
-                    <input type="text" class="form-control" name="consignee_city" placeholder="City" required>
-                  </div>
-                  <div class="form-group">
                     <label>Country</label>
                     <select class="form-control select2" name="consignee_country" required>
                       <option value="">- Select One -</option>
@@ -228,8 +219,20 @@
                     </select>
                   </div>
                   <div class="form-group">
+                    <label>City</label>
+                    <input type="text" class="form-control" name="consignee_city" placeholder="City" required>
+                  </div>
+                  <div class="form-group">
                     <label>Postcode</label>
                     <input type="text" class="form-control" name="consignee_postcode" placeholder="Postcode">
+                  </div>
+                  <div class="form-group">
+                    <label>Consignee Name</label>
+                    <input type="text" class="form-control" name="consignee_name" placeholder="Receiver Name" required>
+                  </div>
+                  <div class="form-group">
+                    <label>Address</label>
+                    <textarea class="form-control" name="consignee_address" placeholder="Address" required></textarea>
                   </div>
                   <div class="form-group">
                     <label>Contact Person</label>

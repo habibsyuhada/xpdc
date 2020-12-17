@@ -143,7 +143,7 @@ class Shipment extends CI_Controller
 		}
 
 		$data['data_input'] 			= $post;
-		$data['meta_title'] 			= 'Shipment Receipt';
+		$data['meta_title'] 			= 'Shipment '.(isset($post['tracking_no']) ? "Preview" : "Receipt");
 		$data['subview']    			= 'shipment/shipment_receipt';
 		$this->load->view('index', $data);
 	}

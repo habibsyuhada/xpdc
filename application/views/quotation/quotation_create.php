@@ -35,8 +35,6 @@
                     <label>Customer Email</label>
                     <input type="email" class="form-control" name="customer_email" placeholder="Customer Email">
                   </div>
-                </div>
-                <div class="col-md-6">
                   <div class="form-group">
                     <label>Customer Name</label>
                     <input type="text" class="form-control" name="customer_name" placeholder="Customer Name" required>
@@ -63,12 +61,6 @@
                     <label>Payment Terms</label>
                     <input type="text" class="form-control" name="payment_terms" placeholder="Payment Terms" required>
                   </div>
-                </div>
-                <div class="col-md-6">
-                  <!-- <div class="form-group">
-                    <label>Quotation No.</label>
-                    <input type="text" class="form-control" name="quotation_no" placeholder="Quotation No." required>
-                  </div> -->
                   <div class="form-group">
                     <label>Date</label>
                     <input type="date" class="form-control" name="date" placeholder="Date" value="<?php echo date("Y-m-d") ?>" readonly required>
@@ -397,14 +389,36 @@
               <h6 class="font-weight-bold border-bottom">Addtional</h6>
               <div class="row clearfix">
                 <div class="col-md-12">
-                  <div class="form-group">
-                    <label>Terms and Conditions:</label>
-                    <textarea rows="5" class="form-control" name="term_condition" placeholder="Terms and Conditions" required>1.	Above rate exclude duties and taxes
-2.	Above rate exclude cargo insurance
-3.	Both shipper and consignee must provide valid related required documents for customs clearance
-4.	Any discrepancy between CIPL and actual shipment will be burden to customer.
-5.	Space is subject to space availability by the carrier.</textarea>
-                  </div>
+                  <table class="table text-center">
+                    <thead>
+                      <tr class="bg-info">
+                        <th class="text-white font-weight-bold">Terms and Conditions</th>
+                        <th class="text-white font-weight-bold" style="width: 1%;"></th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <tr>
+                        <td><input type="text" class="form-control" name="term_condition[]" value="Above rate exclude duties and taxes."></td>
+                        <td><button type="button" class="btn btn-primary" onclick="addrow(this)"><i class="fas fa-plus m-0"></i></button></td>
+                      </tr>
+                      <tr>
+                        <td><input type="text" class="form-control" name="term_condition[]" value="Above rate exclude cargo insurance."></td>
+                        <td><button type="button" class="btn btn-danger" onclick="deleterow(this)"><i class="fas fa-trash m-0"></i></button></td>
+                      </tr>
+                      <tr>
+                        <td><input type="text" class="form-control" name="term_condition[]" value="Both shipper and consignee must provide valid related required documents for customs clearance."></td>
+                        <td><button type="button" class="btn btn-danger" onclick="deleterow(this)"><i class="fas fa-trash m-0"></i></button></td>
+                      </tr>
+                      <tr>
+                        <td><input type="text" class="form-control" name="term_condition[]" value="Any discrepancy between CIPL and actual shipment will be burden to customer."></td>
+                        <td><button type="button" class="btn btn-danger" onclick="deleterow(this)"><i class="fas fa-trash m-0"></i></button></td>
+                      </tr>
+                      <tr>
+                        <td><input type="text" class="form-control" name="term_condition[]" value="Space is subject to space availability by the carrier."></td>
+                        <td><button type="button" class="btn btn-danger" onclick="deleterow(this)"><i class="fas fa-trash m-0"></i></button></td>
+                      </tr>
+                    </tbody>
+                  </table>
                 </div>
               </div>
             </div>
@@ -481,6 +495,7 @@
             $("input[name=customer_contact_person]").val('');
             $("input[name=customer_phone_number]").val('');
             $("input[name=customer_email]").val('');
+            $("input[name=payment_terms]").val('');
           }
           else{
             data = JSON. parse(data);
@@ -494,6 +509,7 @@
             $("input[name=customer_contact_person]").val(data.contact_person);
             $("input[name=customer_phone_number]").val(data.phone_number);
             $("input[name=customer_email]").val(data.email);
+            $("input[name=payment_terms]").val(data.payment_terms);
           }
         }
       }); 

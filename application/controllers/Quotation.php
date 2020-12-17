@@ -48,6 +48,7 @@ class Quotation extends CI_Controller
 
 	public function quotation_create_process(){
 		$post = $this->input->post();
+
 		$quotation_no = "";
 		if(!isset($post['sea'])){
 			$post['sea'] = "";
@@ -67,11 +68,13 @@ class Quotation extends CI_Controller
 		$where = [
 			'branch' 													=> $this->session->userdata('branch'),
 			'type_of_service' 								=> $post['type_of_service'],
-			"YEAR(date) = '".date('n')."'" 		=> NULL,
-			"MONTH(date) = '".date('Y')."'" 	=> NULL,
+			"MONTH(date) = '".date('n')."'" 		=> NULL,
+			"YEAR(date) = '".date('Y')."'" 	=> NULL,
 		];
 		$quotation_no = $this->quotation_mod->quotation_generate_no_db($where);
 		$quotation_no = $quotation_no."/".$branch['code']."-".$post['type_of_service']."/".date('m')."/".date('Y');
+		
+		$term_condition = join("\n", $post['term_condition']);
 
 		$form_data = array(
 			'quotation_no' 							=> $quotation_no,
@@ -87,6 +90,7 @@ class Quotation extends CI_Controller
 			'exp_date' 									=> $post['exp_date'],
 			'payment_terms' 						=> $post['payment_terms'],
 			'type_of_service' 					=> $post['type_of_service'],
+			'type_of_shipment' 					=> $post['type_of_shipment'],
 			'type_of_transport' 				=> $post['type_of_mode'],
 			'sea' 											=> $post['sea'],
 			'incoterms' 								=> $post['incoterms'],
@@ -106,7 +110,7 @@ class Quotation extends CI_Controller
 			'consignee_contact_person' 	=> $post['consignee_contact_person'],
 			'consignee_phone_number' 		=> $post['consignee_phone_number'],
 			'consignee_email' 					=> $post['consignee_email'],
-			'term_condition' 						=> $post['term_condition'],
+			'term_condition' 						=> $term_condition,
 			'branch' 										=> $this->session->userdata('branch'),
 			'created_by' 								=> $this->session->userdata('id'),
 		);
@@ -179,6 +183,7 @@ class Quotation extends CI_Controller
 	public function quotation_update_process()
 	{
 		$post = $this->input->post();
+		$term_condition = join("\n", $post['term_condition']);
 		$form_data = array(
 			'customer_account' 					=> $post['customer_account'],
 			'customer_name' 						=> $post['customer_name'],
@@ -191,8 +196,9 @@ class Quotation extends CI_Controller
 			// 'date' 											=> $post['date'],
 			'exp_date' 									=> $post['exp_date'],
 			'payment_terms' 						=> $post['payment_terms'],
-			// 'type_of_service' 					=> $post['type_of_service'],
+			'type_of_service' 					=> $post['type_of_service'],
 			'type_of_transport' 				=> $post['type_of_transport'],
+			'type_of_shipment' 					=> $post['type_of_shipment'],
 			'sea' 											=> $post['sea'],
 			'incoterms' 								=> $post['incoterms'],
 			'shipper_name' 							=> $post['shipper_name'],
@@ -211,7 +217,7 @@ class Quotation extends CI_Controller
 			'consignee_contact_person' 	=> $post['consignee_contact_person'],
 			'consignee_phone_number' 		=> $post['consignee_phone_number'],
 			'consignee_email' 					=> $post['consignee_email'],
-			'term_condition' 						=> $post['term_condition'],
+			'term_condition' 						=> $term_condition,
 		);
 		$where['id'] = $post['id'];
 		$this->quotation_mod->quotation_update_process_db($form_data, $where);

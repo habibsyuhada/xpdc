@@ -67,7 +67,7 @@ class Shipment extends CI_Controller
 		$express_list 	= [];
 		$created_by 	= [];
 		foreach ($datadb as $key => $value) {
-			if($value['sea'] == "Express" && $value['status'] != "Delivered"){
+			if($value['sea'] == "Express" && !in_array($value['status'], array("Delivered", "Canceled")) ){
 				$express_list[] = $value;
 			}
 			else{

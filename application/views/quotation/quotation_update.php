@@ -36,8 +36,6 @@
                     <label>Customer Email</label>
                     <input type="email" class="form-control" name="customer_email" value="<?php echo $quotation['customer_email'] ?>" placeholder="Customer Email">
                   </div>
-                </div>
-                <div class="col-md-6">
                   <div class="form-group">
                     <label>Customer Name</label>
                     <input type="text" class="form-control" name="customer_name" value="<?php echo $quotation['customer_name'] ?>" placeholder="Customer Name" required>
@@ -64,12 +62,6 @@
                     <label>Payment Terms</label>
                     <input type="text" class="form-control" name="payment_terms" value="<?php echo $quotation['payment_terms'] ?>" placeholder="Payment Terms" required>
                   </div>
-                </div>
-                <div class="col-md-6">
-                  <!-- <div class="form-group">
-                    <label>Quotation No.</label>
-                    <input type="text" class="form-control" name="quotation_no" value="<?php echo $quotation['quotation_no'] ?>" placeholder="Quotation No." required>
-                  </div> -->
                   <div class="form-group">
                     <label>Date</label>
                     <input type="date" class="form-control" name="date" value="<?php echo $quotation['date'] ?>" placeholder="Date" value="<?php echo date("Y-m-d") ?>" readonly required>
@@ -98,6 +90,18 @@
                       <option value="FH" <?php echo ($quotation['type_of_service'] == 'FH' ? 'selected' : '' ) ?>>Freight Handling</option>
                       <option value="CH" <?php echo ($quotation['type_of_service'] == 'CH' ? 'selected' : '' ) ?>>Clearance Handling</option>
                       <option value="WH" <?php echo ($quotation['type_of_service'] == 'WH' ? 'selected' : '' ) ?>>Warehousing</option>
+                    </select>
+                  </div>
+                </div>
+                <div class="col-md-6">
+                </div>
+                <div class="col-md-6">
+                  <div class="form-group">
+                    <label>Type of Shipment</label>
+                    <select class="form-control" name="type_of_shipment" required disabled>
+                      <option value="">-- Select One --</option>
+                      <option value="International shipping" <?php echo ($quotation['type_of_shipment'] == 'International shipping' ? 'selected' : '' ) ?>>International shipping</option>
+                      <option value="Domestic shipping" <?php echo ($quotation['type_of_shipment'] == 'Domestic shipping' ? 'selected' : '' ) ?>>Domestic shipping</option>
                     </select>
                   </div>
                 </div>
@@ -409,10 +413,31 @@
               <h6 class="font-weight-bold border-bottom">Addtional</h6>
               <div class="row clearfix">
                 <div class="col-md-12">
-                  <div class="form-group">
-                    <label>Terms and Conditions:</label>
-                    <textarea rows="5" class="form-control" name="term_condition" placeholder="Terms and Conditions" required><?php echo $quotation['term_condition'] ?></textarea>
-                  </div>
+                  <table class="table text-center">
+                    <thead>
+                      <tr class="bg-info">
+                        <th class="text-white font-weight-bold">Terms and Conditions</th>
+                        <th class="text-white font-weight-bold" style="width: 1%;"></th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <?php 
+                        $term_condition = explode("\n", $quotation['term_condition']);
+                        foreach ($term_condition as $key => $value) : 
+                      ?>
+                      <tr>
+                        <td><input type="text" class="form-control" name="term_condition[]" value="<?php echo $value ?>"></td>
+                        <td>
+                          <?php if ($key == 0) : ?>
+                            <button type="button" class="btn btn-primary" onclick="addrow(this)"><i class="fas fa-plus m-0"></i></button>
+                          <?php else : ?>
+                            <button type="button" class="btn btn-danger" onclick="deleterow(this)"><i class="fas fa-trash m-0"></i></button>
+                          <?php endif; ?>
+                        </td>
+                      </tr>
+                      <?php endforeach; ?>
+                    </tbody>
+                  </table>
                 </div>
               </div>
             </div>

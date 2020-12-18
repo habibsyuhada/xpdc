@@ -532,7 +532,7 @@
     var qty_array = [];
 
     if (type_of_mode == 'Air Freight') {
-      per = 6000;
+      per = 4000;
     } else if (type_of_mode == 'Land Shipping') {
       per = 4000;
     } else if (type_of_mode == 'Sea Transport') {

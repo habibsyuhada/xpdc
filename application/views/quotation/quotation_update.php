@@ -95,7 +95,7 @@
                 <div class="col-md-6">
                   <div class="form-group">
                     <label>Type of Service</label>
-                    <select class="form-control" name="type_of_service" required disabled>
+                    <select class="form-control" name="type_of_service" required>
                       <option value="">-- Select One --</option>
                       <option value="FH" <?php echo ($quotation['type_of_service'] == 'FH' ? 'selected' : '' ) ?>>Freight Handling</option>
                       <option value="CH" <?php echo ($quotation['type_of_service'] == 'CH' ? 'selected' : '' ) ?>>Clearance Handling</option>

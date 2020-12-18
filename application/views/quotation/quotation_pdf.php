@@ -100,9 +100,8 @@
     <tbody>
       <tr>
         <td rowspan="5">
-          <b>Customer Name : </b><?php echo $quotation['customer_name'] ?><br>
-          <?php echo $quotation['customer_phone_number'] ?><br>
-          <?php echo $quotation['customer_email'] ?><br>
+          <b>Customer Name : </b><br>
+          <?php echo $quotation['customer_name'] ?><br>
           <?php echo $quotation['customer_address'] ?>
         </td>
         <td rowspan="5" class="auto-fit px-4"></td>
@@ -135,7 +134,7 @@
       <tr>
         <td class="auto-fit">Attn.</td>
         <td class="auto-fit"> : </td>
-        <td><?php echo $quotation['attn'] ?></td>
+        <td><?php echo $quotation['attn'] ?> (<?php echo $quotation['customer_phone_number'] ?>)</td>
       </tr>
       <tr>
         <td class="auto-fit">Subject</td>
@@ -175,16 +174,10 @@
       <tr>
         <td>
           <b>Shipper :</b> <?php echo $quotation['shipper_name'] ?><br>
-          <?php echo $quotation['shipper_contact_person'] ?><br>
-          <?php echo $quotation['shipper_phone_number'] ?><br>
-          <?php echo $quotation['shipper_email'] ?><br>
           <?php echo $quotation['shipper_address'] ?>
         </td>
         <td>
           <b>Consignee :</b> <?php echo $quotation['consignee_name'] ?><br>
-          <?php echo $quotation['consignee_contact_person'] ?><br>
-          <?php echo $quotation['consignee_phone_number'] ?><br>
-          <?php echo $quotation['consignee_email'] ?><br>
           <?php echo $quotation['consignee_address'] ?>
         </td>
       </tr>
@@ -237,24 +230,22 @@
       <?php endforeach; ?>
     </tbody>
   </table>
-  <table class="td-valign-top" width="100%" cellspacing="0" cellpadding="2">
+  <br>
+  <table class="td-valign-top text-center" border="1" width="100%" cellspacing="0" cellpadding="2">
     <tbody>
       <tr>
-        <td class="auto-fit">Description of Goods</td>
-        <td class="auto-fit">:</td>
-        <td><?php echo @$quotation['description_of_goods'] ?></td>
-        <td class="auto-fit px-4"></td>
-        <td class="auto-fit">Act. Weight</td>
-        <td class="auto-fit">:</td>
-        <td><?php echo number_format($total_act_weight, 2) ?> Kg</td>
+        <td colspan="4" class="header bg-orange"><b>Package Detail</b></td>
       </tr>
       <tr>
-        <td class="auto-fit">Vol. Weight</td>
-        <td class="auto-fit">:</td>
+        <th class="header">Description of Goods</th>
+        <th class="header">Act. Weight</th>
+        <th class="header">Vol. Weight</th>
+        <th class="header">Measurement</th>
+      </tr>
+      <tr>
+        <td><?php echo @$quotation['description_of_goods'] ?></td>
+        <td><?php echo number_format($total_act_weight, 2) ?> Kg</td>
         <td><?php echo number_format($total_vol_weight, 2) ?> Kg</td>
-        <td class="auto-fit px-4"></td>
-        <td class="auto-fit">Measurement</td>
-        <td class="auto-fit">:</td>
         <td><?php echo number_format($total_measurement, 2) ?> M<sup>3</sup></td>
       </tr>
     </tbody>
@@ -298,7 +289,7 @@
       <tr>
         <td colspan="5" style="border-left: 0px; border-bottom: 0px; text-align: left;">
         </td>
-        <td>TOTAL</td>
+        <td>Estimate Total Charges</td>
         <td><?php echo "IDR ".number_format(($subtotal), 0).".00" ?></td>
       </tr>
     </tbody>

@@ -24,6 +24,7 @@
                       <option value="Operator" <?php echo ($user_list['role'] == "Operator" ? 'selected' : '') ?>>Operator</option>
                       <option value="Driver" <?php echo ($user_list['role'] == "Driver" ? 'selected' : '') ?>>Driver</option>
                       <option value="Finance" <?php echo ($user_list['role'] == "Finance" ? 'selected' : '') ?>>Finance</option>
+                      <option value="Commercial" <?php echo ($user_list['role'] == "Commercial" ? 'selected' : '') ?>>Commercial</option>
                     </select>
                   </div>
                   <div class="form-group">

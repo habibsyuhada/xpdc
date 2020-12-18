@@ -31,7 +31,12 @@ class Quotation extends CI_Controller
 	}
 
 	public function quotation_list(){
-		$data['quotation_list'] = $this->quotation_mod->quotation_list_db();
+	    if($this->session->userdata('role') == "Commercial"){
+	        $where['created_by'] = $this->session->userdata('id');
+	        $data['quotation_list'] = $this->quotation_mod->quotation_list_db($where);
+	    }else{
+	        $data['quotation_list'] = $this->quotation_mod->quotation_list_db();   
+	    }
 
 		$data['subview'] 			= 'quotation/quotation_list';
 		$data['meta_title'] 	= 'Quotation List';
@@ -111,7 +116,7 @@ class Quotation extends CI_Controller
 			'consignee_contact_person' 	=> $post['consignee_contact_person'],
 			'consignee_phone_number' 		=> $post['consignee_phone_number'],
 			'consignee_email' 					=> $post['consignee_email'],
-			'term_condition' 						=> $term_condition,
+			'term_condition' 						=> htmlentities($term_condition),
 			'branch' 										=> $this->session->userdata('branch'),
 			'created_by' 								=> $this->session->userdata('id'),
 		);
@@ -219,7 +224,7 @@ class Quotation extends CI_Controller
 			'consignee_contact_person' 	=> $post['consignee_contact_person'],
 			'consignee_phone_number' 		=> $post['consignee_phone_number'],
 			'consignee_email' 					=> $post['consignee_email'],
-			'term_condition' 						=> $term_condition,
+			'term_condition' 						=> htmlentities($term_condition),
 		);
 		$where['id'] = $post['id'];
 		$this->quotation_mod->quotation_update_process_db($form_data, $where);

@@ -204,17 +204,17 @@
                     </div>
                   </div>
                   <div class="form-group row m-0">
-                    <label class="col-sm-3 col-form-label">CIPL No.</label>
+                    <label class="col-sm-3 col-form-label">Container No</label>
                     <div class="col-sm-9">
-                      <label class="col-form-label">: <?php echo $data_input['cipl_no'] ?></label>
-                      <input type="hidden" name="cipl_no" value="<?php echo $data_input['cipl_no'] ?>">
+                      <label class="col-form-label">: <?php echo $data_input['container_no'] ?></label>
+                      <input type="hidden" name="container_no" value="<?php echo $data_input['container_no'] ?>">
                     </div>
                   </div>
                   <div class="form-group row m-0">
-                    <label class="col-sm-3 col-form-label">Permit No</label>
+                    <label class="col-sm-3 col-form-label">Seal No.</label>
                     <div class="col-sm-9">
-                      <label class="col-form-label">: <?php echo $data_input['permit_no'] ?></label>
-                      <input type="hidden" name="permit_no" value="<?php echo $data_input['permit_no'] ?>">
+                      <label class="col-form-label">: <?php echo $data_input['seal_no'] ?></label>
+                      <input type="hidden" name="seal_no" value="<?php echo $data_input['seal_no'] ?>">
                     </div>
                   </div>
                 </div>
@@ -248,17 +248,21 @@
                     </div>
                   </div>
                   <div class="form-group row m-0">
-                    <label class="col-sm-3 col-form-label">Port of Loading</label>
+                    <label class="col-sm-3 col-form-label">CIPL No.</label>
                     <div class="col-sm-9">
-                      <label class="col-form-label">: <?php echo $data_input['secondary_agent_port_of_loading'] ?></label>
-                      <input type="hidden" name="secondary_agent_port_of_loading" value="<?php echo $data_input['secondary_agent_port_of_loading'] ?>">
+                      <?php if(isset($data_input['cipl_no_atc']) && @$data_input['cipl_no_atc'] != ""): ?>
+                        <label class="col-form-label">: <a href="<?php echo base_url()."file/agent/".$data_input['cipl_no_atc'] ?>" target="_blank" class="font-weight-bold text-primary" title="Attachment"><?php echo $data_input['cipl_no'] ?></a></label>
+                      <?php else: ?>
+                        <label class="col-form-label">: <?php echo $data_input['cipl_no'] ?></label>
+                      <?php endif; ?>
+                      <input type="hidden" name="cipl_no" value="<?php echo $data_input['cipl_no'] ?>">
                     </div>
                   </div>
                   <div class="form-group row m-0">
-                    <label class="col-sm-3 col-form-label">Port of Discharge</label>
+                    <label class="col-sm-3 col-form-label">Permit No</label>
                     <div class="col-sm-9">
-                      <label class="col-form-label">: <?php echo $data_input['secondary_agent_port_of_discharge'] ?></label>
-                      <input type="hidden" name="secondary_agent_port_of_discharge" value="<?php echo $data_input['secondary_agent_port_of_discharge'] ?>">
+                      <label class="col-form-label">: <?php echo $data_input['permit_no'] ?></label>
+                      <input type="hidden" name="permit_no" value="<?php echo $data_input['permit_no'] ?>">
                     </div>
                   </div>
                 </div>
@@ -272,6 +276,9 @@
                 $per = 5000;
                 if ($data_input['type_of_mode'] == 'Air Freight') {
                   $per = 6000;
+                }
+                elseif ($post['type_of_mode'] == 'Land Shipping') {
+                  $per = 4000;
                 }
                 foreach ($data_input['qty'] as $key => $value) : 
                   $actual_weight = $data_input['qty'][$key] * $data_input['weight'][$key];
@@ -534,7 +541,11 @@
                   <div class="form-group row m-0">
                     <label class="col-sm-3 col-form-label">MAWB / MBL</label>
                     <div class="col-sm-9">
-                      <label class="col-form-label">: <?php echo $data_input['main_agent_mawb_mbl'] ?></label>
+                      <?php if(isset($data_input['main_agent_mawb_mbl_atc']) && @$data_input['main_agent_mawb_mbl_atc'] != ""): ?>
+                        <label class="col-form-label">: <a href="<?php echo base_url()."file/agent/".$data_input['main_agent_mawb_mbl_atc'] ?>" target="_blank" class="font-weight-bold text-primary" title="Attachment"><?php echo $data_input['main_agent_mawb_mbl'] ?></a></label>
+                      <?php else: ?>
+                        <label class="col-form-label">: <?php echo $data_input['main_agent_mawb_mbl'] ?></label>
+                      <?php endif; ?>
                       <input type="hidden" name="main_agent_mawb_mbl" value="<?php echo $data_input['main_agent_mawb_mbl'] ?>">
                     </div>
                   </div>
@@ -573,20 +584,6 @@
                       <input type="hidden" name="main_agent_port_of_discharge" value="<?php echo $data_input['main_agent_port_of_discharge'] ?>">
                     </div>
                   </div>
-                  <div class="form-group row m-0">
-                    <label class="col-sm-3 col-form-label">Container No</label>
-                    <div class="col-sm-9">
-                      <label class="col-form-label">: <?php echo $data_input['container_no'] ?></label>
-                      <input type="hidden" name="container_no" value="<?php echo $data_input['container_no'] ?>">
-                    </div>
-                  </div>
-                  <div class="form-group row m-0">
-                    <label class="col-sm-3 col-form-label">Seal No.</label>
-                    <div class="col-sm-9">
-                      <label class="col-form-label">: <?php echo $data_input['seal_no'] ?></label>
-                      <input type="hidden" name="seal_no" value="<?php echo $data_input['seal_no'] ?>">
-                    </div>
-                  </div>
                 </div>
                 <div class="col-md-6">
                   <h6 class="font-weight-bold border-bottom">Secondary Agent</h6>
@@ -600,7 +597,11 @@
                   <div class="form-group row m-0">
                     <label class="col-sm-3 col-form-label">MAWB / MBL</label>
                     <div class="col-sm-9">
-                      <label class="col-form-label">: <?php echo $data_input['secondary_agent_mawb_mbl'] ?></label>
+                      <?php if(isset($data_input['secondary_agent_mawb_mbl_atc']) && @$data_input['secondary_agent_mawb_mbl_atc'] != ""): ?>
+                        <label class="col-form-label">: <a href="<?php echo base_url()."file/agent/".$data_input['secondary_agent_mawb_mbl_atc'] ?>" target="_blank" class="font-weight-bold text-primary" title="Attachment"><?php echo $data_input['secondary_agent_mawb_mbl'] ?></a></label>
+                      <?php else: ?>
+                        <label class="col-form-label">: <?php echo $data_input['secondary_agent_mawb_mbl'] ?></label>
+                      <?php endif; ?>
                       <input type="hidden" name="secondary_agent_mawb_mbl" value="<?php echo $data_input['secondary_agent_mawb_mbl'] ?>">
                     </div>
                   </div>
@@ -623,6 +624,20 @@
                     <div class="col-sm-9">
                       <label class="col-form-label">: <?php echo $data_input['secondary_agent_voyage_flight_date'] ?></label>
                       <input type="hidden" name="secondary_agent_voyage_flight_date" value="<?php echo $data_input['secondary_agent_voyage_flight_date'] ?>">
+                    </div>
+                  </div>
+                  <div class="form-group row m-0">
+                    <label class="col-sm-3 col-form-label">Port of Loading</label>
+                    <div class="col-sm-9">
+                      <label class="col-form-label">: <?php echo $data_input['secondary_agent_port_of_loading'] ?></label>
+                      <input type="hidden" name="secondary_agent_port_of_loading" value="<?php echo $data_input['secondary_agent_port_of_loading'] ?>">
+                    </div>
+                  </div>
+                  <div class="form-group row m-0">
+                    <label class="col-sm-3 col-form-label">Port of Discharge</label>
+                    <div class="col-sm-9">
+                      <label class="col-form-label">: <?php echo $data_input['secondary_agent_port_of_discharge'] ?></label>
+                      <input type="hidden" name="secondary_agent_port_of_discharge" value="<?php echo $data_input['secondary_agent_port_of_discharge'] ?>">
                     </div>
                   </div>
                 </div>

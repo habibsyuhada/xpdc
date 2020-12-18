@@ -40,7 +40,7 @@
   if ($shipment['type_of_mode'] == 'Air Freight') {
     $per = 6000;
   } else if ($shipment['type_of_mode'] == 'Land Shipping') {
-    $per = 5000;
+    $per = 4000;
   }
   foreach ($packages_list as $key => $value){
     $total_qty += $value['qty'];

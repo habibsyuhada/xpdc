@@ -214,6 +214,9 @@
         if ($quotation['type_of_transport'] == 'Air Freight') {
           $per = 6000;
         }
+        elseif ($quotation['type_of_transport'] == 'Land Shipping') {
+          $per = 4000;
+        }
         foreach ($cargo_list as $key => $value) : 
           $actual_weight = $value['qty'] * $value['weight'];
           $volume_weight = $value['qty'] * ($value['length'] * $value['width'] * $value['height']) / $per;

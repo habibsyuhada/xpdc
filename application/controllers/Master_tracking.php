@@ -135,6 +135,9 @@ class Master_tracking extends CI_Controller {
 			if ($value['type_of_mode'] == 'Air Freight') {
 				$per = 6000;
 			}
+			elseif ($value['type_of_mode'] == 'Land Shipping') {
+				$per = 4000;
+			}
 		}
 		if(count($id_shipment) > 0){
 			$where["id_shipment IN ('".join("', '", $id_shipment)."')"] 	= NULL;

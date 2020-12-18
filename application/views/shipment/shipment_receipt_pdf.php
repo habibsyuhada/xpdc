@@ -56,6 +56,9 @@
   if ($post['type_of_mode'] == 'Air Freight') {
     $per = 6000;
   }
+  elseif ($post['type_of_mode'] == 'Land Shipping') {
+    $per = 4000;
+  }
   foreach ($post['qty'] as $key => $value) {
     $actual_weight = $post['qty'][$key] * $post['weight'][$key];
     $volume_weight = $post['qty'][$key] * ($post['length'][$key] * $post['width'][$key] * $post['height'][$key]) / $per;

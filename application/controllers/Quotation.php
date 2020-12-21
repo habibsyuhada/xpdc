@@ -36,7 +36,7 @@ class Quotation extends CI_Controller
 	        $data['quotation_list'] = $this->quotation_mod->quotation_list_db($where);
 	    }else{
 	        $data['quotation_list'] = $this->quotation_mod->quotation_list_db();   
-	    }
+		}
 
 		$data['subview'] 			= 'quotation/quotation_list';
 		$data['meta_title'] 	= 'Quotation List';
@@ -45,6 +45,7 @@ class Quotation extends CI_Controller
 
 	public function quotation_create(){
 		$data['country'] = json_decode(file_get_contents("./assets/country/country.json"), true);
+		$data['customer_list'] = $this->quotation_mod->customer_list_db();
 
 		$data['subview'] 			= 'quotation/quotation_create';
 		$data['meta_title'] 	= 'Create Quotation';
@@ -89,8 +90,6 @@ class Quotation extends CI_Controller
 			'customer_phone_number' 		=> $post['customer_phone_number'],
 			'customer_email' 						=> $post['customer_email'],
 			'customer_address' 					=> $post['customer_address'],
-			'attn' 											=> $post['attn'],
-			'subject' 									=> $post['subject'],
 			'date' 											=> $post['date'],
 			'exp_date' 									=> $post['exp_date'],
 			'payment_terms' 						=> $post['payment_terms'],
@@ -162,6 +161,7 @@ class Quotation extends CI_Controller
 		$cargo_list 						= $this->quotation_mod->quotation_cargo_list_db($where);
 		$where['id_quotation'] 	= $id;
 		$charges_list 					= $this->quotation_mod->quotation_charges_list_db($where);
+		$data['customer_list'] = $this->quotation_mod->customer_list_db();
 
 		if (count($quotation_list) <= 0) {
 			$this->session->set_flashdata('error', 'Quotation not Found!');
@@ -197,8 +197,6 @@ class Quotation extends CI_Controller
 			'customer_phone_number' 		=> $post['customer_phone_number'],
 			'customer_email' 						=> $post['customer_email'],
 			'customer_address' 					=> $post['customer_address'],
-			'attn' 											=> $post['attn'],
-			'subject' 									=> $post['subject'],
 			// 'date' 											=> $post['date'],
 			'exp_date' 									=> $post['exp_date'],
 			'payment_terms' 						=> $post['payment_terms'],

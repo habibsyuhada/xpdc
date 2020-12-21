@@ -271,7 +271,7 @@
               <tr>
                 <td>Type of Mode</td>
                 <td>:</td>
-                <td><?php echo $post['type_of_mode'] ?> <?php echo (!isset($data_input['sea']) ? "" : "(" . $data_input['sea'] . ")") ?></td>
+                <td><?php echo $post['type_of_mode'] ?> <?php echo (!isset($post['sea']) ? "(" . $post['sea'] . ")" : "") ?></td>
               </tr>
             </tbody>
           </table>

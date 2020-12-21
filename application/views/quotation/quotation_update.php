@@ -26,7 +26,13 @@
                 <div class="col-md-6">
                   <div class="form-group">
                     <label>Account No.</label>
-                    <input type="text" class="form-control" name="customer_account" value="<?php echo $quotation['customer_account'] ?>" placeholder="Account No." oninput="check_custumer(this);" required>
+                    <select class="form-control select2" name="customer_account" onchange="check_custumer(this);">
+                      <option value="" <?php echo ($quotation['customer_account'] == '') ? 'selected' : '';?>>- Select One -</option>
+                      <?php foreach ($customer_list as $customer) : ?>
+                        <option value="<?php echo $customer['account_no'] ?>" <?php echo ($quotation['customer_account'] == $customer['account_no']) ? 'selected' : '';?>><?php echo $customer['account_no'] . " - " . $customer['name'] ?></option>
+                      <?php endforeach; ?>
+                    </select>
+                    <!-- <input type="text" class="form-control" name="customer_account" value="<?php echo $quotation['customer_account'] ?>" placeholder="Account No." oninput="check_custumer(this);" required> -->
                   </div>
                   <div class="form-group">
                     <label>Customer Name</label>
@@ -51,16 +57,17 @@
                 </div>
                 <div class="col-md-6">
                   <div class="form-group">
-                    <label>Attn.</label>
-                    <input type="text" class="form-control" name="attn" value="<?php echo $quotation['attn'] ?>" placeholder="Attn." required>
-                  </div>
-                  <div class="form-group">
-                    <label>Subject</label>
-                    <input type="text" class="form-control" name="subject" value="<?php echo $quotation['subject'] ?>" placeholder="Subject" required>
-                  </div>
-                  <div class="form-group">
                     <label>Payment Terms</label>
-                    <input type="text" class="form-control" name="payment_terms" value="<?php echo $quotation['payment_terms'] ?>" placeholder="Payment Terms" required>
+                    <select class="form-control" name="payment_terms" required>
+                      <option value="" <?php echo ($quotation['payment_terms'] == '') ? 'selected' : ''; ?>>- Select One -</option>
+                      <option value="Cash In Advance" <?php echo ($quotation['payment_terms'] == 'Cash In Advance') ? 'selected' : ''; ?>>Cash In Advance</option>
+                      <option value="Cash In Delivery" <?php echo ($quotation['payment_terms'] == 'Cash In Delivery') ? 'selected' : ''; ?>>Cash In Delivery</option>
+                      <option value="15 Days" <?php echo ($quotation['payment_terms'] == '15 Days') ? 'selected' : ''; ?>>15 Days</option>
+                      <option value="30 Days" <?php echo ($quotation['payment_terms'] == '30 Days') ? 'selected' : ''; ?>>30 Days</option>
+                      <option value="45 Days" <?php echo ($quotation['payment_terms'] == '45 Days') ? 'selected' : ''; ?>>45 Days</option>
+                      <option value="60 Days" <?php echo ($quotation['payment_terms'] == '60 Days') ? 'selected' : ''; ?>>60 Days</option>
+                    </select>
+                    <!-- <input type="text" class="form-control" name="payment_terms" value="<?php echo $quotation['payment_terms'] ?>" placeholder="Payment Terms" required> -->
                   </div>
                   <div class="form-group">
                     <label>Date</label>
@@ -159,12 +166,6 @@
                     </select>
                   </div>
                 </div>
-                <div class="col-md-6">
-                  <div class="form-group">
-                    <label>Description of Goods</label>
-                    <input type="text" class="form-control" name="description_of_goods" placeholder="Description of Goods" value="<?php echo $quotation['description_of_goods'] ?>" required>
-                  </div>
-                </div>
               </div>
               <br>
               <div class="row clearfix">
@@ -255,6 +256,12 @@
             <div class="card-body overflow-auto">
               <h6 class="font-weight-bold border-bottom">Cargo Information</h6>
               <div class="row clearfix">
+                <div class="col-md-6">
+                  <div class="form-group">
+                    <label>Description of Goods</label>
+                    <input type="text" class="form-control" name="description_of_goods" placeholder="Description of Goods" value="<?php echo $quotation['description_of_goods'] ?>" required>
+                  </div>
+                </div>
                 <div class="col-12">
                   <table class="table text-center">
                     <thead>

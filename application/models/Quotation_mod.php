@@ -17,6 +17,17 @@ class Quotation_mod extends CI_Model {
 		
 		return $query->result_array();
 	}
+   
+  function customer_list_db($where = null){
+		if(isset($where)){
+      if(count($where) > 0){
+        $this->db->where($where);
+      }
+		}
+		$query = $this->db->get('customer');
+		
+		return $query->result_array();
+	}
 
 	public function quotation_create_process_db($data)
   {

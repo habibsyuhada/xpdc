@@ -25,7 +25,13 @@
                 <div class="col-md-6">
                   <div class="form-group">
                     <label>Account No.</label>
-                    <input type="text" class="form-control" name="customer_account" placeholder="Account No." oninput="check_custumer(this);" required>
+                    <select class="form-control select2" name="customer_account" onchange="check_custumer(this);">
+                      <option value="">- Select One -</option>
+                      <?php foreach ($customer_list as $customer) : ?>
+                        <option value="<?php echo $customer['account_no'] ?>"><?php echo $customer['account_no'] . " - " . $customer['name'] ?></option>
+                      <?php endforeach; ?>
+                    </select>
+                    <!-- <input type="text" class="form-control" name="customer_account" placeholder="Account No." oninput="check_custumer(this);"> -->
                   </div>
                   <div class="form-group">
                     <label>Customer Name</label>
@@ -50,16 +56,17 @@
                 </div>
                 <div class="col-md-6">
                   <div class="form-group">
-                    <label>Attn.</label>
-                    <input type="text" class="form-control" name="attn" placeholder="Attn." required>
-                  </div>
-                  <div class="form-group">
-                    <label>Subject</label>
-                    <input type="text" class="form-control" name="subject" placeholder="Subject" required>
-                  </div>
-                  <div class="form-group">
                     <label>Payment Terms</label>
-                    <input type="text" class="form-control" name="payment_terms" placeholder="Payment Terms" required>
+                    <select class="form-control" name="payment_terms" required>
+                      <option value="">- Select One -</option>
+                      <option value="Cash In Advance">Cash In Advance</option>
+                      <option value="Cash In Delivery">Cash In Delivery</option>
+                      <option value="15 Days">15 Days</option>
+                      <option value="30 Days">30 Days</option>
+                      <option value="45 Days">45 Days</option>
+                      <option value="60 Days">60 Days</option>
+                    </select>
+                    <!-- <input type="text" class="form-control" name="payment_terms" placeholder="Payment Terms" required> -->
                   </div>
                   <div class="form-group">
                     <label>Date</label>
@@ -94,7 +101,7 @@
                 <div class="col-md-6">
                   <div class="form-group">
                     <label>Type of Service</label>
-                    <select class="form-control" name="type_of_service" onchange="change_type_of_service(this)" required>
+                    <select class="form-control" name="type_of_service" required>
                       <option value="">-- Select One --</option>
                       <option value="FH">Freight Handling</option>
                       <option value="CH">Clearance Handling</option>
@@ -156,12 +163,6 @@
                       <option value="DAT (Delivered At Terminal)">DAT (Delivered At Terminal)</option>
                       <option value="DAP (Delivered At Place)">DAP (Delivered At Place)</option>
                     </select>
-                  </div>
-                </div>
-                <div class="col-md-6">
-                  <div class="form-group">
-                    <label>Description of Goods</label>
-                    <input type="text" class="form-control" name="description_of_goods" placeholder="Description of Goods" required>
                   </div>
                 </div>
               </div>
@@ -254,6 +255,12 @@
             <div class="card-body overflow-auto">
               <h6 class="font-weight-bold border-bottom">Cargo Information</h6>
               <div class="row clearfix">
+                <div class="col-md-12">
+                  <div class="form-group">
+                    <label>Description of Goods</label>
+                    <input type="text" class="form-control" name="description_of_goods" placeholder="Description of Goods" required>
+                  </div>
+                </div>
                 <div class="col-md-12">
                   <table class="table text-center">
                     <thead>
@@ -366,7 +373,7 @@
                           <input type="text" step="any" class="form-control" value="0" name="charges_subtotal_view[]" readonly>
                           <input type="hidden" step="any" class="form-control" value="0" name="charges_subtotal[]" readonly>
                         </td>
-                        <td><input type="number" step="any" class="form-control" value="0" oninput="get_total(this)"name="charges_exchange_rate[]"></td>
+                        <td><input type="number" step="any" class="form-control" value="0" oninput="get_total(this)" name="charges_exchange_rate[]"></td>
                         <td>
                           <input type="text" step="any" class="form-control" value="0" name="charges_total_view[]" readonly>
                           <input type="hidden" step="any" class="form-control" value="0" name="charges_total[]" readonly>
@@ -382,7 +389,7 @@
               </div>
               <div class="row clearfix">
                 <div class="col-md">
-                  <h5 class="font-weight-bold text-right">Total All : IDR <span id="total_all" name="total_all">0.00</span></h5>
+                  <h5 class="font-weight-bold text-right">Estimation Total Charges : IDR <span id="total_all" name="total_all">0.00</span></h5>
                 </div>
               </div>
             </div>
@@ -457,10 +464,6 @@
     $("select[name=sea]").val('');
   });
 
-  function change_type_of_service(sel) {
-    var text = $(sel).find("option:selected").text();
-    $("input[name=subject]").val("Quotation for "+text); 
-  }
 
   function addrow(btn) {
     var row_copy = $(btn).closest("tr").html();
@@ -474,49 +477,46 @@
   }
 
   var settime_billing_account;
+
   function check_custumer(input) {
-    clearTimeout(settime_billing_account);
-    settime_billing_account = setTimeout(function(){ 
-      var billing_account = $(input).val();
-      $.ajax({
-        url: '<?php echo base_url() ?>shipment/check_custumer',
-        type: 'POST',
-        data:{
-          account_no: billing_account,
-        },
-        success: function (data) {
-          if(data.includes("Error")){
-            $(input).addClass('is-invalid');
-            var invalid_elem = '<div class="invalid-feedback">'+data+'</div>';
-            $('.invalid-feedback').remove();
-            $(invalid_elem).insertAfter(input);
-            showDangerToast(data);
+    var billing_account = $(input).val();
+    $.ajax({
+      url: '<?php echo base_url() ?>shipment/check_custumer',
+      type: 'POST',
+      data: {
+        account_no: billing_account,
+      },
+      success: function(data) {
+        if (data.includes("Error")) {
+          $(input).addClass('is-invalid');
+          var invalid_elem = '<div class="invalid-feedback">' + data + '</div>';
+          $('.invalid-feedback').remove();
+          $(invalid_elem).insertAfter(input);
+          showDangerToast(data);
 
-            $("input[name=customer_name]").val('');
-            $("input[name=customer_account]").val('');
-            $("textarea[name=customer_address]").val('');
-            $("input[name=customer_contact_person]").val('');
-            $("input[name=customer_phone_number]").val('');
-            $("input[name=customer_email]").val('');
-            $("input[name=payment_terms]").val('');
-          }
-          else{
-            data = JSON. parse(data);
-            $(input).removeClass('is-invalid');
-            $(input).addClass('is-valid');
-            $('.invalid-feedback').remove();
-            console.log(data);
+          $("input[name=customer_name]").val('');
+          $("input[name=customer_account]").val('');
+          $("textarea[name=customer_address]").val('');
+          $("input[name=customer_contact_person]").val('');
+          $("input[name=customer_phone_number]").val('');
+          $("input[name=customer_email]").val('');
+          $("input[name=payment_terms]").val('');
+        } else {
+          data = JSON.parse(data);
+          $(input).removeClass('is-invalid');
+          $(input).addClass('is-valid');
+          $('.invalid-feedback').remove();
+          console.log(data);
 
-            $("input[name=customer_name]").val(data.name);
-            $("textarea[name=customer_address]").val(data.address);
-            $("input[name=customer_contact_person]").val(data.contact_person);
-            $("input[name=customer_phone_number]").val(data.phone_number);
-            $("input[name=customer_email]").val(data.email);
-            $("input[name=payment_terms]").val(data.payment_terms);
-          }
+          $("input[name=customer_name]").val(data.name);
+          $("textarea[name=customer_address]").val(data.address);
+          $("input[name=customer_contact_person]").val(data.contact_person);
+          $("input[name=customer_phone_number]").val(data.phone_number);
+          $("input[name=customer_email]").val(data.email);
+          $("input[name=payment_terms]").val(data.payment_terms);
         }
-      }); 
-    }, 2000);
+      }
+    });
   }
 
   function get_vol_weight() {
@@ -597,22 +597,26 @@
   }
 
   function get_total(input = "") {
-    if(input != ""){
+    if (input != "") {
       var row = $(input).closest('tr');
       var unit_price = $(row).find("input[name='charges_unit_price[]']").val();
       var qty = $(row).find("input[name='charges_qty[]']").val();
       var uom = $(row).find("select[name='charges_uom[]']").val();
-      if(uom == "%"){
-        qty = qty/100;
+      if (uom == "%") {
+        qty = qty / 100;
       }
       var subtotal = qty * unit_price;
       $(row).find("input[name='charges_subtotal[]']").val(subtotal);
-      $(row).find("input[name='charges_subtotal_view[]']").val(subtotal.toLocaleString('en-US', {maximumFractionDigits:0}) + ".00");
+      $(row).find("input[name='charges_subtotal_view[]']").val(subtotal.toLocaleString('en-US', {
+        maximumFractionDigits: 0
+      }) + ".00");
 
       var exchange_rate = $(row).find("input[name='charges_exchange_rate[]']").val();
       var total = subtotal * exchange_rate;
       $(row).find("input[name='charges_total[]']").val(total);
-      $(row).find("input[name='charges_total_view[]']").val(total.toLocaleString('en-US', {maximumFractionDigits:0}) + ".00");
+      $(row).find("input[name='charges_total_view[]']").val(total.toLocaleString('en-US', {
+        maximumFractionDigits: 0
+      }) + ".00");
     }
 
     var total_all = 0;
@@ -629,6 +633,8 @@
     // total_all = total_all - discount + 0;
     // console.log(total_all);
     // $(input).closest('form').find("span[name=total_all]").text(total_all);
-    $("#total_all").text(total_all.toLocaleString('en-US', {maximumFractionDigits:0}) + ".00");
+    $("#total_all").text(total_all.toLocaleString('en-US', {
+      maximumFractionDigits: 0
+    }) + ".00");
   }
 </script>

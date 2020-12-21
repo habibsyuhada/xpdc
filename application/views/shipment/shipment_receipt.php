@@ -298,26 +298,26 @@
               <?php endforeach;  ?>
               <div class="row">
                 <div class="col-md">
-                  <div class="form-group row m-0">
-                    <label class="col-sm-auto col-form-label">Act. Weight</label>
+                  <div class="form-group row m-0" style="font-size: 115%;">
+                    <label class="col-sm-auto col-form-label font-weight-bold">Act. Weight</label>
                     <div class="col-sm">
-                      <label class="col-form-label">: <?php echo number_format($total_act_weight, 2) ?></label>
+                      <label class="col-form-label">: <?php echo number_format($total_act_weight, 2) ?> Kg</label>
                     </div>
                   </div>
                 </div>
                 <div class="col-md">
-                  <div class="form-group row m-0">
-                    <label class="col-sm-auto col-form-label">Vol. Weight</label>
+                  <div class="form-group row m-0" style="font-size: 115%;">
+                    <label class="col-sm-auto col-form-label font-weight-bold">Vol. Weight</label>
                     <div class="col-sm">
-                      <label class="col-form-label">: <?php echo number_format($total_vol_weight, 2) ?></label>
+                      <label class="col-form-label">: <?php echo number_format($total_vol_weight, 2) ?> Kg</label>
                     </div>
                   </div>
                 </div>
                 <div class="col-md">
-                  <div class="form-group row m-0">
-                    <label class="col-sm-auto col-form-label">Measurement</label>
+                  <div class="form-group row m-0" style="font-size: 115%;">
+                    <label class="col-sm-auto col-form-label font-weight-bold">Measurement</label>
                     <div class="col-sm">
-                      <label class="col-form-label">: <?php echo number_format($total_measurement, 2) ?></label>
+                      <label class="col-form-label">: <?php echo number_format($total_measurement, 2) ?> M<sub>3</sub></label>
                     </div>
                   </div>
                 </div>
@@ -547,6 +547,11 @@
                         <label class="col-form-label">: <?php echo $data_input['main_agent_mawb_mbl'] ?></label>
                       <?php endif; ?>
                       <input type="hidden" name="main_agent_mawb_mbl" value="<?php echo $data_input['main_agent_mawb_mbl'] ?>">
+                      <?php if($data_input['main_agent_mawb_mbl'] != ""): ?>
+                        <label class="col-form-label">: <a href="<?php echo base_url()."file/agent/".$data_input['main_agent_mawb_mbl'] ?>" target="_blank"><?php echo $data_input['main_agent_mawb_mbl'] ?></a></label>
+                      <?php else: ?>
+                        <label class="col-form-label">: <?php echo $data_input['main_agent_mawb_mbl'] ?></label>
+                      <?php endif; ?>
                     </div>
                   </div>
                   <div class="form-group row m-0">

@@ -128,3 +128,46 @@ ERROR - 2020-12-17 09:52:00 --> Severity: Notice --> Undefined variable: branch_
 ERROR - 2020-12-17 09:52:00 --> Severity: Warning --> Invalid argument supplied for foreach() C:\xampp\htdocs\xpdc\application\views\quotation\quotation_list.php 28
 ERROR - 2020-12-17 09:53:26 --> Severity: Notice --> Undefined variable: branch_list C:\xampp\htdocs\xpdc\application\views\quotation\quotation_list.php 28
 ERROR - 2020-12-17 09:53:26 --> Severity: Warning --> Invalid argument supplied for foreach() C:\xampp\htdocs\xpdc\application\views\quotation\quotation_list.php 28
+ERROR - 2020-12-17 21:23:35 --> 404 Page Not Found: Assets/favicon.ico
+ERROR - 2020-12-17 21:23:45 --> 404 Page Not Found: Home/favicon.ico
+ERROR - 2020-12-17 21:23:58 --> 404 Page Not Found: Shipment/favicon.ico
+ERROR - 2020-12-17 21:24:05 --> Severity: Notice --> Undefined offset: 0 C:\xampp\htdocs\xpdc\application\controllers\Shipment.php 129
+ERROR - 2020-12-17 21:24:06 --> Severity: Warning --> Invalid argument supplied for foreach() C:\xampp\htdocs\xpdc\application\views\shipment\shipment_receipt.php 276
+ERROR - 2020-12-17 21:24:06 --> Severity: Warning --> Invalid argument supplied for foreach() C:\xampp\htdocs\xpdc\application\views\shipment\shipment_receipt.php 330
+ERROR - 2020-12-17 21:25:00 --> Severity: Notice --> Undefined offset: 0 C:\xampp\htdocs\xpdc\application\controllers\Shipment.php 129
+ERROR - 2020-12-17 21:25:01 --> Severity: Warning --> Invalid argument supplied for foreach() C:\xampp\htdocs\xpdc\application\views\shipment\shipment_receipt.php 262
+ERROR - 2020-12-17 21:25:01 --> Severity: Warning --> Invalid argument supplied for foreach() C:\xampp\htdocs\xpdc\application\views\shipment\shipment_receipt.php 316
+ERROR - 2020-12-17 21:25:36 --> Severity: Notice --> Undefined offset: 0 C:\xampp\htdocs\xpdc\application\controllers\Shipment.php 129
+ERROR - 2020-12-17 21:25:36 --> Severity: Warning --> Invalid argument supplied for foreach() C:\xampp\htdocs\xpdc\application\views\shipment\shipment_receipt.php 276
+ERROR - 2020-12-17 21:25:36 --> Severity: Warning --> Invalid argument supplied for foreach() C:\xampp\htdocs\xpdc\application\views\shipment\shipment_receipt.php 330
+ERROR - 2020-12-17 21:27:20 --> Severity: Notice --> Undefined offset: 0 C:\xampp\htdocs\xpdc\application\controllers\Shipment.php 129
+ERROR - 2020-12-17 21:27:21 --> Severity: Warning --> Invalid argument supplied for foreach() C:\xampp\htdocs\xpdc\application\views\shipment\shipment_receipt.php 276
+ERROR - 2020-12-17 21:27:21 --> Severity: Warning --> Invalid argument supplied for foreach() C:\xampp\htdocs\xpdc\application\views\shipment\shipment_receipt.php 330
+ERROR - 2020-12-17 21:27:42 --> Severity: Notice --> Undefined offset: 0 C:\xampp\htdocs\xpdc\application\controllers\Shipment.php 129
+ERROR - 2020-12-17 21:27:42 --> Severity: Warning --> Invalid argument supplied for foreach() C:\xampp\htdocs\xpdc\application\views\shipment\shipment_receipt.php 276
+ERROR - 2020-12-17 21:27:42 --> Severity: Warning --> Invalid argument supplied for foreach() C:\xampp\htdocs\xpdc\application\views\shipment\shipment_receipt.php 330
+ERROR - 2020-12-17 21:27:52 --> Severity: Notice --> Undefined offset: 0 C:\xampp\htdocs\xpdc\application\controllers\Shipment.php 129
+ERROR - 2020-12-17 21:27:52 --> Severity: Warning --> Invalid argument supplied for foreach() C:\xampp\htdocs\xpdc\application\views\shipment\shipment_receipt.php 276
+ERROR - 2020-12-17 21:27:52 --> Severity: Warning --> Invalid argument supplied for foreach() C:\xampp\htdocs\xpdc\application\views\shipment\shipment_receipt.php 330
+ERROR - 2020-12-17 21:29:15 --> Severity: Notice --> Undefined offset: 0 C:\xampp\htdocs\xpdc\application\controllers\Shipment.php 129
+ERROR - 2020-12-17 21:29:16 --> Severity: Warning --> Invalid argument supplied for foreach() C:\xampp\htdocs\xpdc\application\views\shipment\shipment_receipt.php 276
+ERROR - 2020-12-17 21:29:16 --> Severity: Warning --> Invalid argument supplied for foreach() C:\xampp\htdocs\xpdc\application\views\shipment\shipment_receipt.php 330
+ERROR - 2020-12-17 21:32:14 --> Severity: Notice --> Undefined offset: 0 C:\xampp\htdocs\xpdc\application\controllers\Shipment.php 129
+ERROR - 2020-12-17 21:32:14 --> Severity: Warning --> Invalid argument supplied for foreach() C:\xampp\htdocs\xpdc\application\views\shipment\shipment_receipt.php 276
+ERROR - 2020-12-17 21:32:14 --> Severity: Warning --> Invalid argument supplied for foreach() C:\xampp\htdocs\xpdc\application\views\shipment\shipment_receipt.php 330
+ERROR - 2020-12-17 21:37:06 --> Severity: Notice --> Undefined offset: 0 C:\xampp\htdocs\xpdc\application\controllers\Shipment.php 129
+ERROR - 2020-12-17 21:37:06 --> Severity: Warning --> Invalid argument supplied for foreach() C:\xampp\htdocs\xpdc\application\views\shipment\shipment_receipt.php 276
+ERROR - 2020-12-17 21:37:06 --> Severity: Warning --> Invalid argument supplied for foreach() C:\xampp\htdocs\xpdc\application\views\shipment\shipment_receipt.php 330
+ERROR - 2020-12-17 21:38:23 --> Severity: Notice --> Undefined offset: 0 C:\xampp\htdocs\xpdc\application\controllers\Shipment.php 129
+ERROR - 2020-12-17 21:38:24 --> Severity: Warning --> Invalid argument supplied for foreach() C:\xampp\htdocs\xpdc\application\views\shipment\shipment_receipt.php 276
+ERROR - 2020-12-17 21:38:24 --> Severity: Warning --> Invalid argument supplied for foreach() C:\xampp\htdocs\xpdc\application\views\shipment\shipment_receipt.php 330
+ERROR - 2020-12-17 21:39:05 --> Severity: Notice --> Undefined offset: 0 C:\xampp\htdocs\xpdc\application\controllers\Shipment.php 129
+ERROR - 2020-12-17 21:39:05 --> Severity: Warning --> Invalid argument supplied for foreach() C:\xampp\htdocs\xpdc\application\views\shipment\shipment_receipt.php 276
+ERROR - 2020-12-17 21:39:05 --> Severity: Warning --> Invalid argument supplied for foreach() C:\xampp\htdocs\xpdc\application\views\shipment\shipment_receipt.php 330
+ERROR - 2020-12-17 21:40:30 --> Severity: Notice --> Undefined variable: shipment C:\xampp\htdocs\xpdc\application\views\shipment\shipment_receipt.php 538
+ERROR - 2020-12-17 21:40:32 --> Severity: Notice --> Undefined offset: 0 C:\xampp\htdocs\xpdc\application\controllers\Shipment.php 129
+ERROR - 2020-12-17 21:40:33 --> Severity: Warning --> Invalid argument supplied for foreach() C:\xampp\htdocs\xpdc\application\views\shipment\shipment_receipt.php 276
+ERROR - 2020-12-17 21:40:33 --> Severity: Warning --> Invalid argument supplied for foreach() C:\xampp\htdocs\xpdc\application\views\shipment\shipment_receipt.php 330
+ERROR - 2020-12-17 21:41:02 --> Severity: Notice --> Undefined offset: 0 C:\xampp\htdocs\xpdc\application\controllers\Shipment.php 129
+ERROR - 2020-12-17 21:41:03 --> Severity: Warning --> Invalid argument supplied for foreach() C:\xampp\htdocs\xpdc\application\views\shipment\shipment_receipt.php 276
+ERROR - 2020-12-17 21:41:03 --> Severity: Warning --> Invalid argument supplied for foreach() C:\xampp\htdocs\xpdc\application\views\shipment\shipment_receipt.php 330

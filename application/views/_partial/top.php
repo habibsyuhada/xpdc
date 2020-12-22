@@ -193,6 +193,24 @@ $side_permission = array(
 										</div>
 									</div>
 								<?php endif; ?>
+								<?php if ($side_permission[8] == 1) : ?>
+									<div class="nav-item has-sub">
+										<a href="javascript:void(0)"><i class="fas fa-ruler"></i><span>UOM</span></a>
+										<div class="submenu-content">
+											<a href="<?php echo base_url() ?>uom/uom_list" class="menu-item">UOM List</a>
+											<a href="<?php echo base_url() ?>uom/uom_create" class="menu-item">Create UOM</a>
+										</div>
+									</div>
+								<?php endif; ?>
+								<?php if ($side_permission[8] == 1) : ?>
+									<div class="nav-item has-sub">
+										<a href="javascript:void(0)"><i class="fas fa-ruler"></i><span>Payment Terms</span></a>
+										<div class="submenu-content">
+											<a href="<?php echo base_url() ?>payment_terms/payment_terms_list" class="menu-item">Payment Terms List</a>
+											<a href="<?php echo base_url() ?>payment_terms/payment_terms_create" class="menu-item">Create Payment Terms</a>
+										</div>
+									</div>
+								<?php endif; ?>
 							<?php endif; //Not Guest 
 							?>
 						</nav>

@@ -47,3 +47,28 @@ ERROR - 2020-12-21 12:24:58 --> Severity: Notice --> Undefined variable: data_in
 ERROR - 2020-12-21 12:24:58 --> Severity: Notice --> Trying to access array offset on value of type null C:\xampp\htdocs\xpdc\application\views\shipment\shipment_receipt_pdf.php 274
 ERROR - 2020-12-21 12:26:44 --> Severity: Notice --> Undefined variable: data_input C:\xampp\htdocs\xpdc\application\views\shipment\shipment_receipt_pdf.php 274
 ERROR - 2020-12-21 12:26:44 --> Severity: Notice --> Trying to access array offset on value of type null C:\xampp\htdocs\xpdc\application\views\shipment\shipment_receipt_pdf.php 274
+ERROR - 2020-12-21 20:32:18 --> 404 Page Not Found: Assets/favicon.ico
+ERROR - 2020-12-21 20:32:27 --> 404 Page Not Found: Home/favicon.ico
+ERROR - 2020-12-21 21:13:20 --> 404 Page Not Found: Shipment/favicon.ico
+ERROR - 2020-12-21 21:13:29 --> 404 Page Not Found: Uom/favicon.ico
+ERROR - 2020-12-21 21:15:51 --> 404 Page Not Found: Quotation/favicon.ico
+ERROR - 2020-12-21 21:16:14 --> Severity: Notice --> Undefined variable: zone_list C:\xampp\htdocs\xpdc\application\views\uom\uom_list.php 22
+ERROR - 2020-12-21 21:16:14 --> Severity: Warning --> Invalid argument supplied for foreach() C:\xampp\htdocs\xpdc\application\views\uom\uom_list.php 22
+ERROR - 2020-12-21 21:17:09 --> Severity: Notice --> Undefined variable: zone_list C:\xampp\htdocs\xpdc\application\views\uom\uom_update.php 3
+ERROR - 2020-12-21 21:17:09 --> Severity: Notice --> Undefined variable: zone_list C:\xampp\htdocs\xpdc\application\views\uom\uom_update.php 13
+ERROR - 2020-12-21 21:17:09 --> Severity: Notice --> Undefined variable: zone_list C:\xampp\htdocs\xpdc\application\views\uom\uom_update.php 17
+ERROR - 2020-12-21 21:17:09 --> Severity: Notice --> Undefined variable: zone_list C:\xampp\htdocs\xpdc\application\views\uom\uom_update.php 22
+ERROR - 2020-12-21 21:17:09 --> Severity: Notice --> Undefined variable: zone_list C:\xampp\htdocs\xpdc\application\views\uom\uom_update.php 23
+ERROR - 2020-12-21 21:17:13 --> Severity: Notice --> Undefined variable: zone_list C:\xampp\htdocs\xpdc\application\views\uom\uom_update.php 3
+ERROR - 2020-12-21 21:17:13 --> Severity: Notice --> Undefined variable: zone_list C:\xampp\htdocs\xpdc\application\views\uom\uom_update.php 13
+ERROR - 2020-12-21 21:17:13 --> Severity: Notice --> Undefined variable: zone_list C:\xampp\htdocs\xpdc\application\views\uom\uom_update.php 17
+ERROR - 2020-12-21 21:17:13 --> Severity: Notice --> Undefined variable: zone_list C:\xampp\htdocs\xpdc\application\views\uom\uom_update.php 22
+ERROR - 2020-12-21 21:17:13 --> Severity: Notice --> Undefined variable: zone_list C:\xampp\htdocs\xpdc\application\views\uom\uom_update.php 23
+ERROR - 2020-12-21 21:18:05 --> Severity: Notice --> Undefined index: country C:\xampp\htdocs\xpdc\application\controllers\Uom.php 92
+ERROR - 2020-12-21 21:18:05 --> Severity: Notice --> Undefined index: uom C:\xampp\htdocs\xpdc\application\controllers\Uom.php 93
+ERROR - 2020-12-21 21:18:05 --> Severity: Notice --> Undefined index: category C:\xampp\htdocs\xpdc\application\controllers\Uom.php 94
+ERROR - 2020-12-21 21:18:05 --> Query error: Unknown column 'country' in 'field list' - Invalid query: UPDATE `mst_uom` SET `country` = NULL, `uom` = NULL, `category` = NULL
+WHERE `id` = '1'
+ERROR - 2020-12-21 21:34:30 --> Severity: Compile Error --> Cannot declare class Payment_terms, because the name is already in use C:\xampp\htdocs\xpdc\application\models\Payment_terms_mod.php 38
+ERROR - 2020-12-21 21:34:51 --> 404 Page Not Found: Payment_terms/favicon.ico
+ERROR - 2020-12-21 21:37:49 --> Severity: error --> Exception: Call to undefined method Payment_terms_mod::payment_terms_list_db() C:\xampp\htdocs\xpdc\application\controllers\Payment_terms.php 56

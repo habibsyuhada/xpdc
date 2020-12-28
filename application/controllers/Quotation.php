@@ -46,6 +46,7 @@ class Quotation extends CI_Controller
 	public function quotation_create(){
 		$data['country'] = json_decode(file_get_contents("./assets/country/country.json"), true);
 		$data['payment_terms_list'] = $this->home_mod->payment_terms_list();
+		$data['uom_list'] = $this->home_mod->uom_list();
 		$data['customer_list'] = $this->quotation_mod->customer_list_db();
 
 		$data['subview'] 			= 'quotation/quotation_create';
@@ -179,6 +180,7 @@ class Quotation extends CI_Controller
 		$data['country'] = json_decode(file_get_contents("./assets/country/country.json"), true);
 
 		$data['payment_terms_list'] = $this->home_mod->payment_terms_list();
+		$data['uom_list'] = $this->home_mod->uom_list();
 
 		$data['quotation'] 			= $quotation_list[0];
 		$data['cargo_list'] 		= $cargo_list;

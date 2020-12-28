@@ -343,12 +343,15 @@
                         <td>
                           <select class="form-control" name="charges_uom[]" required onchange="get_total(this)">
                             <option value="">-- Select One --</option>
-                            <option value="Kg">Kg</option>
+                            <!-- <option value="Kg">Kg</option>
                             <option value="M3">M3</option>
                             <option value="Set">Set</option>
                             <option value="Trip">Trip</option>
                             <option value="Pallet">Pallet</option>
-                            <option value="%">%</option>
+                            <option value="%">%</option> -->
+                            <?php foreach ($uom_list as $no_uom => $uom) : ?>
+                              <option value="<?php echo $uom['name'] ?>"><?php echo $uom['name'] ?></option>
+                            <?php endforeach; ?>
                           </select>
                         </td>
                         <td>

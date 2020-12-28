@@ -742,6 +742,8 @@ class Shipment extends CI_Controller
 		$data['main_agent'] 			= $main_agent;
 		$data['secondary_agent'] 	= $secondary_agent;
 		$data['costumer'] 				= $costumer;
+		
+		$data['uom_list'] = $this->home_mod->uom_list();
 
 		$data['subview'] 				= 'shipment/shipment_cost';
 		$data['meta_title'] 		= 'Shipment Cost';
@@ -867,6 +869,7 @@ class Shipment extends CI_Controller
 		$data['costumer'] 				= $costumer;
 
 		$data['payment_terms_list'] = $this->home_mod->payment_terms_list();
+		$data['uom_list'] = $this->home_mod->uom_list();
 
 		$data['subview'] 				= 'shipment/shipment_bill';
 		$data['meta_title'] 		= 'Shipment Bill';

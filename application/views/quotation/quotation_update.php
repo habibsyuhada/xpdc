@@ -365,12 +365,15 @@
                         <td>
                           <select class="form-control" name="charges_uom[]" required onchange="get_total(this)">
                             <option value="">-- Select One --</option>
-                            <option value="Kg" <?php echo ($value['uom'] == "Kg" ? 'selected' : '') ?>>Kg</option>
+                            <!-- <option value="Kg" <?php echo ($value['uom'] == "Kg" ? 'selected' : '') ?>>Kg</option>
                             <option value="M3" <?php echo ($value['uom'] == "M3" ? 'selected' : '') ?>>M3</option>
                             <option value="Set" <?php echo ($value['uom'] == "Set" ? 'selected' : '') ?>>Set</option>
                             <option value="Trip" <?php echo ($value['uom'] == "Trip" ? 'selected' : '') ?>>Trip</option>
                             <option value="Pallet" <?php echo ($value['uom'] == "Pallet" ? 'selected' : '') ?>>Pallet</option>
-                            <option value="%" <?php echo ($value['uom'] == "%" ? 'selected' : '') ?>>%</option>
+                            <option value="%" <?php echo ($value['uom'] == "%" ? 'selected' : '') ?>>%</option> -->
+                            <?php foreach ($uom_list as $no_uom => $uom) : ?>
+                              <option value="<?php echo $uom['name'] ?>" <?php echo ($value['uom'] == $uom['name'] ? 'selected' : '') ?>><?php echo $uom['name'] ?></option>
+                            <?php endforeach; ?>
                           </select>
                         </td>
                         <td>

@@ -62,4 +62,13 @@ class Home_mod extends CI_Model {
     return $query->result_array();
   }
 
+  function uom_list($where = null){
+		if(isset($where)){
+			$this->db->where($where);
+		}
+		$query = $this->db->get('mst_uom');
+		
+		return $query->result_array();
+	}
+
 }

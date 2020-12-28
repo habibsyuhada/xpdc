@@ -55,12 +55,15 @@
                     <label>Payment Terms</label>
                     <select class="form-control" name="payment_terms" required>
                       <option value="">- Select One -</option>
-                      <option value="Cash In Advance">Cash In Advance</option>
+                      <!-- <option value="Cash In Advance">Cash In Advance</option>
                       <option value="Cash In Delivery">Cash In Delivery</option>
                       <option value="15 Days">15 Days</option>
                       <option value="30 Days">30 Days</option>
                       <option value="45 Days">45 Days</option>
-                      <option value="60 Days">60 Days</option>
+                      <option value="60 Days">60 Days</option> -->
+                      <?php foreach ($payment_terms_list as $key => $value) : ?>
+                        <option value="<?php echo $value['name'] ?>"><?php echo $value['name'] ?></option>
+                      <?php endforeach; ?>
                     </select>
                   </div>
                   <div class="form-group">

@@ -48,6 +48,8 @@ class Commercial extends CI_Controller
     {
         $data['country'] = json_decode(file_get_contents("./assets/country/country.json"), true);
 
+        $data['payment_terms_list'] = $this->home_mod->payment_terms_list();
+
         $data['subview']        = 'commercial/customer_create';
         $data['meta_title']     = 'Create Customer';
         $this->load->view('index', $data);
@@ -111,6 +113,8 @@ class Commercial extends CI_Controller
         }
         $data['customer_list']     = $user_list[0];
         $data['country'] = json_decode(file_get_contents("./assets/country/country.json"), true);
+
+        $data['payment_terms_list'] = $this->home_mod->payment_terms_list();
 
         $data['subview']            = 'commercial/customer_update';
         $data['meta_title']         = 'Customer Update';

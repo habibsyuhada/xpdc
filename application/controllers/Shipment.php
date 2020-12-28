@@ -866,6 +866,8 @@ class Shipment extends CI_Controller
 		$data['secondary_agent'] 	= $secondary_agent;
 		$data['costumer'] 				= $costumer;
 
+		$data['payment_terms_list'] = $this->home_mod->payment_terms_list();
+
 		$data['subview'] 				= 'shipment/shipment_bill';
 		$data['meta_title'] 		= 'Shipment Bill';
 		$this->load->view('index', $data);

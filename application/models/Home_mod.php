@@ -52,5 +52,14 @@ class Home_mod extends CI_Model {
     $query = $this->db->get();
     return $query->result_array();
   }
+  
+  function payment_terms_list($where = null){
+    if(isset($where)){
+      $this->db->where($where);
+    }
+    $this->db->from('mst_payment_terms');
+    $query = $this->db->get();
+    return $query->result_array();
+  }
 
 }

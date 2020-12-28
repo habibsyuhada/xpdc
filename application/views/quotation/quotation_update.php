@@ -60,12 +60,15 @@
                     <label>Payment Terms</label>
                     <select class="form-control" name="payment_terms" required>
                       <option value="" <?php echo ($quotation['payment_terms'] == '') ? 'selected' : ''; ?>>- Select One -</option>
-                      <option value="Cash In Advance" <?php echo ($quotation['payment_terms'] == 'Cash In Advance') ? 'selected' : ''; ?>>Cash In Advance</option>
+                      <!-- <option value="Cash In Advance" <?php echo ($quotation['payment_terms'] == 'Cash In Advance') ? 'selected' : ''; ?>>Cash In Advance</option>
                       <option value="Cash In Delivery" <?php echo ($quotation['payment_terms'] == 'Cash In Delivery') ? 'selected' : ''; ?>>Cash In Delivery</option>
                       <option value="15 Days" <?php echo ($quotation['payment_terms'] == '15 Days') ? 'selected' : ''; ?>>15 Days</option>
                       <option value="30 Days" <?php echo ($quotation['payment_terms'] == '30 Days') ? 'selected' : ''; ?>>30 Days</option>
                       <option value="45 Days" <?php echo ($quotation['payment_terms'] == '45 Days') ? 'selected' : ''; ?>>45 Days</option>
-                      <option value="60 Days" <?php echo ($quotation['payment_terms'] == '60 Days') ? 'selected' : ''; ?>>60 Days</option>
+                      <option value="60 Days" <?php echo ($quotation['payment_terms'] == '60 Days') ? 'selected' : ''; ?>>60 Days</option> -->
+                      <?php foreach ($payment_terms_list as $key => $value) : ?>
+                        <option value="<?php echo $value['name'] ?>" <?php echo ($quotation['payment_terms'] == $value['name']) ? 'selected' : ''; ?>><?php echo $value['name'] ?></option>
+                      <?php endforeach; ?>
                     </select>
                     <!-- <input type="text" class="form-control" name="payment_terms" value="<?php echo $quotation['payment_terms'] ?>" placeholder="Payment Terms" required> -->
                   </div>

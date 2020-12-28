@@ -181,8 +181,8 @@
       </tr>
     </tbody>
   </table>
-  <!--   
-  <br>
+
+  <!-- <br>
 
   <table class="td-valign-top text-center" border="1" width="100%" cellspacing="0" cellpadding="2">
     <tbody>
@@ -201,7 +201,9 @@
       $total_act_weight = 0;
       $total_vol_weight = 0;
       $total_measurement = 0;
-      $per = 5000;
+      $total_qty = 0;
+      $array_unit = array();
+      $per = 4000;
       if ($quotation['type_of_transport'] == 'Air Freight') {
         $per = 6000;
       } elseif ($quotation['type_of_transport'] == 'Land Shipping') {
@@ -211,10 +213,13 @@
         $actual_weight = $value['qty'] * $value['weight'];
         $volume_weight = $value['qty'] * ($value['length'] * $value['width'] * $value['height']) / $per;
         $measurement = $value['qty'] * ($value['length'] * $value['width'] * $value['height']) / 1000000;
-
         $total_act_weight += $actual_weight;
         $total_vol_weight += $volume_weight;
         $total_measurement += $measurement;
+        $total_qty += $value['qty'];
+        if (!in_array($value['piece_type'], $array_unit)) {
+          $array_unit[] = $value['piece_type'];
+        }
       ?>
       <tr>
         <td><?php echo $value['qty']; ?></td>
@@ -231,17 +236,21 @@
   <table class="td-valign-top text-center" border="1" width="100%" cellspacing="0" cellpadding="2">
     <tbody>
       <tr>
-        <td colspan="4" class="header bg-orange"><b>Cargo Information</b></td>
+        <td colspan="6" class="header bg-orange"><b>Cargo Information</b></td>
       </tr>
       <tr>
         <th class="header">Description of Goods</th>
         <th class="header">Act. Weight</th>
+        <th class="header">Quantity</th>
+        <th class="header">Package</th>
         <th class="header">Vol. Weight</th>
         <th class="header">Measurement</th>
       </tr>
       <tr>
         <td><?php echo @$quotation['description_of_goods'] ?></td>
         <td><?php echo number_format($total_act_weight, 2) ?> Kg</td>
+        <td><?php echo number_format($total_qty) ?> </td>
+        <td><?php echo (count($array_unit) == 1) ? $array_unit[0] : 'nmp' ?> </td>
         <td><?php echo number_format($total_vol_weight, 2) ?> Kg</td>
         <td><?php echo number_format($total_measurement, 2) ?> M<sup>3</sup></td>
       </tr>

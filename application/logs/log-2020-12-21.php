@@ -47,6 +47,7 @@ ERROR - 2020-12-21 12:24:58 --> Severity: Notice --> Undefined variable: data_in
 ERROR - 2020-12-21 12:24:58 --> Severity: Notice --> Trying to access array offset on value of type null C:\xampp\htdocs\xpdc\application\views\shipment\shipment_receipt_pdf.php 274
 ERROR - 2020-12-21 12:26:44 --> Severity: Notice --> Undefined variable: data_input C:\xampp\htdocs\xpdc\application\views\shipment\shipment_receipt_pdf.php 274
 ERROR - 2020-12-21 12:26:44 --> Severity: Notice --> Trying to access array offset on value of type null C:\xampp\htdocs\xpdc\application\views\shipment\shipment_receipt_pdf.php 274
+<<<<<<< Updated upstream
 ERROR - 2020-12-21 20:32:18 --> 404 Page Not Found: Assets/favicon.ico
 ERROR - 2020-12-21 20:32:27 --> 404 Page Not Found: Home/favicon.ico
 ERROR - 2020-12-21 21:13:20 --> 404 Page Not Found: Shipment/favicon.ico
@@ -72,3 +73,23 @@ WHERE `id` = '1'
 ERROR - 2020-12-21 21:34:30 --> Severity: Compile Error --> Cannot declare class Payment_terms, because the name is already in use C:\xampp\htdocs\xpdc\application\models\Payment_terms_mod.php 38
 ERROR - 2020-12-21 21:34:51 --> 404 Page Not Found: Payment_terms/favicon.ico
 ERROR - 2020-12-21 21:37:49 --> Severity: error --> Exception: Call to undefined method Payment_terms_mod::payment_terms_list_db() C:\xampp\htdocs\xpdc\application\controllers\Payment_terms.php 56
+=======
+ERROR - 2020-12-21 16:51:18 --> Severity: Notice --> Undefined variable: branch_list C:\xampp\htdocs\xpdc\application\views\quotation\quotation_list.php 28
+ERROR - 2020-12-21 16:51:18 --> Severity: Warning --> Invalid argument supplied for foreach() C:\xampp\htdocs\xpdc\application\views\quotation\quotation_list.php 28
+ERROR - 2020-12-21 16:54:20 --> Severity: Notice --> Undefined variable: branch_list C:\xampp\htdocs\xpdc\application\views\quotation\quotation_list.php 28
+ERROR - 2020-12-21 16:54:20 --> Severity: Warning --> Invalid argument supplied for foreach() C:\xampp\htdocs\xpdc\application\views\quotation\quotation_list.php 28
+ERROR - 2020-12-21 16:54:30 --> Severity: Notice --> Undefined variable: branch_list C:\xampp\htdocs\xpdc\application\views\quotation\quotation_list.php 28
+ERROR - 2020-12-21 16:54:30 --> Severity: Warning --> Invalid argument supplied for foreach() C:\xampp\htdocs\xpdc\application\views\quotation\quotation_list.php 28
+ERROR - 2020-12-21 16:54:32 --> Severity: Notice --> Undefined variable: branch_list C:\xampp\htdocs\xpdc\application\views\quotation\quotation_list.php 28
+ERROR - 2020-12-21 16:54:32 --> Severity: Warning --> Invalid argument supplied for foreach() C:\xampp\htdocs\xpdc\application\views\quotation\quotation_list.php 28
+ERROR - 2020-12-21 16:54:43 --> Severity: Notice --> Undefined variable: branch_list C:\xampp\htdocs\xpdc\application\views\quotation\quotation_list.php 28
+ERROR - 2020-12-21 16:54:43 --> Severity: Warning --> Invalid argument supplied for foreach() C:\xampp\htdocs\xpdc\application\views\quotation\quotation_list.php 28
+ERROR - 2020-12-21 16:54:45 --> Severity: Notice --> Undefined variable: branch_list C:\xampp\htdocs\xpdc\application\views\quotation\quotation_list.php 28
+ERROR - 2020-12-21 16:54:45 --> Severity: Warning --> Invalid argument supplied for foreach() C:\xampp\htdocs\xpdc\application\views\quotation\quotation_list.php 28
+ERROR - 2020-12-21 16:54:52 --> Severity: Notice --> Undefined variable: branch_list C:\xampp\htdocs\xpdc\application\views\quotation\quotation_list.php 28
+ERROR - 2020-12-21 16:54:52 --> Severity: Warning --> Invalid argument supplied for foreach() C:\xampp\htdocs\xpdc\application\views\quotation\quotation_list.php 28
+ERROR - 2020-12-21 16:56:12 --> Severity: Notice --> Undefined variable: branch_list C:\xampp\htdocs\xpdc\application\views\quotation\quotation_list.php 28
+ERROR - 2020-12-21 16:56:12 --> Severity: Warning --> Invalid argument supplied for foreach() C:\xampp\htdocs\xpdc\application\views\quotation\quotation_list.php 28
+ERROR - 2020-12-21 16:56:45 --> Severity: Notice --> Undefined variable: branch_list C:\xampp\htdocs\xpdc\application\views\quotation\quotation_list.php 28
+ERROR - 2020-12-21 16:56:45 --> Severity: Warning --> Invalid argument supplied for foreach() C:\xampp\htdocs\xpdc\application\views\quotation\quotation_list.php 28
+>>>>>>> Stashed changes

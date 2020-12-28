@@ -412,25 +412,45 @@
                         <th class="text-white font-weight-bold" style="width: 1%;"></th>
                       </tr>
                     </thead>
-                    <tbody>
+                    <tbody class="term_type">
                       <tr>
-                        <td><input type="text" class="form-control" name="term_condition[]" value="Above rate exclude duties and taxes."></td>
+                        <td><input type="text" class="form-control" name="term_condition[]" value="Rate exclude fuel surcharges."></td>
                         <td><button type="button" class="btn btn-primary" onclick="addrow(this)"><i class="fas fa-plus m-0"></i></button></td>
                       </tr>
                       <tr>
-                        <td><input type="text" class="form-control" name="term_condition[]" value="Above rate exclude cargo insurance."></td>
+                        <td><input type="text" class="form-control" name="term_condition[]" value="Rate exclude duties and taxes, cargo insurance, storage charge and any special arrangement (if any)."></td>
                         <td><button type="button" class="btn btn-danger" onclick="deleterow(this)"><i class="fas fa-trash m-0"></i></button></td>
                       </tr>
                       <tr>
-                        <td><input type="text" class="form-control" name="term_condition[]" value="Both shipper and consignee must provide valid related required documents for customs clearance."></td>
+                        <td><input type="text" class="form-control" name="term_condition[]" value="Not applicable for DG Cargo / Odd Size Cargo / Heavy Weight Cargo / Non-Stackable Cargo."></td>
                         <td><button type="button" class="btn btn-danger" onclick="deleterow(this)"><i class="fas fa-trash m-0"></i></button></td>
                       </tr>
                       <tr>
-                        <td><input type="text" class="form-control" name="term_condition[]" value="Any discrepancy between CIPL and actual shipment will be burden to customer."></td>
+                        <td><input type="text" class="form-control" name="term_condition[]" value="Cargo must have proper packaging compliance with carrier valid rules and regulations."></td>
                         <td><button type="button" class="btn btn-danger" onclick="deleterow(this)"><i class="fas fa-trash m-0"></i></button></td>
                       </tr>
                       <tr>
-                        <td><input type="text" class="form-control" name="term_condition[]" value="Space is subject to space availability by the carrier."></td>
+                        <td><input type="text" class="form-control" name="term_condition[]" value="Both shipper and consignee must have required license for customs clearance purpose."></td>
+                        <td><button type="button" class="btn btn-danger" onclick="deleterow(this)"><i class="fas fa-trash m-0"></i></button></td>
+                      </tr>
+                      <tr>
+                        <td><input type="text" class="form-control" name="term_condition[]" value="Rates quoted excluded bank charge and any other taxes on cargo or services rendered."></td>
+                        <td><button type="button" class="btn btn-danger" onclick="deleterow(this)"><i class="fas fa-trash m-0"></i></button></td>
+                      </tr>
+                      <tr>
+                        <td><input type="text" class="form-control" name="term_condition[]" value="Rate is based on FOT (Free On Truck) terms. Loading / Unloading at customer's premises will be at customer own cost."></td>
+                        <td><button type="button" class="btn btn-danger" onclick="deleterow(this)"><i class="fas fa-trash m-0"></i></button></td>
+                      </tr>
+                      <tr>
+                        <td><input type="text" class="form-control" name="term_condition[]" value="Rate is subject to final chargeable weight defined as actual weight or volumetric weight whichever is greater."></td>
+                        <td><button type="button" class="btn btn-danger" onclick="deleterow(this)"><i class="fas fa-trash m-0"></i></button></td>
+                      </tr>
+                      <tr>
+                        <td><input type="text" class="form-control" name="term_condition[]" value="Transit time 3 - 4 Days. Subject to space availability by the carrier, force majeure, customs inspection and any uncontrollable delay."></td>
+                        <td><button type="button" class="btn btn-danger" onclick="deleterow(this)"><i class="fas fa-trash m-0"></i></button></td>
+                      </tr>
+                      <tr>
+                        <td><input type="text" class="form-control" name="term_condition[]" value="Once rates and terms & conditions have been confirmed, please kindly stamp and sign in the confirmation box below."></td>
                         <td><button type="button" class="btn btn-danger" onclick="deleterow(this)"><i class="fas fa-trash m-0"></i></button></td>
                       </tr>
                     </tbody>
@@ -527,6 +547,7 @@
 
   function get_vol_weight() {
     var type_of_mode = $("select[name=type_of_mode]").val();
+    console.log(type_of_mode);
     var per = 1;
     var total_act_weight = 0;
     var total_vol_weight = 0;
@@ -538,11 +559,11 @@
     var qty_array = [];
 
     if (type_of_mode == 'Air Freight') {
-      per = 4000;
+      per = 6000;
     } else if (type_of_mode == 'Land Shipping') {
       per = 4000;
     } else if (type_of_mode == 'Sea Transport') {
-      per = 5000;
+      per = 4000;
     }
 
     $("input[name='cargo_length[]']").each(function(index, value) {
@@ -581,6 +602,8 @@
       var actual_weight = qty_array[index] * weight_array[index];
       var volume_weight = qty_array[index] * (length_array[index] * width_array[index] * height_array[index]) / per;
       var measurement = qty_array[index] * (length_array[index] * width_array[index] * height_array[index]) / 1000000;
+
+      console.log(volume_weight+ " = "+qty_array[index]+" * ("+length_array[index]+" * "+width_array[index]+" * "+height_array[index]+") / "+per+" test "+type_of_mode);
 
       total_act_weight += actual_weight;
       total_vol_weight += volume_weight;

@@ -231,6 +231,25 @@ class Quotation extends CI_Controller
 		);
 		$where['id'] = $post['id'];
 		$this->quotation_mod->quotation_update_process_db($form_data, $where);
+		unset($where);
+
+		$cargo_temp = explode("|", $post['temp_cargo_id']);
+		foreach($cargo_temp as $cargo){
+			if(!in_array($cargo, $post['id_cargo'])){
+				$where['id'] = $cargo;
+				$this->quotation_mod->quotation_cargo_delete_process_db($where);
+			}
+		}
+		unset($where);
+
+		$charges_temp = explode("|", $post['temp_charges_id']);
+		foreach($charges_temp as $charges){
+			if(!in_array($charges, $post['id_charges'])){
+				echo $charges;
+				$where['id'] = $charges;
+				$this->quotation_mod->quotation_charges_delete_process_db($where);
+			}
+		}
 
 		foreach ($post['id_cargo'] as $key => $value) {
 			unset($where);

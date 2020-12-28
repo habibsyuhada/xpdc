@@ -279,7 +279,9 @@
                       </tr>
                     </thead>
                     <tbody>
-                      <?php foreach ($cargo_list as $key => $value) : ?>
+                      <?php foreach ($cargo_list as $key => $value) : 
+                        $cargo_temp[] = $value['id'];
+                        ?>
                         <tr>
                           <td>
                             <input type="number" class="form-control" oninput="get_vol_weight()" step="any" name="cargo_qty[]" value="<?php echo $value['qty'] ?>">
@@ -305,7 +307,7 @@
                             <?php if ($key == 0) : ?>
                               <button type="button" class="btn btn-primary" onclick="addrow(this)"><i class="fas fa-plus m-0"></i></button>
                             <?php else : ?>
-                              <button type="button" onclick="deletepackage('<?php echo $value['id'] ?>', this)" class="btn btn-danger"><i class="fas fa-trash m-0"></i></button>
+                              <button type="button" onclick="deleterow(this)" class="btn btn-danger"><i class="fas fa-trash m-0"></i></button>
                             <?php endif; ?>
                           </td>
                         </tr>
@@ -350,6 +352,7 @@
                     <?php 
                       $total_all = 0;
                       foreach ($charges_list as $key => $value) : 
+                        $charges_temp[] = $value['id'];
                         $persen = 1;
                         if($value['uom'] == "%"){
                           $persen = 100;
@@ -411,7 +414,7 @@
                           <?php if ($key == 0) : ?>
                             <button type="button" class="btn btn-primary" onclick="addrow(this)"><i class="fas fa-plus m-0"></i></button>
                           <?php else : ?>
-                            <button type="button" onclick="deletecost('<?php echo $value['id'] ?>', this)" class="btn btn-danger"><i class="fas fa-trash m-0"></i></button>
+                            <button type="button" onclick="deleterow(this)" class="btn btn-danger"><i class="fas fa-trash m-0"></i></button>
                           <?php endif; ?>
                         </td>
                       </tr>
@@ -430,6 +433,8 @@
           <div class="card">
             <div class="card-body overflow-auto">
               <h6 class="font-weight-bold border-bottom">Addtional</h6>
+              <input type="hidden" name="temp_cargo_id" value="<?=implode("|", $cargo_temp);?>" />
+              <input type="hidden" name="temp_charges_id" value="<?=implode("|", $charges_temp)?>" />
               <div class="row clearfix">
                 <div class="col-md-12">
                   <table class="table text-center">
@@ -478,7 +483,7 @@
   </div>
 </div>
 <script type="text/javascript">
-  $("select[name=type_of_mode]").on("change", function() {
+  $("select[name=type_of_transport]").on("change", function() {
     var value = $(this).val();
     $("select[name=sea]").closest('.form-group').slideUp();
     $("select[name=sea]").attr("disabled", "disabled");
@@ -495,6 +500,7 @@
   function addrow(btn) {
     var row_copy = $(btn).closest("tr").html();
     $(btn).closest("tbody").append("<tr>" + row_copy + "</tr>");
+    $(btn).closest("tbody").find("tr:last").find("input").val('');
     var btn_delete = '<button type="button" class="btn btn-danger" onclick="deleterow(this)"><i class="fas fa-trash m-0"></i></button>';
     $(btn).closest("tbody").find("tr:last").find("td:last").html(btn_delete);
   }
@@ -536,7 +542,7 @@
   });
 
   function get_vol_weight() {
-    var type_of_mode = $("select[name=type_of_mode]").val();
+    var type_of_transport = $("select[name=type_of_transport]").val();
     var per = 1;
     var total_act_weight = 0;
     var total_vol_weight = 0;
@@ -547,12 +553,12 @@
     var weight_array = [];
     var qty_array = [];
 
-    if (type_of_mode == 'Air Freight') {
+    if (type_of_transport == 'Air Freight') {
       per = 6000;
-    } else if (type_of_mode == 'Land Shipping') {
+    } else if (type_of_transport == 'Land Shipping') {
       per = 4000;
-    } else if (type_of_mode == 'Sea Transport') {
-      per = 5000;
+    } else if (type_of_transport == 'Sea Transport') {
+      per = 4000;
     }
 
     $("input[name='cargo_length[]']").each(function(index, value) {
@@ -587,10 +593,12 @@
 
 
     $.each(length_array, function(index, value) {
-      console.log(length_array[index], width_array[index], height_array[index], weight_array[index], qty_array[index], per);
+      // console.log(length_array[index], width_array[index], height_array[index], weight_array[index], qty_array[index], per);
       var actual_weight = qty_array[index] * weight_array[index];
       var volume_weight = qty_array[index] * (length_array[index] * width_array[index] * height_array[index]) / per;
       var measurement = qty_array[index] * (length_array[index] * width_array[index] * height_array[index]) / 1000000;
+
+      console.log(volume_weight+ " = "+qty_array[index]+" * ("+length_array[index]+" * "+width_array[index]+" * "+height_array[index]+") / "+per);
 
       total_act_weight += actual_weight;
       total_vol_weight += volume_weight;
@@ -611,4 +619,46 @@
     }));
 
   }
+
+function get_total(input = "") {
+  if (input != "") {
+    var row = $(input).closest('tr');
+    var unit_price = $(row).find("input[name='charges_unit_price[]']").val();
+    var qty = $(row).find("input[name='charges_qty[]']").val();
+    var uom = $(row).find("select[name='charges_uom[]']").val();
+    if (uom == "%") {
+      qty = qty / 100;
+    }
+    var subtotal = qty * unit_price;
+    $(row).find("input[name='charges_subtotal[]']").val(subtotal);
+    $(row).find("input[name='charges_subtotal_view[]']").val(subtotal.toLocaleString('en-US', {
+      maximumFractionDigits: 0
+    }) + ".00");
+
+    var exchange_rate = $(row).find("input[name='charges_exchange_rate[]']").val();
+    var total = subtotal * exchange_rate;
+    $(row).find("input[name='charges_total[]']").val(total);
+    $(row).find("input[name='charges_total_view[]']").val(total.toLocaleString('en-US', {
+      maximumFractionDigits: 0
+    }) + ".00");
+  }
+
+  var total_all = 0;
+  $("input[name='charges_total[]']").each(function(index, value) {
+    var total_row = parseFloat($(this).val());
+    total_all = total_all + total_row + 0;
+  });
+
+  // var vat = Number($("input[name=vat]").val());
+  // var discount = Number($("input[name=discount]").val());
+  // console.log(total_all);
+  // total_all = total_all + vat + 0;
+  // console.log(total_all);
+  // total_all = total_all - discount + 0;
+  // console.log(total_all);
+  // $(input).closest('form').find("span[name=total_all]").text(total_all);
+  $("#total_all").text(total_all.toLocaleString('en-US', {
+    maximumFractionDigits: 0
+  }) + ".00");
+}
 </script>

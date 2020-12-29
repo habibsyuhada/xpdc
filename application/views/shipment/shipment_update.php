@@ -15,7 +15,7 @@
 </style>
 <div class="main-content">
   <div class="container-fluid">
-    <form action="<?php echo base_url(); ?>shipment/shipment_update_process" method="POST" class="forms-sample">
+    <form action="<?php echo base_url(); ?>shipment/shipment_update_process" method="POST" class="forms-sample" enctype="multipart/form-data">
       <input type="hidden" name="id" value="<?php echo $shipment['id'] ?>">
       <input type="hidden" name="tracking_no" value="<?php echo $shipment['tracking_no'] ?>">
       <div class="row clearfix">

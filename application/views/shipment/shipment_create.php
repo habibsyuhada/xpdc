@@ -5,7 +5,7 @@
 ?>
 <div class="main-content">
   <div class="container-fluid">
-    <form action="<?php echo base_url(); ?>shipment/shipment_receipt" method="POST" class="forms-sample">
+    <form action="<?php echo base_url(); ?>shipment/shipment_receipt" method="POST" class="forms-sample" enctype="multipart/form-data">
       <?php if(isset($id_quotation)): ?>
         <input type="hidden" name="id_quotation" value="<?php echo $id_quotation ?>">
       <?php endif; ?>

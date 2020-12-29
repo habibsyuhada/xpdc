@@ -138,29 +138,6 @@ $side_permission = array(
 										<a href="<?php echo base_url() ?>shipment/shipment_link_share"><i class="fas fa-share-alt"></i> <span>Share Link</span></a>
 									</div>
 								<?php endif; ?>
-								<?php if ($side_permission[8] == 1) : ?>
-									<div class="nav-item has-sub">
-										<a href="javascript:void(0)"><i class="fas fa-user"></i><span>User</span></a>
-										<div class="submenu-content">
-											<a href="<?php echo base_url() ?>user/user_list" class="menu-item">User List</a>
-											<a href="<?php echo base_url() ?>user/user_create" class="menu-item">Create User</a>
-										</div>
-									</div>
-									<div class="nav-item has-sub">
-										<a href="javascript:void(0)"><i class="fas fa-code-branch"></i><span>Branch</span></a>
-										<div class="submenu-content">
-											<a href="<?php echo base_url() ?>branch/branch_list" class="menu-item">Branch List</a>
-											<a href="<?php echo base_url() ?>branch/branch_create" class="menu-item">Create Branch</a>
-										</div>
-									</div>
-									<div class="nav-item has-sub">
-										<a href="javascript:void(0)"><i class="fas fa-user-secret"></i><span>Agent</span></a>
-										<div class="submenu-content">
-											<a href="<?php echo base_url() ?>agent/agent_list" class="menu-item">Agent List</a>
-											<a href="<?php echo base_url() ?>agent/agent_create" class="menu-item">Create Agent</a>
-										</div>
-									</div>
-								<?php endif; ?>
 								<?php if ($side_permission[9] == 1) : ?>
 									<div class="nav-item">
 										<a href="<?php echo base_url() ?>report/summary_report"><i class="fas fa-file-alt"></i> <span>Summary Report</span></a>
@@ -185,29 +162,52 @@ $side_permission = array(
 									</div>
 								<?php endif; ?>
 								<?php if ($side_permission[8] == 1) : ?>
+
 									<div class="nav-item has-sub">
-										<a href="javascript:void(0)"><i class="fas fa-map-marked-alt"></i><span>Zone</span></a>
+										<a href="javascript:void(0)"><i class="fas fa-cog"></i><span>Configuration</span></a>
 										<div class="submenu-content">
-											<a href="<?php echo base_url() ?>zone/zone_list" class="menu-item">Zone List</a>
-											<a href="<?php echo base_url() ?>zone/zone_create" class="menu-item">Create Zone</a>
-										</div>
-									</div>
-								<?php endif; ?>
-								<?php if ($side_permission[8] == 1) : ?>
-									<div class="nav-item has-sub">
-										<a href="javascript:void(0)"><i class="fas fa-ruler"></i><span>UOM</span></a>
-										<div class="submenu-content">
-											<a href="<?php echo base_url() ?>uom/uom_list" class="menu-item">UOM List</a>
-											<a href="<?php echo base_url() ?>uom/uom_create" class="menu-item">Create UOM</a>
-										</div>
-									</div>
-								<?php endif; ?>
-								<?php if ($side_permission[8] == 1) : ?>
-									<div class="nav-item has-sub">
-										<a href="javascript:void(0)"><i class="far fa-credit-card"></i><span>Payment Terms</span></a>
-										<div class="submenu-content">
-											<a href="<?php echo base_url() ?>payment_terms/payment_terms_list" class="menu-item">Payment Terms List</a>
-											<a href="<?php echo base_url() ?>payment_terms/payment_terms_create" class="menu-item">Create Payment Terms</a>
+											<div class="nav-item has-sub">
+												<a href="javascript:void(0)" class="menu-item"><i class="fas fa-user"></i><span>User</span></a>
+												<div class="submenu-content">
+													<a href="<?php echo base_url() ?>user/user_list" class="menu-item">User List</a>
+													<a href="<?php echo base_url() ?>user/user_create" class="menu-item">Create User</a>
+												</div>
+											</div>
+											<div class="nav-item has-sub">
+												<a href="javascript:void(0)" class="menu-item"><i class="fas fa-code-branch"></i><span>Branch</span></a>
+												<div class="submenu-content">
+													<a href="<?php echo base_url() ?>branch/branch_list" class="menu-item">Branch List</a>
+													<a href="<?php echo base_url() ?>branch/branch_create" class="menu-item">Create Branch</a>
+												</div>
+											</div>
+											<div class="nav-item has-sub">
+												<a href="javascript:void(0)" class="menu-item"><i class="fas fa-user-secret"></i><span>Agent</span></a>
+												<div class="submenu-content">
+													<a href="<?php echo base_url() ?>agent/agent_list" class="menu-item">Agent List</a>
+													<a href="<?php echo base_url() ?>agent/agent_create" class="menu-item">Create Agent</a>
+												</div>
+											</div>
+											<div class="nav-item has-sub">
+												<a href="javascript:void(0)" class="menu-item"><i class="far fa-credit-card"></i> Payment Terms</a>
+												<div class="submenu-content">
+													<a href="<?php echo base_url() ?>payment_terms/payment_terms_list" class="menu-item">Payment Terms List</a>
+													<a href="<?php echo base_url() ?>payment_terms/payment_terms_create" class="menu-item">Create Payment Terms</a>
+												</div>
+											</div>
+											<div class="nav-item has-sub">
+												<a href="javascript:void(0)" class="menu-item"><i class="fas fa-ruler"></i><span>UOM</span></a>
+												<div class="submenu-content">
+													<a href="<?php echo base_url() ?>uom/uom_list" class="menu-item">UOM List</a>
+													<a href="<?php echo base_url() ?>uom/uom_create" class="menu-item">Create UOM</a>
+												</div>
+											</div>
+											<div class="nav-item has-sub">
+												<a href="javascript:void(0)" class="menu-item"><i class="fas fa-map-marked-alt"></i><span>Zone</span></a>
+												<div class="submenu-content">
+													<a href="<?php echo base_url() ?>zone/zone_list" class="menu-item">Zone List</a>
+													<a href="<?php echo base_url() ?>zone/zone_create" class="menu-item">Create Zone</a>
+												</div>
+											</div>
 										</div>
 									</div>
 								<?php endif; ?>

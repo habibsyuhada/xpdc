@@ -265,7 +265,6 @@ class Shipment extends CI_Controller
 			$form_data = array(
 				'id_shipment' 							=> $id_shipment,
 				'status_pickup' 						=> $post['status_pickup'],
-				'pickup_same_as' 						=> $post['pickup_same_as'],
 				'pickup_name' 							=> $post['pickup_name'],
 				'pickup_address' 						=> $post['pickup_address'],
 				'pickup_city' 							=> $post['pickup_city'],
@@ -291,6 +290,9 @@ class Shipment extends CI_Controller
 				'billing_phone_number' 			=> $post['billing_phone_number'],
 				'billing_email' 						=> $post['billing_email'],
 			);
+		}
+		if (isset($post['pickup_same_as'])) {
+			$form_data['pickup_same_as'] = $post['pickup_same_as'];
 		}
 
 		$this->shipment_mod->shipment_detail_create_process_db($form_data);
@@ -405,7 +407,6 @@ class Shipment extends CI_Controller
 
 		$form_data = array(
 			'status_pickup' 						=> $post['status_pickup'],
-			'pickup_same_as' 						=> $post['pickup_same_as'],
 			'pickup_name' 							=> $post['pickup_name'],
 			'pickup_address' 						=> $post['pickup_address'],
 			'pickup_city' 							=> $post['pickup_city'],
@@ -435,6 +436,9 @@ class Shipment extends CI_Controller
 			'cipl_no'										=> $post['cipl_no'],
 			'permit_no'									=> $post['permit_no']
 		);
+		if (isset($post['pickup_same_as'])) {
+			$form_data['pickup_same_as'] = $post['pickup_same_as'];
+		}
 		if (!empty($_FILES['cipl_no_atc']['name'])) {
 			$upload_path = 'file/agent/';
 			$config = [

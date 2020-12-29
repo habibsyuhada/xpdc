@@ -2,6 +2,7 @@
   $role = $this->session->userdata('role');
   $page_permission = array(
     0 => (in_array($role, array("Super Admin")) ? 1 : 0), //Delete Quotation
+    1 => (in_array($role, array("Super Admin", "Commercial")) ? 1 : 0), //Approval Quotation
   );
 ?>
 <div class="main-content">
@@ -69,6 +70,7 @@
                   <thead>
                     <tr class="bg-info">
                       <th class="text-white font-weight-bold">Quotation No</th>
+                      <th class="text-white font-weight-bold">Tracking No</th>
                       <th class="text-white font-weight-bold">Date</th>
                       <th class="text-white font-weight-bold">Exp. Date</th>
                       <th class="text-white font-weight-bold">Customer Name</th>
@@ -82,6 +84,7 @@
                     <?php foreach ($quotation_list as $key => $value): ?>
                     <tr>
                       <td><?php echo $value['quotation_no'] ?></td>
+                      <td><?php echo $value['tracking_no'] ?></td>
                       <td><?php echo $value['date'] ?></td>
                       <td><?php echo $value['exp_date'] ?></td>
                       <td><?php echo $value['customer_name'] ?></td>
@@ -105,6 +108,13 @@
                         <a target="_blank" href="<?php echo base_url() ?>quotation/quotation_pdf/<?php echo $value['id'] ?>" class="btn btn-warning" title="PDF"><i class="fas fa-print m-0"></i></a>
                         <?php if($page_permission[0] == 1): ?>
                         <a href="<?php echo base_url() ?>quotation/quotation_delete_process/<?php echo $value['id'] ?>" class="btn btn-danger" title="Delete" onclick="return confirm('Are You Sure?')"><i class="fas fa-trash m-0"></i></a>
+                        <?php endif; ?>
+                        <?php if($value['status'] == 0 && $page_permission[1] == 1): ?>
+                        <a href="<?php echo base_url() ?>quotation/quotation_approval_process/<?php echo $value['id'] ?>/1" class="btn btn-success" title="Approve" onclick="return confirm('Are You Sure to Approve this?')"><i class="fas fa-check m-0"></i></a>
+                        <a href="<?php echo base_url() ?>quotation/quotation_approval_process/<?php echo $value['id'] ?>/2" class="btn btn-danger" title="Reject" onclick="return confirm('Are You Sure to Reject this?')"><i class="fas fa-times m-0"></i></a>
+                        <?php endif; ?>
+                        <?php if($value['status'] == 1 && $value['tracking_no'] == ""): ?>
+                        <a href="<?php echo base_url() ?>quotation/shipment_create/<?php echo $value['id'] ?>" class="btn btn-success" title="Create Shipment" onclick="return confirm('Are You Sure to Approve this?')"><i class="fas fa-plus m-0"></i></a>
                         <?php endif; ?>
                       </td>
                     </tr>

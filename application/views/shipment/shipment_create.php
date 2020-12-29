@@ -1,6 +1,14 @@
+<?php
+  if(!isset($cargo_list)){
+    $cargo_list = [];
+  }
+?>
 <div class="main-content">
   <div class="container-fluid">
     <form action="<?php echo base_url(); ?>shipment/shipment_receipt" method="POST" class="forms-sample">
+      <?php if(isset($id_quotation)): ?>
+        <input type="hidden" name="id_quotation" value="<?php echo $id_quotation ?>">
+      <?php endif; ?>
       <div class="row clearfix">
         <div class="col-md-12">
           <div class="card">
@@ -40,8 +48,8 @@
                         <label>Type of Shipment</label>
                         <select class="form-control" name="type_of_shipment" required>
                           <option value="">-- Select One --</option>
-                          <option value="International Shipping">International Shipping</option>
-                          <option value="Domestic Shipping">Domestic Shipping</option>
+                          <option value="International Shipping" <?php echo (@$quotation['type_of_shipment'] == "International Shipping" ? "selected" : "") ?>>International Shipping</option>
+                          <option value="Domestic Shipping" <?php echo (@$quotation['type_of_shipment'] == "Domestic Shipping" ? "selected" : "") ?>>Domestic Shipping</option>
                         </select>
                       </div>
                     </div>
@@ -54,27 +62,27 @@
                         <label>Type of Mode</label>
                         <select class="form-control" name="type_of_mode" onchange="get_vol_weight()" required>
                           <option value="">- Select One -</option>
-                          <option value="Sea Transport">Sea Transport</option>
-                          <option value="Land Shipping">Land Shipping</option>
-                          <option value="Air Freight">Air Freight</option>
+                          <option value="Sea Transport" <?php echo (@$quotation['type_of_transport'] == "Sea Transport" ? "selected" : "") ?>>Sea Transport</option>
+                          <option value="Land Shipping" <?php echo (@$quotation['type_of_transport'] == "Land Shipping" ? "selected" : "") ?>>Land Shipping</option>
+                          <option value="Air Freight" <?php echo (@$quotation['type_of_transport'] == "Air Freight" ? "selected" : "") ?>>Air Freight</option>
                         </select>
                       </div>
                     </div>
                     <div class="col-md-6">
-                      <div class="form-group" style="display: none;">
+                      <div class="form-group" style="<?php echo (@$quotation['type_of_transport'] == 'Sea Transport' ? '' : 'display: none;') ?>">
                         <label>Sea</label>
-                        <select class="form-control" name="sea" title="sea" required disabled>
+                        <select class="form-control" name="sea" title="sea" required <?php echo (@$quotation['type_of_transport'] == 'Sea Transport' ? '' : 'disabled') ?>>
                           <option value="">- Select Sea -</option>
-                          <option value="LCL">LCL</option>
-                          <option value="FCL">FCL</option>
+                          <option value="LCL" <?php echo (@$quotation['sea'] == "LCL" ? "selected" : "") ?>>LCL</option>
+                          <option value="FCL" <?php echo (@$quotation['sea'] == "FCL" ? "selected" : "") ?>>FCL</option>
                         </select>
                       </div>
-                      <div class="form-group" style="display: none;">
+                      <div class="form-group" style="<?php echo (@$quotation['type_of_transport'] == 'Air Freight' ? '' : 'display: none;') ?>">
                         <label>Type</label>
-                        <select class="form-control" name="sea" title="air" required disabled>
+                        <select class="form-control" name="sea" title="air" required <?php echo (@$quotation['type_of_transport'] == 'Air Freight' ? '' : 'disabled') ?>>
                           <option value="">- Select Sea -</option>
-                          <option value="Express">Express</option>
-                          <option value="Reguler">Reguler</option>
+                          <option value="Express" <?php echo (@$quotation['sea'] == "Express" ? "selected" : "") ?>>Express</option>
+                          <option value="Reguler" <?php echo (@$quotation['sea'] == "Reguler" ? "selected" : "") ?>>Reguler</option>
                         </select>
                       </div>
                     </div>
@@ -95,80 +103,80 @@
                       <h6 class="font-weight-bold">Shipper Information</h6>
                       <div class="form-group">
                         <label>Shipper Name</label>
-                        <input type="text" class="form-control" name="shipper_name" placeholder="Shipper Name" required>
+                        <input type="text" class="form-control" name="shipper_name" value="<?php echo @$quotation['shipper_name'] ?>" placeholder="Shipper Name" required>
                       </div>
                       <div class="form-group">
                         <label>Address</label>
-                        <textarea class="form-control" name="shipper_address" placeholder="Address" required></textarea>
+                        <textarea class="form-control" name="shipper_address" placeholder="Address" required><?php echo @$quotation['shipper_address'] ?></textarea>
                       </div>
                       <div class="form-group">
                         <label>City</label>
-                        <input type="text" class="form-control" name="shipper_city" placeholder="City" required>
+                        <input type="text" class="form-control" name="shipper_city" value="<?php echo @$quotation['shipper_city'] ?>" placeholder="City" required>
                       </div>
                       <div class="form-group">
                         <label>Country</label>
                         <select class="form-control select2" name="shipper_country" required>
                           <option value="">- Select One -</option>
                           <?php foreach ($country['data'] as $data) { ?>
-                            <option value="<?= $data['location'] ?>"><?= $data['location'] ?></option>
+                            <option value="<?= $data['location'] ?>" <?php echo (@$quotation['shipper_country'] == $data['location'] ? 'selected' : '') ?>><?= $data['location'] ?></option>
                           <?php } ?>
                         </select>
                       </div>
                       <div class="form-group">
                         <label>Postcode</label>
-                        <input type="text" class="form-control" name="shipper_postcode" placeholder="Postcode">
+                        <input type="text" class="form-control" name="shipper_postcode" value="<?php echo @$quotation['shipper_postcode'] ?>" placeholder="Postcode">
                       </div>
                       <div class="form-group">
                         <label>Contact Person</label>
-                        <input type="text" class="form-control" name="shipper_contact_person" placeholder="Contact Person" required>
+                        <input type="text" class="form-control" name="shipper_contact_person" value="<?php echo @$quotation['shipper_contact_person'] ?>" placeholder="Contact Person" required>
                       </div>
                       <div class="form-group">
                         <label>Phone Number</label>
-                        <input type="text" class="form-control" name="shipper_phone_number" placeholder="Phone Number" required>
+                        <input type="text" class="form-control" name="shipper_phone_number" value="<?php echo @$quotation['shipper_phone_number'] ?>" placeholder="Phone Number" required>
                       </div>
                       <div class="form-group">
                         <label>Email</label>
-                        <input type="email" class="form-control" name="shipper_email" placeholder="Email">
+                        <input type="email" class="form-control" name="shipper_email" value="<?php echo @$quotation['shipper_email'] ?>" placeholder="Email">
                       </div>
                     </div>
                     <div class="col-md-6">
                       <h6 class="font-weight-bold">Consignee Information</h6>
                       <div class="form-group">
                         <label>Consignee Name</label>
-                        <input type="text" class="form-control" name="consignee_name" placeholder="Receiver Name" required>
+                        <input type="text" class="form-control" name="consignee_name" value="<?php echo @$quotation['consignee_name'] ?>" placeholder="Receiver Name" required>
                       </div>
                       <div class="form-group">
                         <label>Address</label>
-                        <textarea class="form-control" name="consignee_address" placeholder="Address" required></textarea>
+                        <textarea class="form-control" name="consignee_address" placeholder="Address" required><?php echo @$quotation['consignee_address'] ?></textarea>
                       </div>
                       <div class="form-group">
                         <label>City</label>
-                        <input type="text" class="form-control" name="consignee_city" placeholder="City" required>
+                        <input type="text" class="form-control" name="consignee_city" value="<?php echo @$quotation['consignee_city'] ?>" placeholder="City" required>
                       </div>
                       <div class="form-group">
                         <label>Country</label>
                         <select class="form-control select2" name="consignee_country" required>
                           <option value="">- Select One -</option>
                           <?php foreach ($country['data'] as $data) { ?>
-                            <option value="<?= $data['location'] ?>"><?= $data['location'] ?></option>
+                            <option value="<?= $data['location'] ?>" <?php echo (@$quotation['consignee_country'] == $data['location'] ? 'selected' : '') ?>><?= $data['location'] ?></option>
                           <?php } ?>
                         </select>
                       </div>
                       <div class="form-group">
                         <label>Postcode</label>
-                        <input type="text" class="form-control" name="consignee_postcode" placeholder="Postcode">
+                        <input type="text" class="form-control" name="consignee_postcode" value="<?php echo @$quotation['consignee_postcode'] ?>" placeholder="Postcode">
                       </div>
                       <div class="form-group">
                         <label>Contact Person</label>
-                        <input type="text" class="form-control" name="consignee_contact_person" placeholder="Contact Person" required>
+                        <input type="text" class="form-control" name="consignee_contact_person" value="<?php echo @$quotation['consignee_contact_person'] ?>" placeholder="Contact Person" required>
                       </div>
                       <div class="form-group">
                         <label>Phone Number</label>
-                        <input type="text" class="form-control" name="consignee_phone_number" placeholder="Phone Number" required>
+                        <input type="text" class="form-control" name="consignee_phone_number" value="<?php echo @$quotation['consignee_phone_number'] ?>" placeholder="Phone Number" required>
                       </div>
                       <div class="form-group">
                         <label>Email</label>
-                        <input type="email" class="form-control" name="consignee_email" placeholder="Email">
+                        <input type="email" class="form-control" name="consignee_email" value="<?php echo @$quotation['consignee_email'] ?>" placeholder="Email">
                       </div>
                     </div>
                   </div>
@@ -191,21 +199,21 @@
                             <label>Incoterms</label>
                             <select class="form-control" name="incoterms" required>
                               <option value="">-- Select One --</option>
-                              <option value="EXW (ExWorks)">EXW (ExWorks)</option>
-                              <option value="FCA (Free Carrier)">FCA (Free Carrier)</option>
-                              <option value="FAS (Free Alongside Ship)">FAS (Free Alongside Ship)</option>
-                              <option value="FOB (Free On Board)">FOB (Free On Board)</option>
-                              <option value="CFR (Cost and Freight">CFR (Cost and Freight</option>
-                              <option value="CIF (Cost Insurance Freight)">CIF (Cost Insurance Freight)</option>
-                              <option value="CIP (Carriage and Insurance Paid)">CIP (Carriage and Insurance Paid)</option>
-                              <option value="CPT (Carriage Paid To)">CPT (Carriage Paid To)</option>
-                              <option value="DAF (Delivered at Frontier)">DAF (Delivered at Frontier)</option>
-                              <option value="DES (Delivered Ex Ship)">DES (Delivered Ex Ship)</option>
-                              <option value="DEQ (Delivered Ex Quay)">DEQ (Delivered Ex Quay)</option>
-                              <option value="DDU (Delivered Duty Unpaid)">DDU (Delivered Duty Unpaid)</option>
-                              <option value="DDP (Delivered Duty Paid)">DDP (Delivered Duty Paid)</option>
-                              <option value="DAT (Delivered At Terminal)">DAT (Delivered At Terminal)</option>
-                              <option value="DAP (Delivered At Place)">DAP (Delivered At Place)</option>
+                              <option value="EXW (ExWorks)" <?php echo (@$quotation['incoterms'] == "EXW (ExWorks)" ? 'selected' : '') ?>>EXW (ExWorks)</option>
+                              <option value="FCA (Free Carrier)" <?php echo (@$quotation['incoterms'] == "FCA (Free Carrier)" ? 'selected' : '') ?>>FCA (Free Carrier)</option>
+                              <option value="FAS (Free Alongside Ship)" <?php echo (@$quotation['incoterms'] == "FAS (Free Alongside Ship)" ? 'selected' : '') ?>>FAS (Free Alongside Ship)</option>
+                              <option value="FOB (Free On Board)" <?php echo (@$quotation['incoterms'] == "FOB (Free On Board)" ? 'selected' : '') ?>>FOB (Free On Board)</option>
+                              <option value="CFR (Cost and Freight" <?php echo (@$quotation['incoterms'] == "CFR (Cost and Freight" ? 'selected' : '') ?>>CFR (Cost and Freight</option>
+                              <option value="CIF (Cost Insurance Freight)" <?php echo (@$quotation['incoterms'] == "CIF (Cost Insurance Freight)" ? 'selected' : '') ?>>CIF (Cost Insurance Freight)</option>
+                              <option value="CIP (Carriage and Insurance Paid)" <?php echo (@$quotation['incoterms'] == "CIP (Carriage and Insurance Paid)" ? 'selected' : '') ?>>CIP (Carriage and Insurance Paid)</option>
+                              <option value="CPT (Carriage Paid To)" <?php echo (@$quotation['incoterms'] == "CPT (Carriage Paid To)" ? 'selected' : '') ?>>CPT (Carriage Paid To)</option>
+                              <option value="DAF (Delivered at Frontier)" <?php echo (@$quotation['incoterms'] == "DAF (Delivered at Frontier)" ? 'selected' : '') ?>>DAF (Delivered at Frontier)</option>
+                              <option value="DES (Delivered Ex Ship)" <?php echo (@$quotation['incoterms'] == "DES (Delivered Ex Ship)" ? 'selected' : '') ?>>DES (Delivered Ex Ship)</option>
+                              <option value="DEQ (Delivered Ex Quay)" <?php echo (@$quotation['incoterms'] == "DEQ (Delivered Ex Quay)" ? 'selected' : '') ?>>DEQ (Delivered Ex Quay)</option>
+                              <option value="DDU (Delivered Duty Unpaid)" <?php echo (@$quotation['incoterms'] == "DDU (Delivered Duty Unpaid)" ? 'selected' : '') ?>>DDU (Delivered Duty Unpaid)</option>
+                              <option value="DDP (Delivered Duty Paid)" <?php echo (@$quotation['incoterms'] == "DDP (Delivered Duty Paid)" ? 'selected' : '') ?>>DDP (Delivered Duty Paid)</option>
+                              <option value="DAT (Delivered At Terminal)" <?php echo (@$quotation['incoterms'] == "DAT (Delivered At Terminal)" ? 'selected' : '') ?>>DAT (Delivered At Terminal)</option>
+                              <option value="DAP (Delivered At Place)" <?php echo (@$quotation['incoterms'] == "DAP (Delivered At Place)" ? 'selected' : '') ?>>DAP (Delivered At Place)</option>
                             </select>
                           </div>
                         </div>
@@ -223,7 +231,7 @@
                     <div class="col-md-6">
                       <div class="form-group">
                         <label>Description of Goods</label>
-                        <input type="text" class="form-control" name="description_of_goods" placeholder="Description of Goods" required>
+                        <input type="text" class="form-control" name="description_of_goods" placeholder="Description of Goods" value="<?php echo @$quotation['description_of_goods'] ?>" required>
                       </div>
                       <div class="form-group">
                         <label>HSCode</label>
@@ -286,6 +294,39 @@
                           </tr>
                         </thead>
                         <tbody>
+                          <?php if(count($cargo_list) > 0): ?>
+                          <?php foreach ($cargo_list as $key => $value) : ?>
+                            <tr>
+                              <td>
+                                <input type="number" class="form-control" oninput="get_vol_weight()" step="any" name="qty[]" value="<?php echo $value['qty'] ?>">
+                                <input type="hidden" class="form-control" name="id_detail[]" value="<?php echo $value['id'] ?>">
+                              </td>
+                              <td>
+                                <select class="form-control" name="piece_type[]" value="<?php echo $value['piece_type'] ?>">
+                                  <option value="">-- Select One --</option>
+                                  <option value="Pallet" <?php echo ($value['piece_type'] == "Pallet" ? 'selected' : '') ?>>Pallet</option>
+                                  <option value="Carton" <?php echo ($value['piece_type'] == "Carton" ? 'selected' : '') ?>>Carton</option>
+                                  <option value="Crate" <?php echo ($value['piece_type'] == "Crate" ? 'selected' : '') ?>>Crate</option>
+                                  <option value="Loose" <?php echo ($value['piece_type'] == "Loose" ? 'selected' : '') ?>>Loose</option>
+                                  <option value="Container 20 GP" <?php echo ($value['piece_type'] == "Container 20 GP" ? 'selected' : '') ?>>Container 20 GP</option>
+                                  <option value="Container 40 GP" <?php echo ($value['piece_type'] == "Container 40 GP" ? 'selected' : '') ?>>Container 40 GP</option>
+                                  <option value="Others" <?php echo ($value['piece_type'] == "Others" ? 'selected' : '') ?>>Others</option>
+                                </select>
+                              </td>
+                              <td><input type="number" class="form-control" oninput="get_vol_weight()" step="any" name="length[]" value="<?php echo $value['length']+0 ?>"></td>
+                              <td><input type="number" class="form-control" oninput="get_vol_weight()" step="any" name="width[]" value="<?php echo $value['width']+0 ?>"></td>
+                              <td><input type="number" class="form-control" oninput="get_vol_weight()" step="any" name="height[]" value="<?php echo $value['height']+0 ?>"></td>
+                              <td><input type="number" class="form-control" oninput="get_vol_weight()" step="any" name="weight[]" value="<?php echo $value['weight']+0 ?>"></td>
+                              <td>
+                                <?php if ($key == 0) : ?>
+                                  <button type="button" class="btn btn-primary" onclick="addrow(this)"><i class="fas fa-plus m-0"></i></button>
+                                <?php else : ?>
+                                  <button type="button" onclick="deletepackage('<?php echo $value['id'] ?>', this)" class="btn btn-danger"><i class="fas fa-trash m-0"></i></button>
+                                <?php endif; ?>
+                              </td>
+                            </tr>
+                          <?php endforeach; ?>
+                          <?php else: ?>
                           <tr>
                             <td><input type="number" class="form-control" step="any" name="qty[]" oninput="get_vol_weight()"></td>
                             <td>
@@ -306,6 +347,7 @@
                             <td><input type="number" class="form-control" step="any" name="weight[]" value="0" oninput="get_vol_weight()"></td>
                             <td><button type="button" class="btn btn-primary" onclick="addrow(this)"><i class="fas fa-plus m-0"></i></button></td>
                           </tr>
+                          <?php endif; ?>
                         </tbody>
                       </table>
                     </div>
@@ -936,6 +978,10 @@
     }));
 
   }
+
+  $(document).ready(function (){
+    get_vol_weight();
+  });
   
   var settime_billing_account;
   function check_custumer(input) {

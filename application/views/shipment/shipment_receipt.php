@@ -1,6 +1,9 @@
 <div class="main-content">
   <div class="container-fluid">
     <form action="<?php echo base_url(); ?>shipment/shipment_create_process" method="POST" class="forms-sample">
+      <?php if(isset($data_input['id_quotation'])): ?>
+        <input type="hidden" name="id_quotation" value="<?php echo $data_input['id_quotation'] ?>">
+      <?php endif; ?>
       <div class="row clearfix">
         <div class="col-md-12">
           <div class="card">
@@ -206,15 +209,15 @@
                   <div class="form-group row m-0">
                     <label class="col-sm-3 col-form-label">Container No</label>
                     <div class="col-sm-9">
-                      <label class="col-form-label">: <?php echo $data_input['container_no'] ?></label>
-                      <input type="hidden" name="container_no" value="<?php echo $data_input['container_no'] ?>">
+                      <label class="col-form-label">: <?php echo @$data_input['container_no'] ?></label>
+                      <input type="hidden" name="container_no" value="<?php echo @$data_input['container_no'] ?>">
                     </div>
                   </div>
                   <div class="form-group row m-0">
                     <label class="col-sm-3 col-form-label">Seal No.</label>
                     <div class="col-sm-9">
-                      <label class="col-form-label">: <?php echo $data_input['seal_no'] ?></label>
-                      <input type="hidden" name="seal_no" value="<?php echo $data_input['seal_no'] ?>">
+                      <label class="col-form-label">: <?php echo @$data_input['seal_no'] ?></label>
+                      <input type="hidden" name="seal_no" value="<?php echo @$data_input['seal_no'] ?>">
                     </div>
                   </div>
                 </div>
@@ -253,16 +256,16 @@
                       <?php if(isset($data_input['cipl_no_atc']) && @$data_input['cipl_no_atc'] != ""): ?>
                         <label class="col-form-label">: <a href="<?php echo base_url()."file/agent/".$data_input['cipl_no_atc'] ?>" target="_blank" class="font-weight-bold text-primary" title="Attachment"><?php echo $data_input['cipl_no'] ?></a></label>
                       <?php else: ?>
-                        <label class="col-form-label">: <?php echo $data_input['cipl_no'] ?></label>
+                        <label class="col-form-label">: <?php echo @$data_input['cipl_no'] ?></label>
                       <?php endif; ?>
-                      <input type="hidden" name="cipl_no" value="<?php echo $data_input['cipl_no'] ?>">
+                      <input type="hidden" name="cipl_no" value="<?php echo @$data_input['cipl_no'] ?>">
                     </div>
                   </div>
                   <div class="form-group row m-0">
                     <label class="col-sm-3 col-form-label">Permit No</label>
                     <div class="col-sm-9">
-                      <label class="col-form-label">: <?php echo $data_input['permit_no'] ?></label>
-                      <input type="hidden" name="permit_no" value="<?php echo $data_input['permit_no'] ?>">
+                      <label class="col-form-label">: <?php echo @$data_input['permit_no'] ?></label>
+                      <input type="hidden" name="permit_no" value="<?php echo @$data_input['permit_no'] ?>">
                     </div>
                   </div>
                 </div>
@@ -277,7 +280,7 @@
                 if ($data_input['type_of_mode'] == 'Air Freight') {
                   $per = 6000;
                 }
-                elseif ($post['type_of_mode'] == 'Land Shipping') {
+                elseif ($data_input['type_of_mode'] == 'Land Shipping') {
                   $per = 4000;
                 }
                 foreach ($data_input['qty'] as $key => $value) : 

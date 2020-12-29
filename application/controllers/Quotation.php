@@ -86,6 +86,7 @@ class Quotation extends CI_Controller
 
 		$form_data = array(
 			'quotation_no' 							=> $quotation_no,
+			'tracking_no' 							=> $post['tracking_no'],
 			'customer_account' 					=> $post['customer_account'],
 			'customer_name' 						=> $post['customer_name'],
 			'customer_contact_person' 	=> $post['customer_contact_person'],
@@ -196,6 +197,7 @@ class Quotation extends CI_Controller
 		$post = $this->input->post();
 		$term_condition = join("\n", $post['term_condition']);
 		$form_data = array(
+			'tracking_no' 							=> $post['tracking_no'],
 			'customer_account' 					=> $post['customer_account'],
 			'customer_name' 						=> $post['customer_name'],
 			'customer_contact_person' 	=> $post['customer_contact_person'],
@@ -330,6 +332,45 @@ class Quotation extends CI_Controller
 	{
 		$where['id'] = $id;
 		$this->quotation_mod->quotation_charges_delete_process_db($where);
+	}
+
+	public function quotation_approval_process($id, $action){
+		$form_data = array(
+			'status' 					=> $action,
+		);
+		$where['id'] = $id;
+		$this->quotation_mod->quotation_update_process_db($form_data, $where);
+
+		if($action == "1"){
+			$text = "Approved";
+		}
+		else{
+			$text = "Rejected";
+		}
+		$this->session->set_flashdata('success', 'Your Quotation data has been '.$text.'!');
+		redirect($_SERVER['HTTP_REFERER']);
+	}
+
+	public function shipment_create($id){
+		$data['subview'] 			= 'shipment/shipment_create';
+		$data['meta_title'] 	= 'Create Shipment';
+
+		$where['id'] 						= $id;
+		$quotation_list 				= $this->quotation_mod->quotation_list_db($where);
+		if (count($quotation_list) <= 0) {
+			$this->session->set_flashdata('error', 'Quotation not Found!');
+			redirect("quotation/quotation_list");
+		}
+		$data['quotation'] 			= $quotation_list[0];
+		$data['id_quotation'] 	= $id;
+
+		unset($where);
+		$where['id_quotation'] 	= $id;
+		$cargo_list 						= $this->quotation_mod->quotation_cargo_list_db($where);
+		$data['cargo_list'] 		= $cargo_list;
+
+		$data['country'] = json_decode(file_get_contents("./assets/country/country.json"), true);
+		$this->load->view('index', $data);
 	}
 
 	public function quotation_pdf($id){

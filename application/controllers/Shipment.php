@@ -10,6 +10,7 @@ class Shipment extends CI_Controller
 		cek_login();
 		$this->load->model('home_mod');
 		$this->load->model('shipment_mod');
+		$this->load->model('quotation_mod');
 	}
 
 	public function index()
@@ -318,6 +319,15 @@ class Shipment extends CI_Controller
 		}
 
 		// $this->shipment_update_last_history($id_shipment);
+
+		if (isset($post['id_quotation'])) {
+			$form_data = array(
+				'tracking_no' 					=> $tracking_no,
+			);
+			unset($where);
+			$where['id'] = $post['id_quotation'];
+			$this->quotation_mod->quotation_update_process_db($form_data, $where);
+		}
 
 		$this->session->set_flashdata('success', 'Your Shipment data has been Created!');
 		redirect('shipment/shipment_list');

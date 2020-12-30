@@ -26,9 +26,6 @@
                     <label>Branch</label>
                     <select class="form-control" name="branch">
                       <option value="">-- Select One --</option>
-                      <?php foreach ($branch_list as $key => $value) : ?>
-                        <option <?php echo ($this->input->get('branch') == $key ? 'selected' : '') ?> value="<?php echo $key ?>"><?php echo $key ?></option>
-                      <?php endforeach; ?>
                     </select>
                   </div>
                 </div>

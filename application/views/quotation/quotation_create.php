@@ -191,6 +191,9 @@
                     <input type="text" class="form-control" name="shipper_city" placeholder="City" required>
                   </div>
                   <div class="form-group">
+                    <label class="m-0"><input type="checkbox" class="checkbox-20" value="1" name="shipper_tba" onchange="tba_data('shipper')"> <span class="p-1" style="position: relative; top: -5px;">To Be Advice</span></label>
+                  </div>
+                  <div class="form-group">
                     <label>Postcode</label>
                     <input type="text" class="form-control" name="shipper_postcode" placeholder="Postcode">
                   </div>
@@ -229,6 +232,9 @@
                   <div class="form-group">
                     <label>City</label>
                     <input type="text" class="form-control" name="consignee_city" placeholder="City" required>
+                  </div>
+                  <div class="form-group">
+                    <label class="m-0"><input type="checkbox" class="checkbox-20" value="1" name="consignee_tba" onchange="tba_data('consignee')"> <span class="p-1" style="position: relative; top: -5px;">To Be Advice</span></label>
                   </div>
                   <div class="form-group">
                     <label>Postcode</label>
@@ -669,5 +675,16 @@
     $("#total_all").text(total_all.toLocaleString('en-US', {
       maximumFractionDigits: 0
     }) + ".00");
+  }
+
+  function tba_data(data_tba) {
+    var ro = $("input[name="+data_tba+"_name]").prop('readonly');
+    var req = $("input[name="+data_tba+"_name]").prop('required');
+    $("input[name="+data_tba+"_postcode]").val('').prop('readonly', !ro);
+    $("input[name="+data_tba+"_name]").val('').prop('readonly', !ro).prop('required', !req);
+    $("textarea[name="+data_tba+"_address]").val('').prop('readonly', !ro).prop('required', !req);
+    $("input[name="+data_tba+"_contact_person]").val('').prop('readonly', !ro).prop('required', !req);
+    $("input[name="+data_tba+"_phone_number]").val('').prop('readonly', !ro).prop('required', !req);
+    $("input[name="+data_tba+"_email]").val('').prop('readonly', !ro);
   }
 </script>

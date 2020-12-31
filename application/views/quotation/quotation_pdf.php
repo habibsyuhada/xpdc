@@ -171,12 +171,24 @@
       </tr>
       <tr>
         <td>
-          <b>Shipper :</b> <?php echo $quotation['shipper_name'] ?><br>
-          <?php echo $quotation['shipper_address'] ?>
+          <?php
+            if($quotation['shipper_tba'] == 0){
+              echo "<b>Shipper :</b>".$quotation['shipper_name']."<br>".$quotation['shipper_address'];
+            }
+            else{
+              echo "<b>Shipper :</b> TBA";
+            }
+          ?>
         </td>
         <td>
-          <b>Consignee :</b> <?php echo $quotation['consignee_name'] ?><br>
-          <?php echo $quotation['consignee_address'] ?>
+          <?php
+            if($quotation['consignee_tba'] == 0){
+              echo "<b>Consignee :</b>".$quotation['consignee_name']."<br>".$quotation['consignee_address'];
+            }
+            else{
+              echo "<b>Consignee :</b> TBA";
+            }
+          ?>
         </td>
       </tr>
     </tbody>

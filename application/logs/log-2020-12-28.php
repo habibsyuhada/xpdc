@@ -18,3 +18,8 @@ ERROR - 2020-12-28 11:16:27 --> Severity: Warning --> Invalid argument supplied 
 ERROR - 2020-12-28 11:18:33 --> 404 Page Not Found: Uom/favicon.ico
 ERROR - 2020-12-28 11:18:41 --> Severity: Notice --> Undefined variable: branch_list C:\xampp\htdocs\xpdc\application\views\quotation\quotation_list.php 28
 ERROR - 2020-12-28 11:18:41 --> Severity: Warning --> Invalid argument supplied for foreach() C:\xampp\htdocs\xpdc\application\views\quotation\quotation_list.php 28
+ERROR - 2020-12-28 20:51:09 --> 404 Page Not Found: Assets/favicon.ico
+ERROR - 2020-12-28 20:51:22 --> 404 Page Not Found: Home/favicon.ico
+ERROR - 2020-12-28 20:58:56 --> Severity: Notice --> Undefined variable: branch_list C:\xampp\htdocs\xpdc\application\views\quotation\quotation_list.php 28
+ERROR - 2020-12-28 20:58:56 --> Severity: Warning --> Invalid argument supplied for foreach() C:\xampp\htdocs\xpdc\application\views\quotation\quotation_list.php 28
+ERROR - 2020-12-28 20:58:57 --> 404 Page Not Found: Quotation/favicon.ico

@@ -84,6 +84,13 @@ class Quotation extends CI_Controller
 		
 		$term_condition = join("\n", $post['term_condition']);
 
+		if(!isset($post['shipper_tba'])){
+			$post['shipper_tba'] = 0;
+		}
+		if(!isset($post['consignee_tba'])){
+			$post['consignee_tba'] = 0;
+		}
+
 		$form_data = array(
 			'quotation_no' 							=> $quotation_no,
 			'tracking_no' 							=> $post['tracking_no'],
@@ -102,6 +109,7 @@ class Quotation extends CI_Controller
 			'sea' 											=> $post['sea'],
 			'incoterms' 								=> $post['incoterms'],
 			'description_of_goods' 			=> $post['description_of_goods'],
+			'shipper_tba' 							=> $post['shipper_tba'],
 			'shipper_name' 							=> $post['shipper_name'],
 			'shipper_address' 					=> $post['shipper_address'],
 			'shipper_city' 							=> $post['shipper_city'],
@@ -110,6 +118,7 @@ class Quotation extends CI_Controller
 			'shipper_contact_person' 		=> $post['shipper_contact_person'],
 			'shipper_phone_number' 			=> $post['shipper_phone_number'],
 			'shipper_email' 						=> $post['shipper_email'],
+			'consignee_tba' 						=> $post['consignee_tba'],
 			'consignee_name' 						=> $post['consignee_name'],
 			'consignee_address' 				=> $post['consignee_address'],
 			'consignee_city' 						=> $post['consignee_city'],
@@ -196,6 +205,14 @@ class Quotation extends CI_Controller
 	{
 		$post = $this->input->post();
 		$term_condition = join("\n", $post['term_condition']);
+
+		if(!isset($post['shipper_tba'])){
+			$post['shipper_tba'] = 0;
+		}
+		if(!isset($post['consignee_tba'])){
+			$post['consignee_tba'] = 0;
+		}
+
 		$form_data = array(
 			'tracking_no' 							=> $post['tracking_no'],
 			'customer_account' 					=> $post['customer_account'],
@@ -213,6 +230,7 @@ class Quotation extends CI_Controller
 			'sea' 											=> $post['sea'],
 			'incoterms' 								=> $post['incoterms'],
 			'description_of_goods' 			=> $post['description_of_goods'],
+			'shipper_tba' 							=> $post['shipper_tba'],
 			'shipper_name' 							=> $post['shipper_name'],
 			'shipper_address' 					=> $post['shipper_address'],
 			'shipper_city' 							=> $post['shipper_city'],
@@ -221,6 +239,7 @@ class Quotation extends CI_Controller
 			'shipper_contact_person' 		=> $post['shipper_contact_person'],
 			'shipper_phone_number' 			=> $post['shipper_phone_number'],
 			'shipper_email' 						=> $post['shipper_email'],
+			'consignee_tba' 						=> $post['consignee_tba'],
 			'consignee_name' 						=> $post['consignee_name'],
 			'consignee_address' 				=> $post['consignee_address'],
 			'consignee_city' 						=> $post['consignee_city'],

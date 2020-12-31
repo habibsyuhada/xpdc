@@ -252,17 +252,17 @@
       </tr>
       <tr>
         <th class="header">Description of Goods</th>
-        <th class="header">Act. Weight</th>
         <th class="header">Quantity</th>
         <th class="header">Package</th>
+        <th class="header">Act. Weight</th>
         <th class="header">Vol. Weight</th>
         <th class="header">Measurement</th>
       </tr>
       <tr>
         <td><?php echo @$quotation['description_of_goods'] ?></td>
-        <td><?php echo number_format($total_act_weight, 2) ?> Kg</td>
         <td><?php echo number_format($total_qty) ?> </td>
         <td><?php echo (count($array_unit) == 1) ? $array_unit[0] : 'nmp' ?> </td>
+        <td><?php echo number_format($total_act_weight, 2) ?> Kg</td>
         <td><?php echo number_format($total_vol_weight, 2) ?> Kg</td>
         <td><?php echo number_format($total_measurement, 2) ?> M<sup>3</sup></td>
       </tr>

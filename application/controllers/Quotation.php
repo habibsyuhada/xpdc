@@ -31,11 +31,16 @@ class Quotation extends CI_Controller
 	}
 
 	public function quotation_list(){
-	    if($this->session->userdata('role') == "Commercial"){
-	        $where['created_by'] = $this->session->userdata('id');
-	        $data['quotation_list'] = $this->quotation_mod->quotation_list_db($where);
-	    }else{
-	        $data['quotation_list'] = $this->quotation_mod->quotation_list_db();   
+	  if($this->session->userdata('role') == "Commercial"){
+	    $where['created_by'] = $this->session->userdata('id');
+	    $data['quotation_list'] = $this->quotation_mod->quotation_list_db($where);
+		}
+		if($this->session->userdata('role') == "Finance"){
+	    $where['tracking_no !='] = "";
+	    $data['quotation_list'] = $this->quotation_mod->quotation_list_db($where);
+		}
+		else{
+	    $data['quotation_list'] = $this->quotation_mod->quotation_list_db();   
 		}
 
 		$data['subview'] 			= 'quotation/quotation_list';

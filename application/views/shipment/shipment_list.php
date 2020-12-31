@@ -205,7 +205,7 @@ $page_permission = array(
                         <?php endif; ?>
                         <br> -->
                             <?php if ($value['status_bill'] == 1) : ?>
-                              <span class="badge badge-sm badge-warning mb-1">Billed</span>
+                              <a href="<?php echo base_url() ?>shipment/shipment_invoice_pdf/<?php echo $value['id'] ?>" target="_blank" class="badge badge-sm badge-warning mb-1">Billed</a>
                             <?php elseif ($value['status_bill'] == 2) : ?>
                               <span class="badge badge-sm badge-success mb-1">Paid</span>
                             <?php else : ?>

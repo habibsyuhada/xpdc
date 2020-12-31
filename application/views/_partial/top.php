@@ -12,7 +12,8 @@ $side_permission = array(
 	8 => (in_array($role, array("Super Admin")) ? 1 : 0), //User Management
 	9 => (in_array($role, array("Super Admin", "Finance")) ? 1 : 0), //Finance Report
 	10 => (in_array($role, array("Super Admin", "Commercial")) ? 1 : 0), //Commercial Customer
-	11 => (in_array($role, array("Super Admin", "Commercial")) ? 1 : 0), //Quotation
+	11 => (in_array($role, array("Super Admin", "Commercial", "Finance")) ? 1 : 0), //View Quotation
+	12 => (in_array($role, array("Super Admin", "Commercial")) ? 1 : 0), //Create Quotation
 );
 ?>
 
@@ -152,12 +153,16 @@ $side_permission = array(
 										</div>
 									</div>
 								<?php endif; ?>
-								<?php if ($side_permission[11] == 1) : ?>
+								<?php if (in_array(1, array($side_permission[11], $side_permission[12]))) : ?>
 									<div class="nav-item has-sub">
 										<a href="javascript:void(0)"><i class="fas fa-hand-holding-usd"></i><span>Quotation</span></a>
 										<div class="submenu-content">
+											<?php if ($side_permission[11] == 1) : ?>
 											<a href="<?php echo base_url() ?>quotation/quotation_list" class="menu-item">Quotation List</a>
+											<?php endif; ?>
+											<?php if ($side_permission[12] == 1) : ?>
 											<a href="<?php echo base_url() ?>quotation/quotation_create" class="menu-item">Create Quotation</a>
+											<?php endif; ?>
 										</div>
 									</div>
 								<?php endif; ?>

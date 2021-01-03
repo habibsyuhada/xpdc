@@ -253,6 +253,7 @@ class Quotation extends CI_Controller
 			'consignee_contact_person' 	=> $post['consignee_contact_person'],
 			'consignee_phone_number' 		=> $post['consignee_phone_number'],
 			'consignee_email' 					=> $post['consignee_email'],
+			'status' 										=> 0,
 			'term_condition' 						=> htmlentities($term_condition),
 		);
 		$where['id'] = $post['id'];
@@ -362,6 +363,11 @@ class Quotation extends CI_Controller
 		$form_data = array(
 			'status' 					=> $action,
 		);
+
+		if(isset($_POST['remarks'])){
+			$form_data['remarks'] = $_POST['remarks'];
+		}
+		
 		$where['id'] = $id;
 		$this->quotation_mod->quotation_update_process_db($form_data, $where);
 
@@ -372,7 +378,7 @@ class Quotation extends CI_Controller
 			$text = "Rejected";
 		}
 		$this->session->set_flashdata('success', 'Your Quotation data has been '.$text.'!');
-		redirect($_SERVER['HTTP_REFERER']);
+		redirect("quotation/quotation_list");
 	}
 
 	public function shipment_create($id){
@@ -428,6 +434,20 @@ class Quotation extends CI_Controller
     $this->pdf->load_view('quotation/quotation_pdf', $data);
 	}
 	
-	
+	public function quotation_reject($id, $action){
+		$where['id'] 						= $id;
+		$quotation_list 				= $this->quotation_mod->quotation_list_db($where);
+
+		if (count($quotation_list) <= 0) {
+			$this->session->set_flashdata('error', 'Quotation not Found!');
+			redirect("quotation/quotation_list");
+		}
+
+		$data['quotation'] = $quotation_list[0];
+
+		$data['subview'] 			= 'quotation/quotation_reject';
+		$data['meta_title'] 	= 'Quotation Reject';
+		$this->load->view('index', $data);
+	}
 		
 }

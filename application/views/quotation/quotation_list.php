@@ -76,6 +76,7 @@
                       <th class="text-white font-weight-bold">Type of Shipment</th>
                       <th class="text-white font-weight-bold">Type of Mode</th>
                       <th class="text-white font-weight-bold">Status</th>
+                      <th class="text-white font-weight-bold">Reject Remarks</th>
                       <th class="text-white font-weight-bold"></th>
                     </tr>
                   </thead>
@@ -102,6 +103,7 @@
                         }
                       ?>
                       </td>
+                      <td><?php echo $value['remarks'] ?></td>
                       <td>
                         <?php if($page_permission[3] == 1): ?>
                         <a href="<?php echo base_url() ?>quotation/quotation_update/<?php echo $value['id'] ?>" class="btn btn-primary" title="Update"><i class="fas fa-edit m-0"></i></a>
@@ -112,7 +114,7 @@
                         <?php endif; ?>
                         <?php if($value['status'] == 0 && $page_permission[1] == 1): ?>
                         <a href="<?php echo base_url() ?>quotation/quotation_approval_process/<?php echo $value['id'] ?>/1" class="btn btn-success" title="Approve" onclick="return confirm('Are You Sure to Approve this?')"><i class="fas fa-check m-0"></i></a>
-                        <a href="<?php echo base_url() ?>quotation/quotation_approval_process/<?php echo $value['id'] ?>/2" class="btn btn-danger" title="Reject" onclick="return confirm('Are You Sure to Reject this?')"><i class="fas fa-times m-0"></i></a>
+                        <a href="<?php echo base_url() ?>quotation/quotation_reject/<?php echo $value['id'] ?>/2" class="btn btn-danger" title="Reject"><i class="fas fa-times m-0"></i></a>
                         <?php endif; ?>
                         <?php if($value['status'] == 1 && $value['tracking_no'] == "" && $page_permission[2] == 1): ?>
                         <a href="<?php echo base_url() ?>quotation/shipment_create/<?php echo $value['id'] ?>" class="btn btn-success" title="Create Shipment" onclick="return confirm('Are You Sure to Approve this?')"><i class="fas fa-plus m-0"></i></a>

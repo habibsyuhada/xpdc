@@ -25,6 +25,7 @@
                       <option value="Driver">Driver</option>
                       <option value="Finance">Finance</option>
                       <option value="Commercial">Commercial</option>
+                      <option value="Customer">Customer</option>
                     </select>
                   </div>
                   <div class="form-group">

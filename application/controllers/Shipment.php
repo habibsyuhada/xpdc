@@ -35,6 +35,7 @@ class Shipment extends CI_Controller
 			$where["(driver_pickup = " . $this->session->userdata('id') . " OR driver_deliver = " . $this->session->userdata('id') . ")"] 	= NULL;
 		}
 		elseif ($this->session->userdata('role') == "Commercial") {
+			unset($where);
 			$datadb 	= $this->home_mod->customer_list(array("status_delete" => 1, "create_by" => $this->session->userdata('id')));
 			$customer_list = [];
 			foreach ($datadb as $key => $value) {
@@ -45,8 +46,19 @@ class Shipment extends CI_Controller
 			if(count($customer_list) == 0){
 				$customer_list[] = "0";
 			}
+			$where['status_delete'] 	= 1;
 			$where["shipment_detail.billing_account IN ('".join("', '", $customer_list)."') OR created_by = '".$this->session->userdata('id')."'"] 	= NULL;
 			// $where["created_by"] 	= $this->session->userdata('id');
+		}
+		elseif ($this->session->userdata('role') == "Customer") {
+			unset($where);
+			$datadb 	= $this->home_mod->customer_list(array("status_delete" => 1, "email" => $this->session->userdata('email')));
+			if(count($datadb) == 0){
+				$account_no = "0000000";
+			}
+			$account_no = $datadb[0]["account_no"];
+			$where['status_delete'] 	= 1;
+			$where["shipment_detail.billing_account"] 	= $account_no;
 		}
 
 		if ($this->input->get('status_driver')) {
@@ -57,7 +69,6 @@ class Shipment extends CI_Controller
 			else{
 				$where["(status_driver_" . $status_driver[0] . " IN (1, 2) )"] 	= NULL;
 			}
-			
 		}
 		foreach ($this->input->get() as $key => $value) {
 			if ($this->input->get($key) || $value == 0) {
@@ -74,6 +85,7 @@ class Shipment extends CI_Controller
 		if ($this->session->userdata('role') == "Driver") {
 			$order_by["assign_driver_date"] = "DESC";
 		}
+		// test_var($where);
 		$datadb 				= $this->shipment_mod->shipment_list_db($where, null, $order_by);
 		$shipment_list 	= [];
 		$express_list 	= [];

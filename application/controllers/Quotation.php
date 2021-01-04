@@ -206,6 +206,43 @@ class Quotation extends CI_Controller
 		$this->load->view('index', $data);
 	}
 
+	public function quotation_view($id){
+		$where['id'] 						= $id;
+		$quotation_list 				= $this->quotation_mod->quotation_list_db($where);
+
+		unset($where);
+		$where['id_quotation'] 	= $id;
+		$cargo_list 						= $this->quotation_mod->quotation_cargo_list_db($where);
+		$where['id_quotation'] 	= $id;
+		$charges_list 					= $this->quotation_mod->quotation_charges_list_db($where);
+		$data['customer_list'] = $this->quotation_mod->customer_list_db();
+
+		if (count($quotation_list) <= 0) {
+			$this->session->set_flashdata('error', 'Quotation not Found!');
+			redirect("quotation/quotation_list");
+		}
+
+		unset($where);
+		$where["id"] 	= $quotation_list[0]['created_by'];
+		$user_list 		= $this->home_mod->user_list($where);
+		$user_list  	= $user_list[0]['name'];
+		
+		$data['user_list'] = $user_list;
+
+		$data['country'] = json_decode(file_get_contents("./assets/country/country.json"), true);
+
+		$data['payment_terms_list'] = $this->home_mod->payment_terms_list();
+		$data['uom_list'] = $this->home_mod->uom_list();
+
+		$data['quotation'] 			= $quotation_list[0];
+		$data['cargo_list'] 		= $cargo_list;
+		$data['charges_list'] 	= $charges_list;
+
+		$data['subview'] 			= 'quotation/quotation_view';
+		$data['meta_title'] 	= 'Quotation Detail View';
+		$this->load->view('index', $data);
+	}
+
 	public function quotation_update_process()
 	{
 		$post = $this->input->post();

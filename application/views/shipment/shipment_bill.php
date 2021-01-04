@@ -28,9 +28,20 @@
         <form action="<?php echo base_url() ?>shipment/shipment_bill_process" method="POST">
           <div class="card">
             <div class="card-body overflow-auto">
-              <h6 class="font-weight-bold border-bottom">Invoice Detail</h6>
+              <div class="row pb-2 border-bottom">
+                <div class="col-6">
+                  <h6 class="font-weight-bold">Invoice Detail</h6>
+                </div>
+                <?php if(isset($quotation)){ ?>
+                <div class="col-6 text-right">
+                  
+                  <a href="<?=base_url()?>quotation/quotation_view/<?=$quotation['id']?>" target="_blank" class="btn btn-warning btn-sm"><i class="fa fa-eye"></i> Quotation View</a>
+                  <a href="<?=base_url()?>quotation/quotation_pdf/<?=$quotation['id']?>" target="_blank" class="btn btn-primary btn-sm"><i class="fa fa-print"></i> Quotation PDF</a>
+                </div>
+                <?php } ?>
+              </div>
               <input type="hidden" name="id_invoice" value="<?php echo @$invoice['id']; ?>">
-              <div class="row clearfix">
+              <div class="row clearfix mt-2">
                 <div class="col-md-6">
                   <div class="form-group">
                     <label>Bill To</label>
@@ -44,7 +55,7 @@
                 <div class="col-md-6">
                   <div class="form-group">
                     <label>Invoice No.</label>
-                    <input type="text" class="form-control" name="invoice_no" value="<?php echo @$invoice['invoice_no'] ?>" placeholder="Invoice No." <?php echo ((@$invoice['invoice_no'] !== NULL) ? "" : "readonly" ) ?> required>
+                    <input type="text" class="form-control" name="invoice_no" value="<?php echo @$invoice['invoice_no'] ?>" placeholder="Invoice No." <?php echo ((@$invoice['invoice_no'] !== NULL) ? "" : "readonly") ?> required>
                   </div>
                   <div class="form-group">
                     <label>Invoice Date</label>
@@ -65,33 +76,33 @@
                       <?php endforeach; ?>
                     </select>
                   </div>
-                  <?php if(@$invoice['invoice_no'] == ""):?>
-                  <div class="form-group">
-                    <label>Branch</label>
-                    <input type="text" class="form-control" name="branch" value="<?php echo @$this->session->userdata('branch') ?>" readonly required>
-                  </div>
+                  <?php if (@$invoice['invoice_no'] == "") : ?>
+                    <div class="form-group">
+                      <label>Branch</label>
+                      <input type="text" class="form-control" name="branch" value="<?php echo @$this->session->userdata('branch') ?>" readonly required>
+                    </div>
                   <?php endif; ?>
                 </div>
-                <?php if(@$invoice['invoice_no'] != ""):?>
-                <div class="col-md-6">
-                  <div class="form-group">
-                    <label>Status</label>
-                    <select class="form-control" name="status_bill" required>
-                      <option value="1" <?= (@$shipment_list['status_bill'] == '1') ? 'selected' : ''; ?>>Billed</option>
-                      <option value="2" <?= (@$shipment_list['status_bill'] == '2') ? 'selected' : ''; ?>>Paid</option>
-                    </select>
+                <?php if (@$invoice['invoice_no'] != "") : ?>
+                  <div class="col-md-6">
+                    <div class="form-group">
+                      <label>Status</label>
+                      <select class="form-control" name="status_bill" required>
+                        <option value="1" <?= (@$shipment_list['status_bill'] == '1') ? 'selected' : ''; ?>>Billed</option>
+                        <option value="2" <?= (@$shipment_list['status_bill'] == '2') ? 'selected' : ''; ?>>Paid</option>
+                      </select>
+                    </div>
                   </div>
-                </div>
-                <div class="col-md-6">
-                  <div class="form-group">
-                    <label>Date Paid</label>
-                    <input type="date" class="form-control" name="date_paid" value="<?php echo @$shipment_list['date_paid'] ?>" required>
+                  <div class="col-md-6">
+                    <div class="form-group">
+                      <label>Date Paid</label>
+                      <input type="date" class="form-control" name="date_paid" value="<?php echo @$shipment_list['date_paid'] ?>" required>
+                    </div>
                   </div>
-                </div>
                 <?php endif; ?>
               </div>
               <?php
-                $total_all = 0;
+              $total_all = 0;
               ?>
 
               <br>
@@ -181,130 +192,130 @@
                     </tr>
                   </thead>
                   <tbody>
-                    <?php if(count($costumer) < 1) : ?>
-                    <tr>
-                      <td>
-                        <input type="text" class="form-control" name="description[]" required>
-                        <input type="hidden" class="form-control" name="id_cost[]">
-                      </td>
-                      <td><input type="number" step="any" class="form-control" value="0" oninput="get_total(this)" name="qty[]"></td>
-                      <td>
-                        <select class="form-control" name="uom[]" required onchange="get_total(this)">
-                          <option value="">-- Select One --</option>
-                          <!-- <option value="Kg">Kg</option>
+                    <?php if (count($costumer) < 1) : ?>
+                      <tr>
+                        <td>
+                          <input type="text" class="form-control" name="description[]" required>
+                          <input type="hidden" class="form-control" name="id_cost[]">
+                        </td>
+                        <td><input type="number" step="any" class="form-control" value="0" oninput="get_total(this)" name="qty[]"></td>
+                        <td>
+                          <select class="form-control" name="uom[]" required onchange="get_total(this)">
+                            <option value="">-- Select One --</option>
+                            <!-- <option value="Kg">Kg</option>
                           <option value="M3">M3</option>
                           <option value="Set">Set</option>
                           <option value="Trip">Trip</option>
                           <option value="Pallet">Pallet</option>
                           <option value="%">%</option> -->
-                          <?php foreach ($uom_list as $no_uom => $uom) : ?>
-                            <option value="<?php echo $uom['name'] ?>"><?php echo $uom['name'] ?></option>
-                          <?php endforeach; ?>
-                        </select>
-                      </td>
-                      <td>
-                        <select class="form-control" name="currency[]" required>
-                          <option value="">-- Select One --</option>
-                          <option value="AED">AED</option>
-                          <option value="AUD">AUD</option>
-                          <option value="CNY">CNY</option>
-                          <option value="EUR">EUR</option>
-                          <option value="GBP">GBP</option>
-                          <option value="HKD">HKD</option>
-                          <option value="IDR">IDR</option>
-                          <option value="INR">INR</option>
-                          <option value="JPY">JPY</option>
-                          <option value="KRW">KRW</option>
-                          <option value="MYR">MYR</option>
-                          <option value="SGD">SGD</option>
-                          <option value="THB">THB</option>
-                          <option value="TWD">TWD</option>
-                          <option value="USD">USD</option>
-                        </select>
-                      </td>
-                      <td><input type="number" step="any" class="form-control" value="0" oninput="get_total(this)" name="unit_price[]"></td>
-                      <td>
-                        <input type="text" step="any" class="form-control" value="0" name="subtotal_view[]" readonly>
-                        <input type="hidden" step="any" class="form-control" value="0" name="subtotal[]" readonly>
-                      </td>
-                      <td><input type="number" step="any" class="form-control" value="0" oninput="get_total(this)"name="exchange_rate[]"></td>
-                      <td>
-                        <input type="text" step="any" class="form-control" value="0" name="total_view[]" readonly>
-                        <input type="hidden" step="any" class="form-control" value="0" name="total[]" readonly>
-                      </td>
-                      <td><textarea class="form-control" name="remarks[]" placeholder="..."></textarea></td>
-                      <td>
-                        <button type="button" class="btn btn-primary" onclick="addrow(this)"><i class="fas fa-plus m-0"></i></button>
-                      </td>
-                    </tr>
+                            <?php foreach ($uom_list as $no_uom => $uom) : ?>
+                              <option value="<?php echo $uom['name'] ?>"><?php echo $uom['name'] ?></option>
+                            <?php endforeach; ?>
+                          </select>
+                        </td>
+                        <td>
+                          <select class="form-control" name="currency[]" required>
+                            <option value="">-- Select One --</option>
+                            <option value="AED">AED</option>
+                            <option value="AUD">AUD</option>
+                            <option value="CNY">CNY</option>
+                            <option value="EUR">EUR</option>
+                            <option value="GBP">GBP</option>
+                            <option value="HKD">HKD</option>
+                            <option value="IDR">IDR</option>
+                            <option value="INR">INR</option>
+                            <option value="JPY">JPY</option>
+                            <option value="KRW">KRW</option>
+                            <option value="MYR">MYR</option>
+                            <option value="SGD">SGD</option>
+                            <option value="THB">THB</option>
+                            <option value="TWD">TWD</option>
+                            <option value="USD">USD</option>
+                          </select>
+                        </td>
+                        <td><input type="number" step="any" class="form-control" value="0" oninput="get_total(this)" name="unit_price[]"></td>
+                        <td>
+                          <input type="text" step="any" class="form-control" value="0" name="subtotal_view[]" readonly>
+                          <input type="hidden" step="any" class="form-control" value="0" name="subtotal[]" readonly>
+                        </td>
+                        <td><input type="number" step="any" class="form-control" value="0" oninput="get_total(this)" name="exchange_rate[]"></td>
+                        <td>
+                          <input type="text" step="any" class="form-control" value="0" name="total_view[]" readonly>
+                          <input type="hidden" step="any" class="form-control" value="0" name="total[]" readonly>
+                        </td>
+                        <td><textarea class="form-control" name="remarks[]" placeholder="..."></textarea></td>
+                        <td>
+                          <button type="button" class="btn btn-primary" onclick="addrow(this)"><i class="fas fa-plus m-0"></i></button>
+                        </td>
+                      </tr>
                     <?php endif; ?>
-                    <?php 
-                      foreach ($costumer as $key => $value) : 
-                        $persen = 1;
-                        if($value['uom'] == "%"){
-                          $persen = 100;
-                        }
-                        $total_all += ($value['qty'] / $persen)*$value['unit_price']*$value['exchange_rate'];
+                    <?php
+                    foreach ($costumer as $key => $value) :
+                      $persen = 1;
+                      if ($value['uom'] == "%") {
+                        $persen = 100;
+                      }
+                      $total_all += ($value['qty'] / $persen) * $value['unit_price'] * $value['exchange_rate'];
                     ?>
-                    <tr>
-                      <td>
-                        <input type="text" class="form-control" name="description[]" value="<?php echo $value['description'] ?>" required>
-                        <input type="hidden" class="form-control" name="id_cost[]" value="<?php echo $value['id'] ?>">
-                      </td>
-                      <td><input type="number" step="any" class="form-control" value="<?php echo $value['qty'] ?>" oninput="get_total(this)" name="qty[]"></td>
-                      <td>
-                        <select class="form-control" name="uom[]" required onchange="get_total(this)">
-                          <option value="">-- Select One --</option>
-                          <!-- <option value="Kg" <?php echo ($value['uom'] == "Kg" ? 'selected' : '') ?>>Kg</option>
+                      <tr>
+                        <td>
+                          <input type="text" class="form-control" name="description[]" value="<?php echo $value['description'] ?>" required>
+                          <input type="hidden" class="form-control" name="id_cost[]" value="<?php echo $value['id'] ?>">
+                        </td>
+                        <td><input type="number" step="any" class="form-control" value="<?php echo $value['qty'] ?>" oninput="get_total(this)" name="qty[]"></td>
+                        <td>
+                          <select class="form-control" name="uom[]" required onchange="get_total(this)">
+                            <option value="">-- Select One --</option>
+                            <!-- <option value="Kg" <?php echo ($value['uom'] == "Kg" ? 'selected' : '') ?>>Kg</option>
                           <option value="M3" <?php echo ($value['uom'] == "M3" ? 'selected' : '') ?>>M3</option>
                           <option value="Set" <?php echo ($value['uom'] == "Set" ? 'selected' : '') ?>>Set</option>
                           <option value="Trip" <?php echo ($value['uom'] == "Trip" ? 'selected' : '') ?>>Trip</option>
                           <option value="Pallet" <?php echo ($value['uom'] == "Pallet" ? 'selected' : '') ?>>Pallet</option>
                           <option value="%" <?php echo ($value['uom'] == "%" ? 'selected' : '') ?>>%</option> -->
-                          <?php foreach ($uom_list as $no_uom => $uom) : ?>
-                            <option value="<?php echo $uom['name'] ?>" <?php echo ($value['uom'] == $uom['name'] ? 'selected' : '') ?>><?php echo $uom['name'] ?></option>
-                          <?php endforeach; ?>
-                        </select>
-                      </td>
-                      <td>
-                        <select class="form-control" name="currency[]" required>
-                          <option value="">-- Select One --</option>
-                          <option value="AED" <?php echo ($value['currency'] == "AED" ? 'selected' : '') ?>>AED</option>
-                          <option value="AUD" <?php echo ($value['currency'] == "AUD" ? 'selected' : '') ?>>AUD</option>
-                          <option value="CNY" <?php echo ($value['currency'] == "CNY" ? 'selected' : '') ?>>CNY</option>
-                          <option value="EUR" <?php echo ($value['currency'] == "EUR" ? 'selected' : '') ?>>EUR</option>
-                          <option value="GBP" <?php echo ($value['currency'] == "GBP" ? 'selected' : '') ?>>GBP</option>
-                          <option value="HKD" <?php echo ($value['currency'] == "HKD" ? 'selected' : '') ?>>HKD</option>
-                          <option value="IDR" <?php echo ($value['currency'] == "IDR" ? 'selected' : '') ?>>IDR</option>
-                          <option value="INR" <?php echo ($value['currency'] == "INR" ? 'selected' : '') ?>>INR</option>
-                          <option value="JPY" <?php echo ($value['currency'] == "JPY" ? 'selected' : '') ?>>JPY</option>
-                          <option value="KRW" <?php echo ($value['currency'] == "KRW" ? 'selected' : '') ?>>KRW</option>
-                          <option value="MYR" <?php echo ($value['currency'] == "MYR" ? 'selected' : '') ?>>MYR</option>
-                          <option value="SGD" <?php echo ($value['currency'] == "SGD" ? 'selected' : '') ?>>SGD</option>
-                          <option value="THB" <?php echo ($value['currency'] == "THB" ? 'selected' : '') ?>>THB</option>
-                          <option value="TWD" <?php echo ($value['currency'] == "TWD" ? 'selected' : '') ?>>TWD</option>
-                          <option value="USD" <?php echo ($value['currency'] == "USD" ? 'selected' : '') ?>>USD</option>
-                        </select>
-                      </td>
-                      <td><input type="number" step="any" class="form-control" value="<?php echo $value['unit_price'] ?>" oninput="get_total(this)" name="unit_price[]"></td>
-                      <td>
-                        <input type="text" step="any" class="form-control" value="<?php echo number_format((($value['qty'] / $persen)*$value['unit_price']), 0).".00" ?>" name="subtotal_view[]" readonly>
-                        <input type="hidden" step="any" class="form-control" value="<?php echo (($value['qty'] / $persen)*$value['unit_price']) ?>" name="subtotal[]" readonly>
-                      </td>
-                      <td><input type="number" step="any" class="form-control" value="<?php echo $value['exchange_rate'] ?>" oninput="get_total(this)" name="exchange_rate[]"></td>
-                      <td>
-                        <input type="text" step="any" class="form-control" value="<?php echo number_format((($value['qty'] / $persen)*$value['unit_price']*$value ['exchange_rate']), 0).".00" ?>" name="total_view[]" readonly>
-                        <input type="hidden" step="any" class="form-control" value="<?php echo (($value['qty'] / $persen)*$value['unit_price']*$value['exchange_rate']) ?>" name="total[]" readonly>
-                      </td>
-                      <td><textarea class="form-control" name="remarks[]" placeholder="..."><?php echo $value['remarks'] ?></textarea></td>
-                      <td>
-                        <?php if ($key == 0) : ?>
-                          <button type="button" class="btn btn-primary" onclick="addrow(this)"><i class="fas fa-plus m-0"></i></button>
-                        <?php else : ?>
-                          <button type="button" onclick="deletecost('<?php echo $value['id'] ?>', this)" class="btn btn-danger"><i class="fas fa-trash m-0"></i></button>
-                        <?php endif; ?>
-                      </td>
-                    </tr>
+                            <?php foreach ($uom_list as $no_uom => $uom) : ?>
+                              <option value="<?php echo $uom['name'] ?>" <?php echo ($value['uom'] == $uom['name'] ? 'selected' : '') ?>><?php echo $uom['name'] ?></option>
+                            <?php endforeach; ?>
+                          </select>
+                        </td>
+                        <td>
+                          <select class="form-control" name="currency[]" required>
+                            <option value="">-- Select One --</option>
+                            <option value="AED" <?php echo ($value['currency'] == "AED" ? 'selected' : '') ?>>AED</option>
+                            <option value="AUD" <?php echo ($value['currency'] == "AUD" ? 'selected' : '') ?>>AUD</option>
+                            <option value="CNY" <?php echo ($value['currency'] == "CNY" ? 'selected' : '') ?>>CNY</option>
+                            <option value="EUR" <?php echo ($value['currency'] == "EUR" ? 'selected' : '') ?>>EUR</option>
+                            <option value="GBP" <?php echo ($value['currency'] == "GBP" ? 'selected' : '') ?>>GBP</option>
+                            <option value="HKD" <?php echo ($value['currency'] == "HKD" ? 'selected' : '') ?>>HKD</option>
+                            <option value="IDR" <?php echo ($value['currency'] == "IDR" ? 'selected' : '') ?>>IDR</option>
+                            <option value="INR" <?php echo ($value['currency'] == "INR" ? 'selected' : '') ?>>INR</option>
+                            <option value="JPY" <?php echo ($value['currency'] == "JPY" ? 'selected' : '') ?>>JPY</option>
+                            <option value="KRW" <?php echo ($value['currency'] == "KRW" ? 'selected' : '') ?>>KRW</option>
+                            <option value="MYR" <?php echo ($value['currency'] == "MYR" ? 'selected' : '') ?>>MYR</option>
+                            <option value="SGD" <?php echo ($value['currency'] == "SGD" ? 'selected' : '') ?>>SGD</option>
+                            <option value="THB" <?php echo ($value['currency'] == "THB" ? 'selected' : '') ?>>THB</option>
+                            <option value="TWD" <?php echo ($value['currency'] == "TWD" ? 'selected' : '') ?>>TWD</option>
+                            <option value="USD" <?php echo ($value['currency'] == "USD" ? 'selected' : '') ?>>USD</option>
+                          </select>
+                        </td>
+                        <td><input type="number" step="any" class="form-control" value="<?php echo $value['unit_price'] ?>" oninput="get_total(this)" name="unit_price[]"></td>
+                        <td>
+                          <input type="text" step="any" class="form-control" value="<?php echo number_format((($value['qty'] / $persen) * $value['unit_price']), 0) . ".00" ?>" name="subtotal_view[]" readonly>
+                          <input type="hidden" step="any" class="form-control" value="<?php echo (($value['qty'] / $persen) * $value['unit_price']) ?>" name="subtotal[]" readonly>
+                        </td>
+                        <td><input type="number" step="any" class="form-control" value="<?php echo $value['exchange_rate'] ?>" oninput="get_total(this)" name="exchange_rate[]"></td>
+                        <td>
+                          <input type="text" step="any" class="form-control" value="<?php echo number_format((($value['qty'] / $persen) * $value['unit_price'] * $value['exchange_rate']), 0) . ".00" ?>" name="total_view[]" readonly>
+                          <input type="hidden" step="any" class="form-control" value="<?php echo (($value['qty'] / $persen) * $value['unit_price'] * $value['exchange_rate']) ?>" name="total[]" readonly>
+                        </td>
+                        <td><textarea class="form-control" name="remarks[]" placeholder="..."><?php echo $value['remarks'] ?></textarea></td>
+                        <td>
+                          <?php if ($key == 0) : ?>
+                            <button type="button" class="btn btn-primary" onclick="addrow(this)"><i class="fas fa-plus m-0"></i></button>
+                          <?php else : ?>
+                            <button type="button" onclick="deletecost('<?php echo $value['id'] ?>', this)" class="btn btn-danger"><i class="fas fa-trash m-0"></i></button>
+                          <?php endif; ?>
+                        </td>
+                      </tr>
                     <?php endforeach; ?>
                   </tbody>
                 </table>
@@ -314,19 +325,19 @@
                 <div class="col-md-6">
                   <div class="form-group">
                     <label>VAT</label>
-                    <input type="number" class="form-control" name="vat" value="<?php echo @$invoice['vat']+0 ?>" oninput="get_total()" placeholder="VAT" required>
+                    <input type="number" class="form-control" name="vat" value="<?php echo @$invoice['vat'] + 0 ?>" oninput="get_total()" placeholder="VAT" required>
                   </div>
                 </div>
                 <div class="col-md-6">
                   <div class="form-group">
                     <label>Discount</label>
-                    <input type="number" class="form-control" name="discount" value="<?php echo @$invoice['discount']+0 ?>" oninput="get_total()" placeholder="Discount" required>
+                    <input type="number" class="form-control" name="discount" value="<?php echo @$invoice['discount'] + 0 ?>" oninput="get_total()" placeholder="Discount" required>
                   </div>
                 </div>
               </div>
               <div class="row clearfix">
                 <div class="col-md">
-                  <h5 class="font-weight-bold text-right">Total All : IDR <span id="total_all" name="total_all"><?php echo number_format($total_all, 0).".00" ?></span></h5>
+                  <h5 class="font-weight-bold text-right">Total All : IDR <span id="total_all" name="total_all"><?php echo number_format($total_all, 0) . ".00" ?></span></h5>
                 </div>
               </div>
               <br>
@@ -356,12 +367,12 @@
               <div class="row clearfix">
                 <div class="col-md text-right">
                   <?php if (isset($invoice['invoice_no'])) : ?>
-                  <a href="<?php echo base_url() ?>shipment/shipment_invoice_pdf/<?php echo @$invoice['id_shipment'] ?>" target="_blank" class="btn btn-danger"   title="Export Invoice">PDF</a>
+                    <a href="<?php echo base_url() ?>shipment/shipment_invoice_pdf/<?php echo @$invoice['id_shipment'] ?>" target="_blank" class="btn btn-danger" title="Export Invoice">PDF</a>
                   <?php endif; ?>
                   <button type="submit" class="btn btn-success">Submit</button>
                 </div>
               </div>
-              
+
             </div>
           </div>
         </form>
@@ -387,22 +398,26 @@
   }
 
   function get_total(input = "") {
-    if(input != ""){
+    if (input != "") {
       var row = $(input).closest('tr');
       var unit_price = $(row).find("input[name='unit_price[]']").val();
       var qty = $(row).find("input[name='qty[]']").val();
       var uom = $(row).find("select[name='uom[]']").val();
-      if(uom == "%"){
-        qty = qty/100;
+      if (uom == "%") {
+        qty = qty / 100;
       }
       var subtotal = qty * unit_price;
       $(row).find("input[name='subtotal[]']").val(subtotal);
-      $(row).find("input[name='subtotal_view[]']").val(subtotal.toLocaleString('en-US', {maximumFractionDigits:0}) + ".00");
+      $(row).find("input[name='subtotal_view[]']").val(subtotal.toLocaleString('en-US', {
+        maximumFractionDigits: 0
+      }) + ".00");
 
       var exchange_rate = $(row).find("input[name='exchange_rate[]']").val();
       var total = subtotal * exchange_rate;
       $(row).find("input[name='total[]']").val(total);
-      $(row).find("input[name='total_view[]']").val(total.toLocaleString('en-US', {maximumFractionDigits:0}) + ".00");
+      $(row).find("input[name='total_view[]']").val(total.toLocaleString('en-US', {
+        maximumFractionDigits: 0
+      }) + ".00");
     }
 
     var total_all = 0;
@@ -419,7 +434,9 @@
     total_all = total_all - discount + 0;
     console.log(total_all);
     // $(input).closest('form').find("span[name=total_all]").text(total_all);
-    $("#total_all").text(total_all.toLocaleString('en-US', {maximumFractionDigits:0}) + ".00");
+    $("#total_all").text(total_all.toLocaleString('en-US', {
+      maximumFractionDigits: 0
+    }) + ".00");
   }
 
   function deletecost(id, btn) {

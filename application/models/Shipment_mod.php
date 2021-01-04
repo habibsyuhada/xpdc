@@ -45,16 +45,28 @@ class Shipment_mod extends CI_Model
     $this->db->select('*');
     $this->db->from('shipment');
     $this->db->join('shipment_detail', 'shipment.id = shipment_detail.id_shipment');
-    if(isset($order_by)){
+    if (isset($order_by)) {
       foreach ($order_by as $key => $value) {
         $query = $this->db->order_by($key, $value);
       }
-    }
-    else{
+    } else {
       $query = $this->db->order_by("shipment.created_date", "DESC");
       $query = $this->db->order_by("shipment.tracking_no", "DESC");
     }
     $query = $this->db->get();
+    return $query->result_array();
+  }
+
+  public function quotation_list_db($where = null)
+  {
+
+    if (isset($where)) {
+      if (count($where) > 0) {
+        $this->db->where($where);
+      }
+    }
+    $query = $this->db->get('quotation');
+
     return $query->result_array();
   }
 
@@ -107,10 +119,11 @@ class Shipment_mod extends CI_Model
     $query = $this->db->get('shipment_cost');
     return $query->result_array();
   }
-  
-  function shipment_history_delete($where,$table){
-		$this->db->where($where);
-		$this->db->delete($table);
+
+  function shipment_history_delete($where, $table)
+  {
+    $this->db->where($where);
+    $this->db->delete($table);
   }
 
   function shipment_label_list_db($where = null, $show_all = 0)
@@ -205,10 +218,9 @@ class Shipment_mod extends CI_Model
     if ($where) {
       foreach ($where as $key => $value) {
         if ($key != "status") {
-          if($value == NULL){
+          if ($value == NULL) {
             $where_str[] = $key;
-          }
-          else{
+          } else {
             $where_str[] = $key . " = '" . $value . "'";
           }
         }

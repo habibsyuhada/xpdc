@@ -14,6 +14,16 @@ class Zone_mod extends CI_Model {
 		$query = $this->db->get('mst_zone');
 		
 		return $query->result_array();
+  }
+  
+  function branch_list_db($where = null){
+		if(isset($where)){
+			$this->db->where($where);
+		}
+		$this->db->order_by("created_date", "DESC");
+		$query = $this->db->get('branch');
+		
+		return $query->result_array();
 	}
 
 	public function zone_create_process_db($data)

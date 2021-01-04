@@ -878,6 +878,11 @@ class Shipment extends CI_Controller
 			$data['invoice'] 				= $shipment_invoice[0];
 		}
 
+		$quotation = $this->shipment_mod->quotation_list_db(array('tracking_no' => $shipment_list[0]['tracking_no']));
+		if(count($quotation) > 0){
+			$data['quotation'] = $quotation[0];
+		}
+
 		unset($where);
 		echo $id;
 		$where['id_shipment'] 	= $id;

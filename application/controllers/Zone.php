@@ -43,6 +43,8 @@ class Zone extends CI_Controller
 
     public function zone_create()
     {
+        $data['branch_list']    = $this->zone_mod->branch_list_db();
+
         $data['subview']                 = 'zone/zone_create';
         $data['meta_title']         = 'Zone Create';
         $this->load->view('index', $data);

@@ -1,5 +1,6 @@
 <?php defined('BASEPATH') OR exit('No direct script access allowed'); ?>
 
+<<<<<<< Updated upstream
 ERROR - 2020-12-31 10:41:58 --> 404 Page Not Found: Assets/favicon.ico
 ERROR - 2020-12-31 10:42:09 --> 404 Page Not Found: Home/favicon.ico
 ERROR - 2020-12-31 10:45:53 --> Severity: Warning --> mysqli::real_connect(): php_network_getaddresses: getaddrinfo failed: No such host is known.  C:\xampp\htdocs\xpdc\system\database\drivers\mysqli\mysqli_driver.php 203
@@ -149,3 +150,24 @@ ERROR - 2020-12-31 17:07:59 --> Unable to connect to the database
 ERROR - 2020-12-31 17:08:16 --> Severity: Warning --> mysqli::real_connect(): (HY000/2002): A connection attempt failed because the connected party did not properly respond after a period of time, or established connection failed because connected host has failed to respond.
  C:\xampp\htdocs\xpdc\system\database\drivers\mysqli\mysqli_driver.php 203
 ERROR - 2020-12-31 17:08:16 --> Unable to connect to the database
+=======
+ERROR - 2020-12-31 08:22:20 --> 404 Page Not Found: Assets/favicon.ico
+ERROR - 2020-12-31 08:22:30 --> 404 Page Not Found: Home/favicon.ico
+ERROR - 2020-12-31 08:22:59 --> 404 Page Not Found: Quotation/favicon.ico
+ERROR - 2020-12-31 08:25:50 --> Severity: Notice --> Undefined offset: 3 C:\xampp\htdocs\xpdc\application\views\quotation\quotation_list.php 106
+ERROR - 2020-12-31 08:25:50 --> Severity: Notice --> Undefined offset: 3 C:\xampp\htdocs\xpdc\application\views\quotation\quotation_list.php 106
+ERROR - 2020-12-31 08:25:50 --> Severity: Notice --> Undefined offset: 3 C:\xampp\htdocs\xpdc\application\views\quotation\quotation_list.php 106
+ERROR - 2020-12-31 08:25:50 --> Severity: Notice --> Undefined offset: 3 C:\xampp\htdocs\xpdc\application\views\quotation\quotation_list.php 106
+ERROR - 2020-12-31 08:25:50 --> Severity: Notice --> Undefined offset: 3 C:\xampp\htdocs\xpdc\application\views\quotation\quotation_list.php 106
+ERROR - 2020-12-31 08:25:50 --> Severity: Notice --> Undefined offset: 3 C:\xampp\htdocs\xpdc\application\views\quotation\quotation_list.php 106
+ERROR - 2020-12-31 08:25:50 --> Severity: Notice --> Undefined offset: 3 C:\xampp\htdocs\xpdc\application\views\quotation\quotation_list.php 106
+ERROR - 2020-12-31 08:25:50 --> Severity: Notice --> Undefined offset: 3 C:\xampp\htdocs\xpdc\application\views\quotation\quotation_list.php 106
+ERROR - 2020-12-31 08:25:50 --> Severity: Notice --> Undefined offset: 3 C:\xampp\htdocs\xpdc\application\views\quotation\quotation_list.php 106
+ERROR - 2020-12-31 08:25:50 --> Severity: Notice --> Undefined offset: 3 C:\xampp\htdocs\xpdc\application\views\quotation\quotation_list.php 106
+ERROR - 2020-12-31 08:25:50 --> Severity: Notice --> Undefined offset: 3 C:\xampp\htdocs\xpdc\application\views\quotation\quotation_list.php 106
+ERROR - 2020-12-31 08:25:50 --> Severity: Notice --> Undefined offset: 3 C:\xampp\htdocs\xpdc\application\views\quotation\quotation_list.php 106
+ERROR - 2020-12-31 08:25:50 --> Severity: Notice --> Undefined offset: 3 C:\xampp\htdocs\xpdc\application\views\quotation\quotation_list.php 106
+ERROR - 2020-12-31 08:25:50 --> Severity: Notice --> Undefined offset: 3 C:\xampp\htdocs\xpdc\application\views\quotation\quotation_list.php 106
+ERROR - 2020-12-31 11:10:16 --> 404 Page Not Found: Shipment/favicon.ico
+ERROR - 2020-12-31 11:21:55 --> 404 Page Not Found: User/favicon.ico
+>>>>>>> Stashed changes

@@ -543,9 +543,7 @@
       }
       var subtotal = qty * unit_price;
       $(row).find("input[name='charges_subtotal[]']").val(subtotal);
-      $(row).find("input[name='charges_subtotal_view[]']").val(subtotal.toLocaleString('en-US', {
-        maximumFractionDigits: 0
-      }) + ".00");
+      $(row).find("input[name='charges_subtotal_view[]']").val(subtotal.toLocaleString('en-US', {maximumFractionDigits:2, minimumFractionDigits: 2}));
 
       var exchange_rate = $(row).find("input[name='charges_exchange_rate[]']").val();
       var total = subtotal * exchange_rate;

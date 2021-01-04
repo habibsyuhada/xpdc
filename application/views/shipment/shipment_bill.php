@@ -299,7 +299,7 @@
                         </td>
                         <td><input type="number" step="any" class="form-control" value="<?php echo $value['unit_price'] ?>" oninput="get_total(this)" name="unit_price[]"></td>
                         <td>
-                          <input type="text" step="any" class="form-control" value="<?php echo number_format((($value['qty'] / $persen) * $value['unit_price']), 0) . ".00" ?>" name="subtotal_view[]" readonly>
+                          <input type="text" step="any" class="form-control" value="<?php echo number_format((($value['qty'] / $persen) * $value['unit_price']), 2) ?>" name="subtotal_view[]" readonly>
                           <input type="hidden" step="any" class="form-control" value="<?php echo (($value['qty'] / $persen) * $value['unit_price']) ?>" name="subtotal[]" readonly>
                         </td>
                         <td><input type="number" step="any" class="form-control" value="<?php echo $value['exchange_rate'] ?>" oninput="get_total(this)" name="exchange_rate[]"></td>
@@ -408,9 +408,7 @@
       }
       var subtotal = qty * unit_price;
       $(row).find("input[name='subtotal[]']").val(subtotal);
-      $(row).find("input[name='subtotal_view[]']").val(subtotal.toLocaleString('en-US', {
-        maximumFractionDigits: 0
-      }) + ".00");
+      $(row).find("input[name='subtotal_view[]']").val(subtotal.toLocaleString('en-US', {maximumFractionDigits:2, minimumFractionDigits: 2}));
 
       var exchange_rate = $(row).find("input[name='exchange_rate[]']").val();
       var total = subtotal * exchange_rate;

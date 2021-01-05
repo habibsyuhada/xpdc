@@ -85,8 +85,8 @@
                     <input type="text" class="form-control" name="created_by" value="<?php echo $quotation['created_by'] ?>" placeholder="Prepared By" disabled>
                   </div>
                   <div class="form-group">
-                    <label>Tracking No</label>
-                    <input type="text" class="form-control" name="tracking_no" value="<?php echo $quotation['tracking_no'] ?>" placeholder="Tracking No">
+                    <label>Remarks</label>
+                    <input type="text" class="form-control" name="tracking_no" value="<?php echo $quotation['tracking_no'] ?>" placeholder="Remarks">
                   </div>
                 </div>
               </div>

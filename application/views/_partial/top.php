@@ -12,7 +12,7 @@ $side_permission = array(
 	8 => (in_array($role, array("Super Admin")) ? 1 : 0), //User Management
 	9 => (in_array($role, array("Super Admin", "Finance")) ? 1 : 0), //Finance Report
 	10 => (in_array($role, array("Super Admin", "Commercial")) ? 1 : 0), //Commercial Customer
-	11 => (in_array($role, array("Super Admin", "Commercial", "Finance")) ? 1 : 0), //View Quotation
+	11 => (in_array($role, array("Super Admin", "Commercial")) ? 1 : 0), //View Quotation
 	12 => (in_array($role, array("Super Admin", "Commercial")) ? 1 : 0), //Create Quotation
 );
 ?>

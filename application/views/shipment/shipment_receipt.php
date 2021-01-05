@@ -1,3 +1,9 @@
+<?php
+$role = $this->session->userdata('role');
+$page_permission = array(
+  0 => (in_array($role, array("Super Admin", "Driver", "Operator", "Finance", "Commercial")) ? 1 : 0), //Agent Information
+);
+?>
 <div class="main-content">
   <div class="container-fluid">
     <form action="<?php echo base_url(); ?>shipment/shipment_create_process" method="POST" class="forms-sample">
@@ -528,7 +534,7 @@
               </div>
               <?php endif; ?>
               
-              <?php if(isset($data_input['tracking_no'])): ?>
+              <?php if(isset($data_input['tracking_no']) && $page_permission[0] == 1): ?>
               <br>
               <br>
               <div class="row">

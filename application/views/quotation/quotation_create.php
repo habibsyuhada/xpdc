@@ -84,8 +84,8 @@
                     <input type="text" class="form-control" name="created_by" placeholder="Prepared By" value="<?php echo $this->session->userdata('name') ?>" disabled>
                   </div>
                   <div class="form-group">
-                    <label>Tracking No</label>
-                    <input type="text" class="form-control" name="tracking_no" placeholder="Tracking No">
+                    <label>Remarks</label>
+                    <input type="text" class="form-control" name="tracking_no" placeholder="Remarks">
                   </div>
                 </div>
               </div>

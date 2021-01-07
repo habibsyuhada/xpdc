@@ -486,6 +486,44 @@
   </div>
 </div>
 <script type="text/javascript">
+  var term_condition_selection = {
+    AIRFREIGHT: {
+      0 : "Rate exclude fuel surcharges",
+      1 : "Rate exclude duties and taxes, cargo insurance, storage charge and any special arrangement (if any)",
+      2 : "Not applicable for DG Cargo / Odd Size Cargo / Heavy Weight Cargo / Non-Stackable Cargo",
+      3 : "Cargo must have proper packaging compliance with carrier valid rules and regulations.",
+      4 : "Both shipper and consignee must have required license for customs clearance purpose",
+      5 : "Rates quoted excluded bank charge and any other taxes on cargo or services rendered.",
+      6 : "Rate is based on FOT (Free On Truck) terms. Loading / Unloading at customer's premises will be at customer own cost",
+      7 : "Rate is subject to final chargeable weight defined as actual weight or volumetric weight whichever is greater",
+      8 : "Transit time 3 - 4 Days. Subject to space availability by the carrier, force majeure, customs inspection and any uncontrollable delay",
+      9 : "Once rates and terms & conditions have been confirmed, please kindly stamp and sign in the confirmation box below",
+    },
+    LCL: {
+      0 : "Exclude duties and taxes, cargo insurance, storage charge and any special arrangement (if any)",
+      1 : "Not applicable for DG Cargo / Odd Size Cargo / Heavy Weight Cargo / Non-Stackable Cargo",
+      2 : "Cargo must have proper packaging compliance with carrier valid rules and regulations.",
+      3 : "Both shipper and consignee must have required license for customs clearance purpose",
+      4 : "Rates quoted excluded bank charge and any other taxes on cargo or services rendered.",
+      5 : "Rate is based on FOT (Free On Truck) terms. Loading / Unloading at customer's premises will be at customer own cost",
+      6 : "Rate is subject to final chargeable weight. RT (Revenue Tons) is defined as 1 RT = 1,000kgs (Kilograms) or 1 CBM (Cubic Meters) whichever is greater",
+      7 : "Transit time 8 - 10 Days. Subject to space availability by the carrier, force majeure, customs inspection and any uncontrollable delay",
+      8 : "Once rates and terms & conditions have been confirmed, please kindly stamp and sign in the confirmation box below",
+    },
+    FCL : {
+      0 : "Exclude duties and taxes, cargo insurance, storage charge and any special arrangement (if any)",
+      1 : "Not applicable for DG Cargo / Odd Size Cargo / Heavy Weight Cargo / Non-Stackable Cargo",
+      2 : "Cargo must have proper packaging compliance with carrier valid rules and regulations.",
+      3 : "Both shipper and consignee must have required license for customs clearance purpose",
+      4 : "Rates quoted excluded bank charge and any other taxes on cargo or services rendered.",
+      5 : "Rate is based on FOT (Free On Truck) terms. Loading / unloading at customer's premises will be at customer own cost",
+      6 : "Chassis / Container free detention is 3 (Three) days for stuffing / unstuffing once container arrived at customer's premises ",
+      7 : "Exclude addtional charges such as : Chassis / Container reposition,  Demurrage / Detention Charge, Washing Fee, Repair Container Fee and others (if any)",
+      8 : "Rate is subject to final chargeable weight. RT (Revenue Tons) is defined as 1 RT = 1,000kgs (Kilograms) or 1 CBM (Cubic Meters) whichever is greater",
+      9 : "Transit time 8 - 10 Days. Subject to space availability by the carrier, force majeure, customs inspection and any uncontrollable delay",
+      10 : "Once rates and terms & conditions have been confirmed, please kindly stamp and sign in the confirmation box below",
+    }
+  }
   $("select[name=type_of_mode]").on("change", function() {
     var value = $(this).val();
     $("select[name=sea]").closest('.form-group').slideUp();
@@ -498,6 +536,74 @@
       $("select[name=sea][title=air]").removeAttr("disabled");
     }
     $("select[name=sea]").val('');
+
+    if(value == 'Air Freight'){
+      var term_content = "";
+      var num = true;
+      $.each(term_condition_selection.AIRFREIGHT, function (key, val) {
+        if(num == 1){
+          term_content += '<tr>'+
+            '<td><input type="text" class="form-control" name="term_condition[]" value="'+val+'"></td>'+
+            '<td><button type="button" class="btn btn-primary" onclick="addrow(this)"><i class="fas fa-plus m-0"></i></button></td>'+
+          '</tr>';
+        }
+        else{
+          term_content += '<tr>'+
+            '<td><input type="text" class="form-control" name="term_condition[]" value="'+val+'"></td>'+
+            '<td><button type="button" class="btn btn-danger" onclick="deleterow(this)(this)"><i class="fas fa-trash m-0"></i></button></td>'+
+          '</tr>';
+        }
+        num++;
+        console.log(num)
+      });
+      $(".term_type").html(term_content);
+    }
+  });
+
+  $("select[name=sea]").on("change", function() {
+    var value = $(this).val();
+    if(value == 'FCL'){
+      var term_content = "";
+      var num = true;
+      $.each(term_condition_selection.FCL, function (key, val) {
+        if(num == 1){
+          term_content += '<tr>'+
+            '<td><input type="text" class="form-control" name="term_condition[]" value="'+val+'"></td>'+
+            '<td><button type="button" class="btn btn-primary" onclick="addrow(this)"><i class="fas fa-plus m-0"></i></button></td>'+
+          '</tr>';
+        }
+        else{
+          term_content += '<tr>'+
+            '<td><input type="text" class="form-control" name="term_condition[]" value="'+val+'"></td>'+
+            '<td><button type="button" class="btn btn-danger" onclick="deleterow(this)(this)"><i class="fas fa-trash m-0"></i></button></td>'+
+          '</tr>';
+        }
+        num++;
+        console.log(num)
+      });
+      $(".term_type").html(term_content);
+    }
+    else if(value == 'LCL'){
+      var term_content = "";
+      var num = true;
+      $.each(term_condition_selection.LCL, function (key, val) {
+        if(num == 1){
+          term_content += '<tr>'+
+            '<td><input type="text" class="form-control" name="term_condition[]" value="'+val+'"></td>'+
+            '<td><button type="button" class="btn btn-primary" onclick="addrow(this)"><i class="fas fa-plus m-0"></i></button></td>'+
+          '</tr>';
+        }
+        else{
+          term_content += '<tr>'+
+            '<td><input type="text" class="form-control" name="term_condition[]" value="'+val+'"></td>'+
+            '<td><button type="button" class="btn btn-danger" onclick="deleterow(this)(this)"><i class="fas fa-trash m-0"></i></button></td>'+
+          '</tr>';
+        }
+        num++;
+        console.log(num)
+      });
+      $(".term_type").html(term_content);
+    }
   });
 
 
@@ -542,7 +648,7 @@
           $(input).removeClass('is-invalid');
           $(input).addClass('is-valid');
           $('.invalid-feedback').remove();
-          console.log(data);
+          // console.log(data);
 
           $("input[name=customer_name]").val(data.name);
           $("textarea[name=customer_address]").val(data.address);
@@ -557,7 +663,7 @@
 
   function get_vol_weight() {
     var type_of_mode = $("select[name=type_of_mode]").val();
-    console.log(type_of_mode);
+    // console.log(type_of_mode);
     var per = 1;
     var total_act_weight = 0;
     var total_vol_weight = 0;
@@ -608,12 +714,12 @@
 
 
     $.each(length_array, function(index, value) {
-      console.log(length_array[index], width_array[index], height_array[index], weight_array[index], qty_array[index], per);
+      // console.log(length_array[index], width_array[index], height_array[index], weight_array[index], qty_array[index], per);
       var actual_weight = qty_array[index] * weight_array[index];
       var volume_weight = qty_array[index] * (length_array[index] * width_array[index] * height_array[index]) / per;
       var measurement = qty_array[index] * (length_array[index] * width_array[index] * height_array[index]) / 1000000;
 
-      console.log(volume_weight+ " = "+qty_array[index]+" * ("+length_array[index]+" * "+width_array[index]+" * "+height_array[index]+") / "+per+" test "+type_of_mode);
+      // console.log(volume_weight+ " = "+qty_array[index]+" * ("+length_array[index]+" * "+width_array[index]+" * "+height_array[index]+") / "+per+" test "+type_of_mode);
 
       total_act_weight += actual_weight;
       total_vol_weight += volume_weight;
@@ -664,11 +770,11 @@
 
     // var vat = Number($("input[name=vat]").val());
     // var discount = Number($("input[name=discount]").val());
-    // console.log(total_all);
+    console.log(total_all);
     // total_all = total_all + vat + 0;
-    // console.log(total_all);
+    console.log(total_all);
     // total_all = total_all - discount + 0;
-    // console.log(total_all);
+    console.log(total_all);
     // $(input).closest('form').find("span[name=total_all]").text(total_all);
     $("#total_all").text(total_all.toLocaleString('en-US', {
       maximumFractionDigits: 0

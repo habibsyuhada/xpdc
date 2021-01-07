@@ -69,13 +69,13 @@
                   <thead>
                     <tr class="bg-info">
                       <th class="text-white font-weight-bold">Quotation No</th>
-                      <th class="text-white font-weight-bold">Tracking No</th>
                       <th class="text-white font-weight-bold">Date</th>
                       <th class="text-white font-weight-bold">Exp. Date</th>
                       <th class="text-white font-weight-bold">Customer Name</th>
                       <th class="text-white font-weight-bold">Type of Shipment</th>
                       <th class="text-white font-weight-bold">Type of Mode</th>
                       <th class="text-white font-weight-bold">Status</th>
+                      <th class="text-white font-weight-bold">Remarks</th>
                       <th class="text-white font-weight-bold">Reject Remarks</th>
                       <th class="text-white font-weight-bold"></th>
                     </tr>
@@ -84,7 +84,6 @@
                     <?php foreach ($quotation_list as $key => $value): ?>
                     <tr>
                       <td><?php echo $value['quotation_no'] ?></td>
-                      <td><?php echo $value['tracking_no'] ?></td>
                       <td><?php echo $value['date'] ?></td>
                       <td><?php echo $value['exp_date'] ?></td>
                       <td><?php echo $value['customer_name'] ?></td>
@@ -103,6 +102,7 @@
                         }
                       ?>
                       </td>
+                      <td><?php echo $value['tracking_no'] ?></td>
                       <td><?php echo $value['remarks'] ?></td>
                       <td>
                         <?php if($page_permission[3] == 1): ?>

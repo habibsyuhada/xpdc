@@ -186,7 +186,7 @@
         <td><?php echo $value['qty'] ?></td>
         <td><?php echo $value['uom'] ?></td>
         <td><?php echo $value['currency']." ".number_format($value['unit_price'], 2) ?></td>
-        <td><?php echo $value['currency']." ".number_format((($value['qty'] / $persen)*$value['unit_price']), 0).".00" ?></td>
+        <td><?php echo $value['currency']." ".number_format((($value['qty'] / $persen)*$value['unit_price']), 2) ?></td>
         <td><?php echo $value['exchange_rate'] ?></td>
         <td><?php echo "IDR ".number_format((($value['qty'] / $persen)*$value['unit_price']*$value['exchange_rate']), 0).".00" ?></td>
       </tr>

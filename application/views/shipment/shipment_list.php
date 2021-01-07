@@ -11,6 +11,7 @@ $page_permission = array(
   7 => (in_array($role, array("Super Admin", "Finance")) ? 1 : 0), //alert for hipment that not costed
   8 => (in_array($role, array("Super Admin", "Commercial")) ? 1 : 0), //alert for hipment that not costed
   9 => (in_array($role, array("Super Admin")) ? 1 : 0), //show who created
+  10 => (in_array($role, array("Super Admin", "Driver", "Operator", "Finance")) ? 1 : 0), //show master tracking column
 );
 ?>
 <style>
@@ -76,6 +77,10 @@ $page_permission = array(
                       <option <?php echo ($this->input->get('type_of_mode') == 'Land Shipping' ? 'selected' : '') ?> value="Land Shipping">Land Shipping</option>
                       <option <?php echo ($this->input->get('type_of_mode') == 'Air Freight' ? 'selected' : '') ?> value="Air Freight">Air Freight</option>
                     </select>
+                  </div>
+                  <div class="form-group">
+                    <label>Shipment Date</label>
+                    <input type="date" class="form-control" name="created_date" value="<?php echo @$this->input->get('created_date') ?>" placeholder="Shipment Date">
                   </div>
                 </div>
                 <div class="col-md-6">
@@ -162,7 +167,9 @@ $page_permission = array(
                     <tr class="bg-info">
                       <th class="text-white font-weight-bold"></th>
                       <th class="text-white font-weight-bold">Tracking Number</th>
+                      <?php if ($page_permission[10] == 1) : ?>
                       <th class="text-white font-weight-bold">Master Tracking Number</th>
+                      <?php endif; ?>
                       <th class="text-white font-weight-bold">Shipment Type</th>
                       <th class="text-white font-weight-bold">Type of Mode</th>
                       <th class="text-white font-weight-bold">Shipper Name</th>
@@ -187,7 +194,9 @@ $page_permission = array(
                             <i class="fas fa-plane text-danger" title="Express"></i>
                           <?php endif; ?>
                         </td>
+                        <?php if ($page_permission[10] == 1) : ?>
                         <td><?php echo $value['master_tracking'] ?></td>
+                        <?php endif; ?>
                         <td><?php echo $value['type_of_shipment'] ?></td>
                         <td><?php echo $value['type_of_mode'] ?></td>
                         <td><?php echo $value['shipper_name'] ?></td>

@@ -80,7 +80,7 @@
                       <td><?= $quotation['created_by'] ?></td>
                     </tr>
                     <tr>
-                      <td>Tracking No</td>
+                      <td>Remarks</td>
                       <td>:</td>
                       <td><?= $quotation['tracking_no'] ?></td>
                     </tr>

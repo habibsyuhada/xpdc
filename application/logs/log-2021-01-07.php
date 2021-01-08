@@ -1,5 +1,6 @@
 <?php defined('BASEPATH') OR exit('No direct script access allowed'); ?>
 
+<<<<<<< Updated upstream
 ERROR - 2021-01-07 10:11:55 --> 404 Page Not Found: Assets/favicon.ico
 ERROR - 2021-01-07 10:12:22 --> 404 Page Not Found: Home/favicon.ico
 ERROR - 2021-01-07 10:14:57 --> 404 Page Not Found: Zone/favicon.ico
@@ -1937,3 +1938,11 @@ ERROR - 2021-01-07 10:57:28 --> Severity: Warning --> in_array() expects paramet
 ERROR - 2021-01-07 10:57:28 --> Severity: Notice --> Undefined variable: detail C:\xampp\htdocs\xpdc\application\views\zone\zone_update.php 35
 ERROR - 2021-01-07 10:57:28 --> Severity: Warning --> in_array() expects parameter 2 to be array, null given C:\xampp\htdocs\xpdc\application\views\zone\zone_update.php 35
 ERROR - 2021-01-07 11:01:51 --> 404 Page Not Found: Zone/table_rate_list
+=======
+ERROR - 2021-01-07 09:38:22 --> 404 Page Not Found: Assets/favicon.ico
+ERROR - 2021-01-07 09:38:29 --> 404 Page Not Found: Home/favicon.ico
+ERROR - 2021-01-07 09:38:37 --> 404 Page Not Found: Quotation/favicon.ico
+ERROR - 2021-01-07 10:04:09 --> Severity: Warning --> mysqli::real_connect(): php_network_getaddresses: getaddrinfo failed: This is usually a temporary error during hostname resolution and means that the local server did not receive a response from an authoritative server.  C:\xampp\htdocs\xpdc\system\database\drivers\mysqli\mysqli_driver.php 203
+ERROR - 2021-01-07 10:04:09 --> Severity: Warning --> mysqli::real_connect(): (HY000/2002): php_network_getaddresses: getaddrinfo failed: This is usually a temporary error during hostname resolution and means that the local server did not receive a response from an authoritative server.  C:\xampp\htdocs\xpdc\system\database\drivers\mysqli\mysqli_driver.php 203
+ERROR - 2021-01-07 10:04:09 --> Unable to connect to the database
+>>>>>>> Stashed changes

@@ -99,7 +99,7 @@
                 <div class="col-md-6">
                   <div class="form-group">
                     <label>Type of Shipment</label>
-                    <select class="form-control" name="type_of_shipment" required>
+                    <select class="form-control" name="type_of_shipment" required <?=($quotation['type_of_service'] == 'CH' || $quotation['type_of_service'] == 'WH') ? 'disabled' : ''?>>
                       <option value="">-- Select One --</option>
                       <option value="International shipping" <?php echo ($quotation['type_of_shipment'] == 'International shipping' ? 'selected' : '' ) ?>>International shipping</option>
                       <option value="Domestic shipping" <?php echo ($quotation['type_of_shipment'] == 'Domestic shipping' ? 'selected' : '' ) ?>>Domestic shipping</option>
@@ -153,7 +153,7 @@
                 <div class="col-md-6">
                   <div class="form-group">
                     <label>Incoterms</label>
-                    <select class="form-control" name="incoterms" required>
+                    <select class="form-control" name="incoterms" required <?=($quotation['type_of_service'] == 'CH' || $quotation['type_of_service'] == 'WH') ? 'disabled' : ''?>>
                       <option value="">-- Select One --</option>
                       <option value="EXW (ExWorks)" <?php echo ($quotation['incoterms'] == "EXW (ExWorks)" ? 'selected' : '') ?>>EXW (ExWorks)</option>
                       <option value="FCA (Free Carrier)" <?php echo ($quotation['incoterms'] == "FCA (Free Carrier)" ? 'selected' : '') ?>>FCA (Free Carrier)</option>
@@ -518,6 +518,17 @@
   function deleterow(btn) {
     $(btn).closest("tr").remove();
   }
+
+  $("select[name=type_of_service]").on("change", function(){
+    var value = $(this).val();
+    if(value == 'CH' || value == 'WH'){
+      $("select[name=type_of_shipment]").val('').attr("disabled", true);
+      $("select[name=incoterms]").val('').attr("disabled", true);
+    }else{
+      $("select[name=type_of_shipment]").removeAttr("disabled");
+      $("select[name=incoterms]").removeAttr("disabled");
+    }
+  });
 
   function deletecargo(id, btn) {
     var valid = confirm('Are you sure to delete this? You cannot revert it later.');

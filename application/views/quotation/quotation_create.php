@@ -560,6 +560,17 @@
     }
   });
 
+  $("select[name=type_of_service]").on("change", function(){
+    var value = $(this).val();
+    if(value == 'CH' || value == 'WH'){
+      $("select[name=type_of_shipment]").val('').attr("disabled", true);
+      $("select[name=incoterms]").val('').attr("disabled", true);
+    }else{
+      $("select[name=type_of_shipment]").removeAttr("disabled");
+      $("select[name=incoterms]").removeAttr("disabled");
+    }
+  });
+
   $("select[name=sea]").on("change", function() {
     var value = $(this).val();
     if(value == 'FCL'){

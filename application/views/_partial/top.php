@@ -213,13 +213,6 @@ $side_permission = array(
 													<a href="<?php echo base_url() ?>zone/zone_create" class="menu-item">Create Zone</a>
 												</div>
 											</div>
-											<div class="nav-item has-sub">
-												<a href="javascript:void(0)" class="menu-item"><i class="fas fa-table"></i><span>Table Rate</span></a>
-												<div class="submenu-content">
-													<a href="<?php echo base_url() ?>table_rate/table_rate_list" class="menu-item">Table Rate List</a>
-													<a href="<?php echo base_url() ?>table_rate/table_rate_create" class="menu-item">Create Table Rate</a>
-												</div>
-											</div>
 										</div>
 									</div>
 								<?php endif; ?>

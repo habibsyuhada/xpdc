@@ -97,6 +97,18 @@ class Quotation extends CI_Controller
 			$post['consignee_tba'] = 0;
 		}
 
+		if(isset($post['type_of_shipment'])){
+			$type_of_shipment = $post['type_of_shipment'];
+		}else{
+			$type_of_shipment = '';
+		}
+
+		if(isset($post['incoterms'])){
+			$incoterms = $post['incoterms'];
+		}else{
+			$incoterms = '';
+		}
+
 		$form_data = array(
 			'quotation_no' 							=> $quotation_no,
 			'tracking_no' 							=> $post['tracking_no'],
@@ -110,10 +122,10 @@ class Quotation extends CI_Controller
 			'exp_date' 									=> $post['exp_date'],
 			'payment_terms' 						=> $post['payment_terms'],
 			'type_of_service' 					=> $post['type_of_service'],
-			'type_of_shipment' 					=> $post['type_of_shipment'],
+			'type_of_shipment' 					=> $type_of_shipment,
 			'type_of_transport' 				=> $post['type_of_mode'],
 			'sea' 											=> $post['sea'],
-			'incoterms' 								=> $post['incoterms'],
+			'incoterms' 								=> $incoterms,
 			'description_of_goods' 			=> $post['description_of_goods'],
 			'shipper_tba' 							=> $post['shipper_tba'],
 			'shipper_name' 							=> $post['shipper_name'],
@@ -256,6 +268,18 @@ class Quotation extends CI_Controller
 			$post['consignee_tba'] = 0;
 		}
 
+		if(isset($post['type_of_shipment'])){
+			$type_of_shipment = $post['type_of_shipment'];
+		}else{
+			$type_of_shipment = '';
+		}
+
+		if(isset($post['incoterms'])){
+			$incoterms = $post['incoterms'];
+		}else{
+			$incoterms = '';
+		}
+
 		$form_data = array(
 			'tracking_no' 							=> $post['tracking_no'],
 			'customer_account' 					=> $post['customer_account'],
@@ -269,9 +293,9 @@ class Quotation extends CI_Controller
 			'payment_terms' 						=> $post['payment_terms'],
 			'type_of_service' 					=> $post['type_of_service'],
 			'type_of_transport' 				=> $post['type_of_transport'],
-			'type_of_shipment' 					=> $post['type_of_shipment'],
+			'type_of_shipment' 					=> $type_of_shipment,
 			'sea' 											=> $post['sea'],
-			'incoterms' 								=> $post['incoterms'],
+			'incoterms' 								=> $incoterms,
 			'description_of_goods' 			=> $post['description_of_goods'],
 			'shipper_tba' 							=> $post['shipper_tba'],
 			'shipper_name' 							=> $post['shipper_name'],

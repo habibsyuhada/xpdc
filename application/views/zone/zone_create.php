@@ -10,14 +10,14 @@
                   <h6 class="font-weight-bold">Create New Zone</h6>
                   <div class="form-group">
                     <label>Zone Name</label>
-                    <input type="text" class="form-control" name="zone_name" placeholder="Country" required>
+                    <input type="text" class="form-control" name="zone_name" placeholder="Zone Name" required>
                   </div>
                   <div class="form-group">
                     <label>Branch</label>
                     <select class="form-control" name="branch" required>
                       <option value="">- Select One -</option>
                       <?php foreach ($branch_list as $branch) : ?>
-                        <option value="<?=$branch['id']?>"><?=$branch['name']. " (".$branch['code'].")"?></option>
+                        <option value="<?= $branch['id'] ?>"><?= $branch['name'] . " (" . $branch['code'] . ")" ?></option>
                       <?php endforeach; ?>
                     </select>
                   </div>
@@ -30,7 +30,11 @@
                   </div>
                   <div class="form-group">
                     <label>Country</label>
-                    <input type="text" class="form-control" name="zone" placeholder="Zone" required>
+                    <select class="form-control select2" name="country[]" id="country" multiple>
+                        <?php foreach($country as $data): ?>
+                        <option value="<?=$data['country']?>"><?=$data['country']?></option>
+                        <?php endforeach; ?>
+                    </select>
                   </div>
                 </div>
               </div>
@@ -46,3 +50,6 @@
     </form>
   </div>
 </div>
+<script>
+$(".select2").select2();
+</script>

@@ -293,13 +293,9 @@
                         <td>
                           <select class="form-control" name="cargo_piece_type[]">
                             <option value="">-- Select One --</option>
-                            <option value="Pallet">Pallet</option>
-                            <option value="Carton">Carton</option>
-                            <option value="Crate">Crate</option>
-                            <option value="Loose">Loose</option>
-                            <option value="Container 20 GP">Container 20 GP</option>
-                            <option value="Container 40 GP">Container 40 GP</option>
-                            <option value="Others">Others</option>
+                            <?php foreach($package_type as $data) : ?>
+                            <option value="<?=$data['name']?>"><?=$data['name']?></option>
+                            <?php endforeach; ?>
                           </select>
                         </td>
                         <td><input type="number" class="form-control" step="any" name="cargo_length[]" value="0" oninput="get_vol_weight()"></td>

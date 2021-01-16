@@ -34,7 +34,6 @@ class Quotation extends CI_Controller
 	  if($this->session->userdata('role') == "Commercial"){
 			$where['created_by'] = $this->session->userdata('id');
 	    $data['quotation_list'] = $this->quotation_mod->quotation_list_db($where);
-			test_var($data['quotation_list']);
 		}
 		elseif($this->session->userdata('role') == "Finance"){
 	    $where['tracking_no !='] = "";
@@ -54,6 +53,7 @@ class Quotation extends CI_Controller
 		$data['payment_terms_list'] = $this->home_mod->payment_terms_list();
 		$data['uom_list'] = $this->home_mod->uom_list();
 		$data['customer_list'] = $this->quotation_mod->customer_list_db();
+		$data['package_type'] = $this->quotation_mod->package_type_list_db();
 
 		$data['subview'] 			= 'quotation/quotation_create';
 		$data['meta_title'] 	= 'Create Quotation';
@@ -213,6 +213,7 @@ class Quotation extends CI_Controller
 		$data['quotation'] 			= $quotation_list[0];
 		$data['cargo_list'] 		= $cargo_list;
 		$data['charges_list'] 	= $charges_list;
+		$data['package_type'] = $this->quotation_mod->package_type_list_db();
 
 		$data['subview'] 			= 'quotation/quotation_update';
 		$data['meta_title'] 	= 'Quotation Detail Update';

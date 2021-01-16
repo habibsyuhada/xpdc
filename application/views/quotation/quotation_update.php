@@ -300,13 +300,9 @@
                           <td>
                             <select class="form-control" name="cargo_piece_type[]" value="<?php echo $value['piece_type'] ?>">
                               <option value="">-- Select One --</option>
-                              <option value="Pallet" <?php echo ($value['piece_type'] == "Pallet" ? 'selected' : '') ?>>Pallet</option>
-                              <option value="Carton" <?php echo ($value['piece_type'] == "Carton" ? 'selected' : '') ?>>Carton</option>
-                              <option value="Crate" <?php echo ($value['piece_type'] == "Crate" ? 'selected' : '') ?>>Crate</option>
-                              <option value="Loose" <?php echo ($value['piece_type'] == "Loose" ? 'selected' : '') ?>>Loose</option>
-                              <option value="Container 20 GP" <?php echo ($value['piece_type'] == "Container 20 GP" ? 'selected' : '') ?>>Container 20 GP</option>
-                              <option value="Container 40 GP" <?php echo ($value['piece_type'] == "Container 40 GP" ? 'selected' : '') ?>>Container 40 GP</option>
-                              <option value="Others" <?php echo ($value['piece_type'] == "Others" ? 'selected' : '') ?>>Others</option>
+                              <?php foreach($package_type as $data) : ?>
+                              <option value="<?=$data['name']?>" <?php echo ($value['piece_type'] == $data['name'] ? 'selected' : '') ?>><?=$data['name']?></option>
+                              <?php endforeach; ?>
                             </select>
                           </td>
                           <td><input type="number" class="form-control" oninput="get_vol_weight()" step="any" name="cargo_length[]" value="<?php echo $value['length']+0 ?>"></td>

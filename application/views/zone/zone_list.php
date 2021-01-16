@@ -13,8 +13,6 @@
                   <thead>
                     <tr class="bg-info">
                       <th class="text-white font-weight-bold">Zone</th>
-                      <th class="text-white font-weight-bold">Branch</th>
-                      <th class="text-white font-weight-bold">Category</th>
                       <th class="text-white font-weight-bold">Country</th>
                       <th class="text-white font-weight-bold"></th>
                     </tr>
@@ -23,11 +21,9 @@
                     <?php foreach ($zone_list as $key => $value) : ?>
                       <tr>
                         <td><?php echo $value['zone_name'] ?></td>
-                        <td><?php echo $value['name'] ?></td>
-                        <td><?php echo $value['category'] ?></td>
                         <td><?php echo $value['country'] ?></td>
                         <td>
-                          <a href="<?php echo base_url() ?>zone/table_rate_list/<?php echo $value['id'] ?>" class="btn btn-warning" title="Table Rate"><i class="fas fa-table m-0"></i></a>
+                          <a href="<?php echo base_url() ?>zone/subzone_list/<?php echo $value['id'] ?>" class="btn btn-info" title="Sub Zone"><i class="fas fa-map-marker-alt m-0"></i></a>
                           <a href="<?php echo base_url() ?>zone/zone_update/<?php echo $value['id'] ?>" class="btn btn-primary" title="Update"><i class="fas fa-edit m-0"></i></a>
                           <a href="<?php echo base_url() ?>zone/zone_delete_process/<?php echo $value['id'] ?>" class="btn btn-danger" title="Delete" onclick="return confirm('Are You Sure?')"><i class="fas fa-trash m-0"></i></a>
                         </td>

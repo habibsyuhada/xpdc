@@ -137,6 +137,8 @@ class Shipment extends CI_Controller
 		$data['meta_title'] 	= 'Create Shipment';
 
 		$data['country'] = json_decode(file_get_contents("./assets/country/country.json"), true);
+		$data['package_type'] = $this->shipment_mod->package_type_list_db();
+		$data['customer'] = $this->shipment_mod->customer_list_db();
 		$this->load->view('index', $data);
 	}
 
@@ -374,6 +376,8 @@ class Shipment extends CI_Controller
 		$data['shipment'] 			= $shipment_list[0];
 		$data['packages_list'] 	= $packages_list;
 		$data['history_list'] 	= $history_list;
+		$data['customer'] = $this->shipment_mod->customer_list_db();
+		$data['package_type'] = $this->shipment_mod->package_type_list_db();
 		// $data['t'] 							= 'g';
 		$data['subview'] 				= 'shipment/shipment_update';
 		$data['meta_title'] 		= 'Shipment Update';
@@ -1071,6 +1075,7 @@ class Shipment extends CI_Controller
 	{
 		$form_data = array(
 			'status_delete'	=> 0,
+			'deleted_by' => $this->session->userdata('id')
 		);
 		$where['id'] = $id;
 		$this->shipment_mod->shipment_update_process_db($form_data, $where);

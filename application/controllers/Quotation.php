@@ -34,7 +34,6 @@ class Quotation extends CI_Controller
 	  if($this->session->userdata('role') == "Commercial"){
 			$where['created_by'] = $this->session->userdata('id');
 	    $data['quotation_list'] = $this->quotation_mod->quotation_list_db($where);
-			test_var($data['quotation_list']);
 		}
 		elseif($this->session->userdata('role') == "Finance"){
 	    $where['tracking_no !='] = "";
@@ -54,6 +53,7 @@ class Quotation extends CI_Controller
 		$data['payment_terms_list'] = $this->home_mod->payment_terms_list();
 		$data['uom_list'] = $this->home_mod->uom_list();
 		$data['customer_list'] = $this->quotation_mod->customer_list_db();
+		$data['package_type'] = $this->quotation_mod->package_type_list_db();
 
 		$data['subview'] 			= 'quotation/quotation_create';
 		$data['meta_title'] 	= 'Create Quotation';
@@ -97,6 +97,18 @@ class Quotation extends CI_Controller
 			$post['consignee_tba'] = 0;
 		}
 
+		if(isset($post['type_of_shipment'])){
+			$type_of_shipment = $post['type_of_shipment'];
+		}else{
+			$type_of_shipment = '';
+		}
+
+		if(isset($post['incoterms'])){
+			$incoterms = $post['incoterms'];
+		}else{
+			$incoterms = '';
+		}
+
 		$form_data = array(
 			'quotation_no' 							=> $quotation_no,
 			'tracking_no' 							=> $post['tracking_no'],
@@ -110,10 +122,10 @@ class Quotation extends CI_Controller
 			'exp_date' 									=> $post['exp_date'],
 			'payment_terms' 						=> $post['payment_terms'],
 			'type_of_service' 					=> $post['type_of_service'],
-			'type_of_shipment' 					=> $post['type_of_shipment'],
+			'type_of_shipment' 					=> $type_of_shipment,
 			'type_of_transport' 				=> $post['type_of_mode'],
 			'sea' 											=> $post['sea'],
-			'incoterms' 								=> $post['incoterms'],
+			'incoterms' 								=> $incoterms,
 			'description_of_goods' 			=> $post['description_of_goods'],
 			'shipper_tba' 							=> $post['shipper_tba'],
 			'shipper_name' 							=> $post['shipper_name'],
@@ -201,6 +213,7 @@ class Quotation extends CI_Controller
 		$data['quotation'] 			= $quotation_list[0];
 		$data['cargo_list'] 		= $cargo_list;
 		$data['charges_list'] 	= $charges_list;
+		$data['package_type'] = $this->quotation_mod->package_type_list_db();
 
 		$data['subview'] 			= 'quotation/quotation_update';
 		$data['meta_title'] 	= 'Quotation Detail Update';
@@ -256,6 +269,18 @@ class Quotation extends CI_Controller
 			$post['consignee_tba'] = 0;
 		}
 
+		if(isset($post['type_of_shipment'])){
+			$type_of_shipment = $post['type_of_shipment'];
+		}else{
+			$type_of_shipment = '';
+		}
+
+		if(isset($post['incoterms'])){
+			$incoterms = $post['incoterms'];
+		}else{
+			$incoterms = '';
+		}
+
 		$form_data = array(
 			'tracking_no' 							=> $post['tracking_no'],
 			'customer_account' 					=> $post['customer_account'],
@@ -269,9 +294,9 @@ class Quotation extends CI_Controller
 			'payment_terms' 						=> $post['payment_terms'],
 			'type_of_service' 					=> $post['type_of_service'],
 			'type_of_transport' 				=> $post['type_of_transport'],
-			'type_of_shipment' 					=> $post['type_of_shipment'],
+			'type_of_shipment' 					=> $type_of_shipment,
 			'sea' 											=> $post['sea'],
-			'incoterms' 								=> $post['incoterms'],
+			'incoterms' 								=> $incoterms,
 			'description_of_goods' 			=> $post['description_of_goods'],
 			'shipper_tba' 							=> $post['shipper_tba'],
 			'shipper_name' 							=> $post['shipper_name'],

@@ -99,7 +99,7 @@
                 <div class="col-md-6">
                   <div class="form-group">
                     <label>Type of Shipment</label>
-                    <select class="form-control" name="type_of_shipment" required>
+                    <select class="form-control" name="type_of_shipment" required <?=($quotation['type_of_service'] == 'CH' || $quotation['type_of_service'] == 'WH') ? 'disabled' : ''?>>
                       <option value="">-- Select One --</option>
                       <option value="International shipping" <?php echo ($quotation['type_of_shipment'] == 'International shipping' ? 'selected' : '' ) ?>>International shipping</option>
                       <option value="Domestic shipping" <?php echo ($quotation['type_of_shipment'] == 'Domestic shipping' ? 'selected' : '' ) ?>>Domestic shipping</option>
@@ -153,7 +153,7 @@
                 <div class="col-md-6">
                   <div class="form-group">
                     <label>Incoterms</label>
-                    <select class="form-control" name="incoterms" required>
+                    <select class="form-control" name="incoterms" required <?=($quotation['type_of_service'] == 'CH' || $quotation['type_of_service'] == 'WH') ? 'disabled' : ''?>>
                       <option value="">-- Select One --</option>
                       <option value="EXW (ExWorks)" <?php echo ($quotation['incoterms'] == "EXW (ExWorks)" ? 'selected' : '') ?>>EXW (ExWorks)</option>
                       <option value="FCA (Free Carrier)" <?php echo ($quotation['incoterms'] == "FCA (Free Carrier)" ? 'selected' : '') ?>>FCA (Free Carrier)</option>
@@ -300,13 +300,9 @@
                           <td>
                             <select class="form-control" name="cargo_piece_type[]" value="<?php echo $value['piece_type'] ?>">
                               <option value="">-- Select One --</option>
-                              <option value="Pallet" <?php echo ($value['piece_type'] == "Pallet" ? 'selected' : '') ?>>Pallet</option>
-                              <option value="Carton" <?php echo ($value['piece_type'] == "Carton" ? 'selected' : '') ?>>Carton</option>
-                              <option value="Crate" <?php echo ($value['piece_type'] == "Crate" ? 'selected' : '') ?>>Crate</option>
-                              <option value="Loose" <?php echo ($value['piece_type'] == "Loose" ? 'selected' : '') ?>>Loose</option>
-                              <option value="Container 20 GP" <?php echo ($value['piece_type'] == "Container 20 GP" ? 'selected' : '') ?>>Container 20 GP</option>
-                              <option value="Container 40 GP" <?php echo ($value['piece_type'] == "Container 40 GP" ? 'selected' : '') ?>>Container 40 GP</option>
-                              <option value="Others" <?php echo ($value['piece_type'] == "Others" ? 'selected' : '') ?>>Others</option>
+                              <?php foreach($package_type as $data) : ?>
+                              <option value="<?=$data['name']?>" <?php echo ($value['piece_type'] == $data['name'] ? 'selected' : '') ?>><?=$data['name']?></option>
+                              <?php endforeach; ?>
                             </select>
                           </td>
                           <td><input type="number" class="form-control" oninput="get_vol_weight()" step="any" name="cargo_length[]" value="<?php echo $value['length']+0 ?>"></td>
@@ -518,6 +514,17 @@
   function deleterow(btn) {
     $(btn).closest("tr").remove();
   }
+
+  $("select[name=type_of_service]").on("change", function(){
+    var value = $(this).val();
+    if(value == 'CH' || value == 'WH'){
+      $("select[name=type_of_shipment]").val('').attr("disabled", true);
+      $("select[name=incoterms]").val('').attr("disabled", true);
+    }else{
+      $("select[name=type_of_shipment]").removeAttr("disabled");
+      $("select[name=incoterms]").removeAttr("disabled");
+    }
+  });
 
   function deletecargo(id, btn) {
     var valid = confirm('Are you sure to delete this? You cannot revert it later.');

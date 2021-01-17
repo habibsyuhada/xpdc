@@ -293,13 +293,9 @@
                         <td>
                           <select class="form-control" name="cargo_piece_type[]">
                             <option value="">-- Select One --</option>
-                            <option value="Pallet">Pallet</option>
-                            <option value="Carton">Carton</option>
-                            <option value="Crate">Crate</option>
-                            <option value="Loose">Loose</option>
-                            <option value="Container 20 GP">Container 20 GP</option>
-                            <option value="Container 40 GP">Container 40 GP</option>
-                            <option value="Others">Others</option>
+                            <?php foreach($package_type as $data) : ?>
+                            <option value="<?=$data['name']?>"><?=$data['name']?></option>
+                            <?php endforeach; ?>
                           </select>
                         </td>
                         <td><input type="number" class="form-control" step="any" name="cargo_length[]" value="0" oninput="get_vol_weight()"></td>
@@ -557,6 +553,17 @@
         console.log(num)
       });
       $(".term_type").html(term_content);
+    }
+  });
+
+  $("select[name=type_of_service]").on("change", function(){
+    var value = $(this).val();
+    if(value == 'CH' || value == 'WH'){
+      $("select[name=type_of_shipment]").val('').attr("disabled", true);
+      $("select[name=incoterms]").val('').attr("disabled", true);
+    }else{
+      $("select[name=type_of_shipment]").removeAttr("disabled");
+      $("select[name=incoterms]").removeAttr("disabled");
     }
   });
 

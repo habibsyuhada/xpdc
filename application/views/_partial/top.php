@@ -158,10 +158,10 @@ $side_permission = array(
 										<a href="javascript:void(0)"><i class="fas fa-hand-holding-usd"></i><span>Quotation</span></a>
 										<div class="submenu-content">
 											<?php if ($side_permission[11] == 1) : ?>
-											<a href="<?php echo base_url() ?>quotation/quotation_list" class="menu-item">Quotation List</a>
+												<a href="<?php echo base_url() ?>quotation/quotation_list" class="menu-item">Quotation List</a>
 											<?php endif; ?>
 											<?php if ($side_permission[12] == 1) : ?>
-											<a href="<?php echo base_url() ?>quotation/quotation_create" class="menu-item">Create Quotation</a>
+												<a href="<?php echo base_url() ?>quotation/quotation_create" class="menu-item">Create Quotation</a>
 											<?php endif; ?>
 										</div>
 									</div>
@@ -214,10 +214,10 @@ $side_permission = array(
 												</div>
 											</div>
 											<div class="nav-item has-sub">
-												<a href="javascript:void(0)" class="menu-item"><i class="fas fa-table"></i><span>Table Rate</span></a>
+												<a href="javascript:void(0)" class="menu-item"><i class="fas fa-box-open"></i><span>Package Type</span></a>
 												<div class="submenu-content">
-													<a href="<?php echo base_url() ?>table_rate/table_rate_list" class="menu-item">Table Rate List</a>
-													<a href="<?php echo base_url() ?>table_rate/table_rate_create" class="menu-item">Create Table Rate</a>
+													<a href="<?php echo base_url() ?>package_type/package_type_list" class="menu-item">Package Type List</a>
+													<a href="<?php echo base_url() ?>package_type/package_type_create" class="menu-item">Create Package Type</a>
 												</div>
 											</div>
 										</div>

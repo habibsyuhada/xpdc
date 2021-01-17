@@ -38,7 +38,7 @@
 
     body {
       margin: 0px;
-      font-size: 14px;
+      font-size: 12px;
     }
 
     .table-bordered th,
@@ -173,20 +173,20 @@
         <td>
           <?php
             if($quotation['shipper_tba'] == 0){
-              echo "<b>Shipper :</b>".$quotation['shipper_name']."<br>".$quotation['shipper_address'];
+              echo "<b>Shipper : </b>".$quotation['shipper_name']."<br>".$quotation['shipper_address'];
             }
             else{
-              echo "<b>Shipper :</b> TBA";
+              echo "<b>Shipper &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;:</b> TBA";
             }
           ?>
         </td>
         <td>
           <?php
             if($quotation['consignee_tba'] == 0){
-              echo "<b>Consignee :</b>".$quotation['consignee_name']."<br>".$quotation['consignee_address'];
+              echo "<b>Consignee : </b>".$quotation['consignee_name']."<br>".$quotation['consignee_address'];
             }
             else{
-              echo "<b>Consignee :</b> TBA";
+              echo "<b>Consignee &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;:</b> TBA";
             }
           ?>
         </td>
@@ -342,7 +342,7 @@
         <td></td>
         <td></td>
         <td>For and behalf of <b><?php echo $quotation['customer_name'] ?></b></td>
-        <td><br><br><br><br><br><br><br></td>
+        <td><br><br><br><br><br><br></td>
       </tr>
       <tr>
         <td class="auto-fit"></td>

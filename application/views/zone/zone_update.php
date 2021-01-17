@@ -9,18 +9,15 @@
                 <div class="col-md-6">
                   <h6 class="font-weight-bold">Update Zone</h6>
                   <div class="form-group">
-                    <label>Country</label>
-                    <input type="text" class="form-control" name="country" value="<?php echo $zone_list['country'] ?>" placeholder="Country">
+                    <label>Zone Name</label>
+                    <input type="text" class="form-control" name="zone_name" placeholder="Zone Name" value="<?php echo $zone_list['zone_name'] ?>" required>
                   </div>
                   <div class="form-group">
-                    <label>Zone</label>
-                    <input type="number" class="form-control" name="zone" value="<?php echo $zone_list['zone'] ?>" placeholder="Zone" required>
-                  </div>
-                  <div class="form-group">
-                    <label>Category</label>
-                    <select class="form-control" name="category" required>
-                        <option value="International" <?=($zone_list['category'] == 'International') ? 'selected' : ''?>>International</option>
-                        <option value="Domestic" <?=($zone_list['category'] == 'Domestic') ? 'selected' : ''?>>Domestic</option>
+                    <label>Country of Origin</label>
+                    <select class="form-control select2" name="country[]" id="country" multiple>
+                      <?php foreach ($country as $data) : ?>
+                        <option value="<?= $data['country'] ?>" <?=(in_array($data['country'], $detail)) ? 'selected' : '';?>><?= $data['country'] ?></option>
+                      <?php endforeach; ?>
                     </select>
                   </div>
                 </div>
@@ -38,3 +35,6 @@
     </form>
   </div>
 </div>
+<script>
+  $(".select2").select2();
+</script>

@@ -70,6 +70,32 @@ class Shipment_mod extends CI_Model
     return $query->result_array();
   }
 
+  public function customer_list_db($where = null)
+  {
+
+    if (isset($where)) {
+      if (count($where) > 0) {
+        $this->db->where($where);
+      }
+    }
+    $query = $this->db->get('customer');
+
+    return $query->result_array();
+  }
+
+  public function package_type_list_db($where = null)
+  {
+
+    if (isset($where)) {
+      if (count($where) > 0) {
+        $this->db->where($where);
+      }
+    }
+    $query = $this->db->get('mst_package_type');
+
+    return $query->result_array();
+  }
+
   public function shipment_packages_create_process_db($data)
   {
     $this->db->insert('shipment_packages', $data);

@@ -187,10 +187,14 @@ class Shipment extends CI_Controller
 			$where['id_shipment'] 	= $id;
 			$packages_list 					= $this->shipment_mod->shipment_packages_list_db($where);
 			unset($where);
+			unset($data_post['container_no']);
+			unset($data_post['seal_no']);
 			foreach ($packages_list as $key => $value) {
 				foreach ($value as $key2 => $value2) {
-					if (!in_array($key2, array('id', 'id_shipment', 'create_date', 'status_delete')))
+					if (!in_array($key2, array('id', 'id_shipment', 'create_date', 'status_delete'))){
+						echo $key2;
 						$data_post[$key2][] = $value2;
+					}
 				}
 			}
 			$post = $data_post;
@@ -323,12 +327,15 @@ class Shipment extends CI_Controller
 
 		foreach ($post['qty'] as $key => $value) {
 			$form_data = array(
-				'id_shipment' 			=> $id_shipment,
+				'id_shipment' 	=> $id_shipment,
 				'qty' 					=> $post['qty'][$key],
-				'piece_type' 			=> $post['piece_type'][$key],
+				'piece_type' 		=> $post['piece_type'][$key],
 				'length' 				=> $post['length'][$key],
 				'width' 				=> $post['width'][$key],
 				'height' 				=> $post['height'][$key],
+				'size' 					=> $post['size'][$key],
+				'container_no' 	=> $post['container_no'][$key],
+				'seal_no' 			=> $post['seal_no'][$key],
 				'weight'				=> $post['weight'][$key],
 			);
 			$this->shipment_mod->shipment_packages_create_process_db($form_data);

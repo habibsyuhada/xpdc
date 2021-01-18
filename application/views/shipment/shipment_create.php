@@ -281,7 +281,7 @@ if (!isset($cargo_list)) {
                     </div>
                     <br>
                     <div class="col-md-12">
-                      <table class="table text-center">
+                      <table class="table text-center" id="table_packages">
                         <thead>
                           <tr class="bg-info">
                             <th class="text-white font-weight-bold">Qty.</th>
@@ -302,16 +302,36 @@ if (!isset($cargo_list)) {
                                   <input type="hidden" class="form-control" name="id_detail[]" value="<?php echo $value['id'] ?>">
                                 </td>
                                 <td>
-                                  <select class="form-control" name="piece_type[]" value="<?php echo $value['piece_type'] ?>">
+                                  <select class="form-control" name="piece_type[]" title="NONFCL" value="<?php echo $value['piece_type'] ?>">
                                     <option value="">-- Select One --</option>
                                     <?php foreach ($package_type as $data) : ?>
                                       <option value="<?= $data['name'] ?>" <?php echo ($value['piece_type'] == $data['name'] ? 'selected' : '') ?>><?= $data['name'] ?></option>
                                     <?php endforeach; ?>
                                   </select>
+                                  <select class="form-control d-none" name="piece_type[]" title="FCL" disabled>
+                                    <option value="">-- Select One --</option>
+                                    <option value="General Purpose">General Purpose</option>
+                                    <option value="High Cube">High Cube</option>
+                                    <option value="Refrigerator">Refrigerator</option>
+                                  </select>
                                 </td>
-                                <td><input type="number" class="form-control" oninput="get_vol_weight()" step="any" name="length[]" value="<?php echo $value['length'] + 0 ?>"></td>
-                                <td><input type="number" class="form-control" oninput="get_vol_weight()" step="any" name="width[]" value="<?php echo $value['width'] + 0 ?>"></td>
-                                <td><input type="number" class="form-control" oninput="get_vol_weight()" step="any" name="height[]" value="<?php echo $value['height'] + 0 ?>"></td>
+                                <td>
+                                  <input type="number" class="form-control" oninput="get_vol_weight()" step="any" name="length[]" title="NONFCL" value="<?php echo $value['length'] + 0 ?>">
+                                  <select class="form-control d-none" name="size[]" title="FCL">
+                                    <option value="">-- Select One --</option>
+                                    <option value="20 feet">20 feet</option>
+                                    <option value="40 feet">40 feet</option>
+                                    <option value="45 feet">45 feet</option>
+                                  </select>
+                                </td>
+                                <td>
+                                  <input type="number" class="form-control" oninput="get_vol_weight()" step="any" name="width[]" title="NONFCL" value="<?php echo $value['width'] + 0 ?>">
+                                  <input type="text" class="form-control d-none" step="any" name="container_no[]" title="FCL" value="-">
+                                </td>
+                                <td>
+                                  <input type="number" class="form-control" oninput="get_vol_weight()" step="any" name="height[]" title="NONFCL" value="<?php echo $value['height'] + 0 ?>">
+                                  <input type="text" class="form-control d-none" step="any" name="seal_no[]" title="FCL" value="-">
+                                </td>
                                 <td><input type="number" class="form-control" oninput="get_vol_weight()" step="any" name="weight[]" value="<?php echo $value['weight'] + 0 ?>"></td>
                                 <td>
                                   <?php if ($key == 0) : ?>
@@ -326,17 +346,39 @@ if (!isset($cargo_list)) {
                             <tr>
                               <td><input type="number" class="form-control" step="any" name="qty[]" oninput="get_vol_weight()"></td>
                               <td>
-                                <select class="form-control" name="piece_type[]">
+                                <select class="form-control" name="piece_type[]" title="NONFCL">
                                   <option value="">-- Select One --</option>
                                   <?php foreach ($package_type as $data) : ?>
                                     <option value="<?= $data['name'] ?>"><?= $data['name'] ?></option>
                                   <?php endforeach; ?>
                                 </select>
+                                <select class="form-control d-none" name="piece_type[]" title="FCL" disabled>
+                                  <option value="">-- Select One --</option>
+                                  <option value="General Purpose">General Purpose</option>
+                                  <option value="High Cube">High Cube</option>
+                                  <option value="Refrigerator">Refrigerator</option>
+                                </select>
                               </td>
-                              <td><input type="number" class="form-control" step="any" name="length[]" value="0" oninput="get_vol_weight()"></td>
-                              <td><input type="number" class="form-control" step="any" name="width[]" value="0" oninput="get_vol_weight()"></td>
-                              <td><input type="number" class="form-control" step="any" name="height[]" value="0" oninput="get_vol_weight()"></td>
-                              <td><input type="number" class="form-control" step="any" name="weight[]" value="0" oninput="get_vol_weight()"></td>
+                              <td>
+                                <input type="number" class="form-control" step="any" name="length[]" title="NONFCL" value="0" oninput="get_vol_weight()">
+                                <select class="form-control d-none" name="size[]" title="FCL">
+                                  <option value="">-- Select One --</option>
+                                  <option value="20 feet">20 feet</option>
+                                  <option value="40 feet">40 feet</option>
+                                  <option value="45 feet">45 feet</option>
+                                </select>
+                              </td>
+                              <td>
+                                <input type="number" class="form-control" step="any" name="width[]" title="NONFCL" value="0" oninput="get_vol_weight()">
+                                <input type="text" class="form-control d-none" step="any" name="container_no[]" title="FCL" value="-">
+                              </td>
+                              <td>
+                                <input type="number" class="form-control" step="any" name="height[]" title="NONFCL" value="0" oninput="get_vol_weight()">
+                                <input type="text" class="form-control d-none" step="any" name="seal_no[]" title="FCL" value="-">
+                              </td>
+                              <td>
+                                <input type="number" class="form-control" step="any" name="weight[]" value="0" oninput="get_vol_weight()">
+                              </td>
                               <td><button type="button" class="btn btn-primary" onclick="addrow(this)"><i class="fas fa-plus m-0"></i></button></td>
                             </tr>
                           <?php endif; ?>
@@ -842,7 +884,41 @@ if (!isset($cargo_list)) {
       $("select[name=sea][title=air]").removeAttr("disabled");
     }
     $("select[name=sea]").val('');
+    change_sea(value);
   });
+
+  $("select[name=sea]").on("change", function() {
+    var value = $(this).val();
+    change_sea(value);
+  });
+
+  function change_sea(text) {
+    $("#table_packages input[type=text]").val('');
+    $("#table_packages input[type=number]").val(0);
+    $("#table_packages select").val('').trigger('change');
+    if(text == 'FCL'){
+      $("#table_packages th:nth-child(2)").html('Container Type');
+      $("#table_packages th:nth-child(3)").html('Container Size');
+      $("#table_packages th:nth-child(4)").html('Container No.');
+      $("#table_packages th:nth-child(5)").html('Seal No.');
+      $("#table_packages th:nth-child(6)").html('Gross Weight');
+      $("#table_packages input[title=FCL], #table_packages select[title=FCL]").removeClass('d-none');
+      $("#table_packages input[title=NONFCL], #table_packages select[title=NONFCL]").addClass('d-none');
+      $("#table_packages select[name='piece_type[]'][title=FCL]").removeAttr("disabled");
+      $("#table_packages select[name='piece_type[]'][title=NONFCL]").attr("disabled", "disabled");
+    }
+    else{
+      $("#table_packages th:nth-child(2)").html('Package Type');
+      $("#table_packages th:nth-child(3)").html('Length(cm)');
+      $("#table_packages th:nth-child(4)").html('Width(cm)');
+      $("#table_packages th:nth-child(5)").html('Height(cm)');
+      $("#table_packages th:nth-child(6)").html('Weight(kg)');
+      $("#table_packages input[title=FCL], #table_packages select[title=FCL]").addClass('d-none');
+      $("#table_packages input[title=NONFCL], #table_packages select[title=NONFCL]").removeClass('d-none');
+      $("#table_packages select[name='piece_type[]'][title=FCL]").attr("disabled", "disabled");
+      $("#table_packages select[name='piece_type[]'][title=NONFCL]").removeAttr("disabled");
+    }
+  }
 
   $("select[name=status_pickup]").on("change", function() {
     var value = $(this).val();
@@ -980,6 +1056,7 @@ if (!isset($cargo_list)) {
 
   $(document).ready(function() {
     get_vol_weight();
+    change_sea($("select[name=sea]").val());
   });
 
   var settime_billing_account;

@@ -454,8 +454,8 @@ class Shipment extends CI_Controller
 			'billing_phone_number' 			=> $post['billing_phone_number'],
 			'billing_email' 						=> $post['billing_email'],
 			
-			'container_no'							=> $post['container_no'],
-			'seal_no'										=> $post['seal_no'],
+			// 'container_no'							=> $post['container_no'],
+			// 'seal_no'										=> $post['seal_no'],
 			'cipl_no'										=> $post['cipl_no'],
 			'permit_no'									=> $post['permit_no']
 		);
@@ -489,22 +489,28 @@ class Shipment extends CI_Controller
 			unset($where);
 			if ($post['id_detail'][$key] == "") {
 				$form_data = array(
-					'id_shipment' 					=> $post['id'],
+					'id_shipment' 			=> $post['id'],
 					'qty' 							=> $post['qty'][$key],
-					'piece_type' 					=> $post['piece_type'][$key],
+					'piece_type' 				=> $post['piece_type'][$key],
 					'length' 						=> $post['length'][$key],
 					'width' 						=> $post['width'][$key],
 					'height' 						=> $post['height'][$key],
+					'size' 							=> $post['size'][$key],
+					'container_no' 			=> $post['container_no'][$key],
+					'seal_no' 					=> $post['seal_no'][$key],
 					'weight' 						=> $post['weight'][$key],
 				);
 				$this->shipment_mod->shipment_packages_create_process_db($form_data);
 			} else {
 				$form_data = array(
 					'qty' 							=> $post['qty'][$key],
-					'piece_type' 					=> $post['piece_type'][$key],
+					'piece_type' 				=> $post['piece_type'][$key],
 					'length' 						=> $post['length'][$key],
 					'width' 						=> $post['width'][$key],
 					'height' 						=> $post['height'][$key],
+					'size' 							=> $post['size'][$key],
+					'container_no' 			=> $post['container_no'][$key],
+					'seal_no' 					=> $post['seal_no'][$key],
 					'weight' 						=> $post['weight'][$key],
 				);
 				$where['id'] = $post['id_detail'][$key];
@@ -545,6 +551,7 @@ class Shipment extends CI_Controller
 
 		$data['shipment'] 			= $shipment_list[0];
 		$data['packages_list'] 	= $packages_list;
+		$data['package_type'] = $this->shipment_mod->package_type_list_db();
 		$data['country'] = json_decode(file_get_contents("./assets/country/country.json"), true);
 		$data['subview'] 				= 'shipment/shipment_package_detail';
 		$data['meta_title'] 		= 'Shipment Package Detail';

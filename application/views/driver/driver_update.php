@@ -183,11 +183,19 @@
                   <thead>
                     <tr class="bg-info">
                       <th class="text-white">Qty.</th>
+                      <?php if($shipment['sea'] != 'FCL'): ?>
                       <th class="text-white">Package Type</th>
                       <th class="text-white">Length(cm)</th>
                       <th class="text-white">Width(cm)</th>
                       <th class="text-white">Height(cm)</th>
                       <th class="text-white">Weight(kg)</th>
+                      <?php else: ?>
+                      <th>Container Type</th>
+                      <th>Container Size</th>
+                      <th>Seal No.</th>
+                      <th>Seal No.</th>
+                      <th>Gross Weight</th>
+                      <?php endif; ?>
                     </tr>
                   </thead>
                   <tbody>
@@ -195,10 +203,17 @@
                     <tr>
                       <td><?php echo $value['qty'] ?></td>
                       <td><?php echo $value['piece_type'] ?></td>
+                      <?php if($shipment['sea'] != 'FCL'): ?>
                       <td><?php echo $value['length']+0 ?></td>
                       <td><?php echo $value['width']+0 ?></td>
                       <td><?php echo $value['height']+0 ?></td>
                       <td><?php echo $value['weight']+0 ?></td>
+                      <?php else: ?>
+                      <td><?php echo $value['size'] ?></td>
+                      <td><?php echo $value['container_no'] ?></td>
+                      <td><?php echo $value['seal_no'] ?></td>
+                      <td><?php echo $value['weight']+0 ?></td>
+                      <?php endif; ?>
                     </tr>
                     <?php endforeach;  ?>
                   </tbody>

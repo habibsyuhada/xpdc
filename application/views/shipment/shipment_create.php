@@ -310,27 +310,27 @@ if (!isset($cargo_list)) {
                                   </select>
                                   <select class="form-control d-none" name="piece_type[]" title="FCL" disabled>
                                     <option value="">-- Select One --</option>
-                                    <option value="General Purpose">General Purpose</option>
-                                    <option value="High Cube">High Cube</option>
-                                    <option value="Refrigerator">Refrigerator</option>
+                                    <option value="General Purpose" <?php echo ($value['piece_type'] == 'General Purpose' ? 'selected' : '') ?>>General Purpose</option>
+                                    <option value="High Cube" <?php echo ($value['piece_type'] == 'High Cube' ? 'selected' : '') ?>>High Cube</option>
+                                    <option value="Refrigerator" <?php echo ($value['piece_type'] == 'Refrigerator' ? 'selected' : '') ?>>Refrigerator</option>
                                   </select>
                                 </td>
                                 <td>
                                   <input type="number" class="form-control" oninput="get_vol_weight()" step="any" name="length[]" title="NONFCL" value="<?php echo $value['length'] + 0 ?>">
                                   <select class="form-control d-none" name="size[]" title="FCL">
                                     <option value="">-- Select One --</option>
-                                    <option value="20 feet">20 feet</option>
-                                    <option value="40 feet">40 feet</option>
-                                    <option value="45 feet">45 feet</option>
+                                    <option value="20 feet" <?php echo ($value['size'] == '20 feet' ? 'selected' : '') ?>>20 feet</option>
+                                    <option value="40 feet" <?php echo ($value['size'] == '40 feet' ? 'selected' : '') ?>>40 feet</option>
+                                    <option value="45 feet" <?php echo ($value['size'] == '45 feet' ? 'selected' : '') ?>>45 feet</option>
                                   </select>
                                 </td>
                                 <td>
                                   <input type="number" class="form-control" oninput="get_vol_weight()" step="any" name="width[]" title="NONFCL" value="<?php echo $value['width'] + 0 ?>">
-                                  <input type="text" class="form-control d-none" step="any" name="container_no[]" title="FCL" value="-">
+                                  <input type="text" class="form-control d-none" step="any" name="container_no[]" title="FCL" value="<?php echo $value['container_no'] ?>">
                                 </td>
                                 <td>
                                   <input type="number" class="form-control" oninput="get_vol_weight()" step="any" name="height[]" title="NONFCL" value="<?php echo $value['height'] + 0 ?>">
-                                  <input type="text" class="form-control d-none" step="any" name="seal_no[]" title="FCL" value="-">
+                                  <input type="text" class="form-control d-none" step="any" name="seal_no[]" title="FCL" value="<?php echo $value['seal_no'] ?>">
                                 </td>
                                 <td><input type="number" class="form-control" oninput="get_vol_weight()" step="any" name="weight[]" value="<?php echo $value['weight'] + 0 ?>"></td>
                                 <td>
@@ -892,10 +892,12 @@ if (!isset($cargo_list)) {
     change_sea(value);
   });
 
-  function change_sea(text) {
-    $("#table_packages input[type=text]").val('');
-    $("#table_packages input[type=number]").val(0);
-    $("#table_packages select").val('').trigger('change');
+  function change_sea(text, delete_data = 1) {
+    if(delete_data == 1){
+      $("#table_packages input[type=text]").val('');
+      $("#table_packages input[type=number]").val(0);
+      $("#table_packages select").val('').trigger('change');
+    }
     if(text == 'FCL'){
       $("#table_packages th:nth-child(2)").html('Container Type');
       $("#table_packages th:nth-child(3)").html('Container Size');
@@ -1056,7 +1058,7 @@ if (!isset($cargo_list)) {
 
   $(document).ready(function() {
     get_vol_weight();
-    change_sea($("select[name=sea]").val());
+    change_sea($("select[name=sea]").val(), 0);
   });
 
   var settime_billing_account;

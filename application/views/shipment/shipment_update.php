@@ -329,7 +329,7 @@
                     </div>
                     <br>
                     <div class="col-md-12">
-                      <table class="table text-center">
+                      <table class="table text-center" id="table_packages">
                         <thead>
                           <tr class="bg-info">
                             <th class="text-white font-weight-bold">Qty.</th>
@@ -354,12 +354,12 @@
                                   <?php foreach ($package_type as $data) : ?>
                                     <option value="<?= $data['name'] ?>" <?php echo ($value['piece_type'] == $data['name'] ? 'selected' : '') ?>><?= $data['name'] ?></option>
                                   <?php endforeach; ?>
-                                  <select class="form-control d-none" name="piece_type[]" title="FCL" disabled>
-                                    <option value="">-- Select One --</option>
-                                    <option value="General Purpose" <?php echo ($value['piece_type'] == 'General Purpose' ? 'selected' : '') ?>>General Purpose</option>
-                                    <option value="High Cube" <?php echo ($value['piece_type'] == 'High Cube' ? 'selected' : '') ?>>High Cube</option>
-                                    <option value="Refrigerator" <?php echo ($value['piece_type'] == 'Refrigerator' ? 'selected' : '') ?>>Refrigerator</option>
-                                  </select>
+                                </select>
+                                <select class="form-control d-none" name="piece_type[]" title="FCL" disabled>
+                                  <option value="">-- Select One --</option>
+                                  <option value="General Purpose" <?php echo ($value['piece_type'] == 'General Purpose' ? 'selected' : '') ?>>General Purpose</option>
+                                  <option value="High Cube" <?php echo ($value['piece_type'] == 'High Cube' ? 'selected' : '') ?>>High Cube</option>
+                                  <option value="Refrigerator" <?php echo ($value['piece_type'] == 'Refrigerator' ? 'selected' : '') ?>>Refrigerator</option>
                                 </select>
                               </td>
                               <td>

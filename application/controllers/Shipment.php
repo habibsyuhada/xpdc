@@ -157,6 +157,8 @@ class Shipment extends CI_Controller
 			$where['id_shipment'] 	= $id;
 			$packages_list 					= $this->shipment_mod->shipment_packages_list_db($where);
 			unset($where);
+			unset($data_post['container_no']);
+			unset($data_post['seal_no']);
 			foreach ($packages_list as $key => $value) {
 				foreach ($value as $key2 => $value2) {
 					if (!in_array($key2, array('id', 'id_shipment', 'create_date', 'status_delete')))

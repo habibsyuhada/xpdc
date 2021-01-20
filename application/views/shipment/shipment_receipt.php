@@ -212,20 +212,20 @@ $page_permission = array(
                       <input type="hidden" name="hscode" value="<?php echo $data_input['hscode'] ?>">
                     </div>
                   </div>
-                  <div class="form-group row m-0">
+                  <!-- <div class="form-group row m-0">
                     <label class="col-sm-3 col-form-label">Container No</label>
                     <div class="col-sm-9">
-                      <label class="col-form-label">: <?php echo @$data_input['container_no'] ?></label>
+                      <label class="col-form-label">: <?php //echo @$data_input['container_no'] ?></label>
                       <input type="hidden" name="container_no" value="<?php echo @$data_input['container_no'] ?>">
                     </div>
-                  </div>
-                  <div class="form-group row m-0">
+                  </div> -->
+                  <!-- <div class="form-group row m-0">
                     <label class="col-sm-3 col-form-label">Seal No.</label>
                     <div class="col-sm-9">
-                      <label class="col-form-label">: <?php echo @$data_input['seal_no'] ?></label>
-                      <input type="hidden" name="seal_no" value="<?php echo @$data_input['seal_no'] ?>">
+                      <label class="col-form-label">: <?php //echo @$data_input['seal_no'] ?></label>
+                      <input type="hidden" name="seal_no" value="<?php //echo @$data_input['seal_no'] ?>">
                     </div>
-                  </div>
+                  </div> -->
                 </div>
                 <div class="col-md-6">
                   <div class="form-group row m-0">
@@ -303,6 +303,9 @@ $page_permission = array(
                 <input type="hidden" name="length[]" value="<?php echo $data_input['length'][$key]+0 ?>">
                 <input type="hidden" name="width[]" value="<?php echo $data_input['width'][$key]+0 ?>">
                 <input type="hidden" name="height[]" value="<?php echo $data_input['height'][$key]+0 ?>">
+                <input type="hidden" name="size[]" value="<?php echo $data_input['size'][$key] ?>">
+                <input type="hidden" name="container_no[]" value="<?php echo $data_input['container_no'][$key] ?>">
+                <input type="hidden" name="seal_no[]" value="<?php echo $data_input['seal_no'][$key] ?>">
                 <input type="hidden" name="weight[]" value="<?php echo $data_input['weight'][$key]+0 ?>">
               <?php endforeach;  ?>
               <div class="row">
@@ -335,11 +338,19 @@ $page_permission = array(
                 <thead>
                   <tr class="bg-info">
                     <th class="text-white">Qty.</th>
+                    <?php if($data_input['sea'] != 'FCL'): ?>
                     <th class="text-white">Package Type</th>
                     <th class="text-white">Length(cm)</th>
                     <th class="text-white">Width(cm)</th>
                     <th class="text-white">Height(cm)</th>
                     <th class="text-white">Weight(kg)</th>
+                    <?php else: ?>
+                    <th class="text-white">Container Type</th>
+                    <th class="text-white">Container Size</th>
+                    <th class="text-white">Seal No.</th>
+                    <th class="text-white">Seal No.</th>
+                    <th class="text-white">Gross Weight</th>
+                    <?php endif; ?>
                   </tr>
                 </thead>
                 <tbody>
@@ -347,10 +358,17 @@ $page_permission = array(
                   <tr>
                     <td><?php echo $data_input['qty'][$key] ?></td>
                     <td><?php echo $data_input['piece_type'][$key] ?></td>
+                    <?php if($data_input['sea'] != 'FCL'): ?>
                     <td><?php echo $data_input['length'][$key]+0 ?></td>
                     <td><?php echo $data_input['width'][$key]+0 ?></td>
                     <td><?php echo $data_input['height'][$key]+0 ?></td>
                     <td><?php echo $data_input['weight'][$key]+0 ?></td>
+                    <?php else: ?>
+                    <td><?php echo $data_input['size'][$key] ?></td>
+                    <td><?php echo $data_input['container_no'][$key] ?></td>
+                    <td><?php echo $data_input['seal_no'][$key] ?></td>
+                    <td><?php echo $data_input['weight'][$key]+0 ?></td>
+                    <?php endif; ?>
                   </tr>
                   <?php endforeach;  ?>
                 </tbody>

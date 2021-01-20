@@ -569,3 +569,20 @@ ERROR - 2021-01-08 08:24:27 --> Severity: Warning --> file_get_contents(file/bar
 ERROR - 2021-01-08 08:24:27 --> Severity: Warning --> unlink(file/barcode/1610069067.png): No such file or directory C:\xampp\htdocs\xpdc\application\helpers\general_helper.php 75
 ERROR - 2021-01-08 08:24:27 --> Severity: Notice --> Undefined variable: shipment C:\xampp\htdocs\xpdc\application\controllers\Shipment.php 1183
 ERROR - 2021-01-08 08:24:27 --> Severity: Notice --> Trying to access array offset on value of type null C:\xampp\htdocs\xpdc\application\controllers\Shipment.php 1183
+ERROR - 2021-01-08 10:48:48 --> Severity: Notice --> Undefined index: min_value C:\xampp\htdocs\xpdc\application\controllers\Zone.php 188
+ERROR - 2021-01-08 10:48:48 --> Severity: Notice --> Undefined index: max_value C:\xampp\htdocs\xpdc\application\controllers\Zone.php 189
+ERROR - 2021-01-08 10:48:49 --> Severity: Notice --> Undefined index: price C:\xampp\htdocs\xpdc\application\controllers\Zone.php 190
+ERROR - 2021-01-08 10:48:49 --> Query error: Column 'min_value' cannot be null - Invalid query: INSERT INTO `table_rate` (`id_zone`, `min_value`, `max_value`, `price`) VALUES ('1', NULL, NULL, NULL)
+ERROR - 2021-01-08 10:49:56 --> Severity: Notice --> Undefined index: min_value C:\xampp\htdocs\xpdc\application\controllers\Zone.php 188
+ERROR - 2021-01-08 10:49:56 --> Severity: Notice --> Undefined index: max_value C:\xampp\htdocs\xpdc\application\controllers\Zone.php 189
+ERROR - 2021-01-08 10:49:57 --> Severity: Notice --> Undefined index: price C:\xampp\htdocs\xpdc\application\controllers\Zone.php 190
+ERROR - 2021-01-08 10:49:57 --> Query error: Column 'min_value' cannot be null - Invalid query: INSERT INTO `table_rate` (`id_zone`, `min_value`, `max_value`, `price`) VALUES ('1', NULL, NULL, NULL)
+ERROR - 2021-01-08 10:50:35 --> Severity: Notice --> Undefined index: id_zone C:\xampp\htdocs\xpdc\application\controllers\Zone.php 186
+ERROR - 2021-01-08 10:50:35 --> Severity: Notice --> Undefined index: min_value C:\xampp\htdocs\xpdc\application\controllers\Zone.php 187
+ERROR - 2021-01-08 10:50:35 --> Severity: Notice --> Undefined index: max_value C:\xampp\htdocs\xpdc\application\controllers\Zone.php 188
+ERROR - 2021-01-08 10:50:35 --> Severity: Notice --> Undefined index: price C:\xampp\htdocs\xpdc\application\controllers\Zone.php 189
+ERROR - 2021-01-08 10:50:35 --> Query error: Column 'id_zone' cannot be null - Invalid query: INSERT INTO `table_rate` (`id_zone`, `min_value`, `max_value`, `price`) VALUES (NULL, NULL, NULL, NULL)
+ERROR - 2021-01-08 10:50:59 --> Severity: Notice --> Undefined index: min_value C:\xampp\htdocs\xpdc\application\controllers\Zone.php 187
+ERROR - 2021-01-08 10:50:59 --> Severity: Notice --> Undefined index: max_value C:\xampp\htdocs\xpdc\application\controllers\Zone.php 188
+ERROR - 2021-01-08 10:50:59 --> Severity: Notice --> Undefined index: price C:\xampp\htdocs\xpdc\application\controllers\Zone.php 189
+ERROR - 2021-01-08 10:50:59 --> Query error: Column 'min_value' cannot be null - Invalid query: INSERT INTO `table_rate` (`id_zone`, `min_value`, `max_value`, `price`) VALUES ('1', NULL, NULL, NULL)

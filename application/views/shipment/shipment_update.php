@@ -173,7 +173,7 @@
                         <select class="form-control select2" name="consignee_country" required>
                           <option value="">- Select One -</option>
                           <?php foreach ($country['data'] as $data) { ?>
-                            <option value="<?= $data['location'] ?>"  <?php echo ($shipment['consignee_country'] == $data['location'] ? 'selected' : '') ?>><?= $data['location'] ?></option>
+                            <option value="<?= $data['location'] ?>" <?php echo ($shipment['consignee_country'] == $data['location'] ? 'selected' : '') ?>><?= $data['location'] ?></option>
                           <?php } ?>
                         </select>
                       </div>
@@ -233,13 +233,13 @@
                           </div>
                         </div>
                         <div class="col-md-6">
-                            <div class="form-group">
-                                <label>Insurance</label>
-                                <select class="form-control" name="insurance" required>
-                                    <option value="Yes" <?php echo ($shipment['insurance'] == "Yes" ? 'selected' : '') ?>>Yes</option>
-                                    <option value="No" <?php echo ($shipment['insurance'] == "No" ? 'selected' : '') ?>>No</option>
-                                </select>
-                            </div>
+                          <div class="form-group">
+                            <label>Insurance</label>
+                            <select class="form-control" name="insurance" required>
+                              <option value="Yes" <?php echo ($shipment['insurance'] == "Yes" ? 'selected' : '') ?>>Yes</option>
+                              <option value="No" <?php echo ($shipment['insurance'] == "No" ? 'selected' : '') ?>>No</option>
+                            </select>
+                          </div>
                         </div>
                       </div>
                     </div>
@@ -294,14 +294,14 @@
                       </div>
                     </div>
                     <div class="col-md-6">
-                      <div class="form-group">
+                      <!-- <div class="form-group">
                         <label>Container No</label>
                         <input type="text" class="form-control" name="container_no" placeholder="Container No." value="<?= $shipment['container_no'] ?>">
                       </div>
                       <div class="form-group">
                         <label>Seal No.</label>
                         <input type="text" class="form-control" name="seal_no" placeholder="Seal No." value="<?= $shipment['seal_no'] ?>">
-                      </div>
+                      </div> -->
                       <div class="form-group">
                         <label>Permit No.</label>
                         <input type="text" class="form-control" name="permit_no" placeholder="Permit No." value="<?= $shipment['permit_no'] ?>">
@@ -321,9 +321,9 @@
                             <button class="file-upload-browse btn btn-info" type="button">Upload</button>
                           </span>
                         </div>
-                        <?php if($shipment['cipl_no_atc'] != ""): ?>
-                        <!-- <img height="150px" src="<?php echo base_url()."file/agent/".$shipment['cipl_no_atc'] ?>"> -->
-                        <a href="<?php echo base_url()."file/agent/".$shipment['cipl_no_atc'] ?>" target="_blank" class="btn btn-danger btn-flat">Atc</a>
+                        <?php if ($shipment['cipl_no_atc'] != "") : ?>
+                          <!-- <img height="150px" src="<?php echo base_url() . "file/agent/" . $shipment['cipl_no_atc'] ?>"> -->
+                          <a href="<?php echo base_url() . "file/agent/" . $shipment['cipl_no_atc'] ?>" target="_blank" class="btn btn-danger btn-flat">Atc</a>
                         <?php endif; ?>
                       </div>
                     </div>
@@ -349,21 +349,37 @@
                                 <input type="hidden" class="form-control" name="id_detail[]" value="<?php echo $value['id'] ?>">
                               </td>
                               <td>
-                                <select class="form-control" name="piece_type[]" value="<?php echo $value['piece_type'] ?>">
+                                <select class="form-control" name="piece_type[]" title="NONFCL" value="<?php echo $value['piece_type'] ?>">
                                   <option value="">-- Select One --</option>
-                                  <option value="Pallet" <?php echo ($value['piece_type'] == "Pallet" ? 'selected' : '') ?>>Pallet</option>
-                                  <option value="Carton" <?php echo ($value['piece_type'] == "Carton" ? 'selected' : '') ?>>Carton</option>
-                                  <option value="Crate" <?php echo ($value['piece_type'] == "Crate" ? 'selected' : '') ?>>Crate</option>
-                                  <option value="Loose" <?php echo ($value['piece_type'] == "Loose" ? 'selected' : '') ?>>Loose</option>
-                                  <option value="Container 20 GP" <?php echo ($value['piece_type'] == "Container 20 GP" ? 'selected' : '') ?>>Container 20 GP</option>
-                                  <option value="Container 40 GP" <?php echo ($value['piece_type'] == "Container 40 GP" ? 'selected' : '') ?>>Container 40 GP</option>
-                                  <option value="Others" <?php echo ($value['piece_type'] == "Others" ? 'selected' : '') ?>>Others</option>
+                                  <?php foreach ($package_type as $data) : ?>
+                                    <option value="<?= $data['name'] ?>" <?php echo ($value['piece_type'] == $data['name'] ? 'selected' : '') ?>><?= $data['name'] ?></option>
+                                  <?php endforeach; ?>
+                                  <select class="form-control d-none" name="piece_type[]" title="FCL" disabled>
+                                    <option value="">-- Select One --</option>
+                                    <option value="General Purpose" <?php echo ($value['piece_type'] == 'General Purpose' ? 'selected' : '') ?>>General Purpose</option>
+                                    <option value="High Cube" <?php echo ($value['piece_type'] == 'High Cube' ? 'selected' : '') ?>>High Cube</option>
+                                    <option value="Refrigerator" <?php echo ($value['piece_type'] == 'Refrigerator' ? 'selected' : '') ?>>Refrigerator</option>
+                                  </select>
                                 </select>
                               </td>
-                              <td><input type="number" class="form-control" oninput="get_vol_weight()" step="any" name="length[]" value="<?php echo $value['length']+0 ?>"></td>
-                              <td><input type="number" class="form-control" oninput="get_vol_weight()" step="any" name="width[]" value="<?php echo $value['width']+0 ?>"></td>
-                              <td><input type="number" class="form-control" oninput="get_vol_weight()" step="any" name="height[]" value="<?php echo $value['height']+0 ?>"></td>
-                              <td><input type="number" class="form-control" oninput="get_vol_weight()" step="any" name="weight[]" value="<?php echo $value['weight']+0 ?>"></td>
+                              <td>
+                                <input type="number" class="form-control" oninput="get_vol_weight()" step="any" name="length[]" title="NONFCL" value="<?php echo $value['length'] + 0 ?>">
+                                <select class="form-control d-none" name="size[]" title="FCL">
+                                  <option value="">-- Select One --</option>
+                                  <option value="20 feet" <?php echo ($value['size'] == '20 feet' ? 'selected' : '') ?>>20 feet</option>
+                                  <option value="40 feet" <?php echo ($value['size'] == '40 feet' ? 'selected' : '') ?>>40 feet</option>
+                                  <option value="45 feet" <?php echo ($value['size'] == '45 feet' ? 'selected' : '') ?>>45 feet</option>
+                                </select>
+                              </td>
+                              <td>
+                                <input type="number" class="form-control" oninput="get_vol_weight()" step="any" name="width[]" title="NONFCL" value="<?php echo $value['width'] + 0 ?>">
+                                <input type="text" class="form-control d-none" step="any" name="container_no[]" title="FCL" value="<?php echo $value['container_no'] ?>">
+                              </td>
+                              <td>
+                                <input type="number" class="form-control" oninput="get_vol_weight()" step="any" name="height[]" title="NONFCL" value="<?php echo $value['height'] + 0 ?>">
+                                <input type="text" class="form-control d-none" step="any" name="seal_no[]" title="FCL" value="<?php echo $value['seal_no'] ?>">
+                              </td>
+                              <td><input type="number" class="form-control" oninput="get_vol_weight()" step="any" name="weight[]" value="<?php echo $value['weight'] + 0 ?>"></td>
                               <td>
                                 <?php if ($key == 0) : ?>
                                   <button type="button" class="btn btn-primary" onclick="addrow(this)"><i class="fas fa-plus m-0"></i></button>
@@ -438,7 +454,7 @@
                       </div>
                       <div class="form-group">
                         <label>Address</label>
-                        <textarea class="form-control" name="pickup_address" placeholder="Address" <?php echo (($shipment['status_pickup'] == 'Dropoff' ||!in_array ($shipment['pickup_same_as'], array("", "None"))) ? 'readonly' : '') ?> required><?php echo $shipment['pickup_address'] ?></textarea>
+                        <textarea class="form-control" name="pickup_address" placeholder="Address" <?php echo (($shipment['status_pickup'] == 'Dropoff' || !in_array($shipment['pickup_same_as'], array("", "None"))) ? 'readonly' : '') ?> required><?php echo $shipment['pickup_address'] ?></textarea>
                       </div>
                       <div class="form-group">
                         <label>City</label>
@@ -462,7 +478,7 @@
                       </div>
                       <div class="form-group">
                         <label>Email</label>
-                        <input type="email" class="form-control" name="pickup_email" value="<?php echo $shipment['pickup_email'] ?>" placeholder="Email" <?php echo (($shipment['status_pickup'] == 'Dropoff' || !in_array($shipment['pickup_same_as'], array("", "None"))) ? 'readonly' : '') ?> >
+                        <input type="email" class="form-control" name="pickup_email" value="<?php echo $shipment['pickup_email'] ?>" placeholder="Email" <?php echo (($shipment['status_pickup'] == 'Dropoff' || !in_array($shipment['pickup_same_as'], array("", "None"))) ? 'readonly' : '') ?>>
                       </div>
                       <div class="row clearfix">
                         <div class="col-md-6">
@@ -508,10 +524,16 @@
                       <h6 class="font-weight-bold">Billing Details</h6>
                     </div>
                     <div class="col-md-6">
-                      
+
                       <div class="form-group">
                         <label>XPDC Account No.</label>
-                        <input type="text" class="form-control" name="billing_account" value="<?php echo $shipment['billing_account'] ?>" placeholder="XPDC Account No. (if any)" oninput="check_custumer(this);">
+                        <select class="form-control select2" name="billing_account" onchange="check_custumer(this)">
+                          <option value="">XPDC Account No. (if any)</option>
+                          <?php foreach ($customer as $data) : ?>
+                            <option value="<?= $data['account_no'] ?>" <?= ($data['account_no'] == $shipment['billing_account']) ? 'selected' : ''; ?>><?= $data['account_no'] . " - " . $data['name'] ?></option>
+                          <?php endforeach; ?>
+                        </select>
+                        <!-- <input type="text" class="form-control" name="billing_account" value="<?php echo $shipment['billing_account'] ?>" placeholder="XPDC Account No. (if any)" oninput="check_custumer(this);"> -->
                       </div>
                       <div class="form-group">
                         <label>Same as</label>
@@ -591,9 +613,10 @@
     $(this).addClass("is-invalid");
     put_alert_if_invalid();
   });
+
   function put_alert_if_invalid() {
     clearTimeout(settime_invalid_cek);
-    settime_invalid_cek = setTimeout(function(){ 
+    settime_invalid_cek = setTimeout(function() {
       alert("Please Check all input in each tab to make sure you inputed them correctly.");
     }, 1000);
   }
@@ -667,7 +690,7 @@
 
       $('input[name=pickup_account]').attr('readonly', true);
       $('textarea[name=pickup_address]').attr('readonly', true);
-      if(status_pickup == "Picked Up"){
+      if (status_pickup == "Picked Up") {
         $('input[name=pickup_date], input[name=pickup_date_to], input[name=pickup_time], input[name=pickup_time_to]').attr('readonly', false);
       }
       same_as_billing_detail();
@@ -732,13 +755,48 @@
     if (value == 'Sea Transport') {
       $("select[name=sea][title=sea]").closest('.form-group').slideDown();
       $("select[name=sea][title=sea]").removeAttr("disabled");
-    } 
-    else if (value == 'Air Freight') {
+    } else if (value == 'Air Freight') {
       $("select[name=sea][title=air]").closest('.form-group').slideDown();
       $("select[name=sea][title=air]").removeAttr("disabled");
     }
     $("select[name=sea]").val('');
+    change_sea(value);
   });
+
+  $("select[name=sea]").on("change", function() {
+    var value = $(this).val();
+    change_sea(value);
+  });
+
+  function change_sea(text, delete_data = 1) {
+    if(delete_data == 1){
+      $("#table_packages input[type=text]").val('');
+      $("#table_packages input[type=number]").val(0);
+      $("#table_packages select").val('').trigger('change');
+    }
+    if(text == 'FCL'){
+      $("#table_packages th:nth-child(2)").html('Container Type');
+      $("#table_packages th:nth-child(3)").html('Container Size');
+      $("#table_packages th:nth-child(4)").html('Container No.');
+      $("#table_packages th:nth-child(5)").html('Seal No.');
+      $("#table_packages th:nth-child(6)").html('Gross Weight');
+      $("#table_packages input[title=FCL], #table_packages select[title=FCL]").removeClass('d-none');
+      $("#table_packages input[title=NONFCL], #table_packages select[title=NONFCL]").addClass('d-none');
+      $("#table_packages select[name='piece_type[]'][title=FCL]").removeAttr("disabled");
+      $("#table_packages select[name='piece_type[]'][title=NONFCL]").attr("disabled", "disabled");
+    }
+    else{
+      $("#table_packages th:nth-child(2)").html('Package Type');
+      $("#table_packages th:nth-child(3)").html('Length(cm)');
+      $("#table_packages th:nth-child(4)").html('Width(cm)');
+      $("#table_packages th:nth-child(5)").html('Height(cm)');
+      $("#table_packages th:nth-child(6)").html('Weight(kg)');
+      $("#table_packages input[title=FCL], #table_packages select[title=FCL]").addClass('d-none');
+      $("#table_packages input[title=NONFCL], #table_packages select[title=NONFCL]").removeClass('d-none');
+      $("#table_packages select[name='piece_type[]'][title=FCL]").attr("disabled", "disabled");
+      $("#table_packages select[name='piece_type[]'][title=NONFCL]").removeAttr("disabled");
+    }
+  }
 
   $("select[name=status_pickup]").on("change", function() {
     var value = $(this).val();
@@ -859,9 +917,18 @@
       total_measurement += measurement;
     });
 
-    $("#act_weight").html(total_act_weight.toLocaleString('en-US', {maximumFractionDigits:2, minimumFractionDigits: 2}));
-    $("#vol_weight").html(total_vol_weight.toLocaleString('en-US', {maximumFractionDigits:2, minimumFractionDigits: 2}));
-    $("#measurement").html(total_measurement.toLocaleString('en-US', {maximumFractionDigits:2, minimumFractionDigits: 2}));
+    $("#act_weight").html(total_act_weight.toLocaleString('en-US', {
+      maximumFractionDigits: 2,
+      minimumFractionDigits: 2
+    }));
+    $("#vol_weight").html(total_vol_weight.toLocaleString('en-US', {
+      maximumFractionDigits: 2,
+      minimumFractionDigits: 2
+    }));
+    $("#measurement").html(total_measurement.toLocaleString('en-US', {
+      maximumFractionDigits: 2,
+      minimumFractionDigits: 2
+    }));
 
   }
 
@@ -914,59 +981,57 @@
     $('.nav-tabs .active').parent().prev('li').find('a').trigger('click');
   });
 
-  $(document).ready(function (){
+  $(document).ready(function() {
     get_vol_weight();
+    change_sea($("select[name=sea]").val(), 0);
   });
 
   var settime_billing_account;
+
   function check_custumer(input) {
-    clearTimeout(settime_billing_account);
-    settime_billing_account = setTimeout(function(){ 
-      var billing_account = $(input).val();
-      $.ajax({
-        url: '<?php echo base_url() ?>shipment/check_custumer',
-        type: 'POST',
-        data:{
-          account_no: billing_account,
-        },
-        success: function (data) {
-          if(data.includes("Error")){
-            $(input).addClass('is-invalid');
-            var invalid_elem = '<div class="invalid-feedback">'+data+'</div>';
-            $('.invalid-feedback').remove();
-            $(invalid_elem).insertAfter(input);
-            showDangerToast(data);
+    var billing_account = $(input).val();
+    $.ajax({
+      url: '<?php echo base_url() ?>shipment/check_custumer',
+      type: 'POST',
+      data: {
+        account_no: billing_account,
+      },
+      success: function(data) {
+        if (data.includes("Error")) {
+          $(input).addClass('is-invalid');
+          var invalid_elem = '<div class="invalid-feedback">' + data + '</div>';
+          $('.invalid-feedback').remove();
+          $(invalid_elem).insertAfter(input);
+          showDangerToast(data);
 
-            $("input[name=billing_name]").val('');
-            $("input[name=billing_account]").val('');
-            $("textarea[name=billing_address]").val('');
-            $("input[name=billing_city]").val('');
-            $("select[name=billing_country_view]").val('').trigger('change');
-            $("input[name=billing_country]").val('');
-            $("input[name=billing_postcode]").val('');
-            $("input[name=billing_contact_person]").val('');
-            $("input[name=billing_phone_number]").val('');
-            $("input[name=billing_email]").val('');
-          }
-          else{
-            data = JSON. parse(data);
-            $(input).removeClass('is-invalid');
-            $(input).addClass('is-valid');
-            $('.invalid-feedback').remove();
-            console.log(data);
+          $("input[name=billing_name]").val('');
+          $("input[name=billing_account]").val('');
+          $("textarea[name=billing_address]").val('');
+          $("input[name=billing_city]").val('');
+          $("select[name=billing_country_view]").val('').trigger('change');
+          $("input[name=billing_country]").val('');
+          $("input[name=billing_postcode]").val('');
+          $("input[name=billing_contact_person]").val('');
+          $("input[name=billing_phone_number]").val('');
+          $("input[name=billing_email]").val('');
+        } else {
+          data = JSON.parse(data);
+          $(input).removeClass('is-invalid');
+          $(input).addClass('is-valid');
+          $('.invalid-feedback').remove();
+          console.log(data);
 
-            $("input[name=billing_name]").val(data.name);
-            $("textarea[name=billing_address]").val(data.address);
-            $("input[name=billing_city]").val(data.city);
-            $("select[name=billing_country_view]").val(data.country).trigger('change');
-            $("input[name=billing_country]").val(data.country);
-            $("input[name=billing_postcode]").val(data.postcode);
-            $("input[name=billing_contact_person]").val(data.contact_person);
-            $("input[name=billing_phone_number]").val(data.phone_number);
-            $("input[name=billing_email]").val(data.email);
-          }
+          $("input[name=billing_name]").val(data.name);
+          $("textarea[name=billing_address]").val(data.address);
+          $("input[name=billing_city]").val(data.city);
+          $("select[name=billing_country_view]").val(data.country).trigger('change');
+          $("input[name=billing_country]").val(data.country);
+          $("input[name=billing_postcode]").val(data.postcode);
+          $("input[name=billing_contact_person]").val(data.contact_person);
+          $("input[name=billing_phone_number]").val(data.phone_number);
+          $("input[name=billing_email]").val(data.email);
         }
-      }); 
-    }, 2000);
+      }
+    });
   }
 </script>

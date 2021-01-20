@@ -137,6 +137,8 @@ class Shipment extends CI_Controller
 		$data['meta_title'] 	= 'Create Shipment';
 
 		$data['country'] = json_decode(file_get_contents("./assets/country/country.json"), true);
+		$data['package_type'] = $this->shipment_mod->package_type_list_db();
+		$data['customer'] = $this->shipment_mod->customer_list_db();
 		$this->load->view('index', $data);
 	}
 
@@ -185,10 +187,14 @@ class Shipment extends CI_Controller
 			$where['id_shipment'] 	= $id;
 			$packages_list 					= $this->shipment_mod->shipment_packages_list_db($where);
 			unset($where);
+			unset($data_post['container_no']);
+			unset($data_post['seal_no']);
 			foreach ($packages_list as $key => $value) {
 				foreach ($value as $key2 => $value2) {
-					if (!in_array($key2, array('id', 'id_shipment', 'create_date', 'status_delete')))
+					if (!in_array($key2, array('id', 'id_shipment', 'create_date', 'status_delete'))){
+						echo $key2;
 						$data_post[$key2][] = $value2;
+					}
 				}
 			}
 			$post = $data_post;
@@ -321,12 +327,15 @@ class Shipment extends CI_Controller
 
 		foreach ($post['qty'] as $key => $value) {
 			$form_data = array(
-				'id_shipment' 			=> $id_shipment,
+				'id_shipment' 	=> $id_shipment,
 				'qty' 					=> $post['qty'][$key],
-				'piece_type' 			=> $post['piece_type'][$key],
+				'piece_type' 		=> $post['piece_type'][$key],
 				'length' 				=> $post['length'][$key],
 				'width' 				=> $post['width'][$key],
 				'height' 				=> $post['height'][$key],
+				'size' 					=> $post['size'][$key],
+				'container_no' 	=> $post['container_no'][$key],
+				'seal_no' 			=> $post['seal_no'][$key],
 				'weight'				=> $post['weight'][$key],
 			);
 			$this->shipment_mod->shipment_packages_create_process_db($form_data);
@@ -374,6 +383,8 @@ class Shipment extends CI_Controller
 		$data['shipment'] 			= $shipment_list[0];
 		$data['packages_list'] 	= $packages_list;
 		$data['history_list'] 	= $history_list;
+		$data['customer'] = $this->shipment_mod->customer_list_db();
+		$data['package_type'] = $this->shipment_mod->package_type_list_db();
 		// $data['t'] 							= 'g';
 		$data['subview'] 				= 'shipment/shipment_update';
 		$data['meta_title'] 		= 'Shipment Update';
@@ -443,8 +454,8 @@ class Shipment extends CI_Controller
 			'billing_phone_number' 			=> $post['billing_phone_number'],
 			'billing_email' 						=> $post['billing_email'],
 			
-			'container_no'							=> $post['container_no'],
-			'seal_no'										=> $post['seal_no'],
+			// 'container_no'							=> $post['container_no'],
+			// 'seal_no'										=> $post['seal_no'],
 			'cipl_no'										=> $post['cipl_no'],
 			'permit_no'									=> $post['permit_no']
 		);
@@ -478,22 +489,28 @@ class Shipment extends CI_Controller
 			unset($where);
 			if ($post['id_detail'][$key] == "") {
 				$form_data = array(
-					'id_shipment' 					=> $post['id'],
+					'id_shipment' 			=> $post['id'],
 					'qty' 							=> $post['qty'][$key],
-					'piece_type' 					=> $post['piece_type'][$key],
+					'piece_type' 				=> $post['piece_type'][$key],
 					'length' 						=> $post['length'][$key],
 					'width' 						=> $post['width'][$key],
 					'height' 						=> $post['height'][$key],
+					'size' 							=> $post['size'][$key],
+					'container_no' 			=> $post['container_no'][$key],
+					'seal_no' 					=> $post['seal_no'][$key],
 					'weight' 						=> $post['weight'][$key],
 				);
 				$this->shipment_mod->shipment_packages_create_process_db($form_data);
 			} else {
 				$form_data = array(
 					'qty' 							=> $post['qty'][$key],
-					'piece_type' 					=> $post['piece_type'][$key],
+					'piece_type' 				=> $post['piece_type'][$key],
 					'length' 						=> $post['length'][$key],
 					'width' 						=> $post['width'][$key],
 					'height' 						=> $post['height'][$key],
+					'size' 							=> $post['size'][$key],
+					'container_no' 			=> $post['container_no'][$key],
+					'seal_no' 					=> $post['seal_no'][$key],
 					'weight' 						=> $post['weight'][$key],
 				);
 				$where['id'] = $post['id_detail'][$key];
@@ -534,6 +551,7 @@ class Shipment extends CI_Controller
 
 		$data['shipment'] 			= $shipment_list[0];
 		$data['packages_list'] 	= $packages_list;
+		$data['package_type'] = $this->shipment_mod->package_type_list_db();
 		$data['country'] = json_decode(file_get_contents("./assets/country/country.json"), true);
 		$data['subview'] 				= 'shipment/shipment_package_detail';
 		$data['meta_title'] 		= 'Shipment Package Detail';
@@ -1071,6 +1089,7 @@ class Shipment extends CI_Controller
 	{
 		$form_data = array(
 			'status_delete'	=> 0,
+			'deleted_by' => $this->session->userdata('id')
 		);
 		$where['id'] = $id;
 		$this->shipment_mod->shipment_update_process_db($form_data, $where);

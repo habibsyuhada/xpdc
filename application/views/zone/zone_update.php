@@ -13,23 +13,7 @@
                     <input type="text" class="form-control" name="zone_name" placeholder="Zone Name" value="<?php echo $zone_list['zone_name'] ?>" required>
                   </div>
                   <div class="form-group">
-                    <label>Branch</label>
-                    <select class="form-control" name="branch" required>
-                      <option value="">- Select One -</option>
-                      <?php foreach ($branch_list as $branch) : ?>
-                        <option value="<?= $branch['id'] ?>" <?= ($zone_list['id_branch'] == $branch['id']) ? 'selected' : ''; ?>><?= $branch['name'] . " (" . $branch['code'] . ")" ?></option>
-                      <?php endforeach; ?>
-                    </select>
-                  </div>
-                  <div class="form-group">
-                    <label>Category</label>
-                    <select class="form-control" name="category" required>
-                      <option value="International" <?= ($zone_list['category'] == 'International') ? 'selected' : ''; ?>>International</option>
-                      <option value="Domestic" <?= ($zone_list['category'] == 'Domestic') ? 'selected' : ''; ?>>Domestic</option>
-                    </select>
-                  </div>
-                  <div class="form-group">
-                    <label>Country</label>
+                    <label>Country of Origin</label>
                     <select class="form-control select2" name="country[]" id="country" multiple>
                       <?php foreach ($country as $data) : ?>
                         <option value="<?= $data['country'] ?>" <?=(in_array($data['country'], $detail)) ? 'selected' : '';?>><?= $data['country'] ?></option>

@@ -1,12 +1,12 @@
 <?php
-  if(!isset($cargo_list)){
-    $cargo_list = [];
-  }
+if (!isset($cargo_list)) {
+  $cargo_list = [];
+}
 ?>
 <div class="main-content">
   <div class="container-fluid">
     <form action="<?php echo base_url(); ?>shipment/shipment_receipt" method="POST" class="forms-sample" enctype="multipart/form-data">
-      <?php if(isset($id_quotation)): ?>
+      <?php if (isset($id_quotation)) : ?>
         <input type="hidden" name="id_quotation" value="<?php echo $id_quotation ?>">
       <?php endif; ?>
       <div class="row clearfix">
@@ -281,7 +281,7 @@
                     </div>
                     <br>
                     <div class="col-md-12">
-                      <table class="table text-center">
+                      <table class="table text-center" id="table_packages">
                         <thead>
                           <tr class="bg-info">
                             <th class="text-white font-weight-bold">Qty.</th>
@@ -294,59 +294,93 @@
                           </tr>
                         </thead>
                         <tbody>
-                          <?php if(count($cargo_list) > 0): ?>
-                          <?php foreach ($cargo_list as $key => $value) : ?>
+                          <?php if (count($cargo_list) > 0) : ?>
+                            <?php foreach ($cargo_list as $key => $value) : ?>
+                              <tr>
+                                <td>
+                                  <input type="number" class="form-control" oninput="get_vol_weight()" step="any" name="qty[]" value="<?php echo $value['qty'] ?>">
+                                  <input type="hidden" class="form-control" name="id_detail[]" value="<?php echo $value['id'] ?>">
+                                </td>
+                                <td>
+                                  <select class="form-control" name="piece_type[]" title="NONFCL" value="<?php echo $value['piece_type'] ?>">
+                                    <option value="">-- Select One --</option>
+                                    <?php foreach ($package_type as $data) : ?>
+                                      <option value="<?= $data['name'] ?>" <?php echo ($value['piece_type'] == $data['name'] ? 'selected' : '') ?>><?= $data['name'] ?></option>
+                                    <?php endforeach; ?>
+                                  </select>
+                                  <select class="form-control d-none" name="piece_type[]" title="FCL" disabled>
+                                    <option value="">-- Select One --</option>
+                                    <option value="General Purpose" <?php echo ($value['piece_type'] == 'General Purpose' ? 'selected' : '') ?>>General Purpose</option>
+                                    <option value="High Cube" <?php echo ($value['piece_type'] == 'High Cube' ? 'selected' : '') ?>>High Cube</option>
+                                    <option value="Refrigerator" <?php echo ($value['piece_type'] == 'Refrigerator' ? 'selected' : '') ?>>Refrigerator</option>
+                                  </select>
+                                </td>
+                                <td>
+                                  <input type="number" class="form-control" oninput="get_vol_weight()" step="any" name="length[]" title="NONFCL" value="<?php echo $value['length'] + 0 ?>">
+                                  <select class="form-control d-none" name="size[]" title="FCL">
+                                    <option value="">-- Select One --</option>
+                                    <option value="20 feet" <?php echo ($value['size'] == '20 feet' ? 'selected' : '') ?>>20 feet</option>
+                                    <option value="40 feet" <?php echo ($value['size'] == '40 feet' ? 'selected' : '') ?>>40 feet</option>
+                                    <option value="45 feet" <?php echo ($value['size'] == '45 feet' ? 'selected' : '') ?>>45 feet</option>
+                                  </select>
+                                </td>
+                                <td>
+                                  <input type="number" class="form-control" oninput="get_vol_weight()" step="any" name="width[]" title="NONFCL" value="<?php echo $value['width'] + 0 ?>">
+                                  <input type="text" class="form-control d-none" step="any" name="container_no[]" title="FCL" value="<?php echo $value['container_no'] ?>">
+                                </td>
+                                <td>
+                                  <input type="number" class="form-control" oninput="get_vol_weight()" step="any" name="height[]" title="NONFCL" value="<?php echo $value['height'] + 0 ?>">
+                                  <input type="text" class="form-control d-none" step="any" name="seal_no[]" title="FCL" value="<?php echo $value['seal_no'] ?>">
+                                </td>
+                                <td><input type="number" class="form-control" oninput="get_vol_weight()" step="any" name="weight[]" value="<?php echo $value['weight'] + 0 ?>"></td>
+                                <td>
+                                  <?php if ($key == 0) : ?>
+                                    <button type="button" class="btn btn-primary" onclick="addrow(this)"><i class="fas fa-plus m-0"></i></button>
+                                  <?php else : ?>
+                                    <button type="button" onclick="deletepackage('<?php echo $value['id'] ?>', this)" class="btn btn-danger"><i class="fas fa-trash m-0"></i></button>
+                                  <?php endif; ?>
+                                </td>
+                              </tr>
+                            <?php endforeach; ?>
+                          <?php else : ?>
                             <tr>
+                              <td><input type="number" class="form-control" step="any" name="qty[]" oninput="get_vol_weight()"></td>
                               <td>
-                                <input type="number" class="form-control" oninput="get_vol_weight()" step="any" name="qty[]" value="<?php echo $value['qty'] ?>">
-                                <input type="hidden" class="form-control" name="id_detail[]" value="<?php echo $value['id'] ?>">
-                              </td>
-                              <td>
-                                <select class="form-control" name="piece_type[]" value="<?php echo $value['piece_type'] ?>">
+                                <select class="form-control" name="piece_type[]" title="NONFCL">
                                   <option value="">-- Select One --</option>
-                                  <option value="Pallet" <?php echo ($value['piece_type'] == "Pallet" ? 'selected' : '') ?>>Pallet</option>
-                                  <option value="Carton" <?php echo ($value['piece_type'] == "Carton" ? 'selected' : '') ?>>Carton</option>
-                                  <option value="Crate" <?php echo ($value['piece_type'] == "Crate" ? 'selected' : '') ?>>Crate</option>
-                                  <option value="Loose" <?php echo ($value['piece_type'] == "Loose" ? 'selected' : '') ?>>Loose</option>
-                                  <option value="Container 20 GP" <?php echo ($value['piece_type'] == "Container 20 GP" ? 'selected' : '') ?>>Container 20 GP</option>
-                                  <option value="Container 40 GP" <?php echo ($value['piece_type'] == "Container 40 GP" ? 'selected' : '') ?>>Container 40 GP</option>
-                                  <option value="Others" <?php echo ($value['piece_type'] == "Others" ? 'selected' : '') ?>>Others</option>
+                                  <?php foreach ($package_type as $data) : ?>
+                                    <option value="<?= $data['name'] ?>"><?= $data['name'] ?></option>
+                                  <?php endforeach; ?>
+                                </select>
+                                <select class="form-control d-none" name="piece_type[]" title="FCL" disabled>
+                                  <option value="">-- Select One --</option>
+                                  <option value="General Purpose">General Purpose</option>
+                                  <option value="High Cube">High Cube</option>
+                                  <option value="Refrigerator">Refrigerator</option>
                                 </select>
                               </td>
-                              <td><input type="number" class="form-control" oninput="get_vol_weight()" step="any" name="length[]" value="<?php echo $value['length']+0 ?>"></td>
-                              <td><input type="number" class="form-control" oninput="get_vol_weight()" step="any" name="width[]" value="<?php echo $value['width']+0 ?>"></td>
-                              <td><input type="number" class="form-control" oninput="get_vol_weight()" step="any" name="height[]" value="<?php echo $value['height']+0 ?>"></td>
-                              <td><input type="number" class="form-control" oninput="get_vol_weight()" step="any" name="weight[]" value="<?php echo $value['weight']+0 ?>"></td>
                               <td>
-                                <?php if ($key == 0) : ?>
-                                  <button type="button" class="btn btn-primary" onclick="addrow(this)"><i class="fas fa-plus m-0"></i></button>
-                                <?php else : ?>
-                                  <button type="button" onclick="deletepackage('<?php echo $value['id'] ?>', this)" class="btn btn-danger"><i class="fas fa-trash m-0"></i></button>
-                                <?php endif; ?>
+                                <input type="number" class="form-control" step="any" name="length[]" title="NONFCL" value="0" oninput="get_vol_weight()">
+                                <select class="form-control d-none" name="size[]" title="FCL">
+                                  <option value="">-- Select One --</option>
+                                  <option value="20 feet">20 feet</option>
+                                  <option value="40 feet">40 feet</option>
+                                  <option value="45 feet">45 feet</option>
+                                </select>
                               </td>
+                              <td>
+                                <input type="number" class="form-control" step="any" name="width[]" title="NONFCL" value="0" oninput="get_vol_weight()">
+                                <input type="text" class="form-control d-none" step="any" name="container_no[]" title="FCL" value="-">
+                              </td>
+                              <td>
+                                <input type="number" class="form-control" step="any" name="height[]" title="NONFCL" value="0" oninput="get_vol_weight()">
+                                <input type="text" class="form-control d-none" step="any" name="seal_no[]" title="FCL" value="-">
+                              </td>
+                              <td>
+                                <input type="number" class="form-control" step="any" name="weight[]" value="0" oninput="get_vol_weight()">
+                              </td>
+                              <td><button type="button" class="btn btn-primary" onclick="addrow(this)"><i class="fas fa-plus m-0"></i></button></td>
                             </tr>
-                          <?php endforeach; ?>
-                          <?php else: ?>
-                          <tr>
-                            <td><input type="number" class="form-control" step="any" name="qty[]" oninput="get_vol_weight()"></td>
-                            <td>
-                              <select class="form-control" name="piece_type[]">
-                                <option value="">-- Select One --</option>
-                                <option value="Pallet">Pallet</option>
-                                <option value="Carton">Carton</option>
-                                <option value="Crate">Crate</option>
-                                <option value="Loose">Loose</option>
-                                <option value="Container 20 GP">Container 20 GP</option>
-                                <option value="Container 40 GP">Container 40 GP</option>
-                                <option value="Others">Others</option>
-                              </select>
-                            </td>
-                            <td><input type="number" class="form-control" step="any" name="length[]" value="0" oninput="get_vol_weight()"></td>
-                            <td><input type="number" class="form-control" step="any" name="width[]" value="0" oninput="get_vol_weight()"></td>
-                            <td><input type="number" class="form-control" step="any" name="height[]" value="0" oninput="get_vol_weight()"></td>
-                            <td><input type="number" class="form-control" step="any" name="weight[]" value="0" oninput="get_vol_weight()"></td>
-                            <td><button type="button" class="btn btn-primary" onclick="addrow(this)"><i class="fas fa-plus m-0"></i></button></td>
-                          </tr>
                           <?php endif; ?>
                         </tbody>
                       </table>
@@ -485,7 +519,13 @@
 
                       <div class="form-group">
                         <label>XPDC Account No.</label>
-                        <input type="text" class="form-control" name="billing_account" placeholder="XPDC Account No. (if any)" oninput="check_custumer(this);">
+                        <select class="form-control select2" name="billing_account" onchange="check_custumer(this)">
+                          <option value="">XPDC Account No. (if any)</option>
+                          <?php foreach ($customer as $data) : ?>
+                            <option value="<?= $data['account_no'] ?>"><?= $data['account_no'] . " - " . $data['name'] ?></option>
+                          <?php endforeach; ?>
+                        </select>
+                        <!-- <input type="text" class="form-control" name="billing_account" placeholder="XPDC Account No. (if any)" oninput="check_custumer(this);"> -->
                       </div>
                       <div class="form-group">
                         <label>Same as</label>
@@ -685,9 +725,10 @@
     $(this).addClass("is-invalid");
     put_alert_if_invalid();
   });
+
   function put_alert_if_invalid() {
     clearTimeout(settime_invalid_cek);
-    settime_invalid_cek = setTimeout(function(){ 
+    settime_invalid_cek = setTimeout(function() {
       alert("Please Check all input in each tab to make sure you inputed them correctly.");
     }, 1000);
   }
@@ -843,7 +884,43 @@
       $("select[name=sea][title=air]").removeAttr("disabled");
     }
     $("select[name=sea]").val('');
+    change_sea(value);
   });
+
+  $("select[name=sea]").on("change", function() {
+    var value = $(this).val();
+    change_sea(value);
+  });
+
+  function change_sea(text, delete_data = 1) {
+    if(delete_data == 1){
+      $("#table_packages input[type=text]").val('');
+      $("#table_packages input[type=number]").val(0);
+      $("#table_packages select").val('').trigger('change');
+    }
+    if(text == 'FCL'){
+      $("#table_packages th:nth-child(2)").html('Container Type');
+      $("#table_packages th:nth-child(3)").html('Container Size');
+      $("#table_packages th:nth-child(4)").html('Container No.');
+      $("#table_packages th:nth-child(5)").html('Seal No.');
+      $("#table_packages th:nth-child(6)").html('Gross Weight');
+      $("#table_packages input[title=FCL], #table_packages select[title=FCL]").removeClass('d-none');
+      $("#table_packages input[title=NONFCL], #table_packages select[title=NONFCL]").addClass('d-none');
+      $("#table_packages select[name='piece_type[]'][title=FCL]").removeAttr("disabled");
+      $("#table_packages select[name='piece_type[]'][title=NONFCL]").attr("disabled", "disabled");
+    }
+    else{
+      $("#table_packages th:nth-child(2)").html('Package Type');
+      $("#table_packages th:nth-child(3)").html('Length(cm)');
+      $("#table_packages th:nth-child(4)").html('Width(cm)');
+      $("#table_packages th:nth-child(5)").html('Height(cm)');
+      $("#table_packages th:nth-child(6)").html('Weight(kg)');
+      $("#table_packages input[title=FCL], #table_packages select[title=FCL]").addClass('d-none');
+      $("#table_packages input[title=NONFCL], #table_packages select[title=NONFCL]").removeClass('d-none');
+      $("#table_packages select[name='piece_type[]'][title=FCL]").attr("disabled", "disabled");
+      $("#table_packages select[name='piece_type[]'][title=NONFCL]").removeAttr("disabled");
+    }
+  }
 
   $("select[name=status_pickup]").on("change", function() {
     var value = $(this).val();
@@ -979,60 +1056,58 @@
 
   }
 
-  $(document).ready(function (){
+  $(document).ready(function() {
     get_vol_weight();
+    change_sea($("select[name=sea]").val(), 0);
   });
-  
+
   var settime_billing_account;
+
   function check_custumer(input) {
-    clearTimeout(settime_billing_account);
-    settime_billing_account = setTimeout(function(){ 
-      var billing_account = $(input).val();
-      $.ajax({
-        url: '<?php echo base_url() ?>shipment/check_custumer',
-        type: 'POST',
-        data:{
-          account_no: billing_account,
-        },
-        success: function (data) {
-          if(data.includes("Error")){
-            $(input).addClass('is-invalid');
-            var invalid_elem = '<div class="invalid-feedback">'+data+'</div>';
-            $('.invalid-feedback').remove();
-            $(invalid_elem).insertAfter(input);
-            showDangerToast(data);
+    var billing_account = $(input).val();
+    $.ajax({
+      url: '<?php echo base_url() ?>shipment/check_custumer',
+      type: 'POST',
+      data: {
+        account_no: billing_account,
+      },
+      success: function(data) {
+        if (data.includes("Error")) {
+          $(input).addClass('is-invalid');
+          var invalid_elem = '<div class="invalid-feedback">' + data + '</div>';
+          $('.invalid-feedback').remove();
+          $(invalid_elem).insertAfter(input);
+          showDangerToast(data);
 
-            $("input[name=billing_name]").val('');
-            $("input[name=billing_account]").val('');
-            $("textarea[name=billing_address]").val('');
-            $("input[name=billing_city]").val('');
-            $("select[name=billing_country_view]").val('').trigger('change');
-            $("input[name=billing_country]").val('');
-            $("input[name=billing_postcode]").val('');
-            $("input[name=billing_contact_person]").val('');
-            $("input[name=billing_phone_number]").val('');
-            $("input[name=billing_email]").val('');
-          }
-          else{
-            data = JSON. parse(data);
-            $(input).removeClass('is-invalid');
-            $(input).addClass('is-valid');
-            $('.invalid-feedback').remove();
-            console.log(data);
+          $("input[name=billing_name]").val('');
+          $("input[name=billing_account]").val('');
+          $("textarea[name=billing_address]").val('');
+          $("input[name=billing_city]").val('');
+          $("select[name=billing_country_view]").val('').trigger('change');
+          $("input[name=billing_country]").val('');
+          $("input[name=billing_postcode]").val('');
+          $("input[name=billing_contact_person]").val('');
+          $("input[name=billing_phone_number]").val('');
+          $("input[name=billing_email]").val('');
+        } else {
+          data = JSON.parse(data);
+          $(input).removeClass('is-invalid');
+          $(input).addClass('is-valid');
+          $('.invalid-feedback').remove();
+          console.log(data);
 
-            $("input[name=billing_name]").val(data.name);
-            $("textarea[name=billing_address]").val(data.address);
-            $("input[name=billing_city]").val(data.city);
-            $("select[name=billing_country_view]").val(data.country).trigger('change');
-            $("input[name=billing_country]").val(data.country);
-            $("input[name=billing_postcode]").val(data.postcode);
-            $("input[name=billing_contact_person]").val(data.contact_person);
-            $("input[name=billing_phone_number]").val(data.phone_number);
-            $("input[name=billing_email]").val(data.email);
-          }
+          $("input[name=billing_name]").val(data.name);
+          $("textarea[name=billing_address]").val(data.address);
+          $("input[name=billing_city]").val(data.city);
+          $("select[name=billing_country_view]").val(data.country).trigger('change');
+          $("input[name=billing_country]").val(data.country);
+          $("input[name=billing_postcode]").val(data.postcode);
+          $("input[name=billing_contact_person]").val(data.contact_person);
+          $("input[name=billing_phone_number]").val(data.phone_number);
+          $("input[name=billing_email]").val(data.email);
         }
-      }); 
-    }, 2000);
+      }
+    });
   }
 
   $(function() {

@@ -159,6 +159,9 @@ class Quotation extends CI_Controller
 				'length' 						=> $post['cargo_length'][$key],
 				'width' 						=> $post['cargo_width'][$key],
 				'height' 						=> $post['cargo_height'][$key],
+				'size' 							=> $post['cargo_size'][$key],
+				'container_no' 			=> $post['cargo_container_no'][$key],
+				'seal_no' 					=> $post['cargo_seal_no'][$key],
 				'weight' 						=> $post['cargo_weight'][$key],
 			);
 			$this->quotation_mod->quotation_cargo_create_process_db($form_data);
@@ -351,6 +354,9 @@ class Quotation extends CI_Controller
 					'length' 						=> $post['cargo_length'][$key],
 					'width' 						=> $post['cargo_width'][$key],
 					'height' 						=> $post['cargo_height'][$key],
+					'size' 							=> $post['cargo_size'][$key],
+					'container_no' 			=> $post['cargo_container_no'][$key],
+					'seal_no' 					=> $post['cargo_seal_no'][$key],
 					'weight' 						=> $post['cargo_weight'][$key],
 				);
 				$this->quotation_mod->quotation_cargo_create_process_db($form_data);
@@ -361,6 +367,9 @@ class Quotation extends CI_Controller
 					'length' 						=> $post['cargo_length'][$key],
 					'width' 						=> $post['cargo_width'][$key],
 					'height' 						=> $post['cargo_height'][$key],
+					'size' 							=> $post['cargo_size'][$key],
+					'container_no' 			=> $post['cargo_container_no'][$key],
+					'seal_no' 					=> $post['cargo_seal_no'][$key],
 					'weight' 						=> $post['cargo_weight'][$key],
 				);
 				$where['id'] = $post['id_cargo'][$key];

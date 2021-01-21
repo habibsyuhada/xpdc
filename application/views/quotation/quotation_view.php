@@ -240,11 +240,19 @@
                     <thead>
                       <tr class="bg-info">
                         <th class="text-white font-weight-bold">Qty.</th>
+                        <?php if($quotation['sea'] != 'FCL'): ?>
                         <th class="text-white font-weight-bold">Package Type</th>
                         <th class="text-white font-weight-bold">Length(cm)</th>
                         <th class="text-white font-weight-bold">Width(cm)</th>
                         <th class="text-white font-weight-bold">Height(cm)</th>
                         <th class="text-white font-weight-bold">Weight(kg)</th>
+                        <?php else: ?>
+                        <th class="text-white font-weight-bold">Container Type</th>
+                        <th class="text-white font-weight-bold">Container Size</th>
+                        <th class="text-white font-weight-bold">Seal No.</th>
+                        <th class="text-white font-weight-bold">Seal No.</th>
+                        <th class="text-white font-weight-bold">Gross Weight</th>
+                        <?php endif; ?>
                       </tr>
                     </thead>
                     <tbody>
@@ -267,10 +275,17 @@
                         <tr>
                           <td><?php echo $value['qty'] ?></td>
                           <td><?php echo $value['piece_type'] ?></td>
+                          <?php if($quotation['sea'] != 'FCL'): ?>
                           <td><?php echo $value['length'] + 0 ?></td>
                           <td><?php echo $value['width'] + 0 ?></td>
                           <td><?php echo $value['height'] + 0 ?></td>
                           <td><?php echo $value['weight'] + 0 ?></td>
+                          <?php else: ?>
+                          <td><?php echo $value['size'] ?></td>
+                          <td><?php echo $value['container_no'] ?></td>
+                          <td><?php echo $value['seal_no'] ?></td>
+                          <td><?php echo $value['weight']+0 ?></td>
+                          <?php endif; ?>
                         </tr>
                       <?php endforeach; ?>
                     </tbody>

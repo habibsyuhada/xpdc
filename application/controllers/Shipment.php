@@ -33,27 +33,25 @@ class Shipment extends CI_Controller
 
 		if ($this->session->userdata('role') == "Driver") {
 			$where["(driver_pickup = " . $this->session->userdata('id') . " OR driver_deliver = " . $this->session->userdata('id') . ")"] 	= NULL;
-		}
-		elseif ($this->session->userdata('role') == "Commercial") {
+		} elseif ($this->session->userdata('role') == "Commercial") {
 			unset($where);
 			$datadb 	= $this->home_mod->customer_list(array("status_delete" => 1, "create_by" => $this->session->userdata('id')));
 			$customer_list = [];
 			foreach ($datadb as $key => $value) {
-				if($value['account_no'] != ""){
+				if ($value['account_no'] != "") {
 					$customer_list[] = $value['account_no'];
 				}
 			}
-			if(count($customer_list) == 0){
+			if (count($customer_list) == 0) {
 				$customer_list[] = "0";
 			}
 			$where['status_delete'] 	= 1;
-			$where["shipment_detail.billing_account IN ('".join("', '", $customer_list)."') OR created_by = '".$this->session->userdata('id')."'"] 	= NULL;
+			$where["shipment_detail.billing_account IN ('" . join("', '", $customer_list) . "') OR created_by = '" . $this->session->userdata('id') . "'"] 	= NULL;
 			// $where["created_by"] 	= $this->session->userdata('id');
-		}
-		elseif ($this->session->userdata('role') == "Customer") {
+		} elseif ($this->session->userdata('role') == "Customer") {
 			unset($where);
 			$datadb 	= $this->home_mod->customer_list(array("status_delete" => 1, "email" => $this->session->userdata('email')));
-			if(count($datadb) == 0){
+			if (count($datadb) == 0) {
 				$account_no = "0000000";
 			}
 			$account_no = $datadb[0]["account_no"];
@@ -63,10 +61,9 @@ class Shipment extends CI_Controller
 
 		if ($this->input->get('status_driver')) {
 			$status_driver = explode("_", $this->input->get('status_driver'));
-			if(count($status_driver) > 1){
+			if (count($status_driver) > 1) {
 				$where["(status_driver_" . $status_driver[0] . " = " . $status_driver[1] . ")"] 	= NULL;
-			}
-			else{
+			} else {
 				$where["(status_driver_" . $status_driver[0] . " IN (1, 2) )"] 	= NULL;
 			}
 		}
@@ -91,13 +88,12 @@ class Shipment extends CI_Controller
 		$express_list 	= [];
 		$created_by 	= [];
 		foreach ($datadb as $key => $value) {
-			if($value['sea'] == "Express" && !in_array($value['status'], array("Delivered", "Canceled")) ){
+			if ($value['sea'] == "Express" && !in_array($value['status'], array("Delivered", "Canceled"))) {
 				$express_list[] = $value;
-			}
-			else{
+			} else {
 				$shipment_list[] = $value;
 			}
-			if(!in_array($value['created_by'], $created_by)){
+			if (!in_array($value['created_by'], $created_by)) {
 				$created_by[] = $value['created_by'];
 			}
 		}
@@ -114,9 +110,9 @@ class Shipment extends CI_Controller
 		$data['driver_list'] 	= $this->home_mod->user_list($where);
 
 		$created_by_list = [];
-		if(count($created_by) > 0 && $this->session->userdata('role') == "Super Admin"){
+		if (count($created_by) > 0 && $this->session->userdata('role') == "Super Admin") {
 			unset($where);
-			$where["id IN ('".join("', '", $created_by)."')"] 	= NULL;
+			$where["id IN ('" . join("', '", $created_by) . "')"] 	= NULL;
 			$datadb 	= $this->home_mod->user_list($where);
 			foreach ($datadb as $key => $value) {
 				$created_by_list[$value['id']] = $value['name'];
@@ -171,7 +167,7 @@ class Shipment extends CI_Controller
 		}
 
 		$data['data_input'] 			= $post;
-		$data['meta_title'] 			= 'Shipment '.(isset($post['tracking_no']) ? "Preview" : "Receipt");
+		$data['meta_title'] 			= 'Shipment ' . (isset($post['tracking_no']) ? "Preview" : "Receipt");
 		$data['subview']    			= 'shipment/shipment_receipt';
 		$this->load->view('index', $data);
 	}
@@ -193,7 +189,7 @@ class Shipment extends CI_Controller
 			unset($data_post['seal_no']);
 			foreach ($packages_list as $key => $value) {
 				foreach ($value as $key2 => $value2) {
-					if (!in_array($key2, array('id', 'id_shipment', 'create_date', 'status_delete'))){
+					if (!in_array($key2, array('id', 'id_shipment', 'create_date', 'status_delete'))) {
 						echo $key2;
 						$data_post[$key2][] = $value2;
 					}
@@ -375,7 +371,7 @@ class Shipment extends CI_Controller
 		}
 
 		$t = 'sein';
-		if($this->input->get('t')){
+		if ($this->input->get('t')) {
 			$t = $this->input->get('t');
 		}
 		$data['t'] = $t;
@@ -424,7 +420,7 @@ class Shipment extends CI_Controller
 			'currency'					=> $post['currency'],
 			'ref_no'					=> $post['ref_no'],
 		);
-		if(isset($post['has_updated_packages'])){
+		if (isset($post['has_updated_packages'])) {
 			$form_data['has_updated_packages'] = 1;
 		}
 		$where['id'] = $post['id'];
@@ -455,7 +451,7 @@ class Shipment extends CI_Controller
 			'billing_contact_person' 		=> $post['billing_contact_person'],
 			'billing_phone_number' 			=> $post['billing_phone_number'],
 			'billing_email' 						=> $post['billing_email'],
-			
+
 			// 'container_no'							=> $post['container_no'],
 			// 'seal_no'										=> $post['seal_no'],
 			'cipl_no'										=> $post['cipl_no'],
@@ -468,7 +464,7 @@ class Shipment extends CI_Controller
 			$upload_path = 'file/agent/';
 			$config = [
 				'upload_path' 		=> $upload_path,
-				'file_name' 			=> 'img_cipl_no_atc_'.$post['id'].'_'. date('YmsHis'),
+				'file_name' 			=> 'img_cipl_no_atc_' . $post['id'] . '_' . date('YmsHis'),
 				'allowed_types' 	=> '*',
 				// 'max_size'				=> 500,
 				'overwrite' 			=> TRUE,
@@ -520,12 +516,12 @@ class Shipment extends CI_Controller
 			}
 		}
 
-		if(isset($post['has_updated_packages'])){
+		if (isset($post['has_updated_packages'])) {
 			$form_data = array(
 				'id_shipment' 	=> $post['id'],
 				'date' 					=> date("Y-m-d"),
 				'time' 					=> date("H:i:s"),
-				'location' 			=> $post['shipper_city'].", ".$post['shipper_country'],
+				'location' 			=> $post['shipper_city'] . ", " . $post['shipper_country'],
 				'status' 				=> "Service Center",
 				'remarks' 			=> "",
 			);
@@ -572,7 +568,7 @@ class Shipment extends CI_Controller
 			'currency'							=> $post['currency'],
 			'ref_no'								=> $post['ref_no'],
 		);
-		if(isset($post['has_updated_packages'])){
+		if (isset($post['has_updated_packages'])) {
 			$form_data['has_updated_packages'] = 1;
 		}
 		$where['id'] = $post['id'];
@@ -605,12 +601,12 @@ class Shipment extends CI_Controller
 			}
 		}
 
-		if(isset($post['has_updated_packages'])){
+		if (isset($post['has_updated_packages'])) {
 			$form_data = array(
 				'id_shipment' 	=> $post['id'],
 				'date' 					=> date("Y-m-d"),
 				'time' 					=> date("H:i:s"),
-				'location' 			=> $post['shipper_city'].", ".$post['shipper_country'],
+				'location' 			=> $post['shipper_city'] . ", " . $post['shipper_country'],
 				'status' 				=> "Service Center",
 				'remarks' 			=> "Shipment information updated.",
 			);
@@ -652,7 +648,7 @@ class Shipment extends CI_Controller
 	public function shipment_edit_process()
 	{
 		$post = $this->input->post();
-		
+
 		$form_data = array(
 			'main_agent_name'												=> $post['main_agent_name'],
 			'main_agent_mawb_mbl'										=> $post['main_agent_mawb_mbl'],
@@ -679,7 +675,7 @@ class Shipment extends CI_Controller
 			$upload_path = 'file/agent/';
 			$config = [
 				'upload_path' 		=> $upload_path,
-				'file_name' 			=> 'img_main_agent_mawb_mbl_atc_'.$post['id'].'_'. date('YmsHis'),
+				'file_name' 			=> 'img_main_agent_mawb_mbl_atc_' . $post['id'] . '_' . date('YmsHis'),
 				'allowed_types' 	=> '*',
 				// 'max_size'				=> 500,
 				'overwrite' 			=> TRUE,
@@ -699,7 +695,7 @@ class Shipment extends CI_Controller
 			$upload_path = 'file/agent/';
 			$config = [
 				'upload_path' 		=> $upload_path,
-				'file_name' 			=> 'img_secondary_agent_mawb_mbl_atc_'.$post['id'].'_'. date('YmsHis'),
+				'file_name' 			=> 'img_secondary_agent_mawb_mbl_atc_' . $post['id'] . '_' . date('YmsHis'),
 				'allowed_types' 	=> '*',
 				// 'max_size'				=> 500,
 				'overwrite' 			=> TRUE,
@@ -788,7 +784,7 @@ class Shipment extends CI_Controller
 		$data['main_agent'] 			= $main_agent;
 		$data['secondary_agent'] 	= $secondary_agent;
 		$data['costumer'] 				= $costumer;
-		
+
 		$data['uom_list'] = $this->home_mod->uom_list();
 
 		$data['subview'] 				= 'shipment/shipment_cost';
@@ -899,7 +895,7 @@ class Shipment extends CI_Controller
 		}
 
 		$quotation = $this->shipment_mod->quotation_list_db(array('tracking_no' => $shipment_list[0]['tracking_no']));
-		if(count($quotation) > 0){
+		if (count($quotation) > 0) {
 			$data['quotation'] = $quotation[0];
 		}
 
@@ -1087,6 +1083,26 @@ class Shipment extends CI_Controller
 		$this->pdf->load_view('shipment/shipment_invoice_pdf', $data);
 	}
 
+	public function shipment_do_pdf($id)
+	{
+		$where['shipment.id'] = $id;
+		$shipment_list = $this->shipment_mod->shipment_list_db($where);
+		$shipment = $shipment_list[0];
+		$data['shipment'] = $shipment;
+
+		unset($where);
+		$where['id_shipment'] = $id;
+		$packages_list = $this->shipment_mod->shipment_packages_list_db($where);
+		$data['packages'] = $packages_list;
+
+		$data['logo'] 	= base64_encode(file_get_contents("assets/img/logo-big-xpdc.png"));
+
+		$this->load->library('pdf');
+		$this->pdf->setPaper('A4', 'potrait');
+		$this->pdf->filename = "DeliveryOrder-" . $shipment['tracking_no'] . ".pdf";
+		$this->pdf->load_view('shipment/shipment_do_pdf', $data);
+	}
+
 	public function shipment_delete_process($id)
 	{
 		$form_data = array(
@@ -1246,13 +1262,12 @@ class Shipment extends CI_Controller
 		}
 
 		foreach ($shipment_list as $key => $value) {
-			if($post['history_status'] == "Departed" && $value['main_agent_name'] == ""){
-				echo "Error : You cannot depart shipment before fill up Shipping Information (".$value['tracking_no'].")";
+			if ($post['history_status'] == "Departed" && $value['main_agent_name'] == "") {
+				echo "Error : You cannot depart shipment before fill up Shipping Information (" . $value['tracking_no'] . ")";
 				return false;
 				exit;
-			}
-			elseif ($post['history_status'] == "Service Center" && $value['status'] == "Picked up" && $value['has_updated_packages'] != 1) {
-				echo "Error : You need to edit shipment information / packages first to change status Service Center from Picked up (".$value['tracking_no'].")";
+			} elseif ($post['history_status'] == "Service Center" && $value['status'] == "Picked up" && $value['has_updated_packages'] != 1) {
+				echo "Error : You need to edit shipment information / packages first to change status Service Center from Picked up (" . $value['tracking_no'] . ")";
 				return false;
 				exit;
 			}
@@ -1275,7 +1290,8 @@ class Shipment extends CI_Controller
 		echo json_encode($output);
 	}
 
-	public function column_history_update_process(){
+	public function column_history_update_process()
+	{
 		$post = $this->input->post();
 		$form_data = [
 			$post['column'] => $post['text']
@@ -1285,7 +1301,7 @@ class Shipment extends CI_Controller
 		];
 		$this->shipment_mod->shipment_history_update_process_db($form_data, $where);
 
-		if(in_array($post['column'], array('date', 'time'))){
+		if (in_array($post['column'], array('date', 'time'))) {
 			$this->shipment_update_last_history($post['id_shipment']);
 		}
 	}
@@ -1408,19 +1424,19 @@ class Shipment extends CI_Controller
 		$this->load->view('index', $data);
 	}
 
-	public function check_custumer(){
+	public function check_custumer()
+	{
 		$post = $this->input->post();
 		$where = [
 			"status_delete" => 1,
 			"account_no" 		=> $post['account_no'],
 		];
 		$datadb 	= $this->home_mod->customer_list($where);
-		if(count($datadb) > 0){
+		if (count($datadb) > 0) {
 			$customer = $datadb[0];
 			echo json_encode($customer);
-		}
-		else{
-			echo "Error: Account Number ".$post['account_no']." Not Found!";
+		} else {
+			echo "Error: Account Number " . $post['account_no'] . " Not Found!";
 			exit;
 		}
 	}

@@ -42,6 +42,19 @@ class Zone_mod extends CI_Model
 		return $query->result_array();
 	}
 
+	function subzone_list_db_query($where = null)
+	{
+		if (isset($where)) {
+			$this->db->where($where);
+		}
+		$this->db->select("a.id, a.sub_zone, a.created_by, a.created_date, GROUP_CONCAT(b.city) as city");
+		$this->db->from('mst_sub_zone a');
+		$this->db->join("mst_sub_zone_detail b", "a.id = b.id_subzone", "LEFT OUTER");
+		$this->db->group_by("a.id, a.sub_zone, a.created_by, a.created_date");
+		$query = $this->db->get();
+		return $query->result_array();
+	}
+
 	function subzone_list_db($where = null)
 	{
 		if (isset($where)) {
@@ -49,6 +62,16 @@ class Zone_mod extends CI_Model
 		}
 		$this->db->order_by("created_date", "DESC");
 		$query = $this->db->get('mst_sub_zone');
+
+		return $query->result_array();
+	}
+
+	function subzone_detail_list_db($where = null)
+	{
+		if (isset($where)) {
+			$this->db->where($where);
+		}
+		$query = $this->db->get('mst_sub_zone_detail');
 
 		return $query->result_array();
 	}
@@ -98,6 +121,18 @@ class Zone_mod extends CI_Model
 		return $insert_id;
 	}
 
+	public function subzone_create_process_db($data)
+	{
+		$this->db->insert('mst_sub_zone', $data);
+		$insert_id = $this->db->insert_id();
+		return $insert_id;
+	}
+
+	public function subzone_detail_create_process_db($data)
+	{
+		return $this->db->insert_batch("mst_sub_zone_detail", $data);
+	}
+
 	public function table_rate_create_process_db($data)
 	{
 		$this->db->insert('table_rate', $data);
@@ -109,6 +144,12 @@ class Zone_mod extends CI_Model
 	{
 		$this->db->where($where);
 		$this->db->update('mst_zone', $data);
+	}
+
+	public function subzone_update_process_db($data, $where)
+	{
+		$this->db->where($where);
+		$this->db->update('mst_sub_zone', $data);
 	}
 
 	public function table_rate_update_process_db($data, $where)
@@ -129,9 +170,32 @@ class Zone_mod extends CI_Model
 		$this->db->delete('mst_zone_detail');
 	}
 
+	public function subzone_delete_process_db($where)
+	{
+		$this->db->where($where);
+		$this->db->delete('mst_sub_zone');
+	}
+
+	public function subzone_detail_delete_process_db($where)
+	{
+		$this->db->where($where);
+		$this->db->delete('mst_sub_zone_detail');
+	}
+
 	public function table_rate_delete_process_db($where)
 	{
 		$this->db->where($where);
 		$this->db->delete('table_rate');
+	}
+
+	function city_list_db($where = null)
+	{
+		if (isset($where)) {
+			$this->db->where($where);
+		}
+		$this->db->order_by("created_date", "DESC");
+		$query = $this->db->get('mst_city');
+
+		return $query->result_array();
 	}
 }

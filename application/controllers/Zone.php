@@ -150,15 +150,52 @@ class Zone extends CI_Controller
 
     public function subzone_list($id)
     {
+        $where['id']                 = $id;
+        $zone_list                     = $this->zone_mod->zone_list_db($where);
+        if (count($zone_list) < 1) {
+            redirect($_SERVER['HTTP_REFERER']);
+        }
+        unset($where);
         $where['id_zone']                 = $id;
-        $subzone_list                  = $this->zone_mod->subzone_list_db($where);
+        $subzone_list                  = $this->zone_mod->subzone_list_db_query($where);
         $data['id_zone'] = $id;
 
         $data['sub_zone'] = $subzone_list;
+        $data['city'] = $this->zone_mod->city_list_db();
 
         $data['subview']            = 'zone/subzone_list';
         $data['meta_title']         = 'Sub Zone List';
         $this->load->view('index', $data);
+    }
+
+    public function subzone_create_process()
+    {
+        $post = $this->input->post();
+
+        $where["sub_zone = '" . $post['sub_zone'] . "'"]         = NULL;
+        $zone_list             = $this->zone_mod->subzone_list_db($where);
+        if (count($zone_list) > 0) {
+            $this->session->set_flashdata('error', 'Duplicate Sub Zone!');
+            redirect($_SERVER['HTTP_REFERER']);
+        }
+
+        $form_data = array(
+            'id_zone'                 => $post['id_zone'],
+            'sub_zone'                => $post['sub_zone'],
+            'created_by'         => $this->session->userdata('id')
+        );
+        $id_subzone = $this->zone_mod->subzone_create_process_db($form_data);
+
+        unset($form_data);
+
+        foreach ($post['city'] as $value) {
+            $form_data[] = array("id_subzone" => $id_subzone, "city" => $value);
+        }
+
+        $this->zone_mod->subzone_detail_create_process_db($form_data);
+
+        $this->session->set_flashdata('success', 'Your sub zone data has been Created!');
+        redirect($_SERVER['HTTP_REFERER']);
     }
 
     public function subzone_update($id)
@@ -168,10 +205,54 @@ class Zone extends CI_Controller
         if (count($zone_list) < 1) {
             redirect($_SERVER['HTTP_REFERER']);
         }
-        $data['zone_list']          = $zone_list[0];
-        $data['subview']            = 'zone/subzone_update';
-        $data['meta_title']         = 'Sub Zone Update';
-        $this->load->view('index', $data);
+        $data['subzone_list']          = $zone_list[0];
+
+        unset($where);
+        $where['id_subzone']        = $id;
+        $city_list          = $this->zone_mod->subzone_detail_list_db($where);
+        $cities = array();
+        foreach($city_list as $row){
+            $cities[] = $row['city'];
+        }
+        $data['cities'] = $cities;
+
+        $data['city'] = $this->zone_mod->city_list_db();
+        $this->load->view('zone/subzone_update', $data);
+    }
+
+    public function subzone_update_process($id)
+    {
+        $post = $this->input->post();
+
+        $form_data = array(
+            'sub_zone'                 => $post['sub_zone'],
+        );
+        $where['id'] = $id;
+        $this->zone_mod->subzone_update_process_db($form_data, $where);
+
+        unset($form_data);
+
+        $delete = $this->zone_mod->subzone_detail_delete_process_db(array('id_subzone' => $id));
+
+        foreach ($post['city'] as $value) {
+            $form_data[] = array("id_subzone" => $id, "city" => $value);
+        }
+        $this->zone_mod->subzone_detail_create_process_db($form_data);
+
+        $this->session->set_flashdata('success', 'Your sub zone data has been Updated!');
+        redirect($_SERVER['HTTP_REFERER']);
+    }
+
+    public function subzone_delete_process($id)
+    {
+        $where['id'] = $id;
+        $this->zone_mod->subzone_delete_process_db($where);
+
+        unset($where);
+        $where['id_subzone'] = $id;
+        $this->zone_mod->subzone_detail_delete_process_db($where);
+
+        redirect($_SERVER['HTTP_REFERER']);
     }
 
     public function table_rate_list($id)

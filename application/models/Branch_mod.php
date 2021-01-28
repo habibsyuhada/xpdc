@@ -49,6 +49,16 @@ class Branch_mod extends CI_Model
     return $query->result_array();
   }
 
+  function subzone_list_db($where = null)
+  {
+    if (isset($where)) {
+      $this->db->where($where);
+    }
+    $query = $this->db->get('mst_sub_zone');
+
+    return $query->result_array();
+  }
+
   public function table_rate_create_process_db($data)
   {
     $this->db->insert('table_rate', $data);
@@ -78,4 +88,15 @@ class Branch_mod extends CI_Model
 
     return $query->result_array();
   }
+
+	public function table_rate_download_list_db($where = null)
+	{
+	  if(isset($where)){
+		$this->db->where($where);
+	  }
+	  $this->db->select('type_of_shipment, type_of_mode, zone, subzone, rate_type, default_value, min_value, max_value, price');
+	  $this->db->from('table_rate');
+	  $query = $this->db->get();
+	  return $query->result_array();
+	}
 }

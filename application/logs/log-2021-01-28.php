@@ -1131,3 +1131,12 @@ ORDER BY `created_date` DESC
 ERROR - 2021-01-28 09:42:29 --> Severity: Notice --> Undefined variable: id_zone C:\xampp\htdocs\xpdc\application\views\branch\load_table_rate.php 19
 ERROR - 2021-01-28 09:42:29 --> Severity: Notice --> Undefined variable: id_zone C:\xampp\htdocs\xpdc\application\views\branch\load_table_rate.php 60
 ERROR - 2021-01-28 09:42:48 --> Severity: Notice --> Undefined variable: id_zone C:\xampp\htdocs\xpdc\application\views\branch\load_table_rate.php 19
+ERROR - 2021-01-28 10:51:07 --> Severity: Notice --> Undefined index: id_zone C:\xampp\htdocs\xpdc\application\controllers\Branch.php 161
+ERROR - 2021-01-28 10:51:07 --> Query error: Unknown column 'id_zone' in 'field list' - Invalid query: INSERT INTO `table_rate` (`id_branch`, `type_of_shipment`, `type_of_mode`, `id_zone`, `rate_type`, `default_value`, `price`) VALUES ('4', 'International', 'Land Shipping', NULL, 'fix rate', '100', '1000000')
+ERROR - 2021-01-28 17:04:23 --> 404 Page Not Found: Assets/favicon.ico
+ERROR - 2021-01-28 17:04:31 --> 404 Page Not Found: Home/favicon.ico
+ERROR - 2021-01-28 17:26:12 --> 404 Page Not Found: Home/favicon.ico
+ERROR - 2021-01-28 17:26:22 --> 404 Page Not Found: Branch/favicon.ico
+ERROR - 2021-01-28 17:28:01 --> 404 Page Not Found: Shipment/favicon.ico
+ERROR - 2021-01-28 18:14:17 --> 404 Page Not Found: Branch/load_sub_zone
+ERROR - 2021-01-28 18:14:33 --> 404 Page Not Found: Branch/load_sub_zone

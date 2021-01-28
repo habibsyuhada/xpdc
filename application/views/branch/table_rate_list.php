@@ -7,6 +7,25 @@
                         <h3>Table List</h3>
                     </div>
                     <div class="card-body">
+                        <button class="btn btn-primary" type="button" data-toggle="collapse" data-target="#collapseExample" aria-expanded="false" aria-controls="collapseExample">
+                            <i class="fa fa-upload"></i> Upload Excel
+                        </button>
+                        <a href="<?= base_url() ?>branch/download_table_rate/<?= $id_branch ?>" class="btn btn-warning"><i class="fa fa-download"></i> Download Excel</a>
+                        <br>
+                        <div class="collapse" id="collapseExample">
+                            <div class="card card-body">
+                                <form action="<?= base_url() ?>branch/upload_table_rate/<?= $id_branch ?>" method="POST" enctype="multipart/form-data">
+                                    <div class="form-group">
+                                        <label>Upload Excel</label>
+                                        <input type="file" class="form-control-file" name="upload_excel" accept=".csv" required />
+                                    </div>
+                                    <div class="form-group">
+                                        <button type="submit" name="submit" class="btn btn-success"><i class="fa fa-save"></i> Save</button>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                        <br>
                         <div class="row">
                             <div class="col">
                                 <div class="form-group">
@@ -23,8 +42,10 @@
                                     <label>Type of Mode</label>
                                     <select class="form-control" name="type_of_mode" required>
                                         <option value="Land Shipping">Land Shipping</option>
-                                        <option value="Air Freight">Air Freight</option>
-                                        <option value="Sea Transport">Sea Transport</option>
+                                        <option value="Air Freight - Express">Air Freight - Express</option>
+                                        <option value="Air Freight - Reguler">Air Freight - Reguler</option>
+                                        <option value="Sea Transport - LCL">Sea Transport - LCL</option>
+                                        <option value="Sea Transport - FCL">Sea Transport - FCL</option>
                                     </select>
                                 </div>
                             </div>
@@ -35,13 +56,13 @@
                                 <label>Zone</label>
                                 <select class="form-control select2" name="zone" required>
                                     <?php foreach ($zone as $row) : ?>
-                                        <option value="<?= $row['zone_name'] ?>"><?= $row['zone_name'] ?></option>
+                                        <option value="<?= $row['zone_name'] ?>" data-id="<?= $row['id'] ?>"><?= $row['zone_name'] ?></option>
                                     <?php endforeach ?>
                                 </select>
                             </div>
                             <div class="col">
                                 <label>Sub Zone</label>
-                                <select class="form-control select2" name="subzone" required>
+                                <select class="form-control select2" name="subzone" id="subzone" required>
                                     <option value="">All</option>
                                 </select>
                             </div>
@@ -73,6 +94,7 @@
 </div>
 <script>
     load_table();
+    subzone_unit();
 
     $('#myModal').on('shown.bs.modal', function(e) {
         $("#myModal").css("display", "block");
@@ -98,6 +120,7 @@
     });
     $("select[name=zone]").change(function() {
         load_table();
+        subzone_unit();
     });
     $("select[name=subzone]").change(function() {
         load_table();
@@ -116,13 +139,33 @@
             url: "<?= base_url() ?>branch/load_table_rate",
             data: {
                 id_branch: id,
-                type_of_shipment, type_of_shipment,
+                type_of_shipment,
+                type_of_shipment,
                 type_of_mode: type_of_mode,
                 zone: zone,
                 subzone: subzone
             }
         }).done(function(msg) {
             $("#load_table").html(msg);
+        });
+    }
+
+    function subzone_unit() {
+
+        var zone = $("select[name='zone'] option:selected").data('id');
+        $.ajax({
+            type: "POST",
+            url: "<?= base_url() ?>branch/load_subzone",
+            data: {
+                zone: zone
+            }
+        }).done(function(msg) {
+            var array = JSON.parse(msg);
+            $('#subzone option:gt(0)').remove();
+            $.each(array, function(index, value) {
+                $("select[name='subzone']").append($("<option></option>")
+                    .attr("value", value['sub_zone']).text(value['sub_zone']));
+            });
         });
     }
 </script>

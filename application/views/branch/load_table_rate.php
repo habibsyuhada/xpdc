@@ -17,6 +17,7 @@
                     <input type="hidden" name="type_of_shipment" value="<?php echo $type_of_shipment; ?>" />
                     <input type="hidden" name="type_of_mode" value="<?php echo $type_of_mode; ?>" />
                     <input type="hidden" name="zone" value="<?php echo $zone; ?>" />
+                    <input type="hidden" name="subzone" value="<?php echo $subzone; ?>" />
                 </td>
                 <td><input type="text" class="form-control" name="default_value" placeholder="Value" required /></td>
                 <td><input type="text" class="form-control" name="price" placeholder="Price" required /></td>
@@ -58,6 +59,7 @@
                     <input type="hidden" name="type_of_shipment" value="<?php echo $type_of_shipment; ?>" />
                     <input type="hidden" name="type_of_mode" value="<?php echo $type_of_mode; ?>" />
                     <input type="hidden" name="zone" value="<?php echo $zone; ?>" />
+                    <input type="hidden" name="subzone" value="<?php echo $subzone; ?>" />
                 </td>
                 <td><input type="text" class="form-control" name="min_value" placeholder="Min. Value" required /></td>
                 <td><input type="text" class="form-control" name="max_value" placeholder="Max. Value" required /></td>

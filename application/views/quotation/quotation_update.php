@@ -322,11 +322,11 @@
                           </td>
                           <td>
                             <input type="number" class="form-control" oninput="get_vol_weight()" step="any" name="cargo_cargo_width[]" title="NONFCL" value="<?php echo $value['width']+0 ?>">
-                            <input type="text" class="form-control d-none" step="any" name="container_no[]" title="FCL" value="<?php echo $value['container_no'] ?>">
+                            <input type="text" class="form-control d-none" step="any" name="cargo_container_no[]" title="FCL" value="<?php echo $value['container_no'] ?>">
                           </td>
                           <td>
                             <input type="number" class="form-control" oninput="get_vol_weight()" step="any" name="cargo_height[]" title="NONFCL" value="<?php echo $value['height']+0 ?>">
-                            <input type="text" class="form-control d-none" step="any" name="seal_no[]" title="FCL" value="<?php echo $value['seal_no'] ?>">
+                            <input type="text" class="form-control d-none" step="any" name="cargo_seal_no[]" title="FCL" value="<?php echo $value['seal_no'] ?>">
                           </td>
                           <td><input type="number" class="form-control" oninput="get_vol_weight()" step="any" name="cargo_weight[]" value="<?php echo $value['weight']+0 ?>"></td>
                           <td>

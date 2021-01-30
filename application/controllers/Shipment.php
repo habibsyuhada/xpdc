@@ -56,7 +56,7 @@ class Shipment extends CI_Controller
 			}
 			$account_no = $datadb[0]["account_no"];
 			$where['status_delete'] 	= 1;
-			$where["shipment_detail.billing_account"] 	= $account_no;
+			$where["(shipment_detail.billing_account = '".$account_no."' OR created_by = '" . $this->session->userdata('id') . "')"] 	= NULL;
 		}
 
 		if ($this->input->get('status_driver')) {
@@ -132,9 +132,15 @@ class Shipment extends CI_Controller
 		$data['subview'] 			= 'shipment/shipment_create';
 		$data['meta_title'] 	= 'Create Shipment';
 
+		if ($this->session->userdata('role') == "Customer") {
+			$data['customer'] = $this->shipment_mod->customer_list_db(array("status_delete" => 1, "email" => $this->session->userdata('email')));
+		}
+		else{
+			$data['customer'] = $this->shipment_mod->customer_list_db();
+		}
+
 		$data['country'] = json_decode(file_get_contents("./assets/country/country.json"), true);
 		$data['package_type'] = $this->shipment_mod->package_type_list_db();
-		$data['customer'] = $this->shipment_mod->customer_list_db();
 		$this->load->view('index', $data);
 	}
 

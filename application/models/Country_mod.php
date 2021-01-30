@@ -13,7 +13,6 @@ class Country_mod extends CI_Model
     if (isset($where)) {
       $this->db->where($where);
     }
-    $this->db->order_by("created_date", "DESC");
     $query = $this->db->get('mst_country');
 
     return $query->result_array();
@@ -67,7 +66,6 @@ class Country_mod extends CI_Model
     if (isset($where)) {
       $this->db->where($where);
     }
-    $this->db->order_by("created_date", "DESC");
     $query = $this->db->get('mst_city');
 
     return $query->result_array();

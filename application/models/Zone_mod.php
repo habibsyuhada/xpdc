@@ -13,7 +13,6 @@ class Zone_mod extends CI_Model
 		if (isset($where)) {
 			$this->db->where($where);
 		}
-		$this->db->order_by("created_date", "DESC");
 		$query = $this->db->get('mst_zone');
 
 		return $query->result_array();
@@ -60,7 +59,6 @@ class Zone_mod extends CI_Model
 		if (isset($where)) {
 			$this->db->where($where);
 		}
-		$this->db->order_by("created_date", "DESC");
 		$query = $this->db->get('mst_sub_zone');
 
 		return $query->result_array();

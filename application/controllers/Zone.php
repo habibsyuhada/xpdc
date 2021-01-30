@@ -150,15 +150,53 @@ class Zone extends CI_Controller
 
     public function subzone_list($id)
     {
+        $where['id']                 = $id;
+        $zone_list                     = $this->zone_mod->zone_list_db($where);
+        if (count($zone_list) < 1) {
+            redirect($_SERVER['HTTP_REFERER']);
+        }
+        unset($where);
         $where['id_zone']                 = $id;
-        $subzone_list                  = $this->zone_mod->subzone_list_db($where);
+        $subzone_list                  = $this->zone_mod->subzone_list_db_query($where);
         $data['id_zone'] = $id;
 
         $data['sub_zone'] = $subzone_list;
+        $data['zone'] = $zone_list[0];
+        $data['city'] = $this->zone_mod->city_list_db();
 
         $data['subview']            = 'zone/subzone_list';
         $data['meta_title']         = 'Sub Zone List';
         $this->load->view('index', $data);
+    }
+
+    public function subzone_create_process()
+    {
+        $post = $this->input->post();
+
+        $where["sub_zone = '" . $post['sub_zone'] . "'"]         = NULL;
+        $zone_list             = $this->zone_mod->subzone_list_db($where);
+        if (count($zone_list) > 0) {
+            $this->session->set_flashdata('error', 'Duplicate Sub Zone!');
+            redirect($_SERVER['HTTP_REFERER']);
+        }
+
+        $form_data = array(
+            'id_zone'                 => $post['id_zone'],
+            'sub_zone'                => $post['sub_zone'],
+            'created_by'         => $this->session->userdata('id')
+        );
+        $id_subzone = $this->zone_mod->subzone_create_process_db($form_data);
+
+        unset($form_data);
+
+        foreach ($post['city'] as $value) {
+            $form_data[] = array("id_subzone" => $id_subzone, "city" => $value);
+        }
+
+        $this->zone_mod->subzone_detail_create_process_db($form_data);
+
+        $this->session->set_flashdata('success', 'Your sub zone data has been Created!');
+        redirect($_SERVER['HTTP_REFERER']);
     }
 
     public function subzone_update($id)
@@ -168,103 +206,251 @@ class Zone extends CI_Controller
         if (count($zone_list) < 1) {
             redirect($_SERVER['HTTP_REFERER']);
         }
-        $data['zone_list']          = $zone_list[0];
-        $data['subview']            = 'zone/subzone_update';
-        $data['meta_title']         = 'Sub Zone Update';
-        $this->load->view('index', $data);
-    }
-
-    public function table_rate_list($id)
-    {
-        $where['id_zone']                 = $id;
-        $table_rate_list                  = $this->zone_mod->table_rate_list_db($where);
-        $data['id_zone'] = $id;
-
-        $data['subview']            = 'zone/table_rate_list';
-        $data['meta_title']         = 'Table Rate List';
-        $this->load->view('index', $data);
-    }
-
-    public function load_table_rate()
-    {
-        $where = array('id_zone' => $this->input->post('id_zone'), 'rate_type' => "fix rate");
-        $data['table_rate_fix'] = $this->zone_mod->table_rate_list_db($where);
+        $data['subzone_list']          = $zone_list[0];
 
         unset($where);
-        $where = array('id_zone' => $this->input->post('id_zone'), 'rate_type' => "multiply rate");
-        $data['table_rate_multiply'] = $this->zone_mod->table_rate_list_db($where);
+        $where['id_subzone']        = $id;
+        $city_list          = $this->zone_mod->subzone_detail_list_db($where);
+        $cities = array();
+        foreach ($city_list as $row) {
+            $cities[] = $row['city'];
+        }
+        $data['cities'] = $cities;
 
-        $data['id_zone'] = $this->input->post('id_zone');
-
-        $this->load->view("zone/load_table_rate", $data);
+        $data['city'] = $this->zone_mod->city_list_db();
+        $this->load->view('zone/subzone_update', $data);
     }
 
-    public function edit_table_rate()
-    {
-        $where['id'] = $this->input->post('id');
-        $table_rate_list = $this->zone_mod->table_rate_list_db($where);
-
-        $data['table_rate'] = $table_rate_list[0];
-
-        $this->load->view('zone/edit_table_rate', $data);
-    }
-
-    public function table_rate_create_process_fix()
-    {
-        $post = $this->input->post();
-
-        $data = array(
-            'id_zone' => $post['id_zone'],
-            'type_of_mode' => $post['type_of_mode'],
-            'rate_type' => $post['rate_type'],
-            'default_value' => $post['default_value'],
-            'price' => $post['price']
-        );
-
-        $this->zone_mod->table_rate_create_process_db($data);
-        echo "OK";
-    }
-
-    public function table_rate_create_process_multiply()
-    {
-        $post = $this->input->post();
-
-        $data = array(
-            'id_zone' => $post['id_zone'],
-            'type_of_mode' => $post['type_of_mode'],
-            'rate_type' => $post['rate_type'],
-            'min_value' => $post['min_value'],
-            'max_value' => $post['max_value'],
-            'price' => $post['price']
-        );
-
-        $this->zone_mod->table_rate_create_process_db($data);
-        echo "OK";
-    }
-
-    public function table_rate_update_process($id)
+    public function subzone_update_process($id)
     {
         $post = $this->input->post();
 
         $form_data = array(
-            'type_of_mode' => $post['type_of_mode'],
-            'rate_type' => $post['rate_type'],
-            'min_value'                 => $post['min_value'],
-            'max_value'                 => $post['max_value'],
-            'price'             => $post['price'],
+            'sub_zone'                 => $post['sub_zone'],
         );
         $where['id'] = $id;
-        $this->zone_mod->table_rate_update_process_db($form_data, $where);
+        $this->zone_mod->subzone_update_process_db($form_data, $where);
 
-        $this->session->set_flashdata('success', 'Your Table Rate data has been Updated!');
+        unset($form_data);
+
+        $delete = $this->zone_mod->subzone_detail_delete_process_db(array('id_subzone' => $id));
+
+        foreach ($post['city'] as $value) {
+            $form_data[] = array("id_subzone" => $id, "city" => $value);
+        }
+        $this->zone_mod->subzone_detail_create_process_db($form_data);
+
+        $this->session->set_flashdata('success', 'Your sub zone data has been Updated!');
         redirect($_SERVER['HTTP_REFERER']);
     }
 
-    public function table_rate_delete_process($id)
+    public function subzone_delete_process($id)
     {
         $where['id'] = $id;
-        $this->zone_mod->table_rate_delete_process_db($where);
+        $this->zone_mod->subzone_delete_process_db($where);
+
+        unset($where);
+        $where['id_subzone'] = $id;
+        $this->zone_mod->subzone_detail_delete_process_db($where);
 
         redirect($_SERVER['HTTP_REFERER']);
+    }
+
+    public function download_zone()
+    {
+        $file_name = 'zone_' . date('Ymd') . '.csv';
+        header("Content-Description: File Transfer");
+        header("Content-Disposition: attachment; filename=$file_name");
+        header("Content-Type: application/csv;");
+
+        // get data 
+        $zone = $this->zone_mod->zone_download_list_db();
+
+        // file creation 
+        $file = fopen('php://output', 'w');
+
+        $header = array("Zone", "Country");
+        fputcsv($file, $header);
+        foreach ($zone as $key => $value) {
+            fputcsv($file, $value);
+        }
+        fclose($file);
+        exit;
+    }
+
+    public function download_subzone($id)
+    {
+        $where['id'] = $id;
+        $zone = $this->zone_mod->zone_list_db($where);
+        $file_name = 'subzone_' . $zone[0]['zone_name'] . '_' . date('Ymd') . '.csv';
+        header("Content-Description: File Transfer");
+        header("Content-Disposition: attachment; filename=$file_name");
+        header("Content-Type: application/csv;");
+
+        // get data 
+        unset($where);
+        $where['id_zone'] = $id;
+        $subzone = $this->zone_mod->subzone_download_list_db();
+
+        // file creation 
+        $file = fopen('php://output', 'w');
+
+        $header = array("Sub Zone Name", "City");
+        fputcsv($file, $header);
+        foreach ($subzone as $key => $value) {
+            fputcsv($file, $value);
+        }
+        fclose($file);
+        exit;
+    }
+
+    public function upload_zone()
+    {
+        $file = $_FILES['upload_excel']['tmp_name'];
+        $ext = explode(".", $_FILES['upload_excel']['name']);
+        if (empty($file)) {
+            $this->session->set_flashdata('error', 'File is not uploaded!');
+            redirect($_SERVER['HTTP_REFERER']);
+        } else {
+            if (strtolower(end($ext)) === 'csv' && $_FILES['upload_excel']['size'] > 0) {
+                $delimiter = $this->getFileDelimiter($file);
+                $this->zone_mod->zone_truncate_process_db();
+                $this->zone_mod->zone_detail_truncate_process_db();
+                $i = 0;
+                $zone_name = '';
+                $id_zone_temp = '';
+                $handle = fopen($file, "r") or die("can't open file");
+                while (($row = fgetcsv($handle, 2048, $delimiter))) {
+                    $i++;
+                    if ($i == 1) continue;
+                    unset($data);
+
+                    if ($zone_name != $row[0]) {
+                        $data = [
+                            'zone_name' => $row[0],
+                            'created_by' => $this->session->userdata('id')
+                        ];
+
+                        $id_zone = $this->zone_mod->zone_create_process_db($data);
+                        $id_zone_temp = $id_zone;
+                        $zone_name = $row[0];
+                    } else {
+                        $id_zone = $id_zone_temp;
+                    }
+
+                    unset($data);
+                    $data = [
+                        'id_zone' => $id_zone_temp,
+                        'country' => $row[1]
+                    ];
+                    $this->zone_mod->zone_detail_create_process_db_per($data);
+                }
+
+                fclose($handle);
+
+                $this->session->set_flashdata('success', 'Your country data has been imported!');
+                redirect($_SERVER['HTTP_REFERER']);
+            } else {
+                $this->session->set_flashdata('error', 'Invalid format file!');
+                redirect($_SERVER['HTTP_REFERER']);
+            }
+        }
+    }
+
+    public function upload_subzone($id)
+    {
+        $where['id']                      = $id;
+        $zone_list                     = $this->zone_mod->zone_list_db($where);
+        if (count($zone_list) < 1) {
+            redirect($_SERVER['HTTP_REFERER']);
+        }
+        $file = $_FILES['upload_excel']['tmp_name'];
+        $ext = explode(".", $_FILES['upload_excel']['name']);
+        if (empty($file)) {
+            $this->session->set_flashdata('error', 'File is not uploaded!');
+            redirect($_SERVER['HTTP_REFERER']);
+        } else {
+            if (strtolower(end($ext)) === 'csv' && $_FILES['upload_excel']['size'] > 0) {
+                $delimiter = $this->getFileDelimiter($file);
+                unset($where);
+                $where['id_zone']                      = $id;
+                $subzone_list                     = $this->zone_mod->subzone_list_db($where);
+                foreach($subzone_list as $value){
+                    unset($where);
+                    $where['id_subzone'] = $value['id'];
+                    $this->zone_mod->subzone_detail_delete_process_db($where);
+                }
+                unset($where);
+                $where['id_zone'] = $id;
+                $this->zone_mod->subzone_delete_process_db($where);
+                $i = 0;
+                $subzone_name = '';
+                $id_subzone_temp = '';
+                $handle = fopen($file, "r") or die("can't open file");
+                while (($row = fgetcsv($handle, 2048, $delimiter))) {
+                    $i++;
+                    if ($i == 1) continue;
+
+                    if ($subzone_name != $row[0]) {
+                        $data = [
+                            'id_zone' => $id,
+                            'sub_zone' => $row[0],
+                            'created_by' => $this->session->userdata('id')
+                        ];
+
+                        $id_subzone = $this->zone_mod->subzone_create_process_db($data);
+                        $id_subzone_temp = $id_subzone;
+                        $subzone_name = $row[0];
+                    } else {
+                        $id_subzone = $id_subzone_temp;
+                    }
+
+                    unset($data);
+                    $data = [
+                        'id_subzone' => $id_subzone_temp,
+                        'city' => $row[1]
+                    ];
+                    $this->zone_mod->subzone_detail_create_process_db_per($data);
+                }
+
+                fclose($handle);
+                $this->session->set_flashdata('success', 'Your city data has been imported!');
+                redirect($_SERVER['HTTP_REFERER']);
+            } else {
+                $this->session->set_flashdata('error', 'Invalid format file!');
+                redirect($_SERVER['HTTP_REFERER']);
+            }
+        }
+    }
+
+    function getFileDelimiter($file, $checkLines = 2)
+    {
+        $file = new SplFileObject($file);
+        $delimiters = array(
+            ',',
+            '\t',
+            ';',
+            '|',
+            ':'
+        );
+        $results = array();
+        $i = 0;
+        while ($file->valid() && $i <= $checkLines) {
+            $line = $file->fgets();
+            foreach ($delimiters as $delimiter) {
+                $regExp = '/[' . $delimiter . ']/';
+                $fields = preg_split($regExp, $line);
+                if (count($fields) > 1) {
+                    if (!empty($results[$delimiter])) {
+                        $results[$delimiter]++;
+                    } else {
+                        $results[$delimiter] = 1;
+                    }
+                }
+            }
+            $i++;
+        }
+        $results = array_keys($results, max($results));
+        return $results[0];
     }
 }

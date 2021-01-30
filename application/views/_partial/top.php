@@ -214,6 +214,13 @@ $side_permission = array(
 												</div>
 											</div>
 											<div class="nav-item has-sub">
+												<a href="javascript:void(0)" class="menu-item"><i class="fas fa-flag"></i><span>Country</span></a>
+												<div class="submenu-content">
+													<a href="<?php echo base_url() ?>country/country_list" class="menu-item">Country List</a>
+													<a href="<?php echo base_url() ?>country/country_create" class="menu-item">Create Country</a>
+												</div>
+											</div>
+											<div class="nav-item has-sub">
 												<a href="javascript:void(0)" class="menu-item"><i class="fas fa-box-open"></i><span>Package Type</span></a>
 												<div class="submenu-content">
 													<a href="<?php echo base_url() ?>package_type/package_type_list" class="menu-item">Package Type List</a>

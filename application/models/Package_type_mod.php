@@ -10,7 +10,7 @@ class Package_type_mod extends CI_Model {
 		if(isset($where)){
 			$this->db->where($where);
 		}
-		$this->db->order_by("created_date", "DESC");
+		$this->db->order_by("created_date", "ASC");
 		$query = $this->db->get('mst_package_type');
 		
 		return $query->result_array();

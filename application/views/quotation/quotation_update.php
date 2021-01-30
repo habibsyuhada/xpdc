@@ -321,7 +321,7 @@
                             </select>
                           </td>
                           <td>
-                            <input type="number" class="form-control" oninput="get_vol_weight()" step="any" name="cargo_cargo_width[]" title="NONFCL" value="<?php echo $value['width']+0 ?>">
+                            <input type="number" class="form-control" oninput="get_vol_weight()" step="any" name="cargo_width[]" title="NONFCL" value="<?php echo $value['width']+0 ?>">
                             <input type="text" class="form-control d-none" step="any" name="cargo_container_no[]" title="FCL" value="<?php echo $value['container_no'] ?>">
                           </td>
                           <td>

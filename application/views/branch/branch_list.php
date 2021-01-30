@@ -27,6 +27,7 @@
                       <td><?php echo $value['no_telp'] ?></td>
                       <td><?php echo $value['address'] ?></td>
                       <td>
+                        <a href="<?php echo base_url() ?>branch/table_rate_list/<?php echo $value['id'] ?>" class="btn btn-success" title="Table Rate"><i class="fas fa-table m-0"></i></a>
                         <a href="<?php echo base_url() ?>branch/branch_update/<?php echo $value['id'] ?>" class="btn btn-primary" title="Update"><i class="fas fa-edit m-0"></i></a>
                         <a href="<?php echo base_url() ?>branch/branch_delete_process/<?php echo $value['id'] ?>" class="btn btn-danger" title="Delete" onclick="return confirm('Are You Sure?')"><i class="fas fa-trash m-0"></i></a>
                       </td>

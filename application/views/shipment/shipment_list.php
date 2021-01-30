@@ -251,6 +251,7 @@ $page_permission = array(
                               <a class="dropdown-item" target="_blank" href="<?php echo base_url() ?>shipment/shipment_tracking_label_pdf/<?php echo $value['id'] ?>">Label</a>
                               <a class="dropdown-item" target="_blank" href="<?php echo base_url() ?>shipment/shipment_awb_pdf/<?php echo $value['id'] ?>">WayBill</a>
                               <a class="dropdown-item" target="_blank" href="<?php echo base_url() ?>shipment/shipment_receipt_pdf/<?php echo $value['id'] ?>">Receipt</a>
+                              <a class="dropdown-item" target="_blank" href="<?php echo base_url() ?>shipment/shipment_do_pdf/<?php echo $value['id'] ?>">Delivery Order</a>
                             </div>
                           <?php endif; ?>
                           <?php if ($page_permission[8] == 1) : ?>

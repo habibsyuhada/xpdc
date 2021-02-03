@@ -522,7 +522,7 @@ if (!isset($cargo_list)) {
                         <select class="form-control select2" name="billing_account" onchange="check_custumer(this)">
                           <option value="">XPDC Account No. (if any)</option>
                           <?php foreach ($customer as $data) : ?>
-                            <option value="<?= $data['account_no'] ?>"><?= $data['account_no'] . " - " . $data['name'] ?></option>
+                            <option value="<?= $data['account_no'] ?>" <?php echo ($this->session->userdata('role') == "Customer" ? "selected" : "") ?>><?= $data['account_no'] . " - " . $data['name'] ?></option>
                           <?php endforeach; ?>
                         </select>
                         <!-- <input type="text" class="form-control" name="billing_account" placeholder="XPDC Account No. (if any)" oninput="check_custumer(this);"> -->
@@ -1059,6 +1059,9 @@ if (!isset($cargo_list)) {
   $(document).ready(function() {
     get_vol_weight();
     change_sea($("select[name=sea]").val(), 0);
+    <?php if($this->session->userdata('role') == "Customer"): ?>
+      check_custumer($("select[name=billing_account]"));
+    <?php endif; ?>
   });
 
   var settime_billing_account;
@@ -1109,6 +1112,37 @@ if (!isset($cargo_list)) {
       }
     });
   }
+
+  $("input[name=shipper_city], input[name=consignee_city]").autocomplete({
+    source: function( request, response ) {
+      var country = "";
+      var input = this.element;
+      if($(input).attr("name") == "shipper_city"){
+        country = $("select[name=shipper_country]").val();
+        // console.log(country);
+      }
+      else if($(input).attr("name") == "consignee_city"){
+        country = $("select[name=consignee_country]").val();
+      }
+      console.log(country);
+      $.ajax( {
+        url: "<?php echo base_url() ?>country/city_autocomplete",
+        dataType: "jsonp",
+        data: {
+          term: request.term,
+          country: country,
+        },
+        success: function( data ) {
+          console.log(data);
+          response( data );
+        }
+      } );
+    },
+    minLength: 0,
+    // select: function( event, ui ) {
+    //   log( "Selected: " + ui.item.value + " aka " + ui.item.id );
+    // }
+  });
 
   $(function() {
     $('#pickup_from').datetimepicker({

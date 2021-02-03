@@ -346,4 +346,31 @@ class Country extends CI_Controller
         $this->session->set_flashdata('success', 'Your city data has been Deleted!');
         redirect($_SERVER['HTTP_REFERER']);
     }
+
+    public function city_autocomplete()
+    {
+        $term = $this->input->get("term");
+        $country = $this->input->get("country");
+        $where['country']       = $country;
+        $country_list           = $this->country_mod->country_list_db($where);
+        $country_list           = $country_list[0];
+        
+        unset($where);
+        $where["id_country"] = $country_list['id'];
+        $where["city like '%".$term."%'"] = NULL;
+        $city_list = $this->country_mod->city_list_db($where);
+        $results = [];
+        foreach ($city_list as $key => $value) {
+            if(count($results) < 11){
+                $results[] = [
+                    "label" => $value["city"],
+                    "value" => $value["city"],
+                ];
+            }
+        }
+        if(isset ($_GET['callback'])){
+            header("Content-Type: application/json");
+            echo $_GET['callback']."(".json_encode($results).")";
+        }
+    }
 }

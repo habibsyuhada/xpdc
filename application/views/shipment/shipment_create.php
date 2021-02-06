@@ -115,7 +115,7 @@ if (!isset($cargo_list)) {
                       </div>
                       <div class="form-group">
                         <label>Country</label>
-                        <select class="form-control select2" name="shipper_country" required>
+                        <select class="form-control select2" name="shipper_country" required onchange="select_country(this)">
                           <option value="">- Select One -</option>
                           <?php foreach ($country['data'] as $data) { ?>
                             <option value="<?= $data['location'] ?>" <?php echo (@$quotation['shipper_country'] == $data['location'] ? 'selected' : '') ?>><?= $data['location'] ?></option>
@@ -1113,36 +1113,81 @@ if (!isset($cargo_list)) {
     });
   }
 
-  $("input[name=shipper_city], input[name=consignee_city]").autocomplete({
-    source: function( request, response ) {
-      var country = "";
-      var input = this.element;
-      if($(input).attr("name") == "shipper_city"){
-        country = $("select[name=shipper_country]").val();
-        // console.log(country);
-      }
-      else if($(input).attr("name") == "consignee_city"){
-        country = $("select[name=consignee_country]").val();
-      }
-      console.log(country);
-      $.ajax( {
-        url: "<?php echo base_url() ?>country/city_autocomplete",
-        dataType: "jsonp",
-        data: {
-          term: request.term,
-          country: country,
-        },
-        success: function( data ) {
-          console.log(data);
-          response( data );
+  function select_country(input) {
+    var select_city;
+    var name_city
+    if($(input).attr("name") == "shipper_country"){
+      select_city = $("[name=shipper_city]");
+      name_city = "shipper_city";
+    }
+    else if($(input).attr("name") == "consignee_country"){
+      select_city = $("[name=consignee_city ]");
+      name_city = "consignee_city";
+    }
+    $.ajax( {
+      url: "<?php echo base_url() ?>country/city_autocomplete",
+      dataType: "json",
+      data: {
+        // term: request.term,
+        country: $(input).val(),
+      },
+      success: function( data ) {
+        console.log(data);
+        // data = JSON.parse(data);
+        // console.log(data);
+        var content = $(select_city).parent();
+        $("select[name="+name_city+"]").select2("destroy");
+        $(select_city).remove();
+        if(data.length > 0){
+          var html = '<select class="form-control select2" name="'+name_city+'" required>';
+          $.each(data, function(index, value) {
+            html += "<option value='"+value+"'>"+value+"</option>";
+          });
+          html += "</select>";
+          $(content).append(html);
+          $("[name="+name_city+"]").select2({theme: "bootstrap4"});
         }
-      } );
-    },
-    minLength: 0,
-    // select: function( event, ui ) {
-    //   log( "Selected: " + ui.item.value + " aka " + ui.item.id );
-    // }
-  });
+        else{
+          var html = '<input type="text" class="form-control" name="'+name_city+'" placeholder="City" required>';
+          $(content).append(html);
+        }
+      }
+    });
+
+    
+
+  }
+
+  // $("input[name=shipper_city], input[name=consignee_city]").autocomplete({
+  //   source: function( request, response ) {
+  //     var country = "";
+  //     var input = this.element;
+  //     if($(input).attr("name") == "shipper_city"){
+  //       country = $("select[name=shipper_country]").val();
+  //       // console.log(country);
+  //     }
+  //     else if($(input).attr("name") == "consignee_city"){
+  //       country = $("select[name=consignee_country]").val();
+  //     }
+  //     console.log(country);
+  //     $.ajax( {
+  //       url: "<?php echo base_url() ?>country/city_autocomplete",
+  //       dataType: "jsonp",
+  //       data: {
+  //         term: request.term,
+  //         country: country,
+  //       },
+  //       success: function( data ) {
+  //         console.log(data);
+  //         response( data );
+  //       }
+  //     } );
+  //   },
+  //   minLength: 0,
+  //   // select: function( event, ui ) {
+  //   //   log( "Selected: " + ui.item.value + " aka " + ui.item.id );
+  //   // }
+  // });
 
   $(function() {
     $('#pickup_from').datetimepicker({

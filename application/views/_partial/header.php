@@ -14,7 +14,7 @@
 
   <link href="https://fonts.googleapis.com/css?family=Nunito+Sans:300,400,600,700,800" rel="stylesheet">
 
-  <link rel="stylesheet" href="<?php echo base_url(); ?>assets/src/js/vendor/jquery-ui.min.css">
+  <!-- <link rel="stylesheet" href="<?php echo base_url(); ?>assets/src/js/vendor/jquery-ui.min.css"> -->
   <link rel="stylesheet" href="<?php echo base_url(); ?>assets/plugins/bootstrap/dist/css/bootstrap.min.css">
   <link rel="stylesheet" href="<?php echo base_url(); ?>assets/plugins/fontawesome-free/css/all.min.css">
   <link rel="stylesheet" href="<?php echo base_url(); ?>assets/plugins/icon-kit/dist/css/iconkit.min.css">
@@ -34,7 +34,7 @@
   <link rel="stylesheet" href="<?php echo base_url(); ?>assets/dist/css/theme.min.css">
   <script src="<?php echo base_url(); ?>assets/src/js/vendor/modernizr-2.8.3.min.js"></script>
   <script src="<?php echo base_url(); ?>assets/src/js/vendor/jquery-3.3.1.min.js"></script>
-  <script src="<?php echo base_url(); ?>assets/src/js/vendor/jquery-ui.min.js"></script>
+  <!-- <script src="<?php echo base_url(); ?>assets/src/js/vendor/jquery-ui.min.js"></script> -->
   <script src="<?php echo base_url(); ?>assets/plugins/popper.js/dist/umd/popper.min.js"></script>
   <script src="<?php echo base_url(); ?>assets/plugins/bootstrap/dist/js/bootstrap.min.js"></script>
   <script src="<?php echo base_url(); ?>assets/plugins/perfect-scrollbar/dist/perfect-scrollbar.min.js"></script>

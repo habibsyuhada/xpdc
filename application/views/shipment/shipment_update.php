@@ -132,8 +132,8 @@
                         <label>Country</label>
                         <select class="form-control select2" name="shipper_country" required>
                           <option value="">- Select One -</option>
-                          <?php foreach ($country['data'] as $data) { ?>
-                            <option value="<?= $data['location'] ?>" <?php echo ($shipment['shipper_country'] == $data['location'] ? 'selected' : '') ?>><?= $data['location'] ?></option>
+                          <?php foreach ($country as $data) { ?>
+                            <option value="<?= $data['country'] ?>" <?php echo ($shipment['shipper_country'] == $data['country'] ? 'selected' : '') ?>><?= $data['country'] ?></option>
                           <?php } ?>
                         </select>
                       </div>
@@ -172,8 +172,8 @@
                         <label>Country</label>
                         <select class="form-control select2" name="consignee_country" required>
                           <option value="">- Select One -</option>
-                          <?php foreach ($country['data'] as $data) { ?>
-                            <option value="<?= $data['location'] ?>" <?php echo ($shipment['consignee_country'] == $data['location'] ? 'selected' : '') ?>><?= $data['location'] ?></option>
+                          <?php foreach ($country as $data) { ?>
+                            <option value="<?= $data['country'] ?>" <?php echo ($shipment['consignee_country'] == $data['country'] ? 'selected' : '') ?>><?= $data['country'] ?></option>
                           <?php } ?>
                         </select>
                       </div>
@@ -256,8 +256,8 @@
                         <label>COO (Country of Origin)</label>
                         <select class="form-control select2" name="coo">
                           <option value="">- Select One -</option>
-                          <?php foreach ($country['data'] as $data) { ?>
-                            <option value="<?= $data['location'] ?>" <?php echo ($shipment['coo'] == $data['location'] ? 'selected' : '') ?>><?= $data['location'] ?></option>
+                          <?php foreach ($country as $data) { ?>
+                            <option value="<?= $data['country'] ?>" <?php echo ($shipment['coo'] == $data['country'] ? 'selected' : '') ?>><?= $data['country'] ?></option>
                           <?php } ?>
                         </select>
                       </div>
@@ -564,8 +564,8 @@
                         <input type="hidden" class="form-control" name="billing_country" value="<?php echo $shipment['billing_country'] ?>" placeholder="Country">
                         <select class="form-control select2" name="billing_country_view" onchange="$('input[name=billing_country]').val($(this).val());" required>
                           <option value="">- Select One -</option>
-                          <?php foreach ($country['data'] as $data) { ?>
-                            <option value="<?= $data['location'] ?>" <?php echo ($shipment['billing_country'] == $data['location'] ? 'selected' : '') ?>><?= $data['location'] ?></option>
+                          <?php foreach ($country as $data) { ?>
+                            <option value="<?= $data['country'] ?>" <?php echo ($shipment['billing_country'] == $data['country'] ? 'selected' : '') ?>><?= $data['country'] ?></option>
                           <?php } ?>
                         </select>
                       </div>

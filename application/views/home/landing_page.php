@@ -3,110 +3,120 @@
 
 <head>
   <meta charset="utf-8">
-  
+
   <!--====== Title ======-->
   <title>XPDC</title>
-  
+
   <meta name="description" content="">
   <meta name="viewport" content="width=device-width, initial-scale=1">
 
   <!--====== Favicon Icon ======-->
   <!-- <link rel="shortcut icon" href="<?php echo base_url() ?>assets/landing_page/images/favicon.png" type="image/png"> -->
-    
+
   <!--====== Magnific Popup CSS ======-->
   <link rel="stylesheet" href="<?php echo base_url() ?>assets/landing_page/css/magnific-popup.css">
-    
+
   <!--====== Slick CSS ======-->
   <link rel="stylesheet" href="<?php echo base_url() ?>assets/landing_page/css/slick.css">
-    
+
   <!--====== Line Icons CSS ======-->
   <link rel="stylesheet" href="<?php echo base_url() ?>assets/landing_page/css/LineIcons.css">
-    
+
   <!--====== FontAwasome CSS ======-->
   <link rel="stylesheet" href="<?php echo base_url() ?>assets/landing_page/css/fontawasome.min.css">
-    
+
   <!--====== Bootstrap CSS ======-->
   <link rel="stylesheet" href="<?php echo base_url() ?>assets/landing_page/css/bootstrap.min.css">
-  
+
   <!--====== Default CSS ======-->
   <link rel="stylesheet" href="<?php echo base_url() ?>assets/landing_page/css/default.css">
-  
+
   <!--====== Style CSS ======-->
   <link rel="stylesheet" href="<?php echo base_url() ?>assets/landing_page/css/style.css">
 
   <!--====== Jquery js ======-->
   <script src="<?php echo base_url() ?>assets/landing_page/js/vendor/jquery-1.12.4.min.js"></script>
   <script src="<?php echo base_url() ?>assets/landing_page/js/vendor/modernizr-3.7.1.min.js"></script>
-  
+
   <!--====== Bootstrap js ======-->
   <script src="<?php echo base_url() ?>assets/landing_page/js/popper.min.js"></script>
   <script src="<?php echo base_url() ?>assets/landing_page/js/bootstrap.min.js"></script>
-  
+
   <!--====== Slick js ======-->
   <script src="<?php echo base_url() ?>assets/landing_page/js/slick.min.js"></script>
-  
+
   <!--====== Magnific Popup js ======-->
   <script src="<?php echo base_url() ?>assets/landing_page/js/jquery.magnific-popup.min.js"></script>
-  
+
   <!--====== Ajax Contact js ======-->
   <script src="<?php echo base_url() ?>assets/landing_page/js/ajax-contact.js"></script>
-  
+
   <!--====== Isotope js ======-->
   <script src="<?php echo base_url() ?>assets/landing_page/js/imagesloaded.pkgd.min.js"></script>
   <script src="<?php echo base_url() ?>assets/landing_page/js/isotope.pkgd.min.js"></script>
-  
+
   <!--====== Scrolling Nav js ======-->
   <script src="<?php echo base_url() ?>assets/landing_page/js/jquery.easing.min.js"></script>
   <script src="<?php echo base_url() ?>assets/landing_page/js/scrolling-nav.js"></script>
-  
+
   <!--====== Main js ======-->
   <script src="<?php echo base_url() ?>assets/landing_page/js/main.js?v=1"></script>
 
   <style>
-    .border-2px{
+    .border-2px {
       border-width: 3px !important;
     }
-    .border-yellow{
+
+    .border-yellow {
       border-color: #f9ca24 !important;
     }
-    .bg-yellow{
+
+    .bg-yellow {
       background: #f9ca24 !important;
     }
-    .bg-grey{
+
+    .bg-grey {
       background: #f4f6f7 !important;
     }
-    .text-yellow{
+
+    .text-yellow {
       color: #f9ca24 !important;
     }
-    .text-uncolor{
+
+    .text-uncolor {
       color: unset;
     }
-    .carousel-item::before{
+
+    .carousel-item::before {
       background: linear-gradient(rgba(240, 247, 238, 0.3) 0%, rgba(255, 189, 0, 0.3) 100%);
     }
 
     /*Hover Effect*/
-    .hover-effect-1{
+    .hover-effect-1 {
       transition: all .1s linear;
       cursor: pointer;
     }
-    .to-yellow.hover-effect-1:hover, .to-yellow.hover-effect-1:focus{
+
+    .to-yellow.hover-effect-1:hover,
+    .to-yellow.hover-effect-1:focus {
       animation: pulse-effect-yellow 0.2s;
-      box-shadow: 0 0 0 1rem rgba(0, 0, 0,0),
-      inset 0 0 0 8rem #ffffff;
+      box-shadow: 0 0 0 1rem rgba(0, 0, 0, 0),
+        inset 0 0 0 8rem #ffffff;
       color: #f9ca24 !important;
       /* background: #ffffff !important; */
     }
+
     @keyframes pulse-effect-yellow {
-      0% { 
-        box-shadow: 0 0 0 0 #ffffff; 
+      0% {
+        box-shadow: 0 0 0 0 #ffffff;
       }
     }
 
-    .navbar-area .navbar .navbar-btn li a.solid{
+    .navbar-area .navbar .navbar-btn li a.solid {
       color: #f9ca24;
     }
-    .navbar-area.sticky .navbar .navbar-btn li a.solid{
+
+    .navbar-area.sticky .navbar .navbar-btn li a.solid {
       border-color: #f9ca24;
       background-color: #f9ca24;
     }
@@ -117,14 +127,14 @@
       }
     } */
   </style>
-  
+
 </head>
 
 <body>
   <!--[if IE]>
   <p class="browserupgrade">You are using an <strong>outdated</strong> browser. Please <a href="https://browsehappy.com/">upgrade your browser</a> to improve your experience and security.</p>
   <![endif]-->
-   
+
   <!--====== PRELOADER PART START ======-->
 
   <div class="preloader">
@@ -145,7 +155,7 @@
   </div>
 
   <!--====== PRELOADER PART ENDS ======-->
-  
+
   <!--====== NAVBAR TWO PART START ======-->
 
   <section class="navbar-area">
@@ -153,11 +163,11 @@
       <div class="row">
         <div class="col-lg-12">
           <nav class="navbar navbar-expand-lg">
-             
+
             <a class="navbar-brand" href="#">
               <img src="<?php echo base_url() ?>assets/img/logo-fix.png" alt="Logo" width="150px">
             </a>
-            
+
             <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarTwo" aria-controls="navbarTwo" aria-expanded="false" aria-label="Toggle navigation">
               <span class="toggler-icon"></span>
               <span class="toggler-icon"></span>
@@ -172,7 +182,7 @@
                 <li class="nav-item"><a class="page-scroll" href="#contact">Contact</a></li>
               </ul>
             </div>
-            
+
             <div class="navbar-btn d-none d-sm-inline-block">
               <ul>
                 <li><a class="solid" href="<?php echo base_url() ?>home/login">MY XPDC</a></li>
@@ -185,7 +195,7 @@
   </section>
 
   <!--====== NAVBAR TWO PART ENDS ======-->
-  
+
   <!--====== SLIDER PART START ======-->
 
   <section id="home" class="slider_area">
@@ -274,7 +284,7 @@
   </section>
 
   <!--====== SLIDER PART ENDS ======-->
-    
+
   <!--====== ABOUT US START ======-->
 
   <section id="about" class="features-area">
@@ -289,8 +299,8 @@
               <div class="row align-items-center">
                 <div class="col-lg-9 col-md-9 col-sm-12">
                   <p class="text text-justify">PT. XENA PRANADIPA DHIA CAKRA (XPDC) is a dynamic provider of comprehensive logistics company with knowledge and professionalism since 2018 based in Indonesia. With many experiences in handling international and domestic airfreight and sea freight shipments, we offer a profound and personal approach to fulfill customer’s need in any size of business.Due to demand of the customers, the services of ours has expanded to land freight, customs clearance brokerage, warehousing & packaging also handcarry service that makes us become a one-stop logistics partner.
-                  <br><br>
-                  We diversified service offering includes unique logistic handling and services to meet our customer’s unique request. We present our customers a center of excellence they can partner with and benefit from full transparency and a sincere commitment to mutual success.
+                    <br><br>
+                    We diversified service offering includes unique logistic handling and services to meet our customer’s unique request. We present our customers a center of excellence they can partner with and benefit from full transparency and a sincere commitment to mutual success.
                   </p>
                 </div>
                 <div class="col text-center">
@@ -306,74 +316,74 @@
   </section>
 
   <!--====== ABOUT US ENDS ======-->
-  <?php if(isset($tracking_no)): ?>
-  <!--====== TRACKING NO START ======-->
+  <?php if (isset($tracking_no)) : ?>
+    <!--====== TRACKING NO START ======-->
 
-  <section id="tracking" class="features-area">
-    <div class="container">
-      <div class="row justify-content-center">
-        <div class="col-lg-10 col-md-10 col-sm-12">
-          <div class="single-features mt-40">
-            <div class="features-title-icon d-flex justify-content-between">
-              <h2 class="features-title mb-4">XPDC TRACKING NO. <?php echo $tracking_no ?></h2>
-            </div>
-            <div class="features-content">
-              <?php if(isset($shipment)): ?>
-              <div class="row justify-content-center">
-                <div class="col-auto">
-                  <img height="60px" src="<?php echo site_url(); ?>home/barcode_generator/<?php echo $shipment['tracking_no'] ?>">
-                  <br>
-                  <br>
-                  <h4 class="font-weight-bold text-center"><?php echo $shipment['tracking_no'] ?></h4>
-                </div>
+    <section id="tracking" class="features-area">
+      <div class="container">
+        <div class="row justify-content-center">
+          <div class="col-lg-10 col-md-10 col-sm-12">
+            <div class="single-features mt-40">
+              <div class="features-title-icon d-flex justify-content-between">
+                <h2 class="features-title mb-4">XPDC TRACKING NO. <?php echo $tracking_no ?></h2>
               </div>
-              <!--<div class="row">-->
-              <!--  <div class="col-md-6">-->
-              <!--    <p class="m-0 py-3 border-bottom"><b>SHIPPER ADDRESS</b></p>-->
-              <!--    <p class="m-0 py-3"><b>Country : </b><?php echo $shipment['shipper_country'] ?></p>-->
-              <!--  </div>-->
-              <!--  <div class="col-md-6">-->
-              <!--    <p class="m-0 py-3 border-bottom"><b>CONSIGNEE ADDRESS</b></p>-->
-              <!--    <p class="m-0 py-3"><b>Country : </b><?php echo $shipment['consignee_country'] ?></p>-->
-              <!--  </div>-->
-              <!--</div>-->
-              <div class="mb-4 alert alert-dark text-center" role="alert">
-                <b>SHIPMENT STATUS: <?php echo strtoupper($shipment['status']) ?></b>
+              <div class="features-content">
+                <?php if (isset($shipment)) : ?>
+                  <div class="row justify-content-center">
+                    <div class="col-auto">
+                      <img height="60px" src="<?php echo site_url(); ?>home/barcode_generator/<?php echo $shipment['tracking_no'] ?>">
+                      <br>
+                      <br>
+                      <h4 class="font-weight-bold text-center"><?php echo $shipment['tracking_no'] ?></h4>
+                    </div>
+                  </div>
+                  <!--<div class="row">-->
+                  <!--  <div class="col-md-6">-->
+                  <!--    <p class="m-0 py-3 border-bottom"><b>SHIPPER ADDRESS</b></p>-->
+                  <!--    <p class="m-0 py-3"><b>Country : </b><?php echo $shipment['shipper_country'] ?></p>-->
+                  <!--  </div>-->
+                  <!--  <div class="col-md-6">-->
+                  <!--    <p class="m-0 py-3 border-bottom"><b>CONSIGNEE ADDRESS</b></p>-->
+                  <!--    <p class="m-0 py-3"><b>Country : </b><?php echo $shipment['consignee_country'] ?></p>-->
+                  <!--  </div>-->
+                  <!--</div>-->
+                  <div class="mb-4 alert alert-dark text-center" role="alert">
+                    <b>SHIPMENT STATUS: <?php echo strtoupper($shipment['status']) ?></b>
+                  </div>
+                  <p class="mt-4 pt-4 border-bottom"><b>SHIPMENT HISTORY</b></p>
+                  <table class="table data_table">
+                    <thead>
+                      <tr class="bg-info">
+                        <th class="text-white font-weight-bold">Date</th>
+                        <th class="text-white font-weight-bold">Time</th>
+                        <th class="text-white font-weight-bold">Location</th>
+                        <th class="text-white font-weight-bold">Status</th>
+                        <th class="text-white font-weight-bold">Remarks</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <?php foreach ($history_list as $key => $value) : ?>
+                        <tr>
+                          <td><?php echo $value['date'] ?></td>
+                          <td><?php echo date('H:i', strtotime($value['time'])) ?></td>
+                          <td><?php echo $value['location'] ?></td>
+                          <td><?php echo $value['status'] ?></td>
+                          <td><?php echo $value['remarks'] ?></td>
+                        </tr>
+                      <?php endforeach; ?>
+                    </tbody>
+                  </table>
+                <?php else : ?>
+                  <h5>Not Found</h5>
+                <?php endif; ?>
               </div>
-              <p class="mt-4 pt-4 border-bottom"><b>SHIPMENT HISTORY</b></p>
-              <table class="table data_table">
-                <thead>
-                  <tr class="bg-info">
-                    <th class="text-white font-weight-bold">Date</th>
-                    <th class="text-white font-weight-bold">Time</th>
-                    <th class="text-white font-weight-bold">Location</th>
-                    <th class="text-white font-weight-bold">Status</th>
-                    <th class="text-white font-weight-bold">Remarks</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  <?php foreach ($history_list as $key => $value): ?>
-                  <tr>
-                    <td><?php echo $value['date'] ?></td>
-                    <td><?php echo date('H:i', strtotime($value['time'])) ?></td>
-                    <td><?php echo $value['location'] ?></td>
-                    <td><?php echo $value['status'] ?></td>
-                    <td><?php echo $value['remarks'] ?></td>
-                  </tr>
-                  <?php endforeach; ?>
-                </tbody>
-              </table>
-              <?php else: ?>
-                <h5>Not Found</h5>
-              <?php endif; ?>
-            </div>
-          </div> <!-- single features -->
-        </div>
-      </div> <!-- row -->
-    </div> <!-- container -->
-  </section>
+            </div> <!-- single features -->
+          </div>
+        </div> <!-- row -->
+      </div> <!-- container -->
+    </section>
 
-  <!--====== TRACKING NO ENDS ======-->
+    <!--====== TRACKING NO ENDS ======-->
   <?php endif; ?>
   <!--====== FEATRES TWO PART START ======-->
 
@@ -447,7 +457,7 @@
   </section>
 
   <!--====== FEATRES TWO PART ENDS ======-->
-  
+
   <!--====== ABOUT PART START ======-->
 
   <section id="service2" class="about-area bg-grey">
@@ -470,7 +480,7 @@
                     <div class="card-body">
                       <p class="text text-justify">Airfreight can reduce the total logistics cost for urgent or time-critical logistical challenges. By combining the speed of air with the cost savings of other modes, backed by smooth and efficient customs and administrative procedures, customers can enjoy the best of both worlds; reducing inventory and improving their own service offer with faster response times at affordable cost.</p>
                     </div>
-                  </div> 
+                  </div>
                 </div> <!-- card -->
                 <div class="card">
                   <div class="card-header" id="headingTwo">
@@ -479,8 +489,8 @@
                   <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionExample">
                     <div class="card-body">
                       <p class="text text-justify">
-                      Small businesses and individual customers may not typically consider sea freight as a viable option, as it tends to be associated with larger companies exporting high volumes of commercial cargo. But sea freight services can also be a great option for transporting personal effects.<br>
-                      With our LCL (Less Container Load) service, you don’t need to have enough cargo to fill a whole container in order to get a beneficial shipping rate. But if you do, we also offer FCL (Full Container Load) shipments.</p>
+                        Small businesses and individual customers may not typically consider sea freight as a viable option, as it tends to be associated with larger companies exporting high volumes of commercial cargo. But sea freight services can also be a great option for transporting personal effects.<br>
+                        With our LCL (Less Container Load) service, you don’t need to have enough cargo to fill a whole container in order to get a beneficial shipping rate. But if you do, we also offer FCL (Full Container Load) shipments.</p>
                     </div>
                   </div>
                 </div> <!-- card -->
@@ -539,18 +549,18 @@
 
   <!--====== ABOUT PART ENDS ======-->
 
-	<!--================ Start Newsletter Area =================-->
-	<section class="contact-area" style="background: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.6)), url(<?php echo base_url() ?>assets/landing_page/images/global-sea-freight-e1570781123661.jpg);background-attachment: fixed;background-position: center;background-size: cover;">
-		<div class="container">
-			<div class="row justify-content-center">
-				<div class="col-12 text-center wow fadeIn" data-wow-duration="1.5s">
-					<h3 class="text-center text-white">We realize that we are part of our customer businesses as we always strive to make our customer’s goods are delivered quickly and precisely.</h3>
-				</div>
-			</div>
-		</div>
-	</section>
-	<!--================ End Newsletter Area =================-->
-  
+  <!--================ Start Newsletter Area =================-->
+  <section class="contact-area" style="background: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.6)), url(<?php echo base_url() ?>assets/landing_page/images/global-sea-freight-e1570781123661.jpg);background-attachment: fixed;background-position: center;background-size: cover;">
+    <div class="container">
+      <div class="row justify-content-center">
+        <div class="col-12 text-center wow fadeIn" data-wow-duration="1.5s">
+          <h3 class="text-center text-white">We realize that we are part of our customer businesses as we always strive to make our customer’s goods are delivered quickly and precisely.</h3>
+        </div>
+      </div>
+    </div>
+  </section>
+  <!--================ End Newsletter Area =================-->
+
   <!--====== CONTACT PART START ======-->
 
   <section id="contact" class="contact-area">
@@ -571,46 +581,52 @@
         </div>
       </div> -->
       <div class="contact-info pt-30">
-        <div class="row">
-          <div class="col-lg-4 col-md-6">
-            <div class="single-contact-info contact-color-1 mt-30 d-flex ">
-              <div class="contact-info-icon">
-                <i class="lni lni-map-marker"></i>
-              </div>
-              <div class="contact-info-content media-body">
-                <p class="text"> Warna Jaya Business Park B2-07<br>Jl. Jendral Sudirman 29413 Batam ID</p>
-              </div>
-            </div> <!-- single contact info -->
-          </div>
-          <div class="col-lg-4 col-md-6">
-            <div class="single-contact-info contact-color-2 mt-30 d-flex ">
-              <div class="contact-info-icon">
-                <i class="lni lni-envelope"></i>
-              </div>
-              <div class="contact-info-content media-body">
-                <p class="text">inquiry@xpdcid.com</p>
-                <!-- <p class="text">support@uideck.com</p> -->
-              </div>
-            </div> <!-- single contact info -->
-          </div>
-          <div class="col-lg-4 col-md-6">
-            <div class="single-contact-info contact-color-3 mt-30 d-flex ">
-              <div class="contact-info-icon">
-                <i class="lni lni-phone"></i>
-              </div>
-              <div class="contact-info-content media-body">
-                <p class="text">+62 778 4089 918</p>
-                <!-- <p class="text">+333 985-458-609</p> -->
-              </div>
-            </div> <!-- single contact info -->
-          </div>
-        </div> <!-- row -->
+        <?php foreach ($branch as $row) : ?>
+          <div class="row">
+            <div class="col-lg-12">
+              <h4><?=$row['name']?></h4>
+            </div>
+            <div class="col-lg-4 col-md-6">
+              <div class="single-contact-info contact-color-1 mt-30 d-flex ">
+                <div class="contact-info-icon">
+                  <i class="lni lni-map-marker"></i>
+                </div>
+                <div class="contact-info-content media-body">
+                  <p class="text"> <?= $row['address'] ?></p>
+                </div>
+              </div> <!-- single contact info -->
+            </div>
+            <div class="col-lg-4 col-md-6">
+              <div class="single-contact-info contact-color-2 mt-30 d-flex ">
+                <div class="contact-info-icon">
+                  <i class="lni lni-envelope"></i>
+                </div>
+                <div class="contact-info-content media-body">
+                  <p class="text">inquiry@xpdcid.com</p>
+                  <!-- <p class="text">support@uideck.com</p> -->
+                </div>
+              </div> <!-- single contact info -->
+            </div>
+            <div class="col-lg-4 col-md-6">
+              <div class="single-contact-info contact-color-3 mt-30 d-flex ">
+                <div class="contact-info-icon">
+                  <i class="lni lni-phone"></i>
+                </div>
+                <div class="contact-info-content media-body">
+                  <p class="text"><?= $row['no_telp'] ?></p>
+                  <!-- <p class="text">+333 985-458-609</p> -->
+                </div>
+              </div> <!-- single contact info -->
+            </div>
+          </div> <!-- row -->
+          <hr>
+        <?php endforeach; ?>
       </div> <!-- contact info -->
       <div class="row">
         <div class="col-lg-12">
           <div class="contact-wrapper form-style-two pt-115">
             <h4 class="contact-title pb-10"><i class="lni lni-envelope"></i> Leave <span>A Message.</span></h4>
-            
+
             <form id="contact-form" action="<?php echo base_url() ?>assets/landing_page/contact.php" method="post">
               <div class="row">
                 <div class="col-md-6">
@@ -655,7 +671,7 @@
   </section>
 
   <!--====== CONTACT PART ENDS ======-->
-  
+
   <!--====== FOOTER PART START ======-->
 
   <section class="footer-area footer-dark">
@@ -684,16 +700,16 @@
   </section>
 
   <!--====== FOOTER PART ENDS ======-->
-  
+
   <!--====== BACK TOP TOP PART START ======-->
 
   <a href="#" class="back-to-top"><i class="lni lni-chevron-up"></i></a>
 
-  <!--====== BACK TOP TOP PART ENDS ======-->  
+  <!--====== BACK TOP TOP PART ENDS ======-->
 
   <!--====== PART START ======-->
 
-<!--
+  <!--
   <section class="">
     <div class="container">
       <div class="row">
@@ -706,15 +722,15 @@
 -->
 
   <!--====== PART ENDS ======-->
-<script>
-  $(document).ready(function() {
-    <?php if(isset($tracking_no)): ?>
-    $('html, body').animate({
-      scrollTop: $('#tracking').offset().top,
-    },500,'linear');
-    <?php endif; ?>
-  })
-</script>
+  <script>
+    $(document).ready(function() {
+      <?php if (isset($tracking_no)) : ?>
+        $('html, body').animate({
+          scrollTop: $('#tracking').offset().top,
+        }, 500, 'linear');
+      <?php endif; ?>
+    })
+  </script>
 </body>
 
 </html>

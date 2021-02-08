@@ -171,61 +171,29 @@ $side_permission = array(
 									<div class="nav-item has-sub">
 										<a href="javascript:void(0)"><i class="fas fa-cog"></i><span>Configuration</span></a>
 										<div class="submenu-content">
-											<div class="nav-item has-sub">
-												<a href="javascript:void(0)" class="menu-item"><i class="fas fa-user"></i><span>User</span></a>
-												<div class="submenu-content">
-													<a href="<?php echo base_url() ?>user/user_list" class="menu-item">User List</a>
-													<a href="<?php echo base_url() ?>user/user_create" class="menu-item">Create User</a>
-												</div>
+											<div class="nav-item">
+												<a href="<?php echo base_url() ?>user/user_list" class="menu-item"><i class="fas fa-user"></i><span>User</span></a>
 											</div>
-											<div class="nav-item has-sub">
-												<a href="javascript:void(0)" class="menu-item"><i class="fas fa-code-branch"></i><span>Branch</span></a>
-												<div class="submenu-content">
-													<a href="<?php echo base_url() ?>branch/branch_list" class="menu-item">Branch List</a>
-													<a href="<?php echo base_url() ?>branch/branch_create" class="menu-item">Create Branch</a>
-												</div>
+											<div class="nav-item">
+												<a href="<?php echo base_url() ?>branch/branch_list" class="menu-item"><i class="fas fa-code-branch"></i><span>Branch</span></a>
 											</div>
-											<div class="nav-item has-sub">
-												<a href="javascript:void(0)" class="menu-item"><i class="fas fa-user-secret"></i><span>Agent</span></a>
-												<div class="submenu-content">
-													<a href="<?php echo base_url() ?>agent/agent_list" class="menu-item">Agent List</a>
-													<a href="<?php echo base_url() ?>agent/agent_create" class="menu-item">Create Agent</a>
-												</div>
+											<div class="nav-item ">
+												<a href="<?php echo base_url() ?>agent/agent_list" class="menu-item"><i class="fas fa-user-secret"></i><span>Agent</span></a>
 											</div>
-											<div class="nav-item has-sub">
-												<a href="javascript:void(0)" class="menu-item"><i class="far fa-credit-card"></i> Payment Terms</a>
-												<div class="submenu-content">
-													<a href="<?php echo base_url() ?>payment_terms/payment_terms_list" class="menu-item">Payment Terms List</a>
-													<a href="<?php echo base_url() ?>payment_terms/payment_terms_create" class="menu-item">Create Payment Terms</a>
-												</div>
+											<div class="nav-item">
+												<a href="<?php echo base_url() ?>payment_terms/payment_terms_list" class="menu-item"><i class="far fa-credit-card"></i> Payment Terms</a>
 											</div>
-											<div class="nav-item has-sub">
-												<a href="javascript:void(0)" class="menu-item"><i class="fas fa-ruler"></i><span>UOM</span></a>
-												<div class="submenu-content">
-													<a href="<?php echo base_url() ?>uom/uom_list" class="menu-item">UOM List</a>
-													<a href="<?php echo base_url() ?>uom/uom_create" class="menu-item">Create UOM</a>
-												</div>
+											<div class="nav-item">
+												<a href="<?php echo base_url() ?>uom/uom_list" class="menu-item"><i class="fas fa-ruler"></i><span>UOM</span></a>
 											</div>
-											<div class="nav-item has-sub">
-												<a href="javascript:void(0)" class="menu-item"><i class="fas fa-map-marked-alt"></i><span>Zone</span></a>
-												<div class="submenu-content">
-													<a href="<?php echo base_url() ?>zone/zone_list" class="menu-item">Zone List</a>
-													<a href="<?php echo base_url() ?>zone/zone_create" class="menu-item">Create Zone</a>
-												</div>
+											<div class="nav-item">
+												<a href="<?php echo base_url() ?>zone/zone_list" class="menu-item"><i class="fas fa-map-marked-alt"></i><span>Zone</span></a>
 											</div>
-											<div class="nav-item has-sub">
-												<a href="javascript:void(0)" class="menu-item"><i class="fas fa-flag"></i><span>Country</span></a>
-												<div class="submenu-content">
-													<a href="<?php echo base_url() ?>country/country_list" class="menu-item">Country List</a>
-													<a href="<?php echo base_url() ?>country/country_create" class="menu-item">Create Country</a>
-												</div>
+											<div class="nav-item">
+												<a href="<?php echo base_url() ?>country/country_list" class="menu-item"><i class="fas fa-flag"></i><span>Country</span></a>
 											</div>
-											<div class="nav-item has-sub">
-												<a href="javascript:void(0)" class="menu-item"><i class="fas fa-box-open"></i><span>Package Type</span></a>
-												<div class="submenu-content">
-													<a href="<?php echo base_url() ?>package_type/package_type_list" class="menu-item">Package Type List</a>
-													<a href="<?php echo base_url() ?>package_type/package_type_create" class="menu-item">Create Package Type</a>
-												</div>
+											<div class="nav-item">
+												<a href="<?php echo base_url() ?>package_type/package_type_list" class="menu-item"><i class="fas fa-box-open"></i><span>Package Type</span></a>
 											</div>
 										</div>
 									</div>

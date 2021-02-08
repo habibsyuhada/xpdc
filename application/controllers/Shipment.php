@@ -120,7 +120,7 @@ class Shipment extends CI_Controller
 		}
 		$data['created_by_list'] = $created_by_list;
 
-		$data['country'] = json_decode(file_get_contents("./assets/country/country.json"), true);
+		$data['country'] = $this->shipment_mod->country_list_db();
 
 		$data['subview'] 				= 'shipment/shipment_list';
 		$data['meta_title'] 		= 'Shipment List';
@@ -139,7 +139,7 @@ class Shipment extends CI_Controller
 			$data['customer'] = $this->shipment_mod->customer_list_db();
 		}
 
-		$data['country'] = json_decode(file_get_contents("./assets/country/country.json"), true);
+		$data['country'] = $this->shipment_mod->country_list_db();
 		$data['package_type'] = $this->shipment_mod->package_type_list_db();
 		$this->load->view('index', $data);
 	}
@@ -382,7 +382,7 @@ class Shipment extends CI_Controller
 		}
 		$data['t'] = $t;
 
-		$data['country'] = json_decode(file_get_contents("./assets/country/country.json"), true);
+		$data['country'] = $this->shipment_mod->country_list_db();
 
 		$data['shipment'] 			= $shipment_list[0];
 		$data['packages_list'] 	= $packages_list;
@@ -556,7 +556,7 @@ class Shipment extends CI_Controller
 		$data['shipment'] 			= $shipment_list[0];
 		$data['packages_list'] 	= $packages_list;
 		$data['package_type'] = $this->shipment_mod->package_type_list_db();
-		$data['country'] = json_decode(file_get_contents("./assets/country/country.json"), true);
+		$data['country'] = $this->shipment_mod->country_list_db();
 		$data['subview'] 				= 'shipment/shipment_package_detail';
 		$data['meta_title'] 		= 'Shipment Package Detail';
 		$this->load->view('index', $data);
@@ -642,7 +642,7 @@ class Shipment extends CI_Controller
 		}
 		$data['agent_list'] 	= $agent_list;
 
-		$data['country'] = json_decode(file_get_contents("./assets/country/country.json"), true);
+		$data['country'] = $this->shipment_mod->country_list_db();
 
 		$data['shipment'] 			= $shipment_list[0];
 		$data['t'] 							= 'g';
@@ -743,7 +743,7 @@ class Shipment extends CI_Controller
 		}
 		$data['branch_list'] 	= $branch_list;
 
-		$data['country'] = json_decode(file_get_contents("./assets/country/country.json"), true);
+		$data['country'] = $this->shipment_mod->country_list_db();
 
 		$data['shipment'] 			= $shipment_list[0];
 		$data['t'] 							= 'g';

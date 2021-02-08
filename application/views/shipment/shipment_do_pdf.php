@@ -201,7 +201,7 @@
                 <td>
                 <br><br><br>
                 <b>Driver</b><br><br><br><br><br>
-                <?=$shipment['driver_deliver']?>
+                <?=(isset($driver['name'])) ? $driver['name'] : 'Driver not assigned'; ?>
                 </td>
                 <td>
                     Hereby agreed that goods described herein are accepted in<br>

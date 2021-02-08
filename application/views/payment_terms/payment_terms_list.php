@@ -7,6 +7,7 @@
             <h3>Payment Terms List</h3>
           </div>
           <div class="card-body">
+            <a href="<?=base_url()?>payment_terms/payment_terms_create" class="btn btn-success"><i class="fa fa-plus"></i> Add New Payment Terms</a><br><br>
             <div class="row">
               <div class="col-md-12">
                 <table class="table data_table">

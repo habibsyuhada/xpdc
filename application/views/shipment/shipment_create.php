@@ -117,8 +117,8 @@ if (!isset($cargo_list)) {
                         <label>Country</label>
                         <select class="form-control select2" name="shipper_country" required onchange="select_country(this)">
                           <option value="">- Select One -</option>
-                          <?php foreach ($country['data'] as $data) { ?>
-                            <option value="<?= $data['location'] ?>" <?php echo (@$quotation['shipper_country'] == $data['location'] ? 'selected' : '') ?>><?= $data['location'] ?></option>
+                          <?php foreach ($country as $data) { ?>
+                            <option value="<?= $data['country'] ?>" <?php echo (@$quotation['shipper_country'] == $data['country'] ? 'selected' : '') ?>><?= $data['country'] ?></option>
                           <?php } ?>
                         </select>
                       </div>
@@ -155,10 +155,10 @@ if (!isset($cargo_list)) {
                       </div>
                       <div class="form-group">
                         <label>Country</label>
-                        <select class="form-control select2" name="consignee_country" required>
+                        <select class="form-control select2" name="consignee_country" required  onchange="select_country(this)">
                           <option value="">- Select One -</option>
-                          <?php foreach ($country['data'] as $data) { ?>
-                            <option value="<?= $data['location'] ?>" <?php echo (@$quotation['consignee_country'] == $data['location'] ? 'selected' : '') ?>><?= $data['location'] ?></option>
+                          <?php foreach ($country as $data) { ?>
+                            <option value="<?= $data['country'] ?>" <?php echo (@$quotation['consignee_country'] == $data['country'] ? 'selected' : '') ?>><?= $data['country'] ?></option>
                           <?php } ?>
                         </select>
                       </div>
@@ -242,8 +242,8 @@ if (!isset($cargo_list)) {
                         <label>COO (Country of Origin)</label>
                         <select class="form-control select2" name="coo">
                           <option value="">- Select One -</option>
-                          <?php foreach ($country['data'] as $data) { ?>
-                            <option value="<?= $data['location'] ?>"><?= $data['location'] ?></option>
+                          <?php foreach ($country as $data) { ?>
+                            <option value="<?= $data['country'] ?>"><?= $data['country'] ?></option>
                           <?php } ?>
                         </select>
                       </div>
@@ -556,8 +556,8 @@ if (!isset($cargo_list)) {
                         <input type="hidden" class="form-control" name="billing_country" placeholder="Country">
                         <select class="form-control select2" name="billing_country_view" onchange="$('input[name=billing_country]').val($(this).val());" required>
                           <option value="">- Select One -</option>
-                          <?php foreach ($country['data'] as $data) { ?>
-                            <option value="<?= $data['location'] ?>"><?= $data['location'] ?></option>
+                          <?php foreach ($country as $data) { ?>
+                            <option value="<?= $data['country'] ?>"><?= $data['country'] ?></option>
                           <?php } ?>
                         </select>
                       </div>

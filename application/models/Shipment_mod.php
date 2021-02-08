@@ -83,6 +83,19 @@ class Shipment_mod extends CI_Model
     return $query->result_array();
   }
 
+  public function branch_list_db($where = null)
+  {
+
+    if (isset($where)) {
+      if (count($where) > 0) {
+        $this->db->where($where);
+      }
+    }
+    $query = $this->db->get('branch');
+
+    return $query->result_array();
+  }
+
   public function package_type_list_db($where = null)
   {
 
@@ -92,6 +105,32 @@ class Shipment_mod extends CI_Model
       }
     }
     $query = $this->db->get('mst_package_type');
+
+    return $query->result_array();
+  }
+
+  public function country_list_db($where = null)
+  {
+
+    if (isset($where)) {
+      if (count($where) > 0) {
+        $this->db->where($where);
+      }
+    }
+    $query = $this->db->get('mst_country');
+
+    return $query->result_array();
+  }
+
+  public function city_list_db($where = null)
+  {
+
+    if (isset($where)) {
+      if (count($where) > 0) {
+        $this->db->where($where);
+      }
+    }
+    $query = $this->db->get('mst_city');
 
     return $query->result_array();
   }

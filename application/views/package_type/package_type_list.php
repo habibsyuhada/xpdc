@@ -7,6 +7,7 @@
             <h3>Package Type List</h3>
           </div>
           <div class="card-body">
+            <a href="<?=base_url()?>package_type/package_type_create" class="btn btn-success"><i class="fa fa-plus"></i> Add New Package Type</a><br><br>
             <div class="row">
               <div class="col-md-12">
                 <table class="table data_table">

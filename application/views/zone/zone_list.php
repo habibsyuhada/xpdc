@@ -7,6 +7,7 @@
             <h3>Zone List</h3>
           </div>
           <div class="card-body">
+            <a href="<?=base_url()?>zone/zone_create" class="btn btn-success"><i class="fa fa-plus"></i> Add New Zone</a>
             <button class="btn btn-primary" type="button" data-toggle="collapse" data-target="#collapseExample" aria-expanded="false" aria-controls="collapseExample">
               <i class="fa fa-upload"></i> Upload Excel
             </button>

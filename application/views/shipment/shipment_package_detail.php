@@ -83,8 +83,8 @@
                     <label>COO (Country of Origin)</label>
                     <select class="form-control select2" name="coo">
                       <option value="">- Select One -</option>
-                      <?php foreach ($country['data'] as $data) { ?>
-                        <option value="<?= $data['location'] ?>" <?php echo ($shipment['coo'] == $data['location'] ? 'selected' : '') ?>><?= $data['location'] ?></option>
+                      <?php foreach ($country as $data) { ?>
+                        <option value="<?= $data['country'] ?>" <?php echo ($shipment['coo'] == $data['country'] ? 'selected' : '') ?>><?= $data['location'] ?></option>
                       <?php } ?>
                     </select>
                   </div>

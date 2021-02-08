@@ -1,5 +1,6 @@
 <?php defined('BASEPATH') OR exit('No direct script access allowed'); ?>
 
+<<<<<<< Updated upstream
 ERROR - 2021-02-06 07:19:05 --> 404 Page Not Found: Home/favicon.ico
 ERROR - 2021-02-06 07:19:17 --> 404 Page Not Found: Branch/favicon.ico
 ERROR - 2021-02-06 07:19:49 --> Severity: Notice --> Undefined index: data C:\xampp\htdocs\xpdc\application\views\shipment\shipment_list.php 100
@@ -125,3 +126,8 @@ ERROR - 2021-02-06 07:34:45 --> 404 Page Not Found: Package_type/favicon.ico
 ERROR - 2021-02-06 07:35:57 --> 404 Page Not Found: Agent/favicon.ico
 ERROR - 2021-02-06 07:36:19 --> 404 Page Not Found: Payment_terms/favicon.ico
 ERROR - 2021-02-06 07:36:48 --> 404 Page Not Found: Zone/favicon.ico
+=======
+ERROR - 2021-02-06 07:17:50 --> 404 Page Not Found: Assets/favicon.ico
+ERROR - 2021-02-06 07:17:58 --> 404 Page Not Found: Home/favicon.ico
+ERROR - 2021-02-06 07:18:04 --> 404 Page Not Found: Shipment/favicon.ico
+>>>>>>> Stashed changes

@@ -425,8 +425,7 @@ if (!isset($cargo_list)) {
                                 <i class="lni lni-32 p-2 lni-map-marker bg-dark text-white rounded-circle"></i>
                               </div>
                               <div class="col-8">
-                                <h4>Warna Jaya Business Park B2-07<br>
-                                  Jl. Jendral Sudirman 29413 Batam ID</h4>
+                                <h4><?php echo $branch['address'] ?></h4>
                               </div>
                             </div>
                           </div>

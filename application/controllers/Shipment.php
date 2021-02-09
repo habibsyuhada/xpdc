@@ -139,6 +139,9 @@ class Shipment extends CI_Controller
 			$data['customer'] = $this->shipment_mod->customer_list_db();
 		}
 
+		$datadb 	= $this->home_mod->branch_list(["name" => $this->session->userdata('branch')]);
+		$data["branch"] = $datadb[0];
+
 		$data['country'] = $this->shipment_mod->country_list_db();
 		$data['package_type'] = $this->shipment_mod->package_type_list_db();
 		$this->load->view('index', $data);
@@ -383,6 +386,9 @@ class Shipment extends CI_Controller
 		$data['t'] = $t;
 
 		$data['country'] = $this->shipment_mod->country_list_db();
+
+		$datadb 	= $this->home_mod->branch_list(["name" => $shipment_list[0]["branch"]]);
+		$data["branch"] 	= $datadb[0];
 
 		$data['shipment'] 			= $shipment_list[0];
 		$data['packages_list'] 	= $packages_list;

@@ -155,7 +155,7 @@ class Branch_mod extends CI_Model
     if (isset($where)) {
       $this->db->where($where);
     }
-    $this->db->select('city, airfreight_price_kg, airfreight_term, landfreight_price_kg, landfreight_term, seafreight_price_kg, seafreight_term');
+    $this->db->select('city, airfreight_min_kg, airfreight_max_kg, airfreight_price_kg, airfreight_term, landfreight_min_kg, landfreight_max_kg, landfreight_price_kg, landfreight_term, seafreight_min_kg, seafreight_max_kg, seafreight_price_kg, seafreight_term');
     $this->db->from('table_rate_domestic');
     $query = $this->db->get();
     return $query->result_array();

@@ -217,10 +217,16 @@ class Branch extends CI_Controller
 		$data = array(
 			'id_branch' => $post['id_branch'],
 			'city' => $post['city'],
+			'airfreight_min_kg' => $post['airfreight_min_kg'],
+			'airfreight_max_kg' => $post['airfreight_max_kg'],
 			'airfreight_price_kg' => $post['airfreight_price_kg'],
 			'airfreight_term' => $post['airfreight_term'],
+			'landfreight_min_kg' => $post['landfreight_min_kg'],
+			'landfreight_max_kg' => $post['landfreight_max_kg'],
 			'landfreight_price_kg' => $post['landfreight_price_kg'],
 			'landfreight_term' => $post['landfreight_term'],
+			'seafreight_min_kg' => $post['seafreight_min_kg'],
+			'seafreight_max_kg' => $post['seafreight_max_kg'],
 			'seafreight_price_kg' => $post['seafreight_price_kg'],
 			'seafreight_term' => $post['seafreight_term']
 		);
@@ -278,12 +284,18 @@ class Branch extends CI_Controller
 
 		$form_data = array(
 			'city'             		=> $post['city'],
-			'airfreight_price_kg'	=> $post['airfreight_price_kg'],
-			'airfreight_term'	=> $post['airfreight_term'],
-			'landfreight_price_kg'	=> $post['landfreight_price_kg'],
-			'landfreight_term'	=> $post['landfreight_term'],
-			'seafreight_price_kg'	=> $post['seafreight_price_kg'],
-			'seafreight_term'	=> $post['seafreight_term'],
+			'airfreight_min_kg' => $post['airfreight_min_kg'],
+			'airfreight_max_kg' => $post['airfreight_max_kg'],
+			'airfreight_price_kg' => $post['airfreight_price_kg'],
+			'airfreight_term' => $post['airfreight_term'],
+			'landfreight_min_kg' => $post['landfreight_min_kg'],
+			'landfreight_max_kg' => $post['landfreight_max_kg'],
+			'landfreight_price_kg' => $post['landfreight_price_kg'],
+			'landfreight_term' => $post['landfreight_term'],
+			'seafreight_min_kg' => $post['seafreight_min_kg'],
+			'seafreight_max_kg' => $post['seafreight_max_kg'],
+			'seafreight_price_kg' => $post['seafreight_price_kg'],
+			'seafreight_term' => $post['seafreight_term']
 		);
 
 		$where['id'] = $id;
@@ -348,7 +360,7 @@ class Branch extends CI_Controller
 		// file creation 
 		$file = fopen('php://output', 'w');
 
-		$header = array("City", "Airfreight / Kg", "Airfreight Term", "Landfreight / Kg", "Landfreight Term", "Seafreight / Kg", "Seafreight Term");
+		$header = array("City", "Airfreight Min Value", "Airfreight Max Value", "Airfreight / Kg", "Airfreight Term", "Landfreight Min Value", "Landfreight Max Value", "Landfreight / Kg", "Landfreight Term", "Seafreight Min Value", "Seafreight Max Value", "Seafreight / Kg", "Seafreight Term");
 		fputcsv($file, $header);
 		foreach ($table_rate as $key => $value) {
 			fputcsv($file, $value);
@@ -446,12 +458,18 @@ class Branch extends CI_Controller
 					$data = [
 						'id_branch' => $id,
 						'city' => $row[0],
-						'airfreight_price_kg' => $row[1],
-						'airfreight_term' => $row[2],
-						'landfreight_price_kg' => $row[3],
-						'landfreight_term' => $row[4],
-						'seafreight_price_kg' => $row[5],
-						'seafreight_term' => $row[6]
+						'airfreight_min_kg' => $row[1],
+						'airfreight_max_kg' => $row[2],
+						'airfreight_price_kg' => $row[3],
+						'airfreight_term' => $row[4],
+						'landfreight_min_kg' => $row[5],
+						'landfreight_max_kg' => $row[6],
+						'landfreight_price_kg' => $row[7],
+						'landfreight_term' => $row[8],
+						'seafreight_min_kg' => $row[9],
+						'seafreight_max_kg' => $row[10],
+						'seafreight_price_kg' => $row[11],
+						'seafreight_term' => $row[12]
 					];
 
 					$id_branch = $this->branch_mod->table_rate_domestic_create_process_db($data);

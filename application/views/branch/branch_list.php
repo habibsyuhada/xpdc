@@ -17,6 +17,8 @@
                       <th class="text-white font-weight-bold">Code</th>
                       <th class="text-white font-weight-bold">No. Telp.</th>
                       <th class="text-white font-weight-bold">Address</th>
+                      <th class="text-white font-weight-bold">Latitude</th>
+                      <th class="text-white font-weight-bold">Longitude</th>
                       <th class="text-white font-weight-bold"></th>
                     </tr>
                   </thead>
@@ -27,6 +29,8 @@
                       <td><?php echo $value['code'] ?></td>
                       <td><?php echo $value['no_telp'] ?></td>
                       <td><?php echo $value['address'] ?></td>
+                      <td><?php echo $value['latitude'] ?></td>
+                      <td><?php echo $value['longitude'] ?></td>
                       <td>
                         <a href="<?php echo base_url() ?>branch/table_rate_list/<?php echo $value['id'] ?>" class="btn btn-success" title="Table Rate"><i class="fas fa-table m-0"></i></a>
                         <a href="<?php echo base_url() ?>branch/branch_update/<?php echo $value['id'] ?>" class="btn btn-primary" title="Update"><i class="fas fa-edit m-0"></i></a>

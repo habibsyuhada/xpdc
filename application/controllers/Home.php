@@ -45,6 +45,7 @@ class Home extends CI_Controller {
 	
 			$data['tracking_no'] 		= $tracking_no;
 		}
+		$data['branch'] = $this->shipment_mod->branch_list_db(array("name != 'NONE'" => null));
 
 		$this->load->view('home/landing_page', $data);
 	}

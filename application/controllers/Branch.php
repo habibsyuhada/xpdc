@@ -62,8 +62,10 @@ class Branch extends CI_Controller
 		$form_data = array(
 			'name' 				=> $post['name'],
 			'code' 				=> $post['code'],
-			'no_telp' 		=> $post['no_telp'],
-			'address' 		=> $post['address'],
+			'no_telp' 			=> $post['no_telp'],
+			'address' 			=> $post['address'],
+			'latitude' 			=> $post['latitude'],
+			'longitude' 		=> $post['longitude'],
 		);
 		$id_branch = $this->branch_mod->branch_create_process_db($form_data);
 
@@ -95,6 +97,8 @@ class Branch extends CI_Controller
 			'code' 				=> $post['code'],
 			'no_telp' 		=> $post['no_telp'],
 			'address' 		=> $post['address'],
+			'latitude' 			=> $post['latitude'],
+			'longitude' 		=> $post['longitude'],
 		);
 		$where['id'] = $id;
 		$id_branch = $this->branch_mod->branch_update_process_db($form_data, $where);
@@ -125,11 +129,11 @@ class Branch extends CI_Controller
 	public function load_table_rate()
 	{
 		$post = $this->input->post();
-		$where = array('id_branch' => $post['id_branch'], 'type_of_mode' => $post['type_of_mode'], 'zone' => $post['zone'], 'subzone' => $post['subzone'], 'rate_type' => "fix rate");
+		$where = array('id_branch' => $post['id_branch'], 'type_of_mode' => $post['type_of_mode'], 'zone' => $post['zone'], 'subzone' => $post['subzone'], 'rate_type' => "fix rate", 'id_customer' => '0');
 		$data['table_rate_fix'] = $this->branch_mod->table_rate_list_db($where);
 
 		unset($where);
-		$where = array('id_branch' => $post['id_branch'], 'type_of_mode' => $post['type_of_mode'], 'zone' => $post['zone'], 'subzone' => $post['subzone'], 'rate_type' => "multiply rate");
+		$where = array('id_branch' => $post['id_branch'], 'type_of_mode' => $post['type_of_mode'], 'zone' => $post['zone'], 'subzone' => $post['subzone'], 'rate_type' => "multiply rate", 'id_customer' => '0');
 		$data['table_rate_multiply'] = $this->branch_mod->table_rate_list_db($where);
 
 		$data['id_branch'] = $post['id_branch'];
@@ -143,6 +147,7 @@ class Branch extends CI_Controller
 	public function load_table_rate_domestic()
 	{
 		$where['id_branch'] = $this->input->post('id_branch');
+		$where['id_customer'] = '0';
 		$data['table_rate'] = $this->branch_mod->table_rate_domestic_list_db($where);
 
 		unset($where);
@@ -312,6 +317,7 @@ class Branch extends CI_Controller
 		header("Content-Type: application/csv;");
 
 		$where['id_branch'] = $id;
+		$where['id_customer'] = '0';
 		// get data 
 		$table_rate = $this->branch_mod->table_rate_download_list_db($where);
 
@@ -340,6 +346,7 @@ class Branch extends CI_Controller
 	public function upload_table_rate($id)
 	{
 		$where['id_branch']			= $id;
+		$where['id_customer'] = '0';
 		$branch_list                = $this->branch_mod->table_rate_list_db($where);
 		if (count($branch_list) < 1) {
 			redirect($_SERVER['HTTP_REFERER']);

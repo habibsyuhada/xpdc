@@ -31,6 +31,9 @@
   <!--====== Default CSS ======-->
   <link rel="stylesheet" href="<?php echo base_url() ?>assets/landing_page/css/default.css">
 
+  <!--====== Leaflet CSS ======-->
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css" integrity="sha512-xodZBNTC5n17Xt2atTPuE1HxjVMSvLVW9ocqUKLsCC5CXdbqCmblAshOMAS6/keqq/sMZMZ19scR4PsZChSR7A==" crossorigin="" />
+
   <!--====== Style CSS ======-->
   <link rel="stylesheet" href="<?php echo base_url() ?>assets/landing_page/css/style.css">
 
@@ -58,6 +61,9 @@
   <!--====== Scrolling Nav js ======-->
   <script src="<?php echo base_url() ?>assets/landing_page/js/jquery.easing.min.js"></script>
   <script src="<?php echo base_url() ?>assets/landing_page/js/scrolling-nav.js"></script>
+
+  <!--====== Leaflet js ======-->
+  <script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js" integrity="sha512-XQoYMqMTK8LvdxXYG3nZ448hOEQiglfqkJs1NOQV44cWnUrBc8PkAOcXy20w0vlaXaVUearIOBhiXZ5V3ynxwA==" crossorigin=""></script>
 
   <!--====== Main js ======-->
   <script src="<?php echo base_url() ?>assets/landing_page/js/main.js?v=1"></script>
@@ -584,7 +590,7 @@
         <?php foreach ($branch as $row) : ?>
           <div class="row">
             <div class="col-lg-12">
-              <h4><?=$row['name']?></h4>
+              <h4><?= $row['name'] ?></h4>
             </div>
             <div class="col-lg-4 col-md-6">
               <div class="single-contact-info contact-color-1 mt-30 d-flex ">
@@ -622,6 +628,11 @@
           <hr>
         <?php endforeach; ?>
       </div> <!-- contact info -->
+      <div class="row">
+        <div class="col-lg-12">
+          <div id="mapid" style="width: 100%; height: 500px"></div>
+        </div>
+      </div>
       <div class="row">
         <div class="col-lg-12">
           <div class="contact-wrapper form-style-two pt-115">
@@ -729,7 +740,22 @@
           scrollTop: $('#tracking').offset().top,
         }, 500, 'linear');
       <?php endif; ?>
-    })
+    });
+
+    var mymap = L.map('mapid').setView([-2.548926, 118.0148634], 5);
+
+    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+      maxZoom: 20,
+      attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+    }).addTo(mymap);
+
+    <?php foreach ($branch as $row) : ?>
+      var marker = L.marker([<?= $row['latitude'] ?>, <?= $row['longitude'] ?>]).addTo(mymap);
+      marker.bindPopup(`<div class="w-100">
+                        <h4 class="border-bottom"><b>XPDC <?=$row['name']?></b></h4>
+                        <p class="p-0"><?=$row['address']?></p>
+                      </div>`);
+    <?php endforeach; ?>
   </script>
 </body>
 

@@ -61,3 +61,30 @@ ERROR - 2021-02-10 17:26:23 --> Severity: Warning --> Invalid argument supplied 
 ERROR - 2021-02-10 17:26:34 --> 404 Page Not Found: Shipment/favicon.ico
 ERROR - 2021-02-10 17:27:24 --> Severity: Notice --> Undefined variable: where C:\xampp\htdocs\xpdc\application\controllers\Commercial.php 40
 ERROR - 2021-02-10 17:28:08 --> 404 Page Not Found: Commercial/favicon.ico
+ERROR - 2021-02-10 17:41:10 --> Severity: Notice --> Undefined variable: id_branch C:\xampp\htdocs\xpdc\application\views\commercial\table_rate_list.php 24
+ERROR - 2021-02-10 17:41:10 --> Severity: Notice --> Undefined variable: id_branch C:\xampp\htdocs\xpdc\application\views\commercial\table_rate_list.php 28
+ERROR - 2021-02-10 17:41:10 --> Severity: Notice --> Undefined variable: id_branch C:\xampp\htdocs\xpdc\application\views\commercial\table_rate_list.php 44
+ERROR - 2021-02-10 17:41:10 --> Severity: Notice --> Undefined variable: id_branch C:\xampp\htdocs\xpdc\application\views\commercial\table_rate_list.php 83
+ERROR - 2021-02-10 17:41:10 --> Severity: Notice --> Undefined variable: id_branch C:\xampp\htdocs\xpdc\application\views\commercial\table_rate_list.php 87
+ERROR - 2021-02-10 17:41:12 --> Severity: Notice --> Undefined index: id_customer C:\xampp\htdocs\xpdc\application\controllers\Commercial.php 255
+ERROR - 2021-02-10 17:41:13 --> Severity: Notice --> Undefined index: id_customer C:\xampp\htdocs\xpdc\application\controllers\Commercial.php 259
+ERROR - 2021-02-10 17:41:13 --> Severity: Notice --> Undefined index: id_customer C:\xampp\htdocs\xpdc\application\controllers\Commercial.php 262
+ERROR - 2021-02-10 17:41:13 --> Severity: Notice --> Undefined variable: id_branch C:\xampp\htdocs\xpdc\application\views\commercial\load_table_rate.php 16
+ERROR - 2021-02-10 17:41:13 --> Severity: Notice --> Undefined variable: id_branch C:\xampp\htdocs\xpdc\application\views\commercial\load_table_rate.php 57
+ERROR - 2021-02-10 17:41:14 --> Severity: Notice --> Undefined variable: id_branch C:\xampp\htdocs\xpdc\application\views\commercial\load_table_rate_domestic.php 20
+ERROR - 2021-02-10 17:41:14 --> Severity: Notice --> Undefined variable: id_branch C:\xampp\htdocs\xpdc\application\views\commercial\table_rate_list.php 24
+ERROR - 2021-02-10 17:41:14 --> Severity: Notice --> Undefined variable: id_branch C:\xampp\htdocs\xpdc\application\views\commercial\table_rate_list.php 28
+ERROR - 2021-02-10 17:41:14 --> Severity: Notice --> Undefined variable: id_branch C:\xampp\htdocs\xpdc\application\views\commercial\table_rate_list.php 44
+ERROR - 2021-02-10 17:41:14 --> Severity: Notice --> Undefined variable: id_branch C:\xampp\htdocs\xpdc\application\views\commercial\table_rate_list.php 83
+ERROR - 2021-02-10 17:41:14 --> Severity: Notice --> Undefined variable: id_branch C:\xampp\htdocs\xpdc\application\views\commercial\table_rate_list.php 87
+ERROR - 2021-02-10 17:41:50 --> Severity: Notice --> Undefined variable: id_branch C:\xampp\htdocs\xpdc\application\views\commercial\load_table_rate.php 16
+ERROR - 2021-02-10 17:41:50 --> Severity: Notice --> Undefined variable: id_branch C:\xampp\htdocs\xpdc\application\views\commercial\load_table_rate.php 57
+ERROR - 2021-02-10 17:41:51 --> Severity: Notice --> Undefined variable: id_branch C:\xampp\htdocs\xpdc\application\views\commercial\load_table_rate_domestic.php 20
+ERROR - 2021-02-10 17:58:06 --> Severity: Notice --> Undefined variable: branch C:\xampp\htdocs\xpdc\application\views\home\landing_page.php 590
+ERROR - 2021-02-10 17:58:06 --> Severity: Warning --> Invalid argument supplied for foreach() C:\xampp\htdocs\xpdc\application\views\home\landing_page.php 590
+ERROR - 2021-02-10 17:58:07 --> Severity: Notice --> Undefined variable: branch C:\xampp\htdocs\xpdc\application\views\home\landing_page.php 590
+ERROR - 2021-02-10 17:58:07 --> Severity: Warning --> Invalid argument supplied for foreach() C:\xampp\htdocs\xpdc\application\views\home\landing_page.php 590
+ERROR - 2021-02-10 17:58:20 --> Severity: Notice --> Undefined variable: branch C:\xampp\htdocs\xpdc\application\views\home\landing_page.php 590
+ERROR - 2021-02-10 17:58:20 --> Severity: Warning --> Invalid argument supplied for foreach() C:\xampp\htdocs\xpdc\application\views\home\landing_page.php 590
+ERROR - 2021-02-10 17:59:06 --> Severity: Notice --> Undefined variable: branch C:\xampp\htdocs\xpdc\application\views\home\landing_page.php 590
+ERROR - 2021-02-10 17:59:06 --> Severity: Warning --> Invalid argument supplied for foreach() C:\xampp\htdocs\xpdc\application\views\home\landing_page.php 590

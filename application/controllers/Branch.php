@@ -333,6 +333,30 @@ class Branch extends CI_Controller
 		exit;
 	}
 
+	public function download_table_rate_domestic($id)
+	{
+		$file_name = 'table_rate_domestic_' . date('Ymd') . '.csv';
+		header("Content-Description: File Transfer");
+		header("Content-Disposition: attachment; filename=$file_name");
+		header("Content-Type: application/csv;");
+
+		$where['id_branch'] = $id;
+		$where['id_customer'] = '0';
+		// get data 
+		$table_rate = $this->branch_mod->table_rate_domestic_download_list_db($where);
+
+		// file creation 
+		$file = fopen('php://output', 'w');
+
+		$header = array("City", "Airfreight / Kg", "Airfreight Term", "Landfreight / Kg", "Landfreight Term", "Seafreight / Kg", "Seafreight Term");
+		fputcsv($file, $header);
+		foreach ($table_rate as $key => $value) {
+			fputcsv($file, $value);
+		}
+		fclose($file);
+		exit;
+	}
+
 	public function load_subzone()
 	{
 		$post = $this->input->post();
@@ -386,6 +410,55 @@ class Branch extends CI_Controller
 
 				fclose($handle);
 				$this->session->set_flashdata('success', 'Your city data has been imported!');
+				redirect($_SERVER['HTTP_REFERER']);
+			} else {
+				$this->session->set_flashdata('error', 'Invalid format file!');
+				redirect($_SERVER['HTTP_REFERER']);
+			}
+		}
+	}
+
+	public function upload_table_rate_domestic($id)
+	{
+		$where['id_branch']			= $id;
+		$where['id_customer'] = '0';
+		$branch_list                = $this->branch_mod->table_rate_domestic_list_db($where);
+		if (count($branch_list) < 1) {
+			redirect($_SERVER['HTTP_REFERER']);
+		}
+		$file = $_FILES['upload_excel']['tmp_name'];
+		$ext = explode(".", $_FILES['upload_excel']['name']);
+		if (empty($file)) {
+			$this->session->set_flashdata('error', 'File is not uploaded!');
+			redirect($_SERVER['HTTP_REFERER']);
+		} else {
+			if (strtolower(end($ext)) === 'csv' && $_FILES['upload_excel']['size'] > 0) {
+				$delimiter = $this->getFileDelimiter($file);
+				unset($where);
+				$where['id_branch'] = $id;
+				$this->branch_mod->table_rate_domestic_delete_process_db($where);
+				$i = 0;
+				$handle = fopen($file, "r") or die("can't open file");
+				while (($row = fgetcsv($handle, 2048, $delimiter))) {
+					$i++;
+					if ($i == 1) continue;
+
+					$data = [
+						'id_branch' => $id,
+						'city' => $row[0],
+						'airfreight_price_kg' => $row[1],
+						'airfreight_term' => $row[2],
+						'landfreight_price_kg' => $row[3],
+						'landfreight_term' => $row[4],
+						'seafreight_price_kg' => $row[5],
+						'seafreight_term' => $row[6]
+					];
+
+					$id_branch = $this->branch_mod->table_rate_domestic_create_process_db($data);
+				}
+
+				fclose($handle);
+				$this->session->set_flashdata('success', 'Your table rate domestic data has been imported!');
 				redirect($_SERVER['HTTP_REFERER']);
 			} else {
 				$this->session->set_flashdata('error', 'Invalid format file!');

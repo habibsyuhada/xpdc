@@ -88,3 +88,12 @@ ERROR - 2021-02-10 17:58:20 --> Severity: Notice --> Undefined variable: branch 
 ERROR - 2021-02-10 17:58:20 --> Severity: Warning --> Invalid argument supplied for foreach() C:\xampp\htdocs\xpdc\application\views\home\landing_page.php 590
 ERROR - 2021-02-10 17:59:06 --> Severity: Notice --> Undefined variable: branch C:\xampp\htdocs\xpdc\application\views\home\landing_page.php 590
 ERROR - 2021-02-10 17:59:06 --> Severity: Warning --> Invalid argument supplied for foreach() C:\xampp\htdocs\xpdc\application\views\home\landing_page.php 590
+ERROR - 2021-02-10 18:56:29 --> 404 Page Not Found: Home/favicon.ico
+ERROR - 2021-02-10 18:56:36 --> 404 Page Not Found: Shipment/favicon.ico
+ERROR - 2021-02-10 18:56:52 --> Severity: Notice --> Undefined index: data C:\xampp\htdocs\xpdc\application\views\shipment\shipment_list.php 100
+ERROR - 2021-02-10 18:56:52 --> Severity: Warning --> Invalid argument supplied for foreach() C:\xampp\htdocs\xpdc\application\views\shipment\shipment_list.php 100
+ERROR - 2021-02-10 18:56:52 --> Severity: Notice --> Undefined index: data C:\xampp\htdocs\xpdc\application\views\shipment\shipment_list.php 120
+ERROR - 2021-02-10 18:56:52 --> Severity: Warning --> Invalid argument supplied for foreach() C:\xampp\htdocs\xpdc\application\views\shipment\shipment_list.php 120
+ERROR - 2021-02-10 20:09:21 --> 404 Page Not Found: Branch/favicon.ico
+ERROR - 2021-02-10 20:09:30 --> 404 Page Not Found: Branch/download_table_rate_domestic
+ERROR - 2021-02-10 20:42:38 --> 404 Page Not Found: Commercial/favicon.ico

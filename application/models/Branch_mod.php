@@ -149,4 +149,15 @@ class Branch_mod extends CI_Model
     $query = $this->db->get();
     return $query->result_array();
   }
+
+  public function table_rate_domestic_download_list_db($where = null)
+  {
+    if (isset($where)) {
+      $this->db->where($where);
+    }
+    $this->db->select('city, airfreight_price_kg, airfreight_term, landfreight_price_kg, landfreight_term, seafreight_price_kg, seafreight_term');
+    $this->db->from('table_rate_domestic');
+    $query = $this->db->get();
+    return $query->result_array();
+  }
 }

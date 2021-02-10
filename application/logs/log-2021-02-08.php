@@ -15,3 +15,7 @@ ERROR - 2021-02-08 08:11:42 --> Severity: Notice --> Undefined index: data C:\xa
 ERROR - 2021-02-08 08:11:42 --> Severity: Warning --> Invalid argument supplied for foreach() C:\xampp\htdocs\xpdc\application\views\shipment\shipment_list.php 100
 ERROR - 2021-02-08 08:11:42 --> Severity: Notice --> Undefined index: data C:\xampp\htdocs\xpdc\application\views\shipment\shipment_list.php 120
 ERROR - 2021-02-08 08:11:42 --> Severity: Warning --> Invalid argument supplied for foreach() C:\xampp\htdocs\xpdc\application\views\shipment\shipment_list.php 120
+ERROR - 2021-02-08 08:21:07 --> Severity: Notice --> Undefined index: data C:\xampp\htdocs\xpdc\application\views\shipment\shipment_list.php 100
+ERROR - 2021-02-08 08:21:07 --> Severity: Warning --> Invalid argument supplied for foreach() C:\xampp\htdocs\xpdc\application\views\shipment\shipment_list.php 100
+ERROR - 2021-02-08 08:21:07 --> Severity: Notice --> Undefined index: data C:\xampp\htdocs\xpdc\application\views\shipment\shipment_list.php 120
+ERROR - 2021-02-08 08:21:07 --> Severity: Warning --> Invalid argument supplied for foreach() C:\xampp\htdocs\xpdc\application\views\shipment\shipment_list.php 120

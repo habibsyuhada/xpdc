@@ -14,14 +14,13 @@
                 <td>
                     <input type="hidden" name="rate_type" value="fix rate" required />
                     <input type="hidden" name="id_branch" value="<?php echo $id_branch; ?>" />
-                    <input type="hidden" name="type_of_shipment" value="<?php echo $type_of_shipment; ?>" />
                     <input type="hidden" name="type_of_mode" value="<?php echo $type_of_mode; ?>" />
                     <input type="hidden" name="zone" value="<?php echo $zone; ?>" />
                     <input type="hidden" name="subzone" value="<?php echo $subzone; ?>" />
                 </td>
                 <td><input type="text" class="form-control" name="default_value" placeholder="Value" required /></td>
                 <td><input type="text" class="form-control" name="price" placeholder="Price" required /></td>
-                <td><button type="submit" name="submit" class="btn btn-success"><i class="fa fa-save"></i></button></td>
+                <td><button type="submit" id="fixBtn" name="submit" class="btn btn-success"><i class="fa fa-save"></i></button></td>
             </tr>
             <?php $no = 1;
             foreach ($table_rate_fix as $key => $value) : ?>
@@ -56,7 +55,6 @@
                 <td>
                     <input type="hidden" name="rate_type" value="multiply rate" required />
                     <input type="hidden" name="id_branch" value="<?php echo $id_branch; ?>" />
-                    <input type="hidden" name="type_of_shipment" value="<?php echo $type_of_shipment; ?>" />
                     <input type="hidden" name="type_of_mode" value="<?php echo $type_of_mode; ?>" />
                     <input type="hidden" name="zone" value="<?php echo $zone; ?>" />
                     <input type="hidden" name="subzone" value="<?php echo $subzone; ?>" />
@@ -64,7 +62,7 @@
                 <td><input type="text" class="form-control" name="min_value" placeholder="Min. Value" required /></td>
                 <td><input type="text" class="form-control" name="max_value" placeholder="Max. Value" required /></td>
                 <td><input type="text" class="form-control" name="price" placeholder="Price" required /></td>
-                <td><button type="submit" name="submits" class="btn btn-success"><i class="fa fa-save"></i></button></td>
+                <td><button type="submit" name="submits" id="multiplyBtn" class="btn btn-success"><i class="fa fa-save"></i></button></td>
             </tr>
             <?php $no = 1;
             foreach ($table_rate_multiply as $key => $value) : ?>
@@ -89,7 +87,7 @@
         $("input[name=min_value]").attr("readonly", "readonly");
         $("input[name=max_value]").attr("readonly", "readonly");
         $("input[name=price]").attr("readonly", "readonly");
-        $("button[name=submits]").html("<i class='fa fa-spinner fa-spin'></i> Loading");
+        $("#multiplyBtn").html("<i class='fa fa-spinner fa-spin'></i> Loading");
         e.preventDefault();
         $.ajax({
             type: "POST",
@@ -103,7 +101,7 @@
     $("#formData").submit(function(e) {
         $("input[name=default_value]").attr("readonly", "readonly");
         $("input[name=price]").attr("readonly", "readonly");
-        $("button[name=submit]").html("<i class='fa fa-spinner fa-spin'></i> Loading");
+        $("#fixBtn").html("<i class='fa fa-spinner fa-spin'></i> Loading");
         e.preventDefault();
         $.ajax({
             type: "POST",

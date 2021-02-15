@@ -253,7 +253,7 @@ class Country extends CI_Controller
         // get data 
         unset($where);
         $where['id_country'] = $id;
-        $country = $this->country_mod->city_download_list_db();
+        $country = $this->country_mod->city_download_list_db($where);
 
         // file creation 
         $file = fopen('php://output', 'w');

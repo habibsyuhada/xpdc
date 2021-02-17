@@ -13,7 +13,7 @@
             <tr>
                 <td>
                     <input type="hidden" name="rate_type" value="fix rate" required />
-                    <input type="hidden" name="id_branch" value="<?php echo $id_branch; ?>" />
+                    <input type="hidden" name="id_customer" value="<?php echo $id_customer; ?>" />
                     <input type="hidden" name="type_of_mode" value="<?php echo $type_of_mode; ?>" />
                     <input type="hidden" name="zone" value="<?php echo $zone; ?>" />
                     <input type="hidden" name="subzone" value="<?php echo $subzone; ?>" />
@@ -30,7 +30,7 @@
                     <td>Rp. <?php echo number_format($value['price']) ?></td>
                     <td>
                         <button data-target="#myModal" data-toggle="modal" data-id="<?= $value['id'] ?>" type="button" class="btn btn-primary" title="Update"><i class="fas fa-edit m-0"></i></button>
-                        <a href="<?php echo base_url() ?>branch/table_rate_delete_process/<?php echo $value['id'] ?>" class="btn btn-danger" title="Delete" onclick="return confirm('Are You Sure?')"><i class="fas fa-trash m-0"></i></a>
+                        <a href="<?php echo base_url() ?>commercial/table_rate_delete_process/<?php echo $value['id'] ?>" class="btn btn-danger" title="Delete" onclick="return confirm('Are You Sure?')"><i class="fas fa-trash m-0"></i></a>
                     </td>
                 </tr>
             <?php endforeach; ?>
@@ -54,7 +54,7 @@
             <tr>
                 <td>
                     <input type="hidden" name="rate_type" value="multiply rate" required />
-                    <input type="hidden" name="id_branch" value="<?php echo $id_branch; ?>" />
+                    <input type="hidden" name="id_customer" value="<?php echo $id_customer; ?>" />
                     <input type="hidden" name="type_of_mode" value="<?php echo $type_of_mode; ?>" />
                     <input type="hidden" name="zone" value="<?php echo $zone; ?>" />
                     <input type="hidden" name="subzone" value="<?php echo $subzone; ?>" />
@@ -73,7 +73,7 @@
                     <td>Rp. <?php echo number_format($value['price']) ?></td>
                     <td>
                         <button data-target="#myModal" data-toggle="modal" data-id="<?= $value['id'] ?>" type="button" class="btn btn-primary" title="Update"><i class="fas fa-edit m-0"></i></button>
-                        <a href="<?php echo base_url() ?>branch/table_rate_delete_process/<?php echo $value['id'] ?>" class="btn btn-danger" title="Delete" onclick="return confirm('Are You Sure?')"><i class="fas fa-trash m-0"></i></a>
+                        <a href="<?php echo base_url() ?>commercial/table_rate_delete_process/<?php echo $value['id'] ?>" class="btn btn-danger" title="Delete" onclick="return confirm('Are You Sure?')"><i class="fas fa-trash m-0"></i></a>
                     </td>
                 </tr>
             <?php endforeach; ?>
@@ -91,7 +91,7 @@
         e.preventDefault();
         $.ajax({
             type: "POST",
-            url: "<?= base_url() ?>branch/table_rate_create_process_multiply",
+            url: "<?= base_url() ?>commercial/table_rate_create_process_multiply",
             data: $("#formDataMultiply").serialize()
         }).done(function(resp) {
             load_table();
@@ -105,7 +105,7 @@
         e.preventDefault();
         $.ajax({
             type: "POST",
-            url: "<?= base_url() ?>branch/table_rate_create_process_fix",
+            url: "<?= base_url() ?>commercial/table_rate_create_process_fix",
             data: $("#formData").serialize()
         }).done(function(resp) {
             load_table();

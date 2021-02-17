@@ -16,32 +16,25 @@
                             </li>
                         </ul>
                         <div class="tab-content" id="myTabContent">
+                            <input type="hidden" name="id_customer" value="<?= $id_customer ?>">
                             <div class="tab-pane fade show active" id="international" role="tabpanel" aria-labelledby="international-tab">
                                 <br>
-                                <button class="btn btn-primary" type="button" data-toggle="collapse" data-target="#collapseExample" aria-expanded="false" aria-controls="collapseExample">
-                                    <i class="fa fa-upload"></i> Upload Excel
-                                </button>
-                                <a href="<?= base_url() ?>branch/download_table_rate/<?= $id_branch ?>" class="btn btn-warning"><i class="fa fa-download"></i> Download Excel</a>
-                                <br>
-                                <div class="collapse" id="collapseExample">
-                                    <div class="card card-body">
-                                        <form action="<?= base_url() ?>branch/upload_table_rate/<?= $id_branch ?>" method="POST" enctype="multipart/form-data">
-                                            <div class="form-group">
-                                                <label>Upload Excel</label>
-                                                <input type="file" class="form-control-file" name="upload_excel" accept=".csv" required />
-                                            </div>
-                                            <div class="form-group">
-                                                <button type="submit" name="submit" class="btn btn-success"><i class="fa fa-save"></i> Save</button>
-                                            </div>
-                                        </form>
-                                    </div>
-                                </div>
-                                <br>
                                 <div class="row">
+                                    <?php if ($status_branch == '1') { ?>
+                                        <div class="col">
+                                            <div class="form-group">
+                                                <label>Branch</label>
+                                                <select class="form-control" name="branch" required>
+                                                    <?php foreach ($branch as $row) { ?>
+                                                        <option value="<?= $row['id'] ?>"><?= $row['name'] ?></option>
+                                                    <?php } ?>
+                                                </select>
+                                            </div>
+                                        </div>
+                                    <?php } ?>
                                     <div class="col">
                                         <div class="form-group">
                                             <label>Type of Mode</label>
-                                            <input type="hidden" name="id_branch" value="<?= $id_branch ?>">
                                             <select class="form-control" name="type_of_mode" required>
                                                 <option value="Land Shipping">Land Shipping</option>
                                                 <option value="Air Freight - Express">Air Freight - Express</option>
@@ -76,25 +69,19 @@
                                 </div>
                             </div>
                             <div class="tab-pane fade" id="domestic" role="tabpanel" aria-labelledby="domestic-tab">
-                                <br>
-                                <button class="btn btn-primary" type="button" data-toggle="collapse" data-target="#collapseDomestic" aria-expanded="false" aria-controls="collapseDomestic">
-                                    <i class="fa fa-upload"></i> Upload Excel
-                                </button>
-                                <a href="<?= base_url() ?>branch/download_table_rate_domestic/<?= $id_branch ?>" class="btn btn-warning"><i class="fa fa-download"></i> Download Excel</a>
-                                <br>
-                                <div class="collapse" id="collapseDomestic">
-                                    <div class="card card-body">
-                                        <form action="<?= base_url() ?>branch/upload_table_rate_domestic/<?= $id_branch ?>" method="POST" enctype="multipart/form-data">
-                                            <div class="form-group">
-                                                <label>Upload Excel</label>
-                                                <input type="file" class="form-control-file" name="upload_excel" accept=".csv" required />
-                                            </div>
-                                            <div class="form-group">
-                                                <button type="submit" name="submit" class="btn btn-success"><i class="fa fa-save"></i> Save</button>
-                                            </div>
-                                        </form>
+                                <?php if ($status_branch == '1') { ?>
+                                    <br>
+                                    <div class="col-3">
+                                        <div class="form-group">
+                                            <label>Branch</label>
+                                            <select class="form-control" name="branch_domestic" required>
+                                                <?php foreach ($branch as $row) { ?>
+                                                    <option value="<?= $row['id'] ?>"><?= $row['name'] ?></option>
+                                                <?php } ?>
+                                            </select>
+                                        </div>
                                     </div>
-                                </div>
+                                <?php } ?>
                                 <br>
                                 <div class="row">
                                     <div class="col-md-12">
@@ -109,66 +96,10 @@
         </div>
     </div>
 </div>
-<!-- Modal -->
-<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-    <div class="modal-dialog" role="document">
-        <div class="modal-content">
-            <div class="modal-header bg-info text-white">
-                <h5 class="modal-title" id="myModalLabel">Edit Table Rate</h5>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                </button>
-            </div>
-            <div id="fetch_data"></div>
-        </div>
-    </div>
-</div>
-<!-- Modal -->
-<div class="modal fade" id="myModalDomestic" tabindex="-1" role="dialog" aria-labelledby="myModalDomesticLabel" aria-hidden="true">
-    <div class="modal-dialog" role="document">
-        <div class="modal-content">
-            <div class="modal-header bg-info text-white">
-                <h5 class="modal-title" id="myModalDomesticLabel">Edit Table Rate Domestic</h5>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                </button>
-            </div>
-            <div id="fetch_data_domestic"></div>
-        </div>
-    </div>
-</div>
 <script>
     load_table();
     load_table_domestic();
     subzone_unit();
-
-    $('#myModalDomestic').on('shown.bs.modal', function(e) {
-        $("#myModalDomestic").css("display", "block");
-        var id = $(e.relatedTarget).data('id');
-        $.ajax({
-            type: 'POST',
-            url: "<?= base_url() ?>branch/edit_table_rate_domestic",
-            data: {
-                id: id
-            }
-        }).done(function(msg) {
-            $('#fetch_data_domestic').html(msg);
-        })
-    });
-
-    $('#myModal').on('shown.bs.modal', function(e) {
-        $("#myModal").css("display", "block");
-        var id = $(e.relatedTarget).data('id');
-        $.ajax({
-            type: 'POST',
-            url: "<?= base_url() ?>branch/edit_table_rate",
-            data: {
-                id: id
-            }
-        }).done(function(msg) {
-            $('#fetch_data').html(msg);
-        })
-    });
 
     $(".select2").select2();
 
@@ -182,6 +113,14 @@
     $("select[name=subzone]").change(function() {
         load_table();
     });
+    <?php if ($status_branch == '1') { ?>
+        $("select[name=branch]").change(function() {
+            load_table();
+        });
+        $("select[name=branch_domestic]").change(function() {
+            load_table_domestic();
+        });
+    <?php } ?>
 
     function load_table() {
         var loading = `<h4 class="font-weight-bold text-center"><i class="fa fa-spinner fa-spin"></i> Loading</h4>`;
@@ -189,15 +128,21 @@
         var type_of_mode = $("select[name=type_of_mode]").val();
         var zone = $("select[name=zone]").val();
         var subzone = $("select[name=subzone]").val();
-        var id = $("input[name=id_branch]").val();
+        var id = $("input[name=id_customer]").val();
+        <?php if ($status_branch == '1') { ?>
+            var branch = $("select[name=branch]").val();
+        <?php } ?>
         $.ajax({
             type: "POST",
-            url: "<?= base_url() ?>branch/load_table_rate",
+            url: "<?= base_url() ?>customer/load_table_rate",
             data: {
-                id_branch: id,
+                id_customer: id,
                 type_of_mode: type_of_mode,
                 zone: zone,
-                subzone: subzone
+                subzone: subzone,
+                <?php if ($status_branch == '1') { ?>
+                    branch: branch
+                <?php } ?>
             }
         }).done(function(msg) {
             $("#load_table").html(msg);
@@ -207,12 +152,18 @@
     function load_table_domestic() {
         var loading = `<h4 class="font-weight-bold text-center"><i class="fa fa-spinner fa-spin"></i> Loading</h4>`;
         $("#load_table_domestic").html(loading);
-        var id = $("input[name=id_branch]").val();
+        var id = $("input[name=id_customer]").val();
+        <?php if ($status_branch == '1') { ?>
+            var branch = $("select[name=branch_domestic]").val();
+        <?php } ?>
         $.ajax({
             type: "POST",
-            url: "<?= base_url() ?>branch/load_table_rate_domestic",
+            url: "<?= base_url() ?>customer/load_table_rate_domestic",
             data: {
-                id_branch: id
+                id_customer: id,
+                <?php if ($status_branch == '1') { ?>
+                    branch: branch
+                <?php } ?>
             }
         }).done(function(msg) {
             $("#load_table_domestic").html(msg);
@@ -224,7 +175,7 @@
         var zone = $("select[name='zone'] option:selected").data('id');
         $.ajax({
             type: "POST",
-            url: "<?= base_url() ?>branch/load_subzone",
+            url: "<?= base_url() ?>customer/load_subzone",
             data: {
                 zone: zone
             }

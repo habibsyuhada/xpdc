@@ -24,6 +24,14 @@
                     <label>Address</label>
                     <textarea class="form-control" name="address" placeholder="Address" rows="4"></textarea required>
                   </div>
+                  <div class="form-group">
+                    <label>Latitude</label>
+                    <input type="text" class="form-control" name="latitude" placeholder="Latitude" required>
+                  </div>
+                  <div class="form-group">
+                    <label>Longitude</label>
+                    <input type="text" class="form-control" name="longitude" placeholder="Longitude" required>
+                  </div>
                 </div>
               </div>
               <div class="mt-2 row">

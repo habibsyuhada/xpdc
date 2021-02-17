@@ -21,11 +21,11 @@
                                 <button class="btn btn-primary" type="button" data-toggle="collapse" data-target="#collapseExample" aria-expanded="false" aria-controls="collapseExample">
                                     <i class="fa fa-upload"></i> Upload Excel
                                 </button>
-                                <a href="<?= base_url() ?>branch/download_table_rate/<?= $id_branch ?>" class="btn btn-warning"><i class="fa fa-download"></i> Download Excel</a>
+                                <a href="<?= base_url() ?>commercial/download_table_rate/<?= $id_customer ?>" class="btn btn-warning"><i class="fa fa-download"></i> Download Excel</a>
                                 <br>
                                 <div class="collapse" id="collapseExample">
                                     <div class="card card-body">
-                                        <form action="<?= base_url() ?>branch/upload_table_rate/<?= $id_branch ?>" method="POST" enctype="multipart/form-data">
+                                        <form action="<?= base_url() ?>commercial/upload_table_rate/<?= $id_customer ?>" method="POST" enctype="multipart/form-data">
                                             <div class="form-group">
                                                 <label>Upload Excel</label>
                                                 <input type="file" class="form-control-file" name="upload_excel" accept=".csv" required />
@@ -41,7 +41,7 @@
                                     <div class="col">
                                         <div class="form-group">
                                             <label>Type of Mode</label>
-                                            <input type="hidden" name="id_branch" value="<?= $id_branch ?>">
+                                            <input type="hidden" name="id_customer" value="<?= $id_customer ?>">
                                             <select class="form-control" name="type_of_mode" required>
                                                 <option value="Land Shipping">Land Shipping</option>
                                                 <option value="Air Freight - Express">Air Freight - Express</option>
@@ -80,11 +80,11 @@
                                 <button class="btn btn-primary" type="button" data-toggle="collapse" data-target="#collapseDomestic" aria-expanded="false" aria-controls="collapseDomestic">
                                     <i class="fa fa-upload"></i> Upload Excel
                                 </button>
-                                <a href="<?= base_url() ?>branch/download_table_rate_domestic/<?= $id_branch ?>" class="btn btn-warning"><i class="fa fa-download"></i> Download Excel</a>
+                                <a href="<?= base_url() ?>commercial/download_table_rate_domestic/<?= $id_customer ?>" class="btn btn-warning"><i class="fa fa-download"></i> Download Excel</a>
                                 <br>
                                 <div class="collapse" id="collapseDomestic">
                                     <div class="card card-body">
-                                        <form action="<?= base_url() ?>branch/upload_table_rate_domestic/<?= $id_branch ?>" method="POST" enctype="multipart/form-data">
+                                        <form action="<?= base_url() ?>commercial/upload_table_rate_domestic/<?= $id_customer ?>" method="POST" enctype="multipart/form-data">
                                             <div class="form-group">
                                                 <label>Upload Excel</label>
                                                 <input type="file" class="form-control-file" name="upload_excel" accept=".csv" required />
@@ -147,7 +147,7 @@
         var id = $(e.relatedTarget).data('id');
         $.ajax({
             type: 'POST',
-            url: "<?= base_url() ?>branch/edit_table_rate_domestic",
+            url: "<?= base_url() ?>commercial/edit_table_rate_domestic",
             data: {
                 id: id
             }
@@ -161,7 +161,7 @@
         var id = $(e.relatedTarget).data('id');
         $.ajax({
             type: 'POST',
-            url: "<?= base_url() ?>branch/edit_table_rate",
+            url: "<?= base_url() ?>commercial/edit_table_rate",
             data: {
                 id: id
             }
@@ -189,12 +189,12 @@
         var type_of_mode = $("select[name=type_of_mode]").val();
         var zone = $("select[name=zone]").val();
         var subzone = $("select[name=subzone]").val();
-        var id = $("input[name=id_branch]").val();
+        var id = $("input[name=id_customer]").val();
         $.ajax({
             type: "POST",
-            url: "<?= base_url() ?>branch/load_table_rate",
+            url: "<?= base_url() ?>commercial/load_table_rate",
             data: {
-                id_branch: id,
+                id_customer: id,
                 type_of_mode: type_of_mode,
                 zone: zone,
                 subzone: subzone
@@ -207,12 +207,12 @@
     function load_table_domestic() {
         var loading = `<h4 class="font-weight-bold text-center"><i class="fa fa-spinner fa-spin"></i> Loading</h4>`;
         $("#load_table_domestic").html(loading);
-        var id = $("input[name=id_branch]").val();
+        var id = $("input[name=id_customer]").val();
         $.ajax({
             type: "POST",
-            url: "<?= base_url() ?>branch/load_table_rate_domestic",
+            url: "<?= base_url() ?>commercial/load_table_rate_domestic",
             data: {
-                id_branch: id
+                id_customer: id
             }
         }).done(function(msg) {
             $("#load_table_domestic").html(msg);
@@ -224,7 +224,7 @@
         var zone = $("select[name='zone'] option:selected").data('id');
         $.ajax({
             type: "POST",
-            url: "<?= base_url() ?>branch/load_subzone",
+            url: "<?= base_url() ?>commercial/load_subzone",
             data: {
                 zone: zone
             }

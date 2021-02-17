@@ -24,6 +24,14 @@
                     <label>Address</label>
                     <textarea class="form-control" name="address" placeholder="Address" rows="4"><?php echo $branch_list['address'] ?></textarea required>
                   </div>
+                  <div class="form-group">
+                    <label>Latitude</label>
+                    <input type="text" class="form-control" name="latitude" placeholder="Latitude" value="<?php echo $branch_list['latitude'] ?>" required>
+                  </div>
+                  <div class="form-group">
+                    <label>Longitude</label>
+                    <input type="text" class="form-control" name="longitude" placeholder="Longitude" value="<?php echo $branch_list['longitude'] ?>" required>
+                  </div>
                 </div>
               </div>
               <div class="mt-2 row">

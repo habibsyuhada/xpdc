@@ -14,6 +14,7 @@ $side_permission = array(
 	10 => (in_array($role, array("Super Admin", "Commercial")) ? 1 : 0), //Commercial Customer
 	11 => (in_array($role, array("Super Admin", "Commercial")) ? 1 : 0), //View Quotation
 	12 => (in_array($role, array("Super Admin", "Commercial")) ? 1 : 0), //Create Quotation
+	13 => (in_array($role, array("Customer")) ? 1 : 0),
 );
 ?>
 
@@ -64,7 +65,7 @@ $side_permission = array(
 			<div class="app-sidebar colored">
 				<div class="sidebar-header" style="overflow: hidden; padding-left: 7px;">
 					<a class="header-brand" href="<?php echo base_url() ?>">
-						<img src="<?php echo base_url(); ?>assets/img/logo-fix.png" class="header-brand-img" alt="lavalite" width="150px">
+						<img src="<?php echo base_url(); ?>assets/img/logo-white-fix.png" class="header-brand-img" alt="lavalite" width="150px">
 					</a>
 					<button type="button" class="nav-toggle"><i data-toggle="expanded" class="ik ik-toggle-right toggle-icon"></i></button>
 					<button id="sidebarClose" class="nav-close"><i class="ik ik-x"></i></button>
@@ -137,6 +138,11 @@ $side_permission = array(
 								<?php if ($side_permission[6] == 1) : ?>
 									<div class="nav-item">
 										<a href="<?php echo base_url() ?>shipment/shipment_link_share"><i class="fas fa-share-alt"></i> <span>Share Link</span></a>
+									</div>
+								<?php endif; ?>
+								<?php if ($side_permission[13] == 1) : ?>
+									<div class="nav-item">
+										<a href="<?php echo base_url() ?>customer/table_rate_list"><i class="fas fa-table"></i> <span>Table Rate</span></a>
 									</div>
 								<?php endif; ?>
 								<?php if ($side_permission[9] == 1) : ?>

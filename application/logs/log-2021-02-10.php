@@ -1,5 +1,6 @@
 <?php defined('BASEPATH') OR exit('No direct script access allowed'); ?>
 
+<<<<<<< Updated upstream
 ERROR - 2021-02-10 05:37:08 --> Severity: Notice --> Undefined variable: branch C:\xampp\htdocs\xpdc\application\views\home\landing_page.php 584
 ERROR - 2021-02-10 05:37:08 --> Severity: Warning --> Invalid argument supplied for foreach() C:\xampp\htdocs\xpdc\application\views\home\landing_page.php 584
 ERROR - 2021-02-10 08:46:16 --> Severity: Notice --> Undefined variable: branch C:\xampp\htdocs\xpdc\application\views\home\landing_page.php 584
@@ -97,3 +98,7 @@ ERROR - 2021-02-10 18:56:52 --> Severity: Warning --> Invalid argument supplied 
 ERROR - 2021-02-10 20:09:21 --> 404 Page Not Found: Branch/favicon.ico
 ERROR - 2021-02-10 20:09:30 --> 404 Page Not Found: Branch/download_table_rate_domestic
 ERROR - 2021-02-10 20:42:38 --> 404 Page Not Found: Commercial/favicon.ico
+=======
+ERROR - 2021-02-10 07:22:09 --> Severity: Notice --> Undefined variable: branch C:\xampp\htdocs\xpdc\application\views\home\landing_page.php 584
+ERROR - 2021-02-10 07:22:09 --> Severity: Warning --> Invalid argument supplied for foreach() C:\xampp\htdocs\xpdc\application\views\home\landing_page.php 584
+>>>>>>> Stashed changes

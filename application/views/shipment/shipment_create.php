@@ -528,7 +528,7 @@ if (!isset($cargo_list)) {
                       </div>
                       <div class="form-group">
                         <label>Same as</label>
-                        <select class="form-control" name="billing_same_as" onchange="same_as(this)" required>
+                        <select class="form-control" name="billing_same_as" onchange="same_as(this)">
                           <option value="None">-- None --</option>
                           <option value="Shipper">Shipper</option>
                           <option value="Consignee">Consignee</option>

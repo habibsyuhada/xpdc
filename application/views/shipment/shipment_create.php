@@ -111,7 +111,7 @@ if (!isset($cargo_list)) {
                       </div>
                       <div class="form-group">
                         <label>City</label>
-                        <input type="text" class="form-control" name="shipper_city" value="<?php echo @$quotation['shipper_city'] ?>" placeholder="City" required>
+                        <input type="text" class="form-control" name="shipper_city" value="<?php echo @$quotation['shipper_city'] ?>" placeholder="City">
                       </div>
                       <div class="form-group">
                         <label>Country</label>
@@ -151,7 +151,7 @@ if (!isset($cargo_list)) {
                       </div>
                       <div class="form-group">
                         <label>City</label>
-                        <input type="text" class="form-control" name="consignee_city" value="<?php echo @$quotation['consignee_city'] ?>" placeholder="City" required>
+                        <input type="text" class="form-control" name="consignee_city" value="<?php echo @$quotation['consignee_city'] ?>" placeholder="City">
                       </div>
                       <div class="form-group">
                         <label>Country</label>
@@ -449,7 +449,7 @@ if (!isset($cargo_list)) {
                       </div>
                       <div class="form-group">
                         <label>City</label>
-                        <input type="text" class="form-control" name="pickup_city" placeholder="City" readonly required>
+                        <input type="text" class="form-control" name="pickup_city" placeholder="City" readonly>
                       </div>
                       <div class="form-group">
                         <label>Country</label>
@@ -548,7 +548,7 @@ if (!isset($cargo_list)) {
                       </div>
                       <div class="form-group">
                         <label>City</label>
-                        <input type="text" class="form-control" name="billing_city" placeholder="City" required>
+                        <input type="text" class="form-control" name="billing_city" placeholder="City">
                       </div>
                       <div class="form-group">
                         <label>Country</label>
@@ -1164,7 +1164,7 @@ if (!isset($cargo_list)) {
           $("[name="+name_city+"]").select2({theme: "bootstrap4"});
         }
         else{
-          var html = '<input type="text" class="form-control" name="'+name_city+'" placeholder="City" required>';
+          var html = '<input type="text" class="form-control" name="'+name_city+'" placeholder="City">';
           $(content).append(html);
         }
       }

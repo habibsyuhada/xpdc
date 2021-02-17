@@ -1107,6 +1107,23 @@ if (!isset($cargo_list)) {
           $("input[name=billing_contact_person]").val(data.contact_person);
           $("input[name=billing_phone_number]").val(data.phone_number);
           $("input[name=billing_email]").val(data.email);
+
+          <?php if($this->session->userdata('role') == "Customer"): ?>
+          $("#billing input, #billing textarea").attr("readonly", "readonly");
+          // $("#billing select[name=billing_account], #billing select[name=billing_country_view]").select2('destroy')
+          // $("#billing select").attr("readonly", "readonly").css({'-moz-appearance': 'none','-webkit-appearance': 'none'});
+          $("#billing select[name=billing_account], #billing select[name=billing_country_view]").select2({"readonly": true});
+
+          var data_select = $("#billing select[name=billing_account]").val();
+          $("#billing select[name=billing_account]").parent().append("<input type='hidden' class='form-control' name='billing_account' value='"+data_select+"'>");
+          $("#billing select[name=billing_account]").select2('destroy').attr("disabled", true).attr("name", "billing_account_view");
+          
+          data_select = $("#billing select[name=billing_same_as]").val();
+          $("#billing select[name=billing_same_as]").parent().append("<input type='hidden' class='form-control' name='billing_same_as' value='"+data_select+"'>");
+          $("#billing select[name=billing_same_as]").attr("disabled", true).attr("name", "billing_same_as_view");
+
+          $("#billing select[name=billing_country_view]").select2('destroy').attr("disabled", true);
+          <?php endif; ?>
         }
       }
     });

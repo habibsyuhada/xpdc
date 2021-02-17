@@ -130,7 +130,7 @@
                       </div>
                       <div class="form-group">
                         <label>Country</label>
-                        <select class="form-control select2" name="shipper_country" required>
+                        <select class="form-control select2" name="shipper_country" required onchange="select_country(this)">
                           <option value="">- Select One -</option>
                           <?php foreach ($country as $data) { ?>
                             <option value="<?= $data['country'] ?>" <?php echo ($shipment['shipper_country'] == $data['country'] ? 'selected' : '') ?>><?= $data['country'] ?></option>
@@ -983,6 +983,9 @@
   $(document).ready(function() {
     get_vol_weight();
     change_sea($("select[name=sea]").val(), 0);
+
+    select_country($("select[name=shipper_country]"));
+    select_country($("select[name=consignee_country]"));
   });
 
   var settime_billing_account;
@@ -1033,4 +1036,68 @@
       }
     });
   }
+
+  var first_shipper_city_load = true;
+  var first_consignee_city_load = true;
+  function select_country(input) {
+    var select_city;
+    var name_city
+    if($(input).attr("name") == "shipper_country"){
+      select_city = $("[name=shipper_city]");
+      name_city = "shipper_city";
+    }
+    else if($(input).attr("name") == "consignee_country"){
+      select_city = $("[name=consignee_city ]");
+      name_city = "consignee_city";
+    }
+    $.ajax( {
+      url: "<?php echo base_url() ?>country/city_autocomplete",
+      dataType: "json",
+      data: {
+        // term: request.term,
+        country: $(input).val(),
+      },
+      success: function( data ) {
+        console.log(data);
+        // data = JSON.parse(data);
+        // console.log(data);
+        var content = $(select_city).parent();
+        $("select[name="+name_city+"]").select2("destroy");
+        $(select_city).remove();
+        if(data.length > 0){
+          var html = '<select class="form-control select2" name="'+name_city+'" required>';
+          $.each(data, function(index, value) {
+            html += "<option value='"+value+"'>"+value+"</option>";
+          });
+          html += "</select>";
+          $(content).append(html);
+          $("[name="+name_city+"]").select2({theme: "bootstrap4"});
+        }
+        else{
+          var html = '<input type="text" class="form-control" name="'+name_city+'" placeholder="City" required>';
+          $(content).append(html);
+        }
+
+        if(first_shipper_city_load == true && name_city == "shipper_city"){
+          if($("select[name="+name_city+"]").length){
+            $("select[name="+name_city+"]").val('<?php echo $shipment['shipper_city'] ?>').trigger('change');
+          }
+          else{
+            $("input[name="+name_city+"]").val('<?php echo $shipment['shipper_city'] ?>')
+          }
+          first_shipper_city_load = false;
+        }
+        if(first_consignee_city_load == true && name_city == "consignee_city"){
+          if($("select[name="+name_city+"]").length){
+            $("select[name="+name_city+"]").val('<?php echo $shipment['consignee_city'] ?>').trigger('change');
+          }
+          else{
+            $("input[name="+name_city+"]").val('<?php echo $shipment['consignee_city'] ?>')
+          }
+          first_consignee_city_load = false;
+        }
+      }
+    });
+  }
+
 </script>

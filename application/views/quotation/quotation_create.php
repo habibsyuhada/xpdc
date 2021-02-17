@@ -179,7 +179,7 @@
                   <h6 class="font-weight-bold">Shipper Information</h6>
                   <div class="form-group">
                     <label>Country</label>
-                    <select class="form-control select2" name="shipper_country" required>
+                    <select class="form-control select2" name="shipper_country" required onchange="select_country(this)">
                       <option value="">- Select One -</option>
                       <?php foreach ($country['data'] as $data) { ?>
                         <option value="<?= $data['location'] ?>"><?= $data['location'] ?></option>
@@ -222,7 +222,7 @@
                   <h6 class="font-weight-bold">Consignee Information</h6>
                   <div class="form-group">
                     <label>Country</label>
-                    <select class="form-control select2" name="consignee_country" required>
+                    <select class="form-control select2" name="consignee_country" required onchange="select_country(this)">
                       <option value="">- Select One -</option>
                       <?php foreach ($country['data'] as $data) { ?>
                         <option value="<?= $data['location'] ?>"><?= $data['location'] ?></option>
@@ -502,6 +502,10 @@
   </div>
 </div>
 <script type="text/javascript">
+  $(".select2").select2({
+    theme: "bootstrap4"
+  });
+  
   var term_condition_selection = {
     AIRFREIGHT: {
       0 : "Rate exclude fuel surcharges",
@@ -854,5 +858,47 @@
     $("input[name="+data_tba+"_contact_person]").val('').prop('readonly', !ro).prop('required', !req);
     $("input[name="+data_tba+"_phone_number]").val('').prop('readonly', !ro).prop('required', !req);
     $("input[name="+data_tba+"_email]").val('').prop('readonly', !ro);
+  }
+
+  function select_country(input) {
+    var select_city;
+    var name_city
+    if($(input).attr("name") == "shipper_country"){
+      select_city = $("[name=shipper_city]");
+      name_city = "shipper_city";
+    }
+    else if($(input).attr("name") == "consignee_country"){
+      select_city = $("[name=consignee_city ]");
+      name_city = "consignee_city";
+    }
+    $.ajax( {
+      url: "<?php echo base_url() ?>country/city_autocomplete",
+      dataType: "json",
+      data: {
+        // term: request.term,
+        country: $(input).val(),
+      },
+      success: function( data ) {
+        console.log(data);
+        // data = JSON.parse(data);
+        // console.log(data);
+        var content = $(select_city).parent();
+        $("select[name="+name_city+"]").select2("destroy");
+        $(select_city).remove();
+        if(data.length > 0){
+          var html = '<select class="form-control select2" name="'+name_city+'" required>';
+          $.each(data, function(index, value) {
+            html += "<option value='"+value+"'>"+value+"</option>";
+          });
+          html += "</select>";
+          $(content).append(html);
+          $("[name="+name_city+"]").select2({theme: "bootstrap4"});
+        }
+        else{
+          var html = '<input type="text" class="form-control" name="'+name_city+'" placeholder="City" required>';
+          $(content).append(html);
+        }
+      }
+    });
   }
 </script>

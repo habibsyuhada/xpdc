@@ -39,7 +39,7 @@ $page_permission = array(
                 <div class="col-md-6">
                   <div class="form-group">
                     <label>Country</label>
-                    <select class="form-control select2" name="country" required>
+                    <select class="form-control select2" name="country" required onchange="select_country(this)">>
                       <option value="">- Select One -</option>
                       <?php foreach ($country['data'] as $data) { ?>
                         <option value="<?= $data['location'] ?>" <?php echo ($data['location'] == $customer_list['country']) ? 'selected' : ''; ?>><?= $data['location'] ?></option>
@@ -130,4 +130,53 @@ $page_permission = array(
   $(".select2").select2({
     theme: "bootstrap4"
   });
+
+  $(document).ready(function() {
+    select_country($("select[name=country]"));
+  });
+
+  var first_customer_city_load = true;
+  function select_country(input) {
+    var select_city = $("[name=city]");;
+    var name_city = "city";
+    $.ajax( {
+      url: "<?php echo base_url() ?>country/city_autocomplete",
+      dataType: "json",
+      data: {
+        // term: request.term,
+        country: $(input).val(),
+      },
+      success: function( data ) {
+        console.log(data);
+        // data = JSON.parse(data);
+        // console.log(data);
+        var content = $(select_city).parent();
+        $("select[name="+name_city+"]").select2("destroy");
+        $(select_city).remove();
+        if(data.length > 0){
+          var html = '<select class="form-control select2" name="'+name_city+'" required>';
+          $.each(data, function(index, value) {
+            html += "<option value='"+value+"'>"+value+"</option>";
+          });
+          html += "</select>";
+          $(content).append(html);
+          $("[name="+name_city+"]").select2({theme: "bootstrap4"});
+        }
+        else{
+          var html = '<input type="text" class="form-control" name="'+name_city+'" placeholder="City" required>';
+          $(content).append(html);
+        }
+
+        if(first_customer_city_load == true){
+          if($("select[name="+name_city+"]").length){
+            $("select[name="+name_city+"]").val('<?php echo $customer_list['city'] ?>').trigger('change');
+          }
+          else{
+            $("input[name="+name_city+"]").val('<?php echo $customer_list['city'] ?>')
+          }
+          first_customer_city_load = false;
+        }
+      }
+    });
+  }
 </script>

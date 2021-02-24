@@ -43,7 +43,7 @@
             </tr>
         <?php } else { ?>
             <tr>
-                <td colspan="3"><button type="button" class=" btn btn-danger btn-sm btn-block">Pickup Rate Price Not Defined</button></td>
+                <td colspan="3"><button type="button" class=" btn btn-danger btn-sm btn-block">Not Available</button></td>
             </tr>
         <?php } ?>
     </table>
@@ -56,13 +56,13 @@
             </tr>
             <tr>
                 <td>
-                    Rp. <?= number_format($result['airfreight_price_kg'], 2) ?></td>
-                <td>Rp. <?= number_format($result['landfreight_price_kg'], 2) ?></td>
-                <td>Rp. <?= number_format($result['seafreight_price_kg'], 2) ?></td>
+                    Rp. <?= number_format($airfreight_weight, 2) ?> (<?=$result['airfreight_term']?>)</td>
+                <td>Rp. <?= number_format($landfreight_weight, 2) ?> (<?=$result['landfreight_term']?>)</td>
+                <td>Rp. <?= number_format($seafreight_weight, 2) ?> (<?=$result['seafreight_term']?>)</td>
             </tr>
         <?php } else { ?>
             <tr>
-                <td colspan="3"><button type="button" class=" btn btn-danger btn-sm btn-block">Cost Can't Simulate</button></td>
+                <td colspan="3"><button type="button" class=" btn btn-danger btn-sm btn-block">Not Available</button></td>
             </tr>
         <?php } ?>
     </table>
@@ -111,7 +111,7 @@
             </tr>
         <?php } else { ?>
             <tr>
-                <td colspan="3"><button type="button" class=" btn btn-danger btn-sm btn-block">Cost Can't Simulate</button></td>
+                <td colspan="3"><button type="button" class=" btn btn-danger btn-sm btn-block">Not Available</button></td>
             </tr>
         <?php } ?>
         <?php if ($pickup != null) { ?>
@@ -122,7 +122,7 @@
             </tr>
         <?php } else { ?>
             <tr>
-                <td colspan="3"><button type="button" class=" btn btn-danger btn-sm btn-block">Pickup Rate Price Not Defined</button></td>
+                <td colspan="3"><button type="button" class=" btn btn-danger btn-sm btn-block">Not Available</button></td>
             </tr>
         <?php } ?>
     </table>

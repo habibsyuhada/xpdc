@@ -52,6 +52,9 @@ class Customer extends CI_Controller
             if ($query->num_rows() > 0) {
                 // if customer table rate exists
                 $row = $query->row_array();
+                $data['airfreight_weight'] = $post['weight'] * $row['airfreight_price_kg'];
+                $data['landfreight_weight'] = $post['weight'] * $row['landfreight_price_kg'];
+                $data['seafreight_weight'] = $post['weight'] * $row['seafreight_price_kg'];
                 $data['result'] = $row;
                 $data['status'] = "202";
                 $data['type_of_shipment'] = "Domestic";
@@ -61,6 +64,9 @@ class Customer extends CI_Controller
                 $query = $this->customer_mod->table_rate_domestic_list_db($where);
                 if ($query->num_rows() > 0) {
                     $row = $query->row_array();
+                    $data['airfreight_weight'] = $post['weight'] * $row['airfreight_price_kg'];
+                    $data['landfreight_weight'] = $post['weight'] * $row['landfreight_price_kg'];
+                    $data['seafreight_weight'] = $post['weight'] * $row['seafreight_price_kg'];
                     $data['result'] = $row;
                     $data['status'] = "202";
                     $data['type_of_shipment'] = "Domestic";

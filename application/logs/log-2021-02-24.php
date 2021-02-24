@@ -26,3 +26,14 @@ ERROR - 2021-02-24 09:08:44 --> Severity: Notice --> Undefined offset: 0 C:\xamp
 ERROR - 2021-02-24 09:08:44 --> Severity: Notice --> Trying to access array offset on value of type null C:\xampp\htdocs\xpdc\application\views\commercial\load_table_rate_pickup.php 21
 ERROR - 2021-02-24 09:08:44 --> Severity: Notice --> Trying to access array offset on value of type null C:\xampp\htdocs\xpdc\application\views\commercial\load_table_rate_pickup.php 66
 ERROR - 2021-02-24 09:11:07 --> 404 Page Not Found: Assets/img
+ERROR - 2021-02-24 09:29:39 --> 404 Page Not Found: Assets/img
+ERROR - 2021-02-24 09:29:45 --> 404 Page Not Found: Assets/img
+ERROR - 2021-02-24 09:29:49 --> 404 Page Not Found: Assets/img
+ERROR - 2021-02-24 09:30:39 --> 404 Page Not Found: Assets/img
+ERROR - 2021-02-24 09:31:08 --> 404 Page Not Found: Assets/img
+ERROR - 2021-02-24 09:31:13 --> 404 Page Not Found: Assets/img
+ERROR - 2021-02-24 09:31:13 --> 404 Page Not Found: Customer/favicon.ico
+ERROR - 2021-02-24 09:32:19 --> 404 Page Not Found: Assets/img
+ERROR - 2021-02-24 09:36:50 --> 404 Page Not Found: Assets/img
+ERROR - 2021-02-24 09:36:58 --> 404 Page Not Found: Assets/img
+ERROR - 2021-02-24 09:38:45 --> 404 Page Not Found: Assets/img

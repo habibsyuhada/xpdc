@@ -14,6 +14,9 @@
                             <li class="nav-item">
                                 <a class="nav-link" id="domestic-tab" data-toggle="tab" href="#domestic" role="tab" aria-controls="domestic" aria-selected="false">Domestic Table Rate</a>
                             </li>
+                            <li class="nav-item">
+                                <a class="nav-link" id="pickup-tab" data-toggle="tab" href="#pickup" role="tab" aria-controls="pickup" aria-selected="false">Pickup Rate</a>
+                            </li>
                         </ul>
                         <div class="tab-content" id="myTabContent">
                             <div class="tab-pane fade show active" id="international" role="tabpanel" aria-labelledby="international-tab">
@@ -102,6 +105,33 @@
                                     </div>
                                 </div>
                             </div>
+                            <div class="tab-pane fade" id="pickup" role="tabpanel" aria-labelledby="pickup-tab">
+                                <br>
+                                <button class="btn btn-primary" type="button" data-toggle="collapse" data-target="#collapsePickup" aria-expanded="false" aria-controls="collapsePickup">
+                                    <i class="fa fa-upload"></i> Upload Excel
+                                </button>
+                                <a href="<?= base_url() ?>branch/download_table_rate_pickup/<?= $id_branch ?>" class="btn btn-warning"><i class="fa fa-download"></i> Download Excel</a>
+                                <br>
+                                <div class="collapse" id="collapsePickup">
+                                    <div class="card card-body">
+                                        <form action="<?= base_url() ?>branch/upload_table_rate_pickup/<?= $id_branch ?>" method="POST" enctype="multipart/form-data">
+                                            <div class="form-group">
+                                                <label>Upload Excel</label>
+                                                <input type="file" class="form-control-file" name="upload_excel" accept=".csv" required />
+                                            </div>
+                                            <div class="form-group">
+                                                <button type="submit" name="submit" class="btn btn-success"><i class="fa fa-save"></i> Save</button>
+                                            </div>
+                                        </form>
+                                    </div>
+                                </div>
+                                <br>
+                                <div class="row">
+                                    <div class="col-md-12">
+                                        <div id="load_table_pickup"></div>
+                                    </div>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -137,9 +167,24 @@
         </div>
     </div>
 </div>
+<!-- Modal -->
+<div class="modal fade" id="myModalPickup" tabindex="-1" role="dialog" aria-labelledby="myModalPickupLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header bg-info text-white">
+                <h5 class="modal-title" id="myModalPickupLabel">Edit Table Rate Pickup</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div id="fetch_data_pickup"></div>
+        </div>
+    </div>
+</div>
 <script>
     load_table();
     load_table_domestic();
+    load_table_pickup();
     subzone_unit();
 
     $('#myModalDomestic').on('shown.bs.modal', function(e) {
@@ -168,6 +213,20 @@
         }).done(function(msg) {
             $('#fetch_data').html(msg);
         })
+    });
+
+    $("#myModalPickup").on('shown.bs.modal', function(e) {
+        $("#myModalPickup").css("display", "block");
+        var id = $(e.relatedTarget).data('id');
+        $.ajax({
+            type: 'POST',
+            url: "<?= base_url() ?>branch/edit_table_rate_pickup",
+            data: {
+                id: id
+            }
+        }).done(function(msg) {
+            $('#fetch_data_pickup').html(msg);
+        });
     });
 
     $(".select2").select2();
@@ -216,6 +275,21 @@
             }
         }).done(function(msg) {
             $("#load_table_domestic").html(msg);
+        });
+    }
+
+    function load_table_pickup() {
+        var loading = `<h4 class="font-weight-bold text-center"><i class="fa fa-spinner fa-spin"></i> Loading</h4>`;
+        $("#load_table_pickup").html(loading);
+        var id = $("input[name=id_branch]").val();
+        $.ajax({
+            type: "POST",
+            url: "<?= base_url() ?>branch/load_table_rate_pickup",
+            data: {
+                id_branch: id
+            }
+        }).done(function(msg) {
+            $("#load_table_pickup").html(msg);
         });
     }
 

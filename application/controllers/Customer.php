@@ -8,114 +8,218 @@ class Customer extends CI_Controller
         parent::__construct();
         cek_login();
         $this->load->model('home_mod');
-        $this->load->model('branch_mod');
+        $this->load->model('customer_mod');
     }
 
     public function index()
     {
-        redirect("customer/table_rate_list");
+        redirect("customer/check_price");
     }
 
-    public function table_rate_list()
+    public function check_price()
     {
-        $where = array('customer_id' => $this->session->userdata("id"));
-        $customer = $this->home_mod->customer_list($where);
-        $id_customer = $customer[0]['id'];
+        $data['country'] = $this->customer_mod->country_list_db()->result_array();
 
-        unset($where);
-        $where['id_customer'] = $id_customer;
-        $get = $this->branch_mod->table_rate_list_db($where);
-        if (count($get) > 0) {
-            $data['status_branch'] = 0;
-        } else {
-            $data['status_branch'] = 1;
-        }
-
-        $data['branch'] = $this->branch_mod->branch_list_db(array("name != 'None'" => NULL));
-
-        $data['id_customer'] = $this->session->userdata("id");
-        $data['zone'] = $this->branch_mod->zone_list_db();
-
-        $data['subview']            = 'customer/table_rate_list';
-        $data['meta_title']         = 'Table Rate List';
+        $data['subview']            = 'customer/check_price';
+        $data['meta_title']         = 'Check Price';
         $this->load->view('index', $data);
     }
 
-    public function load_table_rate()
+    public function check_price_process()
     {
         $post = $this->input->post();
 
-        $where = array('customer_id' => $post['id_customer']);
-        $customer = $this->home_mod->customer_list($where);
-        $customers = $customer[0];
-
-        unset($where);
-        $id_customer = $customers['id'];
-        $where = array('id_customer' => $id_customer);
-        $table_rate_fix = $this->branch_mod->table_rate_list_db($where);
-
-        unset($where);
-        if (count($table_rate_fix) > 0) {
-            $where = array('id_customer' => $id_customer, 'type_of_mode' => $post['type_of_mode'], 'zone' => $post['zone'], 'subzone' => $post['subzone'], 'rate_type' => "fix rate");
-            $data['table_rate_fix'] = $this->branch_mod->table_rate_list_db($where);
-
-            unset($where);
-            $where = array('id_customer' => $id_customer, 'type_of_mode' => $post['type_of_mode'], 'zone' => $post['zone'], 'subzone' => $post['subzone'], 'rate_type' => "multiply rate");
-            $data['table_rate_multiply'] = $this->branch_mod->table_rate_list_db($where);
-        } else {
-            $where = array('id_branch' => $post['branch'], 'type_of_mode' => $post['type_of_mode'], 'zone' => $post['zone'], 'subzone' => $post['subzone'], 'rate_type' => "fix rate");
-            $data['table_rate_fix'] = $this->branch_mod->table_rate_list_db($where);
-
-            unset($where);
-            $where = array('id_branch' => $post['branch'], 'type_of_mode' => $post['type_of_mode'], 'zone' => $post['zone'], 'subzone' => $post['subzone'], 'rate_type' => "multiply rate");
-            $data['table_rate_multiply'] = $this->branch_mod->table_rate_list_db($where);
-        }
-
-        $data['id_customer'] = $id_customer;
-        $data['type_of_mode'] = $post['type_of_mode'];
-        $data['zone'] = $post['zone'];
-        $data['subzone'] = $post['subzone'];
-
-        $this->load->view("customer/load_table_rate", $data);
-    }
-
-    public function load_table_rate_domestic()
-    {
-        $post = $this->input->post();
         $where['customer_id'] = $this->session->userdata('id');
-        $customer = $this->home_mod->customer_list($where);
-        $id_customer = $customer[0]['id'];
+        $customer = $this->customer_mod->customer_list_db($where)->row_array();
+        $id_customer = $customer['id'];
 
-        if (isset($post['branch'])) {
-            unset($where);
-            $where['id_branch'] = $post['branch'];
-            $data['table_rate'] = $this->branch_mod->table_rate_domestic_list_db($where);
+        unset($where);
+        $where['name'] = $this->session->userdata('branch');
+        $branch = $this->customer_mod->branch_list_db($where)->row_array();
+        $id_branch = $branch['id'];
+
+        $data['customer'] = $customer;
+        $data['branch'] = $branch;
+        $data['country_post'] = $post['country'];
+        $data['city_post'] = $post['city'];
+        $data['weight_post'] = $post['weight'];
+
+        unset($where);
+        //domestic
+        if ($post['country'] == 'Indonesia') {
+            $where = array($post['weight'] . " BETWEEN airfreight_min_kg AND airfreight_max_kg" => NULL, 'city' => $post['city'], 'id_customer' => $id_customer);
+            $query = $this->customer_mod->table_rate_domestic_list_db($where);
+            if ($query->num_rows() > 0) {
+                // if customer table rate exists
+                $row = $query->row_array();
+                $data['result'] = $row;
+                $data['status'] = "202";
+                $data['type_of_shipment'] = "Domestic";
+            } else {
+                // if customer table rate not exists, get from branch
+                $where = array($post['weight'] . " BETWEEN airfreight_min_kg AND airfreight_max_kg" => NULL, 'city' => $post['city'], 'id_branch' => $id_branch);
+                $query = $this->customer_mod->table_rate_domestic_list_db($where);
+                if ($query->num_rows() > 0) {
+                    $row = $query->row_array();
+                    $data['result'] = $row;
+                    $data['status'] = "202";
+                    $data['type_of_shipment'] = "Domestic";
+                } else {
+                    $data['result'] = NULL;
+                    $data['status'] = "404";
+                    $data['type_of_shipment'] = "Domestic";
+                }
+            }
         } else {
-            unset($where);
-            $where['id_customer'] = $id_customer;
-            $data['table_rate'] = $this->branch_mod->table_rate_domestic_list_db($where);
+            $where['city'] = $post['city'];
+            $get_subzone = $this->customer_mod->subzone_list_db($where);
+            if ($get_subzone->num_rows() > 0) {
+                $subzone = $get_subzone->row_array();
+                //if city in subzone exists
+                unset($where);
+                //fix rate
+                $where = array('id_customer' => $id_customer, 'subzone' => $subzone['sub_zone'], 'default_value' => $post['weight'], 'rate_type' => 'fix rate');
+                $fix_rate = $this->customer_mod->table_rate_list_db($where);
+
+                if ($fix_rate->num_rows() > 0) {
+                    //if fix rate exists
+                    $data['result'] = $fix_rate->row_array();
+                    $data['status'] = "202";
+                    $data['type_of_shipment'] = "International";
+                } else {
+                    //if fix rate not exists
+                    unset($where);
+                    $where = array('id_customer' => $id_customer, 'subzone' => $subzone['sub_zone'], $post['weight'] . ' BETWEEN min_value AND max_value' => NULL, 'rate_type' => 'multiply rate');
+                    $multiply_rate = $this->customer_mod->table_rate_list_db($where);
+                    if ($multiply_rate->num_rows() > 0) {
+                        //if multiply rate exists
+                        $data['result'] = $multiply_rate->row_array();
+                        $data['status'] = "202";
+                        $data['type_of_shipment'] = "International";
+                    } else {
+                        //if multiply rate not exists, check branch fix rate
+                        unset($where);
+                        $where = array('id_branch' => $id_branch, 'subzone' => $subzone['sub_zone'], 'default_value' => $post['weight'], 'rate_type' => 'fix rate');
+                        $branch = $this->customer_mod->table_rate_list_db($where);
+                        if ($branch->num_rows() > 0) {
+                            // if fix rate branch is exists
+                            $data['result'] = $branch->row_array();
+                            $data['status'] = "202";
+                            $data['type_of_shipment'] = "International";
+                        } else {
+                            // if fix rate branch is not exists
+                            unset($where);
+                            $where = array('id_branch' => $id_branch, 'subzone' => $subzone['sub_zone'], $post['weight'] . ' BETWEEN min_value AND max_value' => NULL, 'rate_type' => 'multiply rate');
+                            $branch = $this->customer_mod->table_rate_list_db($where);
+                            if ($branch->num_rows() > 0) {
+                                $data['result'] = $branch->row_array();
+                                $data['status'] = "202";
+                                $data['type_of_shipment'] = "International";
+                            } else {
+                                $data['result'] = null;
+                                $data['status'] = "404";
+                                $data['type_of_shipment'] = "International";
+                            }
+                        }
+                    }
+                }
+            } else {
+                //if city in subzone not exists
+                unset($where);
+                $where['country'] = $post['country'];
+                $get_zone = $this->customer_mod->zone_list_db($where);
+                if ($get_zone->num_rows() > 0) {
+                    $zone = $get_zone->row_array();
+                    //if country in zone exists
+                    unset($where);
+                    //fix rate
+                    $where = array('id_customer' => $id_customer, 'zone' => $zone['zone_name'], 'default_value' => $post['weight'], 'rate_type' => 'fix rate');
+                    $fix_rate = $this->customer_mod->table_rate_list_db($where);
+
+                    if ($fix_rate->num_rows() > 0) {
+                        // if fix rate exists
+                        $data['result'] = $fix_rate->row_array();
+                        $data['status'] = "202";
+                        $data['type_of_shipment'] = "International";
+                    } else {
+                        unset($where);
+                        $where = array('id_customer' => $id_customer, 'zone' => $zone['zone_name'], $post['weight'] . ' BETWEEN min_value AND max_value' => NULL, 'rate_type' => 'multiply rate');
+                        $multiply_rate = $this->customer_mod->table_rate_list_db($where);
+                        if ($multiply_rate->num_rows() > 0) {
+                            $data['result'] = $multiply_rate->row_array();
+                        } else {
+                            //if multiply rate not exists, check branch fix rate
+                            unset($where);
+                            $where = array('id_branch' => $id_branch, 'zone' => $zone['zone_name'], 'default_value' => $post['weight'], 'rate_type' => 'fix rate');
+                            $branch = $this->customer_mod->table_rate_list_db($where);
+                            if ($branch->num_rows() > 0) {
+                                // if fix rate branch is exists
+                                $data['result'] = $branch->row_array();
+                                $data['status'] = "202";
+                                $data['type_of_shipment'] = "International";
+                            } else {
+                                // if fix rate branch is not exists
+                                unset($where);
+                                $where = array('id_branch' => $id_branch, 'zone' => $zone['zone_name'], $post['weight'] . ' BETWEEN min_value AND max_value' => NULL, 'rate_type' => 'multiply rate');
+                                $branch = $this->customer_mod->table_rate_list_db($where);
+                                if ($branch->num_rows() > 0) {
+                                    $data['result'] = $branch->row_array();
+                                    $data['status'] = "202";
+                                    $data['type_of_shipment'] = "International";
+                                } else {
+                                    $data['result'] = null;
+                                    $data['status'] = "404";
+                                    $data['type_of_shipment'] = "International";
+                                }
+                            }
+                        }
+                    }
+                } else {
+                    $data['result'] = NULL;
+                    $data['status'] = "404";
+                    $data['type_of_shipment'] = "International";
+                }
+            }
         }
 
         unset($where);
-        $where['country'] = "Indonesia";
-        $country = $this->branch_mod->country_list_db($where);
-        $get_country = $country[0];
+        //fix rate
+        $where = array('default_value' => $post['weight'], 'id_customer' => $id_customer, 'rate_type' => 'fix rate');
+        $query = $this->customer_mod->table_rate_pickup_list_db($where);
+        if ($query->num_rows() > 0) {
+            $row = $query->row_array();
+            $data['pickup'] = $row;
+        } else {
+            //multiply rate
+            unset($where);
+            $where = array($post['weight'] . " BETWEEN min_value AND max_value" => NULL, 'id_customer' => $id_customer, 'rate_type' => 'multiply rate');
+            $query = $this->customer_mod->table_rate_pickup_list_db($where);
+            if ($query->num_rows() > 0) {
+                $row = $query->row_array();
+                $data['pickup'] = $row;
+            } else {
+                //fix rate branch
+                unset($where);
+                $where = array('city' => $customer['city'], 'default_value' => $post['weight'], 'id_branch' => $id_branch, 'rate_type' => 'fix rate');
+                $query = $this->customer_mod->table_rate_pickup_list_db($where);
+                if ($query->num_rows() > 0) {
+                    $row = $query->row_array();
+                    $data['pickup'] = $row;
+                } else {
+                    //multiply rate branch
+                    unset($where);
+                    $where = array('city' => $customer['city'], $post['weight'] . " BETWEEN min_value AND max_value" => NULL, 'id_branch' => $id_branch, 'rate_type' => 'multiply rate');
+                    $query = $this->customer_mod->table_rate_pickup_list_db($where);
+                    if ($query->num_rows() > 0) {
+                        $row = $query->row_array();
+                        $data['pickup'] = $row;
+                    } else {
+                        $data['pickup'] = NULL;
+                    }
+                }
+            }
+        }
 
-        unset($where);
-        $where['id_country'] = $get_country['id'];
-        $data['city'] = $this->branch_mod->city_list_db($where);
-        $data['id_customer'] = $this->input->post('id_customer');
-
-        $this->load->view("customer/load_table_rate_domestic", $data);
-    }
-
-    public function load_subzone()
-    {
-        $post = $this->input->post();
-
-        $zone = $post['zone'];
-        $where['id_zone'] = $zone;
-        $subzone_list = $this->branch_mod->subzone_list_db($where);
-        echo json_encode($subzone_list);
+        $this->load->view('customer/load_price', $data);
     }
 }

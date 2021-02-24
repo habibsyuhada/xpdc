@@ -163,6 +163,29 @@ class Branch extends CI_Controller
 		$this->load->view("branch/load_table_rate_domestic", $data);
 	}
 
+	public function load_table_rate_pickup()
+	{
+		$post = $this->input->post();
+		$where = array('id_branch' => $post['id_branch'], 'rate_type' => "fix rate", 'id_customer' => '0');
+		$data['table_rate_fix'] = $this->branch_mod->table_rate_pickup_list_db($where);
+
+		unset($where);
+		$where = array('id_branch' => $post['id_branch'], 'rate_type' => "multiply rate", 'id_customer' => '0');
+		$data['table_rate_multiply'] = $this->branch_mod->table_rate_pickup_list_db($where);
+
+		unset($where);
+		$where['country'] = "Indonesia";
+		$country = $this->branch_mod->country_list_db($where);
+		$get_country = $country[0];
+
+		unset($where);
+		$where['id_country'] = $get_country['id'];
+		$data['city'] = $this->branch_mod->city_list_db($where);
+		$data['id_branch'] = $this->input->post('id_branch');
+
+		$this->load->view("branch/load_table_rate_pickup", $data);
+	}
+
 	public function edit_table_rate()
 	{
 		$where['id'] = $this->input->post('id');
@@ -171,6 +194,25 @@ class Branch extends CI_Controller
 		$data['table_rate'] = $table_rate_list[0];
 
 		$this->load->view('branch/edit_table_rate', $data);
+	}
+
+	public function edit_table_rate_pickup()
+	{
+		$where['id'] = $this->input->post('id');
+		$table_rate_list = $this->branch_mod->table_rate_pickup_list_db($where);
+
+		$data['table_rate'] = $table_rate_list[0];
+		
+		unset($where);
+		$where['country'] = "Indonesia";
+		$country = $this->branch_mod->country_list_db($where);
+		$get_country = $country[0];
+
+		unset($where);
+		$where['id_country'] = $get_country['id'];
+		$data['city'] = $this->branch_mod->city_list_db($where);
+
+		$this->load->view('branch/edit_table_rate_pickup', $data);
 	}
 
 	public function edit_table_rate_domestic()
@@ -278,6 +320,32 @@ class Branch extends CI_Controller
 		redirect($_SERVER['HTTP_REFERER']);
 	}
 
+	public function table_rate_pickup_update_process($id)
+	{
+		$post = $this->input->post();
+
+		if ($post['rate_type'] == 'fix rate') {
+			$form_data = array(
+				'city'             => $post['city'],
+				'default_value'             => $post['default_value'],
+				'price'             		=> $post['price'],
+			);
+		} else if ($post['rate_type'] == 'multiply rate') {
+			$form_data = array(
+				'city'             => $post['city'],
+				'min_value'             => $post['min_value'],
+				'max_value'             => $post['max_value'],
+				'price'             		=> $post['price'],
+			);
+		}
+
+		$where['id'] = $id;
+		$this->branch_mod->table_rate_pickup_update_process_db($form_data, $where);
+
+		$this->session->set_flashdata('success', 'Your Table Rate Pickup data has been Updated!');
+		redirect($_SERVER['HTTP_REFERER']);
+	}
+
 	public function table_rate_domestic_update_process($id)
 	{
 		$post = $this->input->post();
@@ -305,6 +373,39 @@ class Branch extends CI_Controller
 		redirect($_SERVER['HTTP_REFERER']);
 	}
 
+	public function table_rate_pickup_create_process_fix()
+	{
+		$post = $this->input->post();
+
+		$data = array(
+			'id_branch' => $post['id_branch'],
+			'city' => $post['city'],
+			'rate_type' => $post['rate_type'],
+			'default_value' => $post['default_value'],
+			'price' => $post['price']
+		);
+
+		$this->branch_mod->table_rate_pickup_create_process_db($data);
+		echo "OK";
+	}
+
+	public function table_rate_pickup_create_process_multiply()
+	{
+		$post = $this->input->post();
+
+		$data = array(
+			'id_branch' => $post['id_branch'],
+			'city' => $post['city'],
+			'rate_type' => $post['rate_type'],
+			'min_value' => $post['min_value'],
+			'max_value' => $post['max_value'],
+			'price' => $post['price']
+		);
+
+		$this->branch_mod->table_rate_pickup_create_process_db($data);
+		echo "OK";
+	}
+
 	public function table_rate_delete_process($id)
 	{
 		$where['id'] = $id;
@@ -317,6 +418,14 @@ class Branch extends CI_Controller
 	{
 		$where['id'] = $id;
 		$this->branch_mod->table_rate_domestic_delete_process_db($where);
+
+		redirect($_SERVER['HTTP_REFERER']);
+	}
+
+	public function table_rate_pickup_delete_process($id)
+	{
+		$where['id'] = $id;
+		$this->branch_mod->table_rate_pickup_delete_process_db($where);
 
 		redirect($_SERVER['HTTP_REFERER']);
 	}
@@ -337,6 +446,30 @@ class Branch extends CI_Controller
 		$file = fopen('php://output', 'w');
 
 		$header = array("Type of Mode (Land Shipping/Air Freight - Express/Air Freight - Reguler/Sea Transport - LCL/Sea Transport - FCL)", "Zone", "Sub Zone (if Exists)", "Rate Type (fix rate / multiply rate)", "Default Value (for fix rate)", "Min. Value (for multiply value)", "Max. Value (for multiply value)", "Price");
+		fputcsv($file, $header);
+		foreach ($table_rate as $key => $value) {
+			fputcsv($file, $value);
+		}
+		fclose($file);
+		exit;
+	}
+
+	public function download_table_rate_pickup($id)
+	{
+		$file_name = 'table_rate_pickup_' . date('Ymd') . '.csv';
+		header("Content-Description: File Transfer");
+		header("Content-Disposition: attachment; filename=$file_name");
+		header("Content-Type: application/csv;");
+
+		$where['id_branch'] = $id;
+		$where['id_customer'] = '0';
+		// get data 
+		$table_rate = $this->branch_mod->table_rate_pickup_download_list_db($where);
+
+		// file creation 
+		$file = fopen('php://output', 'w');
+
+		$header = array("City", "Rate Type (fix rate / multiply rate)", "Default Value (for fix rate)", "Min. Value (for multiply value)", "Max. Value (for multiply value)", "Price");
 		fputcsv($file, $header);
 		foreach ($table_rate as $key => $value) {
 			fputcsv($file, $value);
@@ -384,9 +517,6 @@ class Branch extends CI_Controller
 		$where['id_branch']			= $id;
 		$where['id_customer'] = '0';
 		$branch_list                = $this->branch_mod->table_rate_list_db($where);
-		if (count($branch_list) < 1) {
-			redirect($_SERVER['HTTP_REFERER']);
-		}
 		$file = $_FILES['upload_excel']['tmp_name'];
 		$ext = explode(".", $_FILES['upload_excel']['name']);
 		if (empty($file)) {
@@ -421,7 +551,7 @@ class Branch extends CI_Controller
 				}
 
 				fclose($handle);
-				$this->session->set_flashdata('success', 'Your city data has been imported!');
+				$this->session->set_flashdata('success', 'Your table rate has been imported!');
 				redirect($_SERVER['HTTP_REFERER']);
 			} else {
 				$this->session->set_flashdata('error', 'Invalid format file!');
@@ -435,9 +565,6 @@ class Branch extends CI_Controller
 		$where['id_branch']			= $id;
 		$where['id_customer'] = '0';
 		$branch_list                = $this->branch_mod->table_rate_domestic_list_db($where);
-		if (count($branch_list) < 1) {
-			redirect($_SERVER['HTTP_REFERER']);
-		}
 		$file = $_FILES['upload_excel']['tmp_name'];
 		$ext = explode(".", $_FILES['upload_excel']['name']);
 		if (empty($file)) {
@@ -484,6 +611,52 @@ class Branch extends CI_Controller
 			}
 		}
 	}
+	public function upload_table_rate_pickup($id)
+	{
+		$where['id_branch']			= $id;
+		$where['id_customer'] = '0';
+		$branch_list                = $this->branch_mod->table_rate_pickup_list_db($where);
+		$file = $_FILES['upload_excel']['tmp_name'];
+		$ext = explode(".", $_FILES['upload_excel']['name']);
+		if (empty($file)) {
+			$this->session->set_flashdata('error', 'File is not uploaded!');
+			redirect($_SERVER['HTTP_REFERER']);
+		} else {
+			if (strtolower(end($ext)) === 'csv' && $_FILES['upload_excel']['size'] > 0) {
+				$delimiter = $this->getFileDelimiter($file);
+				unset($where);
+				$where['id_branch'] = $id;
+				$this->branch_mod->table_rate_pickup_delete_process_db($where);
+				$i = 0;
+				$handle = fopen($file, "r") or die("can't open file");
+				while (($row = fgetcsv($handle, 2048, $delimiter))) {
+					$i++;
+					if ($i == 1) continue;
+
+					$data = [
+						'id_branch' => $id,
+						'city' => $row[0],
+						'rate_type' => $row[1],
+						'default_value' => $row[2],
+						'min_value' => $row[3],
+						'max_value' => $row[4],
+						'price' => $row[5],
+						'created_by' => $this->session->userdata('id')
+					];
+
+					$id_branch = $this->branch_mod->table_rate_pickup_create_process_db($data);
+				}
+
+				fclose($handle);
+				$this->session->set_flashdata('success', 'Your table rate has been imported!');
+				redirect($_SERVER['HTTP_REFERER']);
+			} else {
+				$this->session->set_flashdata('error', 'Invalid format file!');
+				redirect($_SERVER['HTTP_REFERER']);
+			}
+		}
+	}
+
 	function getFileDelimiter($file, $checkLines = 2)
 	{
 		$file = new SplFileObject($file);

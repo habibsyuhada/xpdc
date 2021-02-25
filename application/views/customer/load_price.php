@@ -61,7 +61,7 @@
         <td>Rp. <?= number_format($seafreight_weight, 2) ?> (<?=$result['seafreight_term']?>)</td>
       </tr>
       <tr>
-        <td colspan="3">
+        <td>
           <form method="POST" action="<?php echo base_url() ?>customer/shipment_create">
             <input type="hidden" name="type_of_shipment" value="<?= $type_of_shipment ?> Shipping">
             <input type="hidden" name="type_of_mode" value="Air Freight">
@@ -72,6 +72,60 @@
             <input type="hidden" name="act_weight" value="<?= $weight_post ?>">
             <input type="hidden" name="check_price_weight" value="<?= $airfreight_weight ?>">
             <input type="hidden" name="check_price_term" value="<?= $result['airfreight_term'] ?>">
+
+            <?php foreach ($post['qty'] as $key => $value): ?>
+            <input type="hidden" name="qty[]" value="<?= $post['qty'][$key] ?>">
+            <input type="hidden" name="piece_type[]" value="<?= $post['piece_type'][$key] ?>">
+            <input type="hidden" name="length[]" value="<?= $post['length'][$key] ?>">
+            <input type="hidden" name="size[]" value="<?= $post['size'][$key] ?>">
+            <input type="hidden" name="width[]" value="<?= $post['width'][$key] ?>">
+            <input type="hidden" name="container_no[]" value="<?= $post['container_no'][$key] ?>">
+            <input type="hidden" name="height[]" value="<?= $post['height'][$key] ?>">
+            <input type="hidden" name="seal_no[]" value="<?= $post['seal_no'][$key] ?>">
+            <input type="hidden" name="weight[]" value="<?= $post['weight'][$key] ?>">
+            <?php endforeach; ?>
+
+            <button type="submit" class=" btn btn-success btn-sm btn-block">Create Shipment</button>
+          </form>
+        </td>
+        <td>
+          <form method="POST" action="<?php echo base_url() ?>customer/shipment_create">
+            <input type="hidden" name="type_of_shipment" value="<?= $type_of_shipment ?> Shipping">
+            <input type="hidden" name="type_of_mode" value="Land Shipping">
+            <input type="hidden" name="shipper_city" value="<?= $customer['city'] ?>">
+            <input type="hidden" name="shipper_country" value="<?= $customer['country'] ?>">
+            <input type="hidden" name="consignee_city" value="<?= $city_post ?>">
+            <input type="hidden" name="consignee_country" value="<?= $country_post ?>">
+            <input type="hidden" name="act_weight" value="<?= $weight_post ?>">
+            <input type="hidden" name="check_price_weight" value="<?= $landfreight_weight ?>">
+            <input type="hidden" name="check_price_term" value="<?= $result['landfreight_term'] ?>">
+
+            <?php foreach ($post['qty'] as $key => $value): ?>
+            <input type="hidden" name="qty[]" value="<?= $post['qty'][$key] ?>">
+            <input type="hidden" name="piece_type[]" value="<?= $post['piece_type'][$key] ?>">
+            <input type="hidden" name="length[]" value="<?= $post['length'][$key] ?>">
+            <input type="hidden" name="size[]" value="<?= $post['size'][$key] ?>">
+            <input type="hidden" name="width[]" value="<?= $post['width'][$key] ?>">
+            <input type="hidden" name="container_no[]" value="<?= $post['container_no'][$key] ?>">
+            <input type="hidden" name="height[]" value="<?= $post['height'][$key] ?>">
+            <input type="hidden" name="seal_no[]" value="<?= $post['seal_no'][$key] ?>">
+            <input type="hidden" name="weight[]" value="<?= $post['weight'][$key] ?>">
+            <?php endforeach; ?>
+
+            <button type="submit" class=" btn btn-success btn-sm btn-block">Create Shipment</button>
+          </form>
+        </td>
+        <td>
+          <form method="POST" action="<?php echo base_url() ?>customer/shipment_create">
+            <input type="hidden" name="type_of_shipment" value="<?= $type_of_shipment ?> Shipping">
+            <input type="hidden" name="type_of_mode" value="Sea Transport">
+            <input type="hidden" name="shipper_city" value="<?= $customer['city'] ?>">
+            <input type="hidden" name="shipper_country" value="<?= $customer['country'] ?>">
+            <input type="hidden" name="consignee_city" value="<?= $city_post ?>">
+            <input type="hidden" name="consignee_country" value="<?= $country_post ?>">
+            <input type="hidden" name="act_weight" value="<?= $weight_post ?>">
+            <input type="hidden" name="check_price_weight" value="<?= $seafreight_weight ?>">
+            <input type="hidden" name="check_price_term" value="<?= $result['seafreight_term'] ?>">
 
             <?php foreach ($post['qty'] as $key => $value): ?>
             <input type="hidden" name="qty[]" value="<?= $post['qty'][$key] ?>">

@@ -9,6 +9,10 @@ if (!isset($cargo_list)) {
       <?php if (isset($id_quotation)) : ?>
         <input type="hidden" name="id_quotation" value="<?php echo $id_quotation ?>">
       <?php endif; ?>
+      <?php if (isset($quotation['check_price_term'])) : ?>
+        <input type="hidden" name="check_price_term" value="<?php echo $quotation['check_price_term'] ?>">
+        <input type="hidden" name="check_price_weight" value="<?php echo $quotation['check_price_weight'] ?>">
+      <?php endif; ?>
       <div class="row clearfix">
         <div class="col-md-12">
           <div class="card">
@@ -110,17 +114,17 @@ if (!isset($cargo_list)) {
                         <textarea class="form-control" name="shipper_address" placeholder="Address" required><?php echo @$quotation['shipper_address'] ?></textarea>
                       </div>
                       <div class="form-group">
-                        <label>City</label>
-                        <input type="text" class="form-control" name="shipper_city" value="<?php echo @$quotation['shipper_city'] ?>" placeholder="City">
-                      </div>
-                      <div class="form-group">
-                        <label>Country</label>
+                        <label>Country <?php echo $quotation['shipper_country'] ?></label>
                         <select class="form-control select2" name="shipper_country" required onchange="select_country(this)">
                           <option value="">- Select One -</option>
                           <?php foreach ($country as $data) { ?>
                             <option value="<?= $data['country'] ?>" <?php echo (@$quotation['shipper_country'] == $data['country'] ? 'selected' : '') ?>><?= $data['country'] ?></option>
                           <?php } ?>
                         </select>
+                      </div>
+                      <div class="form-group">
+                        <label>City</label>
+                        <input type="text" class="form-control" name="shipper_city" value="<?php echo @$quotation['shipper_city'] ?>" placeholder="City">
                       </div>
                       <div class="form-group">
                         <label>Postcode</label>
@@ -150,10 +154,6 @@ if (!isset($cargo_list)) {
                         <textarea class="form-control" name="consignee_address" placeholder="Address" required><?php echo @$quotation['consignee_address'] ?></textarea>
                       </div>
                       <div class="form-group">
-                        <label>City</label>
-                        <input type="text" class="form-control" name="consignee_city" value="<?php echo @$quotation['consignee_city'] ?>" placeholder="City">
-                      </div>
-                      <div class="form-group">
                         <label>Country</label>
                         <select class="form-control select2" name="consignee_country" required  onchange="select_country(this)">
                           <option value="">- Select One -</option>
@@ -161,6 +161,10 @@ if (!isset($cargo_list)) {
                             <option value="<?= $data['country'] ?>" <?php echo (@$quotation['consignee_country'] == $data['country'] ? 'selected' : '') ?>><?= $data['country'] ?></option>
                           <?php } ?>
                         </select>
+                      </div>
+                      <div class="form-group">
+                        <label>City</label>
+                        <input type="text" class="form-control" name="consignee_city" value="<?php echo @$quotation['consignee_city'] ?>" placeholder="City">
                       </div>
                       <div class="form-group">
                         <label>Postcode</label>
@@ -299,7 +303,7 @@ if (!isset($cargo_list)) {
                               <tr>
                                 <td>
                                   <input type="number" class="form-control" oninput="get_vol_weight()" step="any" name="qty[]" value="<?php echo $value['qty'] ?>">
-                                  <input type="hidden" class="form-control" name="id_detail[]" value="<?php echo $value['id'] ?>">
+                                  <input type="hidden" class="form-control" name="id_detail[]" value="<?php echo @$value['id'] ?>">
                                 </td>
                                 <td>
                                   <select class="form-control" name="piece_type[]" title="NONFCL" value="<?php echo $value['piece_type'] ?>">
@@ -448,12 +452,12 @@ if (!isset($cargo_list)) {
                         <textarea class="form-control" name="pickup_address" placeholder="Address" readonly required></textarea>
                       </div>
                       <div class="form-group">
-                        <label>City</label>
-                        <input type="text" class="form-control" name="pickup_city" placeholder="City" readonly>
-                      </div>
-                      <div class="form-group">
                         <label>Country</label>
                         <input type="text" class="form-control" name="pickup_country" placeholder="Country" readonly required>
+                      </div>
+                      <div class="form-group">
+                        <label>City</label>
+                        <input type="text" class="form-control" name="pickup_city" placeholder="City" readonly>
                       </div>
                       <div class="form-group">
                         <label>Postcode</label>
@@ -547,10 +551,6 @@ if (!isset($cargo_list)) {
                         <textarea class="form-control" name="billing_address" placeholder="Address" required></textarea>
                       </div>
                       <div class="form-group">
-                        <label>City</label>
-                        <input type="text" class="form-control" name="billing_city" placeholder="City">
-                      </div>
-                      <div class="form-group">
                         <label>Country</label>
                         <input type="hidden" class="form-control" name="billing_country" placeholder="Country">
                         <select class="form-control select2" name="billing_country_view" onchange="$('input[name=billing_country]').val($(this).val());" required>
@@ -559,6 +559,10 @@ if (!isset($cargo_list)) {
                             <option value="<?= $data['country'] ?>"><?= $data['country'] ?></option>
                           <?php } ?>
                         </select>
+                      </div>
+                      <div class="form-group">
+                        <label>City</label>
+                        <input type="text" class="form-control" name="billing_city" placeholder="City">
                       </div>
                     </div>
                     <div class="col-md-6">

@@ -89,15 +89,15 @@
                   </div>
                 </div>
                 <div class="form-group row m-0">
-                  <label class="col-sm-3 col-form-label">City</label>
-                  <div class="col-sm-9">
-                    <label class="col-form-label">: <?php echo $shipment['pickup_city'] ?></label>
-                  </div>
-                </div>
-                <div class="form-group row m-0">
                   <label class="col-sm-3 col-form-label">Country</label>
                   <div class="col-sm-9">
                     <label class="col-form-label">: <?php echo $shipment['pickup_country'] ?></label>
+                  </div>
+                </div>
+                <div class="form-group row m-0">
+                  <label class="col-sm-3 col-form-label">City</label>
+                  <div class="col-sm-9">
+                    <label class="col-form-label">: <?php echo $shipment['pickup_city'] ?></label>
                   </div>
                 </div>
                 <div class="form-group row m-0">
@@ -140,15 +140,15 @@
                   </div>
                 </div>
                 <div class="form-group row m-0">
-                  <label class="col-sm-3 col-form-label">City</label>
-                  <div class="col-sm-9">
-                    <label class="col-form-label">: <?php echo $shipment['consignee_city'] ?></label>
-                  </div>
-                </div>
-                <div class="form-group row m-0">
                   <label class="col-sm-3 col-form-label">Country</label>
                   <div class="col-sm-9">
                     <label class="col-form-label">: <?php echo $shipment['consignee_country'] ?></label>
+                  </div>
+                </div>
+                <div class="form-group row m-0">
+                  <label class="col-sm-3 col-form-label">City</label>
+                  <div class="col-sm-9">
+                    <label class="col-form-label">: <?php echo $shipment['consignee_city'] ?></label>
                   </div>
                 </div>
                 <div class="form-group row m-0">

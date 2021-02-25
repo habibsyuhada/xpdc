@@ -125,10 +125,6 @@
                         <textarea class="form-control" name="shipper_address" placeholder="Address" required><?php echo $shipment['shipper_address'] ?></textarea>
                       </div>
                       <div class="form-group">
-                        <label>City</label>
-                        <input type="text" class="form-control" name="shipper_city" value="<?php echo $shipment['shipper_city'] ?>" placeholder="City" required>
-                      </div>
-                      <div class="form-group">
                         <label>Country</label>
                         <select class="form-control select2" name="shipper_country" required onchange="select_country(this)">
                           <option value="">- Select One -</option>
@@ -136,6 +132,10 @@
                             <option value="<?= $data['country'] ?>" <?php echo ($shipment['shipper_country'] == $data['country'] ? 'selected' : '') ?>><?= $data['country'] ?></option>
                           <?php } ?>
                         </select>
+                      </div>
+                      <div class="form-group">
+                        <label>City</label>
+                        <input type="text" class="form-control" name="shipper_city" value="<?php echo $shipment['shipper_city'] ?>" placeholder="City" required>
                       </div>
                       <div class="form-group">
                         <label>Postcode</label>
@@ -165,10 +165,6 @@
                         <textarea class="form-control" name="consignee_address" placeholder="Address" required><?php echo $shipment['consignee_address'] ?></textarea>
                       </div>
                       <div class="form-group">
-                        <label>City</label>
-                        <input type="text" class="form-control" name="consignee_city" value="<?php echo $shipment['consignee_city'] ?>" placeholder="City" required>
-                      </div>
-                      <div class="form-group">
                         <label>Country</label>
                         <select class="form-control select2" name="consignee_country" required>
                           <option value="">- Select One -</option>
@@ -176,6 +172,10 @@
                             <option value="<?= $data['country'] ?>" <?php echo ($shipment['consignee_country'] == $data['country'] ? 'selected' : '') ?>><?= $data['country'] ?></option>
                           <?php } ?>
                         </select>
+                      </div>
+                      <div class="form-group">
+                        <label>City</label>
+                        <input type="text" class="form-control" name="consignee_city" value="<?php echo $shipment['consignee_city'] ?>" placeholder="City" required>
                       </div>
                       <div class="form-group">
                         <label>Postcode</label>
@@ -452,12 +452,12 @@
                         <input type="text" class="form-control" name="pickup_name" value="<?php echo $shipment['pickup_name'] ?>" placeholder="Name" <?php echo (($shipment['status_pickup'] == 'Dropoff' || !in_array($shipment['pickup_same_as'], array("", "None"))) ? 'readonly' : '') ?> required>
                       </div>
                       <div class="form-group">
-                        <label>Address</label>
-                        <textarea class="form-control" name="pickup_address" placeholder="Address" <?php echo (($shipment['status_pickup'] == 'Dropoff' || !in_array($shipment['pickup_same_as'], array("", "None"))) ? 'readonly' : '') ?> required><?php echo $shipment['pickup_address'] ?></textarea>
-                      </div>
-                      <div class="form-group">
                         <label>City</label>
                         <input type="text" class="form-control" name="pickup_city" value="<?php echo $shipment['pickup_city'] ?>" placeholder="City" <?php echo (($shipment['status_pickup'] == 'Dropoff' || !in_array($shipment['pickup_same_as'], array("", "None"))) ? 'readonly' : '') ?> required>
+                      </div>
+                      <div class="form-group">
+                        <label>Address</label>
+                        <textarea class="form-control" name="pickup_address" placeholder="Address" <?php echo (($shipment['status_pickup'] == 'Dropoff' || !in_array($shipment['pickup_same_as'], array("", "None"))) ? 'readonly' : '') ?> required><?php echo $shipment['pickup_address'] ?></textarea>
                       </div>
                       <div class="form-group">
                         <label>Country</label>
@@ -555,10 +555,6 @@
                         <textarea class="form-control" name="billing_address" placeholder="Address" required><?php echo $shipment['billing_address'] ?></textarea>
                       </div>
                       <div class="form-group">
-                        <label>City</label>
-                        <input type="text" class="form-control" name="billing_city" value="<?php echo $shipment['billing_city'] ?>" placeholder="City" required>
-                      </div>
-                      <div class="form-group">
                         <label>Country</label>
                         <input type="hidden" class="form-control" name="billing_country" value="<?php echo $shipment['billing_country'] ?>" placeholder="Country">
                         <select class="form-control select2" name="billing_country_view" onchange="$('input[name=billing_country]').val($(this).val());" required>
@@ -567,6 +563,10 @@
                             <option value="<?= $data['country'] ?>" <?php echo ($shipment['billing_country'] == $data['country'] ? 'selected' : '') ?>><?= $data['country'] ?></option>
                           <?php } ?>
                         </select>
+                      </div>
+                      <div class="form-group">
+                        <label>City</label>
+                        <input type="text" class="form-control" name="billing_city" value="<?php echo $shipment['billing_city'] ?>" placeholder="City" required>
                       </div>
                     </div>
                     <div class="col-md-6">

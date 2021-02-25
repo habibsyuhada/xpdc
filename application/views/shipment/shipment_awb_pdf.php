@@ -114,10 +114,10 @@
       </tr>
       <tr>
         <td colspan="2">
-          Address: <?php echo $shipment['shipper_address'] ?><br>City: <?php echo $shipment['shipper_city'] ?><br>Country: <?php echo $shipment['shipper_country'] ?><br>Postcode: <?php echo $shipment['shipper_postcode'] ?>
+          Address: <?php echo $shipment['shipper_address'] ?><br>Country: <?php echo $shipment['shipper_country'] ?><br>City: <?php echo $shipment['shipper_city'] ?><br>Postcode: <?php echo $shipment['shipper_postcode'] ?>
         </td>
         <td colspan="2">
-          Address: <?php echo $shipment['consignee_address'] ?><br>City: <?php echo $shipment['consignee_city'] ?><br>Country: <?php echo $shipment['consignee_country'] ?><br>Postcode: <?php echo $shipment['consignee_postcode'] ?>
+          Address: <?php echo $shipment['consignee_address'] ?><br>Country: <?php echo $shipment['consignee_country'] ?><br>City: <?php echo $shipment['consignee_city'] ?><br>Postcode: <?php echo $shipment['consignee_postcode'] ?>
         </td>
         <td style="vertical-align: top; border-bottom: 0px;">
           Signature :

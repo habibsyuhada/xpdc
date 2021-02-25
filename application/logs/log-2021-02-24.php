@@ -37,3 +37,14 @@ ERROR - 2021-02-24 09:32:19 --> 404 Page Not Found: Assets/img
 ERROR - 2021-02-24 09:36:50 --> 404 Page Not Found: Assets/img
 ERROR - 2021-02-24 09:36:58 --> 404 Page Not Found: Assets/img
 ERROR - 2021-02-24 09:38:45 --> 404 Page Not Found: Assets/img
+ERROR - 2021-02-24 10:30:54 --> 404 Page Not Found: Assets/favicon.ico
+ERROR - 2021-02-24 10:31:03 --> 404 Page Not Found: Assets/img
+ERROR - 2021-02-24 10:31:03 --> 404 Page Not Found: Home/favicon.ico
+ERROR - 2021-02-24 10:31:08 --> 404 Page Not Found: Assets/img
+ERROR - 2021-02-24 10:31:08 --> 404 Page Not Found: User/favicon.ico
+ERROR - 2021-02-24 10:31:15 --> 404 Page Not Found: Assets/img
+ERROR - 2021-02-24 10:34:42 --> 404 Page Not Found: Assets/img
+ERROR - 2021-02-24 10:34:48 --> 404 Page Not Found: Assets/img
+ERROR - 2021-02-24 10:34:48 --> 404 Page Not Found: Customer/favicon.ico
+ERROR - 2021-02-24 10:37:48 --> 404 Page Not Found: Assets/img
+ERROR - 2021-02-24 10:37:53 --> 404 Page Not Found: Assets/img

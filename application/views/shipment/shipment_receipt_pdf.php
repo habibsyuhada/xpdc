@@ -106,14 +106,14 @@
                 <td><?php echo $post['shipper_address'] ?></td>
               </tr>
               <tr>
-                <td>City</td>
-                <td>:</td>
-                <td><?php echo $post['shipper_city'] ?></td>
-              </tr>
-              <tr>
                 <td>Country</td>
                 <td>:</td>
                 <td><?php echo $post['shipper_country'] ?></td>
+              </tr>
+              <tr>
+                <td>City</td>
+                <td>:</td>
+                <td><?php echo $post['shipper_city'] ?></td>
               </tr>
               <tr>
                 <td>Postcode</td>
@@ -154,14 +154,14 @@
                 <td><?php echo $post['consignee_address'] ?></td>
               </tr>
               <tr>
-                <td>City</td>
-                <td>:</td>
-                <td><?php echo $post['consignee_city'] ?></td>
-              </tr>
-              <tr>
                 <td>Country</td>
                 <td>:</td>
                 <td><?php echo $post['consignee_country'] ?></td>
+              </tr>
+              <tr>
+                <td>City</td>
+                <td>:</td>
+                <td><?php echo $post['consignee_city'] ?></td>
               </tr>
               <tr>
                 <td>Postcode</td>
@@ -208,7 +208,7 @@
               <tr>
                 <td>Insurance</td>
                 <td>:</td>
-                <td><?php echo $post['insurance'] ?></td>
+                <td><?php echo ($post['insurance'] == "" ? "Yes" : "No") ?></td>
               </tr>
               <tr>
                 <td>Description of Goods</td>
@@ -298,14 +298,14 @@
                 <td><?php echo $post['billing_address'] ?></td>
               </tr>
               <tr>
-                <td>City</td>
-                <td>:</td>
-                <td><?php echo $post['billing_city'] ?></td>
-              </tr>
-              <tr>
                 <td>Country</td>
                 <td>:</td>
                 <td><?php echo $post['billing_country'] ?></td>
+              </tr>
+              <tr>
+                <td>City</td>
+                <td>:</td>
+                <td><?php echo $post['billing_city'] ?></td>
               </tr>
               <tr>
                 <td>Postcode</td>
@@ -352,14 +352,14 @@
                 <td><?php echo $post['pickup_address'] ?></td>
               </tr>
               <tr>
-                <td>City</td>
-                <td>:</td>
-                <td><?php echo $post['pickup_city'] ?></td>
-              </tr>
-              <tr>
                 <td>Country</td>
                 <td>:</td>
                 <td><?php echo $post['pickup_country'] ?></td>
+              </tr>
+              <tr>
+                <td>City</td>
+                <td>:</td>
+                <td><?php echo $post['pickup_city'] ?></td>
               </tr>
               <tr>
                 <td>Postcode</td>

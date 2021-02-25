@@ -35,17 +35,17 @@ $page_permission = array(
                     </div>
                   </div>
                   <div class="form-group row m-0">
-                    <label class="col-sm-3 col-form-label">City</label>
-                    <div class="col-sm-9">
-                      <label class="col-form-label">: <?php echo $data_input['shipper_city'] ?></label>
-                      <input type="hidden" name="shipper_city" value="<?php echo $data_input['shipper_city'] ?>">
-                    </div>
-                  </div>
-                  <div class="form-group row m-0">
                     <label class="col-sm-3 col-form-label">Country</label>
                     <div class="col-sm-9">
                       <label class="col-form-label">: <?php echo $data_input['shipper_country'] ?></label>
                       <input type="hidden" name="shipper_country" value="<?php echo $data_input['shipper_country'] ?>">
+                    </div>
+                  </div>
+                  <div class="form-group row m-0">
+                    <label class="col-sm-3 col-form-label">City</label>
+                    <div class="col-sm-9">
+                      <label class="col-form-label">: <?php echo $data_input['shipper_city'] ?></label>
+                      <input type="hidden" name="shipper_city" value="<?php echo $data_input['shipper_city'] ?>">
                     </div>
                   </div>
                   <div class="form-group row m-0">
@@ -94,17 +94,17 @@ $page_permission = array(
                     </div>
                   </div>
                   <div class="form-group row m-0">
-                    <label class="col-sm-3 col-form-label">City</label>
-                    <div class="col-sm-9">
-                      <label class="col-form-label">: <?php echo $data_input['consignee_city'] ?></label>
-                      <input type="hidden" name="consignee_city" value="<?php echo $data_input['consignee_city'] ?>">
-                    </div>
-                  </div>
-                  <div class="form-group row m-0">
                     <label class="col-sm-3 col-form-label">Country</label>
                     <div class="col-sm-9">
                       <label class="col-form-label">: <?php echo $data_input['consignee_country'] ?></label>
                       <input type="hidden" name="consignee_country" value="<?php echo $data_input['consignee_country'] ?>">
+                    </div>
+                  </div>
+                  <div class="form-group row m-0">
+                    <label class="col-sm-3 col-form-label">City</label>
+                    <div class="col-sm-9">
+                      <label class="col-form-label">: <?php echo $data_input['consignee_city'] ?></label>
+                      <input type="hidden" name="consignee_city" value="<?php echo $data_input['consignee_city'] ?>">
                     </div>
                   </div>
                   <div class="form-group row m-0">
@@ -155,6 +155,14 @@ $page_permission = array(
                       <label class="col-form-label">: <?php echo $data_input['type_of_mode'] ?> <?php echo (!isset($data_input['sea']) ? "" : "(" . $data_input['sea'] . ")") ?></label>
                       <input type="hidden" name="type_of_mode" value="<?php echo $data_input['type_of_mode'] ?>">
                       <input type="hidden" name="sea" value="<?php echo (isset($data_input['sea'])) ? $data_input['sea'] : ''; ?>">
+                    </div>
+                  </div>
+                  <div class="form-group row m-0">
+                    <label class="col-sm-3 col-form-label">Price per Kg (Rp.)</label>
+                    <div class="col-sm-9">
+                      <label class="col-form-label">: Rp. <?php echo number_format($data_input['check_price_weight'], 2) ?> (<?php echo $data_input['check_price_term'] ?>)</label>
+                      <input type="hidden" name="check_price_weight" value="<?php echo $data_input['check_price_weight'] ?>">
+                      <input type="hidden" name="check_price_term" value="<?php echo $data_input['check_price_term'] ?>">
                     </div>
                   </div>
                 </div>
@@ -401,17 +409,17 @@ $page_permission = array(
                     </div>
                   </div>
                   <div class="form-group row m-0">
-                    <label class="col-sm-3 col-form-label">City</label>
-                    <div class="col-sm-9">
-                      <label class="col-form-label">: <?php echo $data_input['billing_city'] ?></label>
-                      <input type="hidden" name="billing_city" value="<?php echo $data_input['billing_city'] ?>">
-                    </div>
-                  </div>
-                  <div class="form-group row m-0">
                     <label class="col-sm-3 col-form-label">Country</label>
                     <div class="col-sm-9">
                       <label class="col-form-label">: <?php echo $data_input['billing_country'] ?></label>
                       <input type="hidden" name="billing_country" value="<?php echo $data_input['billing_country'] ?>">
+                    </div>
+                  </div>
+                  <div class="form-group row m-0">
+                    <label class="col-sm-3 col-form-label">City</label>
+                    <div class="col-sm-9">
+                      <label class="col-form-label">: <?php echo $data_input['billing_city'] ?></label>
+                      <input type="hidden" name="billing_city" value="<?php echo $data_input['billing_city'] ?>">
                     </div>
                   </div>
                   <div class="form-group row m-0">
@@ -474,17 +482,17 @@ $page_permission = array(
                     </div>
                   </div>
                   <div class="form-group row m-0 <?php echo $hide_pickup; ?>">
-                    <label class="col-sm-3 col-form-label">City</label>
-                    <div class="col-sm-9">
-                      <label class="col-form-label">: <?php echo $data_input['pickup_city'] ?></label>
-                      <input type="hidden" name="pickup_city" value="<?php echo $data_input['pickup_city'] ?>">
-                    </div>
-                  </div>
-                  <div class="form-group row m-0 <?php echo $hide_pickup; ?>">
                     <label class="col-sm-3 col-form-label">Country</label>
                     <div class="col-sm-9">
                       <label class="col-form-label">: <?php echo $data_input['pickup_country'] ?></label>
                       <input type="hidden" name="pickup_country" value="<?php echo $data_input['pickup_country'] ?>">
+                    </div>
+                  </div>
+                  <div class="form-group row m-0 <?php echo $hide_pickup; ?>">
+                    <label class="col-sm-3 col-form-label">City</label>
+                    <div class="col-sm-9">
+                      <label class="col-form-label">: <?php echo $data_input['pickup_city'] ?></label>
+                      <input type="hidden" name="pickup_city" value="<?php echo $data_input['pickup_city'] ?>">
                     </div>
                   </div>
                   <div class="form-group row m-0 <?php echo $hide_pickup; ?>">

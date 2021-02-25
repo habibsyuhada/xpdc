@@ -84,10 +84,6 @@ $page_permission = array(
                     <input type="text" class="form-control" name="shipper_name" value="<?php echo @$this->input->get('shipper_name') ?>" placeholder="Shipper Name">
                   </div>
                   <div class="form-group">
-                    <label>City</label>
-                    <input type="text" class="form-control" name="shipper_city" value="<?php echo @$this->input->get('shipper_city') ?>" placeholder="City">
-                  </div>
-                  <div class="form-group">
                     <label>Country</label>
                     <select class="form-control select2" name="shipper_country">
                       <option value="">- Select One -</option>
@@ -95,6 +91,10 @@ $page_permission = array(
                         <option value="<?= $data['location'] ?>" <?php echo ($this->input->get('shipper_country') == $data['location'] ? 'selected' : '') ?>><?= $data['location'] ?></option>
                       <?php } ?>
                     </select>
+                  </div>
+                  <div class="form-group">
+                    <label>City</label>
+                    <input type="text" class="form-control" name="shipper_city" value="<?php echo @$this->input->get('shipper_city') ?>" placeholder="City">
                   </div>
                 </div>
                 <div class="col-md-6">
@@ -104,10 +104,6 @@ $page_permission = array(
                     <input type="text" class="form-control" name="consignee_name" value="<?php echo @$this->input->get('consignee_name') ?>" placeholder="Receiver Name">
                   </div>
                   <div class="form-group">
-                    <label>City</label>
-                    <input type="text" class="form-control" name="consignee_city" value="<?php echo @$this->input->get('consignee_city') ?>" placeholder="City">
-                  </div>
-                  <div class="form-group">
                     <label>Country</label>
                     <select class="form-control select2" name="consignee_country">
                       <option value="">- Select One -</option>
@@ -115,6 +111,10 @@ $page_permission = array(
                         <option value="<?= $data['location'] ?>" <?php echo ($this->input->get('consignee_country') == $data['location'] ? 'selected' : '') ?>><?= $data['location'] ?></option>
                       <?php } ?>
                     </select>
+                  </div>
+                  <div class="form-group">
+                    <label>City</label>
+                    <input type="text" class="form-control" name="consignee_city" value="<?php echo @$this->input->get('consignee_city') ?>" placeholder="City">
                   </div>
                 </div>
               </div>

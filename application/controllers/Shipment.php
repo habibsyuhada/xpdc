@@ -267,6 +267,9 @@ class Shipment extends CI_Controller
 			'status_delete'				=> 1,
 			'created_by'				=> $this->session->userdata('id'),
 			'branch'				=> $this->session->userdata('branch'),
+			'check_price_weight'					=> $post['check_price_weight'],
+			'check_price_term'					=> $post['check_price_term'],
+			'insurance'					=> $post['insurance'],
 		);
 		$id_shipment = $this->shipment_mod->shipment_create_process_db($form_data);
 

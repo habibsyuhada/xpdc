@@ -53,12 +53,12 @@
                       <input type="text" class="form-control" name="history_location" required>
                     </div> -->
                     <div class="form-group">
-                      <label>City</label>
-                      <input type="text" class="form-control" name="city_history_location" required>
-                    </div>
-                    <div class="form-group">
                       <label>Country</label>
                       <input type="text" class="form-control" name="country_history_location" required>
+                    </div>
+                    <div class="form-group">
+                      <label>City</label>
+                      <input type="text" class="form-control" name="city_history_location" required>
                     </div>
                     <div class="form-group">
                       <label>Status</label>

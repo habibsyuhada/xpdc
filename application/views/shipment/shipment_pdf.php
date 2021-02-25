@@ -42,8 +42,8 @@
             <small class="lv2">
               <b>Shipper Name :</b> <?php echo $shipment['shipper_name'] ?><br>
               <b>Address :</b> <?php echo $shipment['shipper_address'] ?><br>
-              <b>City :</b> <?php echo $shipment['shipper_city'] ?><br>
               <b>Country :</b> <?php echo $shipment['shipper_country'] ?><br>
+              <b>City :</b> <?php echo $shipment['shipper_city'] ?><br>
               <b>Postcode :</b> <?php echo $shipment['shipper_postcode'] ?><br>
               <b>Shipper PIC :</b> <?php echo $shipment['shipper_contact_person'] ?><br>
               <b>Phone Number :</b> <?php echo $shipment['shipper_phone_number'] ?><br>
@@ -56,8 +56,8 @@
             <small>
               <b>Receiver Name :</b> <?php echo $shipment['consignee_name'] ?><br>
               <b>Address :</b> <?php echo $shipment['consignee_address'] ?><br>
-              <b>City :</b> <?php echo $shipment['consignee_city'] ?><br>
               <b>Country :</b> <?php echo $shipment['consignee_country'] ?><br>
+              <b>City :</b> <?php echo $shipment['consignee_city'] ?><br>
               <b>Postcode :</b> <?php echo $shipment['consignee_postcode'] ?><br>
               <b>Receiver PIC :</b> <?php echo $shipment['consignee_contact_person'] ?><br>
               <b>Phone Number :</b> <?php echo $shipment['consignee_phone_number'] ?><br>

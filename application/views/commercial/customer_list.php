@@ -25,8 +25,8 @@ $page_permission = array(
                       <th class="text-white font-weight-bold">Name</th>
                       <th class="text-white font-weight-bold">Email</th>
                       <th class="text-white font-weight-bold">Address</th>
-                      <th class="text-white font-weight-bold">City</th>
                       <th class="text-white font-weight-bold">Country</th>
+                      <th class="text-white font-weight-bold">City</th>
                       <th class="text-white font-weight-bold">Postcode</th>
                       <th class="text-white font-weight-bold">Contact Person</th>
                       <th class="text-white font-weight-bold">Phone Number</th>
@@ -42,8 +42,8 @@ $page_permission = array(
                         <td><?php echo $value['name'] ?></td>
                         <td><?php echo $value['email'] ?></td>
                         <td><?php echo $value['address'] ?></td>
-                        <td><?php echo $value['city'] ?></td>
                         <td><?php echo $value['country'] ?></td>
+                        <td><?php echo $value['city'] ?></td>
                         <td><?php echo $value['postcode'] ?></td>
                         <td><?php echo $value['contact_person'] ?></td>
                         <td><?php echo $value['phone_number'] ?></td>

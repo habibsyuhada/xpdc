@@ -68,3 +68,23 @@ ERROR - 2021-02-26 21:29:08 --> 404 Page Not Found: Assets/img
 ERROR - 2021-02-26 21:29:12 --> 404 Page Not Found: Assets/img
 ERROR - 2021-02-26 21:30:01 --> 404 Page Not Found: Assets/img
 ERROR - 2021-02-26 21:31:38 --> 404 Page Not Found: Assets/img
+ERROR - 2021-02-26 22:40:42 --> 404 Page Not Found: Assets/img
+ERROR - 2021-02-26 22:43:22 --> 404 Page Not Found: Assets/img
+ERROR - 2021-02-26 22:44:43 --> Severity: Notice --> Undefined variable: customer C:\xampp\htdocs\xpdc\application\views\customer\load_price.php 70
+ERROR - 2021-02-26 22:44:43 --> Severity: Notice --> Trying to access array offset on value of type null C:\xampp\htdocs\xpdc\application\views\customer\load_price.php 70
+ERROR - 2021-02-26 22:44:43 --> Severity: Notice --> Undefined variable: customer C:\xampp\htdocs\xpdc\application\views\customer\load_price.php 71
+ERROR - 2021-02-26 22:44:43 --> Severity: Notice --> Trying to access array offset on value of type null C:\xampp\htdocs\xpdc\application\views\customer\load_price.php 71
+ERROR - 2021-02-26 22:44:43 --> Severity: Notice --> Undefined variable: customer C:\xampp\htdocs\xpdc\application\views\customer\load_price.php 97
+ERROR - 2021-02-26 22:44:43 --> Severity: Notice --> Trying to access array offset on value of type null C:\xampp\htdocs\xpdc\application\views\customer\load_price.php 97
+ERROR - 2021-02-26 22:44:43 --> Severity: Notice --> Undefined variable: customer C:\xampp\htdocs\xpdc\application\views\customer\load_price.php 98
+ERROR - 2021-02-26 22:44:43 --> Severity: Notice --> Trying to access array offset on value of type null C:\xampp\htdocs\xpdc\application\views\customer\load_price.php 98
+ERROR - 2021-02-26 22:44:43 --> Severity: Notice --> Undefined variable: customer C:\xampp\htdocs\xpdc\application\views\customer\load_price.php 124
+ERROR - 2021-02-26 22:44:43 --> Severity: Notice --> Trying to access array offset on value of type null C:\xampp\htdocs\xpdc\application\views\customer\load_price.php 124
+ERROR - 2021-02-26 22:44:43 --> Severity: Notice --> Undefined variable: customer C:\xampp\htdocs\xpdc\application\views\customer\load_price.php 125
+ERROR - 2021-02-26 22:44:43 --> Severity: Notice --> Trying to access array offset on value of type null C:\xampp\htdocs\xpdc\application\views\customer\load_price.php 125
+ERROR - 2021-02-26 22:47:14 --> 404 Page Not Found: Assets/img
+ERROR - 2021-02-26 22:47:50 --> 404 Page Not Found: Assets/img
+ERROR - 2021-02-26 22:47:54 --> 404 Page Not Found: Assets/img
+ERROR - 2021-02-26 22:49:28 --> Severity: Notice --> Undefined variable: package_type C:\xampp\htdocs\xpdc\application\views\shipment\shipment_create.php 311
+ERROR - 2021-02-26 22:49:28 --> Severity: Warning --> Invalid argument supplied for foreach() C:\xampp\htdocs\xpdc\application\views\shipment\shipment_create.php 311
+ERROR - 2021-02-26 22:49:28 --> 404 Page Not Found: Assets/img

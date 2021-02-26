@@ -30,17 +30,6 @@
                 <?php if ($this->session->userdata('role') != 'Customer') { ?>
                   <div class="col-md-3">
                     <div class="form-group">
-                      <label>Customer</label>
-                      <select class="form-control select2" name="customer" required>
-                        <option value="">- Select One -</option>
-                        <?php foreach ($customer as $value) { ?>
-                          <option value="<?= $value['customer_id'] ?>"><?= $value['name'] ?></option>
-                        <?php } ?>
-                      </select>
-                    </div>
-                  </div>
-                  <div class="col-md-3">
-                    <div class="form-group">
                       <label>Branch</label>
                       <select class="form-control select2" name="branch" required>
                         <?php foreach ($branch as $value) { ?>

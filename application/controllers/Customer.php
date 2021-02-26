@@ -34,24 +34,24 @@ class Customer extends CI_Controller
     $post = $this->input->post();
     $data['post'] = $post;
 
-    if($this->session->userdata('role') == 'Customer'){
+    if ($this->session->userdata('role') == 'Customer') {
       $customer_post = $this->session->userdata('id');
       $branch_post = $this->session->userdata('branch');
-    }else{
-      $customer_post = $post['customer'];
+
+      $where['customer_id'] = $customer_post;
+      $customer = $this->customer_mod->customer_list_db($where)->row_array();
+      $id_customer = $customer['id'];
+      $data['customer']     = $customer;
+    } else {
       $branch_post = $post['branch'];
+      $id_customer = 0;
     }
-    
-    $where['customer_id'] = $customer_post;
-    $customer = $this->customer_mod->customer_list_db($where)->row_array();
-    $id_customer = $customer['id'];
 
     unset($where);
     $where['name'] = $branch_post;
     $branch = $this->customer_mod->branch_list_db($where)->row_array();
     $id_branch = $branch['id'];
 
-    $data['customer']     = $customer;
     $data['branch']     = $branch;
     $data['country_post']   = $post['country'];
     $data['city_post']    = $post['city'];

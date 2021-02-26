@@ -3,15 +3,16 @@ $role = $this->session->userdata('role');
 $page_permission = array(
   0 => (in_array($role, array("Super Admin", "Driver")) ? 1 : 0), //Driver
   1 => (in_array($role, array("Super Admin", "Operator")) ? 1 : 0), //Update
-  2 => (in_array($role, array("Super Admin", "Operator", "Finance")) ? 1 : 0), //Print
+  2 => (in_array($role, array("Super Admin", "Operator", "Finance")) ? 1 : 0), //Print Waybill & DO
   3 => (in_array($role, array("Super Admin")) ? 1 : 0), //Delete
   4 => (in_array($role, array("Super Admin", "Operator")) ? 1 : 0), //master_tracking
   5 => (in_array($role, array("Super Admin", "Operator")) ? 1 : 0), //assign_driver
   6 => (in_array($role, array("Super Admin", "Finance")) ? 1 : 0), //shipment cost
   7 => (in_array($role, array("Super Admin", "Finance")) ? 1 : 0), //alert for hipment that not costed
-  8 => (in_array($role, array("Super Admin", "Commercial")) ? 1 : 0), //alert for hipment that not costed
+  8 => (in_array($role, array("Super Admin", "Commercial", "Operator", "Finance")) ? 1 : 0), //Print receipt
   9 => (in_array($role, array("Super Admin")) ? 1 : 0), //show who created
   10 => (in_array($role, array("Super Admin", "Driver", "Operator", "Finance")) ? 1 : 0), //show master tracking column
+  11 => (in_array($role, array("Super Admin", "Customer", "Operator", "Finance")) ? 1 : 0), //Print label
 );
 ?>
 <style>
@@ -245,19 +246,19 @@ $page_permission = array(
                               <a href="<?php echo base_url() ?>shipment/shipment_package_detail/<?php echo $value['id'] ?>" class="btn btn-secondary" title="Check Shipment Packages"><i class="fas fa-box"></i></a>
                             <?php endif; ?>
                           <?php endif; ?>
-                          <?php if ($page_permission[2] == 1) : ?>
+                          <?php if (in_array(1, array($page_permission[2], $page_permission[8], $page_permission[11]))) : ?>
                             <button type="button" class="btn btn btn-warning dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><i class="fas fa-print m-0"></i> <i class="ik ik-chevron-down m-0"></i></button>
                             <div class="dropdown-menu">
+                              <?php if ($page_permission[11] == 1) : ?>
                               <a class="dropdown-item" target="_blank" href="<?php echo base_url() ?>shipment/shipment_tracking_label_pdf/<?php echo $value['id'] ?>">Label</a>
+                              <?php endif; ?>
+                              <?php if ($page_permission[8] == 1) : ?>
+                              <a class="dropdown-item" target="_blank" href="<?php echo base_url() ?>shipment/shipment_receipt_pdf/<?php echo $value['id'] ?>">Receipt</a>
+                              <?php endif; ?>
+                              <?php if ($page_permission[2] == 1) : ?>
                               <a class="dropdown-item" target="_blank" href="<?php echo base_url() ?>shipment/shipment_awb_pdf/<?php echo $value['id'] ?>">WayBill</a>
-                              <a class="dropdown-item" target="_blank" href="<?php echo base_url() ?>shipment/shipment_receipt_pdf/<?php echo $value['id'] ?>">Receipt</a>
                               <a class="dropdown-item" target="_blank" href="<?php echo base_url() ?>shipment/shipment_do_pdf/<?php echo $value['id'] ?>">Delivery Order</a>
-                            </div>
-                          <?php endif; ?>
-                          <?php if ($page_permission[8] == 1) : ?>
-                            <button type="button" class="btn btn btn-warning dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><i class="fas fa-print m-0"></i> <i class="ik ik-chevron-down m-0"></i></button>
-                            <div class="dropdown-menu">
-                              <a class="dropdown-item" target="_blank" href="<?php echo base_url() ?>shipment/shipment_receipt_pdf/<?php echo $value['id'] ?>">Receipt</a>
+                              <?php endif; ?>
                             </div>
                           <?php endif; ?>
                           <?php if ($page_permission[3] == 1) : ?>

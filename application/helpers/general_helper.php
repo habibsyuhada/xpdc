@@ -9,6 +9,18 @@
     }
   }
 
+  function dump_var($value, $pass = 0){
+    $CI =& get_instance();
+    if($CI->session->userdata('id') == 1){
+      echo '<pre>';
+      print_r($value);
+      echo '</pre>';
+      if($pass == 0){
+          exit;
+      }
+    }
+  }
+
   function cek_login(){
     $CI =& get_instance();
 

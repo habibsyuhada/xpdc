@@ -114,7 +114,7 @@ if (!isset($cargo_list)) {
                         <textarea class="form-control" name="shipper_address" placeholder="Address" required><?php echo @$quotation['shipper_address'] ?></textarea>
                       </div>
                       <div class="form-group">
-                        <label>Country <?php echo $quotation['shipper_country'] ?></label>
+                        <label>Country</label>
                         <select class="form-control select2" name="shipper_country" required onchange="select_country(this)">
                           <option value="">- Select One -</option>
                           <?php foreach ($country as $data) { ?>
@@ -453,7 +453,13 @@ if (!isset($cargo_list)) {
                       </div>
                       <div class="form-group">
                         <label>Country</label>
-                        <input type="text" class="form-control" name="pickup_country" placeholder="Country" readonly required>
+                        <input type="hidden" class="form-control" name="pickup_country" placeholder="Country" readonly required>
+                        <select class="form-control select2" name="pickup_country_view" required  onchange="$('input[name=pickup_country]').val($(this).val()); select_country(this)">
+                          <option value="">- Select One -</option>
+                          <?php foreach ($country as $data) { ?>
+                            <option value="<?= $data['country'] ?>"><?= $data['country'] ?></option>
+                          <?php } ?>
+                        </select>
                       </div>
                       <div class="form-group">
                         <label>City</label>
@@ -1135,7 +1141,8 @@ if (!isset($cargo_list)) {
 
   function select_country(input) {
     var select_city;
-    var name_city
+    var name_city;
+    var disable = "";
     if($(input).attr("name") == "shipper_country"){
       select_city = $("[name=shipper_city]");
       name_city = "shipper_city";
@@ -1143,6 +1150,17 @@ if (!isset($cargo_list)) {
     else if($(input).attr("name") == "consignee_country"){
       select_city = $("[name=consignee_city ]");
       name_city = "consignee_city";
+    }
+    else if($(input).attr("name") == "pickup_country_view"){
+      select_city = $("[name=pickup_city]");
+      name_city = "pickup_city";
+      if($("select[name=pickup_same_as]").val() != "None"){
+        disable = "disabled";
+      }
+    }
+    else if($(input).attr("name") == "billing_country_view"){
+      select_city = $("[name=billing_city]");
+      name_city = "billing_city";
     }
     $.ajax( {
       url: "<?php echo base_url() ?>country/city_autocomplete",
@@ -1159,16 +1177,18 @@ if (!isset($cargo_list)) {
         $("select[name="+name_city+"]").select2("destroy");
         $(select_city).remove();
         if(data.length > 0){
-          var html = '<select class="form-control select2" name="'+name_city+'" required>';
+          var html = '<select class="form-control select2" name="'+name_city+'" required '+disable+'>';
           $.each(data, function(index, value) {
             html += "<option value='"+value+"'>"+value+"</option>";
           });
           html += "</select>";
           $(content).append(html);
-          $("[name="+name_city+"]").select2({theme: "bootstrap4"});
+          if(disable == ""){
+            $("[name="+name_city+"]").select2({theme: "bootstrap4"});
+          }
         }
         else{
-          var html = '<input type="text" class="form-control" name="'+name_city+'" placeholder="City">';
+          var html = '<input type="text" class="form-control" name="'+name_city+'" placeholder="City" '+disable+'>';
           $(content).append(html);
         }
       }

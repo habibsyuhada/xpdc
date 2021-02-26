@@ -324,14 +324,20 @@ class Shipment extends CI_Controller
 		}
 
 		$this->shipment_mod->shipment_detail_create_process_db($form_data);
-
+		$remarks = "";
+		if($post['status_pickup'] == "Dropoff"){
+			$remarks = "Tracking number has been created and shipment will be DROPPED OFF";
+		}
+		elseif($post['status_pickup'] == "Picked Up"){
+			$remarks = "Tracking number has been created and shipment is preparing to be PICKED UP";
+		}
 		$form_data = array(
 			'id_shipment' 			=> $id_shipment,
 			'date' 					=> date("Y-m-d"),
 			'time' 					=> date("H:i:s"),
 			'location' 				=> $post['shipper_city'] . ", " . $post['shipper_country'],
 			'status' 				=> $status,
-			'remarks' 				=> "",
+			'remarks' 				=> $remarks,
 		);
 		$this->shipment_mod->shipment_history_create_process_db($form_data);
 
@@ -434,6 +440,7 @@ class Shipment extends CI_Controller
 			'declared_value'			=> $post['declared_value'],
 			'currency'					=> $post['currency'],
 			'ref_no'					=> $post['ref_no'],
+			'insurance'					=> $post['insurance'],
 		);
 		if (isset($post['has_updated_packages'])) {
 			$form_data['has_updated_packages'] = 1;
@@ -1202,6 +1209,8 @@ class Shipment extends CI_Controller
 		// echo $id;
 		$where['id_shipment'] 	= $id;
 		$history_list 					= $this->shipment_mod->shipment_history_list_db($where);
+
+		$data['country'] 				= $this->shipment_mod->country_list_db();
 
 		$data['shipment'] 			= $shipment_list[0];
 		$data['history_list'] 	= $history_list;

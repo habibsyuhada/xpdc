@@ -36,6 +36,7 @@ class Driver extends CI_Controller
 			$this->session->set_flashdata('error', 'Please tick shipment first to assign driver!');
 			redirect('shipment/shipment_list');
 		}
+		$driver_list = user_data(array($post['driver']));
 
 		$where['shipment.id IN ('.$post['id'].')'] = NULL;
 		$shipment_list 					= $this->shipment_mod->shipment_list_db($where);
@@ -84,7 +85,23 @@ class Driver extends CI_Controller
 					'time' 					=> $time_now,
 					'location' 			=> $value["consignee_city"].", ".$value["consignee_country"],
 					'status' 				=> "With Courier",
-					'remarks' 			=> "-",
+					'remarks' 			=> "Delivery assigned to (".@$driver_list[$post['driver']]['name'].")",
+				);
+				$id_history = $this->shipment_mod->shipment_history_create_process_db($form_data);
+				$this->shipment_update_last_history($post['id']);
+			}
+		}
+		elseif($post['status'] == "pickup"){
+			$date_now = date("Y-m-d");
+			$time_now = date("H:i:s");
+			foreach ($shipment_list as $key => $value) {
+				$form_data = array(
+					'id_shipment' 	=> $value['id'],
+					'date' 					=> $date_now,
+					'time' 					=> $time_now,
+					'location' 			=> $value["shipper_city"].", ".$value["shipper_country"],
+					'status' 				=> "Booking Confirmed",
+					'remarks' 			=> "Pick up has been assigned to ".@$driver_list[$post['driver']]['name']." at ".$date_now." ".$time_now,
 				);
 				$id_history = $this->shipment_mod->shipment_history_create_process_db($form_data);
 				$this->shipment_update_last_history($post['id']);

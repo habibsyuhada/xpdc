@@ -56,9 +56,9 @@
       </tr>
       <tr>
         <td>
-          Rp. <?= number_format($airfreight_weight, 2) ?> (<?=$result['airfreight_term']?>)</td>
-        <td>Rp. <?= number_format($landfreight_weight, 2) ?> (<?=$result['landfreight_term']?>)</td>
-        <td>Rp. <?= number_format($seafreight_weight, 2) ?> (<?=$result['seafreight_term']?>)</td>
+          Rp. <?= number_format($airfreight_weight, 2) ?> (<?=($result['airfreight_term'] == '') ? '-' : $result['airfreight_term']?>)</td>
+        <td>Rp. <?= number_format($landfreight_weight, 2) ?> (<?=($result['landfreight_term'] == '') ? '-' : $result['landfreight_term']?>)</td>
+        <td>Rp. <?= number_format($seafreight_weight, 2) ?> (<?=($result['seafreight_term'] == '') ? '-' : $result['seafreight_term']?>)</td>
       </tr>
       <tr>
         <td>

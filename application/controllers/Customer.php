@@ -20,6 +20,7 @@ class Customer extends CI_Controller
   public function check_price()
   {
     $data['country'] = $this->customer_mod->country_list_db()->result_array();
+    $data['package_type'] = $this->customer_mod->package_type_list_db();
 
     $data['subview']      = 'customer/check_price';
     $data['meta_title']     = 'Check Price';
@@ -49,7 +50,7 @@ class Customer extends CI_Controller
     unset($where);
     //domestic
     if ($post['country'] == 'Indonesia') {
-      $where = array("'".$post['act_weight'] . "' BETWEEN airfreight_min_kg AND airfreight_max_kg" => NULL, 'city' => $post['city'], 'id_customer' => $id_customer);
+      $where = array("(('".$post['act_weight'] . "' BETWEEN airfreight_min_kg AND airfreight_max_kg) OR ('".$post['act_weight'] . "' BETWEEN landfreight_min_kg AND landfreight_max_kg) OR ('".$post['act_weight'] . "' BETWEEN seafreight_min_kg AND seafreight_max_kg))" => NULL, 'city' => $post['city'], 'id_customer' => $id_customer);
       $query = $this->customer_mod->table_rate_domestic_list_db($where);
       if ($query->num_rows() > 0) {
         // if customer table rate exists
@@ -62,7 +63,7 @@ class Customer extends CI_Controller
         $data['type_of_shipment'] = "Domestic";
       } else {
         // if customer table rate not exists, get from branch
-        $where = array("'".$post['act_weight'] . "' BETWEEN airfreight_min_kg AND airfreight_max_kg" => NULL, 'city' => $post['city'], 'id_branch' => $id_branch);
+        $where = array("(('".$post['act_weight'] . "' BETWEEN airfreight_min_kg AND airfreight_max_kg) OR ('".$post['act_weight'] . "' BETWEEN landfreight_min_kg AND landfreight_max_kg) OR ('".$post['act_weight'] . "' BETWEEN seafreight_min_kg AND seafreight_max_kg))" => NULL, 'city' => $post['city'], 'id_branch' => $id_branch);
         $query = $this->customer_mod->table_rate_domestic_list_db($where);
         if ($query->num_rows() > 0) {
           $row = $query->row_array();

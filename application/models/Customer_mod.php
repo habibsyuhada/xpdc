@@ -77,4 +77,14 @@ class Customer_mod extends CI_Model
         $query = $this->db->get('table_rate_pickup');
         return $query;
     }
+    function package_type_list_db($where = null)
+    {
+        if (isset($where)) {
+            $this->db->where($where);
+        }
+        $this->db->order_by("created_date", "ASC");
+        $query = $this->db->get('mst_package_type');
+
+        return $query->result_array();
+    }
 }

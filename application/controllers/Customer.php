@@ -43,7 +43,7 @@ class Customer extends CI_Controller
       $id_customer = $customer['id'];
       $data['customer']     = $customer;
     } else {
-      $branch_post = $post['branch'];
+      $branch_post = $this->session->userdata('branch');
       $id_customer = 0;
     }
 

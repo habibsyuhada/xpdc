@@ -27,18 +27,6 @@
                     <input type="text" class="form-control" name="city" placeholder="City">
                   </div>
                 </div>
-                <?php if ($this->session->userdata('role') != 'Customer') { ?>
-                  <div class="col-md-3">
-                    <div class="form-group">
-                      <label>Branch</label>
-                      <select class="form-control select2" name="branch" required>
-                        <?php foreach ($branch as $value) { ?>
-                          <option value="<?= $value['name'] ?>"><?= $value['name'] ?></option>
-                        <?php } ?>
-                      </select>
-                    </div>
-                  </div>
-                <?php } ?>
               </div>
               <div class="row">
                 <div class="col-md-12">

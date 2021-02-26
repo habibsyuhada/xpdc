@@ -87,4 +87,7 @@ class Customer_mod extends CI_Model
 
         return $query->result_array();
     }
+    function select_manual_query($query){
+        return $this->db->query($query);
+    }
 }

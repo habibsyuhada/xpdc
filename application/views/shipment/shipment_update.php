@@ -442,12 +442,12 @@
                       <div class="form-group">
                         <label>Same as</label>
                         <select class="form-control" name="pickup_same_as" onchange="pickup_same(this)" <?php echo ($shipment['status_pickup'] == 'Dropoff' ? 'disabled' : '') ?> required>
-                          <option value="None" <?php echo ($shipment['pickup_same_as'] == "None" ? 'selected' : '') ?>>-- None --</option>
+                          <!-- <option value="None" <?php echo ($shipment['pickup_same_as'] == "None" ? 'selected' : '') ?>>-- None --</option> -->
                           <option value="Shipper" <?php echo ($shipment['pickup_same_as'] == "Shipper" ? 'selected' : '') ?>>Shipper</option>
-                          <option value="Consignee" <?php echo ($shipment['pickup_same_as'] == "Consignee" ? 'selected' : '') ?>>Consignee</option>
+                          <!-- <option value="Consignee" <?php echo ($shipment['pickup_same_as'] == "Consignee" ? 'selected' : '') ?>>Consignee</option> -->
                         </select>
                       </div>
-                      <div class="form-group">
+                      <!-- <div class="form-group">
                         <label>Name</label>
                         <input type="text" class="form-control" name="pickup_name" value="<?php echo $shipment['pickup_name'] ?>" placeholder="Name" <?php echo (($shipment['status_pickup'] == 'Dropoff' || !in_array($shipment['pickup_same_as'], array("", "None"))) ? 'readonly' : '') ?> required>
                       </div>
@@ -478,7 +478,7 @@
                       <div class="form-group">
                         <label>Email</label>
                         <input type="email" class="form-control" name="pickup_email" value="<?php echo $shipment['pickup_email'] ?>" placeholder="Email" <?php echo (($shipment['status_pickup'] == 'Dropoff' || !in_array($shipment['pickup_same_as'], array("", "None"))) ? 'readonly' : '') ?>>
-                      </div>
+                      </div> -->
                       <div class="row clearfix">
                         <div class="col-md-6">
                           <div class="form-group">
@@ -634,7 +634,7 @@
       $("input[name=billing_name]").val('');
       $("input[name=billing_account]").val('');
       $("textarea[name=billing_address]").val('');
-      $("input[name=billing_city]").val('');
+      $("[name=billing_city]").val('');
       $("select[name=billing_country_view]").val('').trigger('change');
       $("input[name=billing_country]").val('');
       $("input[name=billing_postcode]").val('');
@@ -710,7 +710,7 @@
     if (same_as != 'none') {
       $("input[name=billing_name]").val($("input[name=" + same_as + "_name]").val());
       $("textarea[name=billing_address]").val($("textarea[name=" + same_as + "_address]").val());
-      $("input[name=billing_city]").val($("input[name=" + same_as + "_city]").val());
+      $("[name=billing_city]").val($("[name=" + same_as + "_city]").val());
       var select_country = $("select[name=" + same_as + "_country]").val()
       $("select[name=billing_country_view]").val(select_country).trigger('change');
       $("input[name=billing_country]").val(select_country);
@@ -1009,7 +1009,7 @@
           $("input[name=billing_name]").val('');
           $("input[name=billing_account]").val('');
           $("textarea[name=billing_address]").val('');
-          $("input[name=billing_city]").val('');
+          $("[name=billing_city]").val('');
           $("select[name=billing_country_view]").val('').trigger('change');
           $("input[name=billing_country]").val('');
           $("input[name=billing_postcode]").val('');
@@ -1025,7 +1025,7 @@
 
           $("input[name=billing_name]").val(data.name);
           $("textarea[name=billing_address]").val(data.address);
-          $("input[name=billing_city]").val(data.city);
+          $("[name=billing_city]").val(data.city);
           $("select[name=billing_country_view]").val(data.country).trigger('change');
           $("input[name=billing_country]").val(data.country);
           $("input[name=billing_postcode]").val(data.postcode);

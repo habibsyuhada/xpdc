@@ -267,8 +267,8 @@ class Shipment extends CI_Controller
 			'status_delete'				=> 1,
 			'created_by'				=> $this->session->userdata('id'),
 			'branch'				=> $this->session->userdata('branch'),
-			'check_price_weight'					=> $post['check_price_weight'],
-			'check_price_term'					=> $post['check_price_term'],
+			'check_price_weight'					=> @$post['check_price_weight'],
+			'check_price_term'					=> @$post['check_price_term'],
 			'insurance'					=> $post['insurance'],
 		);
 		$id_shipment = $this->shipment_mod->shipment_create_process_db($form_data);
@@ -368,6 +368,11 @@ class Shipment extends CI_Controller
 			$this->quotation_mod->quotation_update_process_db($form_data, $where);
 		}
 
+		if(@$post['check_price_weight'] != ""){
+			$this->session->set_flashdata('success', 'Your Shipment data has been Created!');
+			redirect('shipment/shipment_autobill/'.$id_shipment);
+		}
+
 		$this->session->set_flashdata('success', 'Your Shipment data has been Created!');
 		redirect('shipment/shipment_list');
 	}
@@ -450,14 +455,6 @@ class Shipment extends CI_Controller
 
 		$form_data = array(
 			'status_pickup' 						=> $post['status_pickup'],
-			'pickup_name' 							=> $post['pickup_name'],
-			'pickup_address' 						=> $post['pickup_address'],
-			'pickup_city' 							=> $post['pickup_city'],
-			'pickup_country' 						=> $post['pickup_country'],
-			'pickup_postcode'						=> $post['pickup_postcode'],
-			'pickup_contact_person' 		=> $post['pickup_contact_person'],
-			'pickup_phone_number' 			=> $post['pickup_phone_number'],
-			'pickup_email' 							=> $post['pickup_email'],
 			'pickup_date' 							=> $post['pickup_date'],
 			'pickup_time' 							=> $post['pickup_time'],
 			'pickup_date_to' 						=> $post['pickup_date_to'],
@@ -479,6 +476,16 @@ class Shipment extends CI_Controller
 			'cipl_no'										=> $post['cipl_no'],
 			'permit_no'									=> $post['permit_no']
 		);
+		if($post['status_pickup'] == "Picked Up"){
+			$form_data['pickup_name'] = $post['shipper_name'];
+			$form_data['pickup_address'] = $post['shipper_address'];
+			$form_data['pickup_city'] = $post['shipper_city'];
+			$form_data['pickup_country'] = $post['shipper_country'];
+			$form_data['pickup_postcode'] = $post['shipper_postcode'];
+			$form_data['pickup_contact_person'] = $post['shipper_contact_person'];
+			$form_data['pickup_phone_number'] = $post['shipper_phone_number'];
+			$form_data['pickup_email'] = $post['shipper_email'];
+		}
 		if (isset($post['pickup_same_as'])) {
 			$form_data['pickup_same_as'] = $post['pickup_same_as'];
 		}
@@ -1463,5 +1470,43 @@ class Shipment extends CI_Controller
 			echo "Error: Account Number " . $post['account_no'] . " Not Found!";
 			exit;
 		}
+	}
+
+	public function shipment_autobill($id)
+	{
+		$where['id'] 						= $id;
+		$shipment_list 					= $this->shipment_mod->shipment_list_db($where);
+
+		unset($where);
+		$where['id_shipment'] 	= $id;
+		$packages_list 					= $this->shipment_mod->shipment_packages_list_db($where);
+		$where['id_shipment'] 	= $id;
+		$history_list 					= $this->shipment_mod->shipment_history_list_db($where);
+
+		if (count($shipment_list) <= 0) {
+			$this->session->set_flashdata('error', 'Shipment not Found!');
+			redirect("shipment/shipment_list");
+		}
+
+		$t = 'sein';
+		if ($this->input->get('t')) {
+			$t = $this->input->get('t');
+		}
+		$data['t'] = $t;
+
+		$data['country'] = $this->shipment_mod->country_list_db();
+
+		$datadb 	= $this->home_mod->branch_list(["name" => $shipment_list[0]["branch"]]);
+		$data["branch"] 	= $datadb[0];
+
+		$data['shipment_list'] 			= $shipment_list[0];
+		$data['packages_list'] 	= $packages_list;
+		$data['history_list'] 	= $history_list;
+		$data['customer'] 			= $this->shipment_mod->customer_list_db();
+		$data['package_type'] 	= $this->shipment_mod->package_type_list_db();
+		// $data['t'] 							= 'g';
+		$data['subview'] 				= 'shipment/shipment_autobill';
+		$data['meta_title'] 		= 'Shipment Bill';
+		$this->load->view('index', $data);
 	}
 }

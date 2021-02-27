@@ -44,15 +44,15 @@ class Driver extends CI_Controller
 		if(count($shipment_list) > 0){
 			$shipment = array();
 			if($post['status'] == "pickup"){
-				foreach ($shipment_list as $key => $value) {
-					if($value['status'] != "Booking Confirmed"){
-						$shipment[] = $value['tracking_no'];
-					}
-				}
-				if(count(@$shipment) > 0){
-					$this->session->set_flashdata('error', 'All shipment below is not Booking Confirmed status!<br>'.join('<br>', $shipment));
-					redirect('shipment/shipment_list');
-				}
+				// foreach ($shipment_list as $key => $value) {
+				// 	if($value['status'] != "Booking Confirmed"){
+				// 		$shipment[] = $value['tracking_no'];
+				// 	}
+				// }
+				// if(count(@$shipment) > 0){
+				// 	$this->session->set_flashdata('error', 'All shipment below is not Booking Confirmed status!<br>'.join('<br>', $shipment));
+				// 	redirect('shipment/shipment_list');
+				// }
 			}
 			elseif($post['status'] == "deliver"){
 				foreach ($shipment_list as $key => $value) {

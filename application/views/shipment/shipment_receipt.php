@@ -466,61 +466,71 @@ $page_permission = array(
                   if ($data_input['status_pickup'] == 'Dropoff') {
                     $hide_pickup = 'd-none';
                   }
+                  else{
+                    $data_input['pickup_name'] = $data_input['shipper_name'];
+                    $data_input['pickup_address'] = $data_input['shipper_address'];
+                    $data_input['pickup_country'] = $data_input['shipper_country'];
+                    $data_input['pickup_city'] = $data_input['shipper_city'];
+                    $data_input['pickup_postcode'] = $data_input['shipper_postcode'];
+                    $data_input['pickup_contact_person'] = $data_input['shipper_contact_person'];
+                    $data_input['pickup_phone_number'] = $data_input['shipper_phone_number'];
+                    $data_input['pickup_email'] = $data_input['shipper_email'];
+                  }
                   ?>
                   <div class="form-group row m-0 <?php echo $hide_pickup; ?>">
                     <label class="col-sm-3 col-form-label">Name</label>
                     <div class="col-sm-9">
-                      <label class="col-form-label">: <?php echo $data_input['pickup_name'] ?></label>
-                      <input type="hidden" name="pickup_name" value="<?php echo $data_input['pickup_name'] ?>">
+                      <label class="col-form-label">: <?php echo @$data_input['pickup_name'] ?></label>
+                      <input type="hidden" name="pickup_name" value="<?php echo @$data_input['pickup_name'] ?>">
                     </div>
                   </div>
                   <div class="form-group row m-0 <?php echo $hide_pickup; ?>">
                     <label class="col-sm-3 col-form-label">Address</label>
                     <div class="col-sm-9">
-                      <label class="col-form-label">: <?php echo $data_input['pickup_address'] ?></label>
-                      <input type="hidden" name="pickup_address" value="<?php echo $data_input['pickup_address'] ?>">
+                      <label class="col-form-label">: <?php echo @$data_input['pickup_address'] ?></label>
+                      <input type="hidden" name="pickup_address" value="<?php echo @$data_input['pickup_address'] ?>">
                     </div>
                   </div>
                   <div class="form-group row m-0 <?php echo $hide_pickup; ?>">
                     <label class="col-sm-3 col-form-label">Country</label>
                     <div class="col-sm-9">
-                      <label class="col-form-label">: <?php echo $data_input['pickup_country'] ?></label>
-                      <input type="hidden" name="pickup_country" value="<?php echo $data_input['pickup_country'] ?>">
+                      <label class="col-form-label">: <?php echo @$data_input['pickup_country'] ?></label>
+                      <input type="hidden" name="pickup_country" value="<?php echo @$data_input['pickup_country'] ?>">
                     </div>
                   </div>
                   <div class="form-group row m-0 <?php echo $hide_pickup; ?>">
                     <label class="col-sm-3 col-form-label">City</label>
                     <div class="col-sm-9">
-                      <label class="col-form-label">: <?php echo $data_input['pickup_city'] ?></label>
-                      <input type="hidden" name="pickup_city" value="<?php echo $data_input['pickup_city'] ?>">
+                      <label class="col-form-label">: <?php echo @$data_input['pickup_city'] ?></label>
+                      <input type="hidden" name="pickup_city" value="<?php echo @$data_input['pickup_city'] ?>">
                     </div>
                   </div>
                   <div class="form-group row m-0 <?php echo $hide_pickup; ?>">
                     <label class="col-sm-3 col-form-label">Postcode</label>
                     <div class="col-sm-9">
-                      <label class="col-form-label">: <?php echo $data_input['pickup_postcode'] ?></label>
-                      <input type="hidden" name="pickup_postcode" value="<?php echo $data_input['pickup_postcode'] ?>">
+                      <label class="col-form-label">: <?php echo @$data_input['pickup_postcode'] ?></label>
+                      <input type="hidden" name="pickup_postcode" value="<?php echo @$data_input['pickup_postcode'] ?>">
                     </div>
                   </div>
                   <div class="form-group row m-0 <?php echo $hide_pickup; ?>">
                     <label class="col-sm-3 col-form-label">Contact Person</label>
                     <div class="col-sm-9">
-                      <label class="col-form-label">: <?php echo $data_input['pickup_contact_person'] ?></label>
-                      <input type="hidden" name="pickup_contact_person" value="<?php echo $data_input['pickup_contact_person'] ?>">
+                      <label class="col-form-label">: <?php echo @$data_input['pickup_contact_person'] ?></label>
+                      <input type="hidden" name="pickup_contact_person" value="<?php echo @$data_input['pickup_contact_person'] ?>">
                     </div>
                   </div>
                   <div class="form-group row m-0 <?php echo $hide_pickup; ?>">
                     <label class="col-sm-3 col-form-label">Phone Number</label>
                     <div class="col-sm-9">
-                      <label class="col-form-label">: <?php echo $data_input['pickup_phone_number'] ?></label>
-                      <input type="hidden" name="pickup_phone_number" value="<?php echo $data_input['pickup_phone_number'] ?>">
+                      <label class="col-form-label">: <?php echo @$data_input['pickup_phone_number'] ?></label>
+                      <input type="hidden" name="pickup_phone_number" value="<?php echo @$data_input['pickup_phone_number'] ?>">
                     </div>
                   </div>
                   <div class="form-group row m-0 <?php echo $hide_pickup; ?>">
                     <label class="col-sm-3 col-form-label">Email</label>
                     <div class="col-sm-9">
-                      <label class="col-form-label">: <?php echo $data_input['pickup_email'] ?></label>
-                      <input type="hidden" name="pickup_email" value="<?php echo $data_input['pickup_email'] ?>">
+                      <label class="col-form-label">: <?php echo @$data_input['pickup_email'] ?></label>
+                      <input type="hidden" name="pickup_email" value="<?php echo @$data_input['pickup_email'] ?>">
                     </div>
                   </div>
                   <div class="form-group row m-0 <?php echo $hide_pickup; ?>">

@@ -1,5 +1,6 @@
 <?php defined('BASEPATH') OR exit('No direct script access allowed'); ?>
 
+<<<<<<< Updated upstream
 ERROR - 2021-02-26 09:11:27 --> 404 Page Not Found: Assets/favicon.ico
 ERROR - 2021-02-26 09:11:42 --> 404 Page Not Found: Assets/img
 ERROR - 2021-02-26 09:11:42 --> 404 Page Not Found: Home/favicon.ico
@@ -88,3 +89,73 @@ ERROR - 2021-02-26 22:47:54 --> 404 Page Not Found: Assets/img
 ERROR - 2021-02-26 22:49:28 --> Severity: Notice --> Undefined variable: package_type C:\xampp\htdocs\xpdc\application\views\shipment\shipment_create.php 311
 ERROR - 2021-02-26 22:49:28 --> Severity: Warning --> Invalid argument supplied for foreach() C:\xampp\htdocs\xpdc\application\views\shipment\shipment_create.php 311
 ERROR - 2021-02-26 22:49:28 --> 404 Page Not Found: Assets/img
+=======
+ERROR - 2021-02-26 07:55:15 --> 404 Page Not Found: Assets/favicon.ico
+ERROR - 2021-02-26 07:55:25 --> 404 Page Not Found: Assets/img
+ERROR - 2021-02-26 07:55:25 --> 404 Page Not Found: Home/favicon.ico
+ERROR - 2021-02-26 07:55:32 --> Severity: Notice --> Undefined index: data C:\xampp\htdocs\xpdc\application\views\shipment\shipment_list.php 96
+ERROR - 2021-02-26 07:55:32 --> Severity: Warning --> Invalid argument supplied for foreach() C:\xampp\htdocs\xpdc\application\views\shipment\shipment_list.php 96
+ERROR - 2021-02-26 07:55:32 --> Severity: Notice --> Undefined index: data C:\xampp\htdocs\xpdc\application\views\shipment\shipment_list.php 116
+ERROR - 2021-02-26 07:55:32 --> Severity: Warning --> Invalid argument supplied for foreach() C:\xampp\htdocs\xpdc\application\views\shipment\shipment_list.php 116
+ERROR - 2021-02-26 07:55:32 --> 404 Page Not Found: Assets/img
+ERROR - 2021-02-26 07:55:34 --> 404 Page Not Found: Shipment/favicon.ico
+ERROR - 2021-02-26 07:56:34 --> 404 Page Not Found: Assets/img
+ERROR - 2021-02-26 07:56:36 --> Severity: Notice --> Undefined offset: 0 C:\xampp\htdocs\xpdc\application\controllers\Shipment.php 1209
+ERROR - 2021-02-26 07:56:36 --> Severity: Notice --> Undefined index: id_shipment C:\xampp\htdocs\xpdc\application\views\shipment\shipment_track.php 143
+ERROR - 2021-02-26 07:56:46 --> 404 Page Not Found: Assets/img
+ERROR - 2021-02-26 07:56:49 --> Severity: Notice --> Undefined offset: 0 C:\xampp\htdocs\xpdc\application\controllers\Shipment.php 1209
+ERROR - 2021-02-26 07:56:49 --> Severity: Notice --> Undefined index: id_shipment C:\xampp\htdocs\xpdc\application\views\shipment\shipment_track.php 143
+ERROR - 2021-02-26 07:57:08 --> 404 Page Not Found: Assets/img
+ERROR - 2021-02-26 07:57:12 --> Severity: Notice --> Undefined offset: 0 C:\xampp\htdocs\xpdc\application\controllers\Shipment.php 1209
+ERROR - 2021-02-26 07:57:12 --> Severity: Notice --> Undefined index: id_shipment C:\xampp\htdocs\xpdc\application\views\shipment\shipment_track.php 143
+ERROR - 2021-02-26 07:57:43 --> 404 Page Not Found: Assets/img
+ERROR - 2021-02-26 07:57:45 --> Severity: Notice --> Undefined offset: 0 C:\xampp\htdocs\xpdc\application\controllers\Shipment.php 1209
+ERROR - 2021-02-26 07:57:46 --> Severity: Notice --> Undefined index: id_shipment C:\xampp\htdocs\xpdc\application\views\shipment\shipment_track.php 143
+ERROR - 2021-02-26 08:01:27 --> Severity: Notice --> Undefined index: data C:\xampp\htdocs\xpdc\application\views\shipment\shipment_list.php 97
+ERROR - 2021-02-26 08:01:27 --> Severity: Warning --> Invalid argument supplied for foreach() C:\xampp\htdocs\xpdc\application\views\shipment\shipment_list.php 97
+ERROR - 2021-02-26 08:01:27 --> Severity: Notice --> Undefined index: data C:\xampp\htdocs\xpdc\application\views\shipment\shipment_list.php 117
+ERROR - 2021-02-26 08:01:27 --> Severity: Warning --> Invalid argument supplied for foreach() C:\xampp\htdocs\xpdc\application\views\shipment\shipment_list.php 117
+ERROR - 2021-02-26 08:01:27 --> 404 Page Not Found: Assets/img
+ERROR - 2021-02-26 08:21:37 --> 404 Page Not Found: Assets/img
+ERROR - 2021-02-26 08:21:51 --> Severity: Notice --> Undefined index: data C:\xampp\htdocs\xpdc\application\views\shipment\shipment_list.php 97
+ERROR - 2021-02-26 08:21:51 --> Severity: Warning --> Invalid argument supplied for foreach() C:\xampp\htdocs\xpdc\application\views\shipment\shipment_list.php 97
+ERROR - 2021-02-26 08:21:51 --> Severity: Notice --> Undefined index: data C:\xampp\htdocs\xpdc\application\views\shipment\shipment_list.php 117
+ERROR - 2021-02-26 08:21:51 --> Severity: Warning --> Invalid argument supplied for foreach() C:\xampp\htdocs\xpdc\application\views\shipment\shipment_list.php 117
+ERROR - 2021-02-26 08:22:09 --> 404 Page Not Found: Assets/img
+ERROR - 2021-02-26 08:22:26 --> Severity: Notice --> Undefined index: data C:\xampp\htdocs\xpdc\application\views\shipment\shipment_list.php 97
+ERROR - 2021-02-26 08:22:26 --> Severity: Warning --> Invalid argument supplied for foreach() C:\xampp\htdocs\xpdc\application\views\shipment\shipment_list.php 97
+ERROR - 2021-02-26 08:22:26 --> Severity: Notice --> Undefined index: data C:\xampp\htdocs\xpdc\application\views\shipment\shipment_list.php 117
+ERROR - 2021-02-26 08:22:26 --> Severity: Warning --> Invalid argument supplied for foreach() C:\xampp\htdocs\xpdc\application\views\shipment\shipment_list.php 117
+ERROR - 2021-02-26 08:23:00 --> Severity: Notice --> Undefined index: data C:\xampp\htdocs\xpdc\application\views\shipment\shipment_list.php 97
+ERROR - 2021-02-26 08:23:00 --> Severity: Warning --> Invalid argument supplied for foreach() C:\xampp\htdocs\xpdc\application\views\shipment\shipment_list.php 97
+ERROR - 2021-02-26 08:23:00 --> Severity: Notice --> Undefined index: data C:\xampp\htdocs\xpdc\application\views\shipment\shipment_list.php 117
+ERROR - 2021-02-26 08:23:00 --> Severity: Warning --> Invalid argument supplied for foreach() C:\xampp\htdocs\xpdc\application\views\shipment\shipment_list.php 117
+ERROR - 2021-02-26 08:55:55 --> 404 Page Not Found: Assets/img
+ERROR - 2021-02-26 09:04:45 --> 404 Page Not Found: Assets/img
+ERROR - 2021-02-26 09:04:59 --> Severity: Notice --> Undefined index: data C:\xampp\htdocs\xpdc\application\views\shipment\shipment_list.php 97
+ERROR - 2021-02-26 09:04:59 --> Severity: Warning --> Invalid argument supplied for foreach() C:\xampp\htdocs\xpdc\application\views\shipment\shipment_list.php 97
+ERROR - 2021-02-26 09:04:59 --> Severity: Notice --> Undefined index: data C:\xampp\htdocs\xpdc\application\views\shipment\shipment_list.php 117
+ERROR - 2021-02-26 09:04:59 --> Severity: Warning --> Invalid argument supplied for foreach() C:\xampp\htdocs\xpdc\application\views\shipment\shipment_list.php 117
+ERROR - 2021-02-26 09:04:59 --> 404 Page Not Found: Assets/img
+ERROR - 2021-02-26 09:05:04 --> 404 Page Not Found: Assets/img
+ERROR - 2021-02-26 09:05:07 --> Severity: Notice --> Undefined offset: 0 C:\xampp\htdocs\xpdc\application\controllers\Shipment.php 1215
+ERROR - 2021-02-26 09:05:07 --> Severity: Notice --> Undefined index: id_shipment C:\xampp\htdocs\xpdc\application\views\shipment\shipment_track.php 143
+ERROR - 2021-02-26 09:05:19 --> Severity: Notice --> Array to string conversion C:\xampp\htdocs\xpdc\application\views\shipment\shipment_receipt.php 227
+ERROR - 2021-02-26 09:05:19 --> 404 Page Not Found: Assets/img
+ERROR - 2021-02-26 09:05:20 --> Severity: Notice --> Undefined offset: 0 C:\xampp\htdocs\xpdc\application\controllers\Shipment.php 160
+ERROR - 2021-02-26 09:05:20 --> Severity: Warning --> Invalid argument supplied for foreach() C:\xampp\htdocs\xpdc\application\views\shipment\shipment_receipt.php 300
+ERROR - 2021-02-26 09:05:20 --> Severity: Warning --> Invalid argument supplied for foreach() C:\xampp\htdocs\xpdc\application\views\shipment\shipment_receipt.php 365
+ERROR - 2021-02-26 09:05:32 --> Severity: Notice --> Undefined index: data C:\xampp\htdocs\xpdc\application\views\shipment\shipment_list.php 97
+ERROR - 2021-02-26 09:05:32 --> Severity: Warning --> Invalid argument supplied for foreach() C:\xampp\htdocs\xpdc\application\views\shipment\shipment_list.php 97
+ERROR - 2021-02-26 09:05:32 --> Severity: Notice --> Undefined index: data C:\xampp\htdocs\xpdc\application\views\shipment\shipment_list.php 117
+ERROR - 2021-02-26 09:05:32 --> Severity: Warning --> Invalid argument supplied for foreach() C:\xampp\htdocs\xpdc\application\views\shipment\shipment_list.php 117
+ERROR - 2021-02-26 09:05:32 --> 404 Page Not Found: Assets/img
+ERROR - 2021-02-26 09:08:26 --> Severity: Notice --> Undefined index: data C:\xampp\htdocs\xpdc\application\views\shipment\shipment_list.php 97
+ERROR - 2021-02-26 09:08:26 --> Severity: Warning --> Invalid argument supplied for foreach() C:\xampp\htdocs\xpdc\application\views\shipment\shipment_list.php 97
+ERROR - 2021-02-26 09:08:26 --> Severity: Notice --> Undefined index: data C:\xampp\htdocs\xpdc\application\views\shipment\shipment_list.php 117
+ERROR - 2021-02-26 09:08:26 --> Severity: Warning --> Invalid argument supplied for foreach() C:\xampp\htdocs\xpdc\application\views\shipment\shipment_list.php 117
+ERROR - 2021-02-26 09:08:27 --> 404 Page Not Found: Assets/img
+ERROR - 2021-02-26 09:08:33 --> 404 Page Not Found: Assets/img
+ERROR - 2021-02-26 09:08:36 --> Severity: Notice --> Undefined offset: 0 C:\xampp\htdocs\xpdc\application\controllers\Shipment.php 1215
+ERROR - 2021-02-26 09:08:36 --> Severity: Notice --> Undefined index: id_shipment C:\xampp\htdocs\xpdc\application\views\shipment\shipment_track.php 143
+>>>>>>> Stashed changes

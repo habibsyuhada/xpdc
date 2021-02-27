@@ -325,3 +325,40 @@ ERROR - 2021-02-25 09:22:44 --> Severity: Notice --> Undefined index: data C:\xa
 ERROR - 2021-02-25 09:22:44 --> Severity: Warning --> Invalid argument supplied for foreach() C:\xampp\htdocs\xpdc\application\views\shipment\shipment_list.php 100
 ERROR - 2021-02-25 09:22:44 --> Severity: Notice --> Undefined index: data C:\xampp\htdocs\xpdc\application\views\shipment\shipment_list.php 120
 ERROR - 2021-02-25 09:22:44 --> Severity: Warning --> Invalid argument supplied for foreach() C:\xampp\htdocs\xpdc\application\views\shipment\shipment_list.php 120
+ERROR - 2021-02-25 09:59:30 --> Severity: Notice --> Undefined variable: package_type C:\xampp\htdocs\xpdc\application\views\customer\check_price.php 61
+ERROR - 2021-02-25 09:59:30 --> Severity: Warning --> Invalid argument supplied for foreach() C:\xampp\htdocs\xpdc\application\views\customer\check_price.php 61
+ERROR - 2021-02-25 09:59:30 --> 404 Page Not Found: Assets/img
+ERROR - 2021-02-25 09:59:34 --> Severity: Notice --> Undefined index: data C:\xampp\htdocs\xpdc\application\views\shipment\shipment_list.php 96
+ERROR - 2021-02-25 09:59:34 --> Severity: Warning --> Invalid argument supplied for foreach() C:\xampp\htdocs\xpdc\application\views\shipment\shipment_list.php 96
+ERROR - 2021-02-25 09:59:34 --> Severity: Notice --> Undefined index: data C:\xampp\htdocs\xpdc\application\views\shipment\shipment_list.php 116
+ERROR - 2021-02-25 09:59:34 --> Severity: Warning --> Invalid argument supplied for foreach() C:\xampp\htdocs\xpdc\application\views\shipment\shipment_list.php 116
+ERROR - 2021-02-25 09:59:35 --> 404 Page Not Found: Assets/img
+ERROR - 2021-02-25 09:59:36 --> Severity: Notice --> Undefined variable: package_type C:\xampp\htdocs\xpdc\application\views\customer\check_price.php 61
+ERROR - 2021-02-25 09:59:36 --> Severity: Warning --> Invalid argument supplied for foreach() C:\xampp\htdocs\xpdc\application\views\customer\check_price.php 61
+ERROR - 2021-02-25 09:59:36 --> 404 Page Not Found: Assets/img
+ERROR - 2021-02-25 09:59:41 --> Severity: Notice --> Undefined variable: package_type C:\xampp\htdocs\xpdc\application\views\customer\check_price.php 61
+ERROR - 2021-02-25 09:59:41 --> Severity: Warning --> Invalid argument supplied for foreach() C:\xampp\htdocs\xpdc\application\views\customer\check_price.php 61
+ERROR - 2021-02-25 09:59:41 --> 404 Page Not Found: Assets/img
+ERROR - 2021-02-25 10:00:07 --> 404 Page Not Found: Assets/img
+ERROR - 2021-02-25 10:00:12 --> Severity: Notice --> Undefined variable: package_type C:\xampp\htdocs\xpdc\application\views\customer\check_price.php 61
+ERROR - 2021-02-25 10:00:12 --> Severity: Warning --> Invalid argument supplied for foreach() C:\xampp\htdocs\xpdc\application\views\customer\check_price.php 61
+ERROR - 2021-02-25 10:00:13 --> Severity: Notice --> Undefined variable: package_type C:\xampp\htdocs\xpdc\application\views\customer\check_price.php 61
+ERROR - 2021-02-25 10:00:13 --> Severity: Warning --> Invalid argument supplied for foreach() C:\xampp\htdocs\xpdc\application\views\customer\check_price.php 61
+ERROR - 2021-02-25 10:00:13 --> 404 Page Not Found: Assets/img
+ERROR - 2021-02-25 10:00:34 --> Severity: Notice --> Undefined variable: package_type C:\xampp\htdocs\xpdc\application\views\shipment\shipment_create.php 311
+ERROR - 2021-02-25 10:00:34 --> Severity: Warning --> Invalid argument supplied for foreach() C:\xampp\htdocs\xpdc\application\views\shipment\shipment_create.php 311
+ERROR - 2021-02-25 10:00:34 --> 404 Page Not Found: Assets/img
+ERROR - 2021-02-25 10:00:38 --> Severity: Notice --> Undefined variable: package_type C:\xampp\htdocs\xpdc\application\views\customer\check_price.php 61
+ERROR - 2021-02-25 10:00:38 --> Severity: Warning --> Invalid argument supplied for foreach() C:\xampp\htdocs\xpdc\application\views\customer\check_price.php 61
+ERROR - 2021-02-25 14:33:55 --> 404 Page Not Found: Assets/img
+ERROR - 2021-02-25 14:34:00 --> Severity: Notice --> Undefined variable: quotation C:\xampp\htdocs\xpdc\application\views\shipment\shipment_create.php 117
+ERROR - 2021-02-25 14:34:00 --> 404 Page Not Found: Assets/img
+ERROR - 2021-02-25 14:35:03 --> 404 Page Not Found: Assets/img
+ERROR - 2021-02-25 14:35:20 --> Severity: Notice --> Undefined offset: 0 C:\xampp\htdocs\xpdc\application\controllers\Country.php 356
+ERROR - 2021-02-25 14:36:59 --> Severity: Notice --> Undefined offset: 0 C:\xampp\htdocs\xpdc\application\controllers\Country.php 356
+ERROR - 2021-02-25 14:41:45 --> 404 Page Not Found: Assets/img
+ERROR - 2021-02-25 14:41:58 --> Severity: Notice --> Undefined offset: 0 C:\xampp\htdocs\xpdc\application\controllers\Country.php 356
+ERROR - 2021-02-25 14:42:28 --> 404 Page Not Found: Assets/img
+ERROR - 2021-02-25 14:42:53 --> Severity: Notice --> Undefined offset: 0 C:\xampp\htdocs\xpdc\application\controllers\Country.php 356
+ERROR - 2021-02-25 14:43:09 --> 404 Page Not Found: Assets/img
+ERROR - 2021-02-25 14:43:35 --> Severity: Notice --> Undefined offset: 0 C:\xampp\htdocs\xpdc\application\controllers\Country.php 356

@@ -10,7 +10,7 @@
             <form id='formData' method="POST">
               <input type="hidden" class="form-control" name="act_weight" placeholder="Total Weight" required>
               <div class="row">
-                <div class="col-md-6">
+                <div class="col-md-3">
                   <div class="form-group">
                     <label>Country</label>
                     <select class="form-control select2" name="country" onchange="select_country(this)" required>
@@ -21,22 +21,12 @@
                     </select>
                   </div>
                 </div>
-                <div class="col-md-6">
+                <div class="col-md-3">
                   <div class="form-group">
                     <label>City</label>
                     <input type="text" class="form-control" name="city" placeholder="City">
                   </div>
                 </div>
-                <!-- <div class="col-md-3">
-                  <div class="form-group">
-                    <label>Total Weight</label>
-                    <input type="number" class="form-control" name="weight" placeholder="Total Weight" required>
-                  </div>
-                </div>
-                <div class="col-md-3">
-                  <label>Action</label><br>
-                  <button type="submit" name="btn_action" class="btn btn-warning"><i class="fa fa-search"></i> Calculate</button>
-                </div> -->
               </div>
               <div class="row">
                 <div class="col-md-12">

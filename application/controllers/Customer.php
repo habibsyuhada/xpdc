@@ -20,6 +20,9 @@ class Customer extends CI_Controller
   public function check_price()
   {
     $data['country'] = $this->customer_mod->country_list_db()->result_array();
+    $data['package_type'] = $this->customer_mod->package_type_list_db();
+    $data['customer'] = $this->customer_mod->customer_list_db()->result_array();
+    $data['branch'] = $this->customer_mod->branch_list_db()->result_array();
 
     $data['subview']      = 'customer/check_price';
     $data['meta_title']     = 'Check Price';
@@ -31,16 +34,24 @@ class Customer extends CI_Controller
     $post = $this->input->post();
     $data['post'] = $post;
 
-    $where['customer_id'] = $this->session->userdata('id');
-    $customer = $this->customer_mod->customer_list_db($where)->row_array();
-    $id_customer = $customer['id'];
+    if ($this->session->userdata('role') == 'Customer') {
+      $customer_post = $this->session->userdata('id');
+      $branch_post = $this->session->userdata('branch');
+
+      $where['customer_id'] = $customer_post;
+      $customer = $this->customer_mod->customer_list_db($where)->row_array();
+      $id_customer = $customer['id'];
+      $data['customer']     = $customer;
+    } else {
+      $branch_post = $this->session->userdata('branch');
+      $id_customer = 0;
+    }
 
     unset($where);
-    $where['name'] = $this->session->userdata('branch');
+    $where['name'] = $branch_post;
     $branch = $this->customer_mod->branch_list_db($where)->row_array();
     $id_branch = $branch['id'];
 
-    $data['customer']     = $customer;
     $data['branch']     = $branch;
     $data['country_post']   = $post['country'];
     $data['city_post']    = $post['city'];
@@ -49,8 +60,8 @@ class Customer extends CI_Controller
     unset($where);
     //domestic
     if ($post['country'] == 'Indonesia') {
-      $where = array("'".$post['act_weight'] . "' BETWEEN airfreight_min_kg AND airfreight_max_kg" => NULL, 'city' => $post['city'], 'id_customer' => $id_customer);
-      $query = $this->customer_mod->table_rate_domestic_list_db($where);
+      $qry = "SELECT * FROM table_rate_domestic WHERE (('" . $post['act_weight'] . "' BETWEEN airfreight_min_kg AND airfreight_max_kg) OR ('" . $post['act_weight'] . "' BETWEEN landfreight_min_kg AND landfreight_max_kg) OR ('" . $post['act_weight'] . "' BETWEEN seafreight_min_kg AND seafreight_max_kg)) AND city = '" . $post['city'] . "' AND id_customer = '" . $id_customer . "' ";
+      $query = $this->customer_mod->select_manual_query($qry);
       if ($query->num_rows() > 0) {
         // if customer table rate exists
         $row = $query->row_array();
@@ -62,8 +73,8 @@ class Customer extends CI_Controller
         $data['type_of_shipment'] = "Domestic";
       } else {
         // if customer table rate not exists, get from branch
-        $where = array("'".$post['act_weight'] . "' BETWEEN airfreight_min_kg AND airfreight_max_kg" => NULL, 'city' => $post['city'], 'id_branch' => $id_branch);
-        $query = $this->customer_mod->table_rate_domestic_list_db($where);
+        $qry = "SELECT * FROM table_rate_domestic WHERE (('" . $post['act_weight'] . "' BETWEEN airfreight_min_kg AND airfreight_max_kg) OR ('" . $post['act_weight'] . "' BETWEEN landfreight_min_kg AND landfreight_max_kg) OR ('" . $post['act_weight'] . "' BETWEEN seafreight_min_kg AND seafreight_max_kg)) AND city = '" . $post['city'] . "' AND id_branch = '" . $id_branch . "' ";
+        $query = $this->customer_mod->select_manual_query($qry);
         if ($query->num_rows() > 0) {
           $row = $query->row_array();
           $data['airfreight_weight'] = $post['act_weight'] * $row['airfreight_price_kg'];
@@ -200,7 +211,7 @@ class Customer extends CI_Controller
     } else {
       //multiply rate
       unset($where);
-      $where = array("'".$post['act_weight'] . "' BETWEEN min_value AND max_value" => NULL, 'id_customer' => $id_customer, 'rate_type' => 'multiply rate');
+      $where = array("'" . $post['act_weight'] . "' BETWEEN min_value AND max_value" => NULL, 'id_customer' => $id_customer, 'rate_type' => 'multiply rate');
       $query = $this->customer_mod->table_rate_pickup_list_db($where);
       if ($query->num_rows() > 0) {
         $row = $query->row_array();
@@ -216,7 +227,7 @@ class Customer extends CI_Controller
         } else {
           //multiply rate branch
           unset($where);
-          $where = array('city' => $customer['city'], "'".$post['act_weight'] . "' BETWEEN min_value AND max_value" => NULL, 'id_branch' => $id_branch, 'rate_type' => 'multiply rate');
+          $where = array('city' => $customer['city'], "'" . $post['act_weight'] . "' BETWEEN min_value AND max_value" => NULL, 'id_branch' => $id_branch, 'rate_type' => 'multiply rate');
           $query = $this->customer_mod->table_rate_pickup_list_db($where);
           if ($query->num_rows() > 0) {
             $row = $query->row_array();
@@ -231,14 +242,15 @@ class Customer extends CI_Controller
     $this->load->view('customer/load_price', $data);
   }
 
-  public function shipment_create(){
+  public function shipment_create()
+  {
     $post = $this->input->post();
-		$data['subview'] 			= 'shipment/shipment_create';
-		$data['meta_title'] 	= 'Create Shipment';
+    $data['subview']       = 'shipment/shipment_create';
+    $data['meta_title']   = 'Create Shipment';
 
     $data['customer'] = $this->shipment_mod->customer_list_db(array("status_delete" => 1, "email" => $this->session->userdata('email')));
 
-		$data['quotation'] 	  = [
+    $data['quotation']     = [
       "type_of_shipment"        => $post['type_of_shipment'],
       "type_of_transport"       => $post['type_of_mode'],
       "shipper_city"            => $post['shipper_city'],
@@ -256,7 +268,7 @@ class Customer extends CI_Controller
 
     $data['cargo_list'] = [];
     foreach ($post['qty'] as $key => $value) {
-      $data['cargo_list'][]	= [
+      $data['cargo_list'][]  = [
         "qty"           => $post['qty'][$key],
         "piece_type"    => $post['piece_type'][$key],
         "length"        => $post['length'][$key],
@@ -269,12 +281,12 @@ class Customer extends CI_Controller
       ];
     }
 
-    
-    $datadb 	= $this->home_mod->branch_list(["name" => $this->session->userdata('branch')]);
-		$data["branch"] = $datadb[0];
 
-		$data['country'] = $this->shipment_mod->country_list_db();
+    $datadb   = $this->home_mod->branch_list(["name" => $this->session->userdata('branch')]);
+    $data["branch"] = $datadb[0];
+
+    $data['country'] = $this->shipment_mod->country_list_db();
     // test_var($data['country']);
-		$this->load->view('index', $data);
-	}
+    $this->load->view('index', $data);
+  }
 }

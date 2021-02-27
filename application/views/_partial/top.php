@@ -142,7 +142,7 @@ $side_permission = array(
 								<?php endif; ?>
 								<?php if ($side_permission[13] == 1) : ?>
 									<div class="nav-item">
-										<a href="<?php echo base_url() ?>customer/check_price"><i class="fas fa-money-bill-alt"></i> <span>Check Price</span></a>
+										<a href="<?php echo base_url() ?>customer/check_price"><i class="fas fa-ship"></i> <span><?=($this->session->userdata('role') == 'Customer') ? 'Book Shipment' : 'Price Check'?></span></a>
 									</div>
 								<?php endif; ?>
 								<?php if ($side_permission[9] == 1) : ?>

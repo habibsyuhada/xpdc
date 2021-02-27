@@ -13,6 +13,7 @@ $page_permission = array(
   9 => (in_array($role, array("Super Admin")) ? 1 : 0), //show who created
   10 => (in_array($role, array("Super Admin", "Driver", "Operator", "Finance")) ? 1 : 0), //show master tracking column
   11 => (in_array($role, array("Super Admin", "Customer", "Operator", "Finance")) ? 1 : 0), //Print label
+  12 => (in_array($role, array("Customer")) ? 1 : 0),
 );
 ?>
 <style>
@@ -139,21 +140,20 @@ $page_permission = array(
       <div class="col-md-12">
         <div class="card">
           <div class="card-header">
-            <?php 
-              if ($this->input->get('status_driver')) : 
-                $status_driver = explode("_", $this->input->get('status_driver'));
+            <?php
+            if ($this->input->get('status_driver')) :
+              $status_driver = explode("_", $this->input->get('status_driver'));
             ?>
               <h3 class="text-capitalize">
                 <?php echo $status_driver[0] ?> List
-                <?php 
-                  if(count($status_driver) > 1){
-                    if($status_driver[1] == 1){
-                      echo "(Outstanding)";
-                    }
-                    else{
-                      echo "(Done)";
-                    }
+                <?php
+                if (count($status_driver) > 1) {
+                  if ($status_driver[1] == 1) {
+                    echo "(Outstanding)";
+                  } else {
+                    echo "(Done)";
                   }
+                }
                 ?>
               </h3>
             <?php else : ?>
@@ -169,17 +169,17 @@ $page_permission = array(
                       <th class="text-white font-weight-bold"></th>
                       <th class="text-white font-weight-bold">Tracking Number</th>
                       <?php if ($page_permission[10] == 1) : ?>
-                      <th class="text-white font-weight-bold">Master Tracking Number</th>
+                        <th class="text-white font-weight-bold">Master Tracking Number</th>
                       <?php endif; ?>
                       <th class="text-white font-weight-bold">Shipment Type</th>
                       <th class="text-white font-weight-bold">Type of Mode</th>
                       <th class="text-white font-weight-bold">Shipper Name</th>
                       <th class="text-white font-weight-bold">Receiver Name</th>
                       <?php if ($page_permission[9] == 1) : ?>
-                      <th class="text-white font-weight-bold">Created by</th>
+                        <th class="text-white font-weight-bold">Created by</th>
                       <?php endif; ?>
                       <th class="text-white font-weight-bold">Status</th>
-                      <?php if ($page_permission[6] == 1) : ?>
+                      <?php if ($page_permission[6] == 1 || $page_permission[12] == 1) : ?>
                         <th class="text-white font-weight-bold">Status Finance</th>
                       <?php endif; ?>
                       <th class="text-white font-weight-bold"></th>
@@ -190,23 +190,23 @@ $page_permission = array(
                       <tr class="<?php echo ((($value['main_agent_name'] != "" && $value['main_agent_invoice'] == "") || ($value['secondary_agent_name'] != "" && $value['secondary_agent_invoice'] == "")) && $value['status'] == "Delivered" && $page_permission[7] == 1 ? "alert-warning" : "") ?>">
                         <td><input type="checkbox" class="checkbox-20" value="<?php echo $value['id'] ?>" onclick="save_checkbox(this)"></td>
                         <td nowrap>
-                          <a target="_blank" class="font-weight-bold" href="<?php echo base_url() ?>shipment/shipment_receipt/<?php echo $value['id'] ?>"><?php echo $value['tracking_no'] ?></a> 
-                          <?php if($value['sea'] == "Express" && $value['status'] != "Delivered"): ?>
+                          <a target="_blank" class="font-weight-bold" href="<?php echo base_url() ?>shipment/shipment_receipt/<?php echo $value['id'] ?>"><?php echo $value['tracking_no'] ?></a>
+                          <?php if ($value['sea'] == "Express" && $value['status'] != "Delivered") : ?>
                             <i class="fas fa-plane text-danger" title="Express"></i>
                           <?php endif; ?>
                         </td>
                         <?php if ($page_permission[10] == 1) : ?>
-                        <td><?php echo $value['master_tracking'] ?></td>
+                          <td><?php echo $value['master_tracking'] ?></td>
                         <?php endif; ?>
                         <td><?php echo $value['type_of_shipment'] ?></td>
                         <td><?php echo $value['type_of_mode'] ?></td>
                         <td><?php echo $value['shipper_name'] ?></td>
                         <td><?php echo $value['consignee_name'] ?></td>
                         <?php if ($page_permission[9] == 1) : ?>
-                        <td><?php echo @$created_by_list[$value['created_by']] ?></td>
+                          <td><?php echo @$created_by_list[$value['created_by']] ?></td>
                         <?php endif; ?>
                         <td><a target="_blank" class="font-weight-bold" href="<?php echo base_url() ?>shipment/shipment_tracking/<?php echo $value['id'] ?>"><?php echo $value['status'] ?></a></td>
-                        <?php if ($page_permission[6] == 1) : ?>
+                        <?php if ($page_permission[6] == 1 || $page_permission[12] == 1) : ?>
                           <td>
                             <!-- <?php if ($value['status_cost'] == 1) : ?>
                         <span class="badge badge-sm badge-success mb-1">Paid</span>
@@ -242,7 +242,7 @@ $page_permission = array(
                             <a href="<?php echo base_url() ?>shipment/shipment_update/<?php echo $value['id'] ?><?php echo ($value['status'] == "Picked up" ? "?t=shin" : "") ?>" class="btn btn-primary" title="Update"><i class="fas fa-edit m-0"></i></a>
                             <a href="<?php echo base_url() ?>shipment/shipment_edit/<?php echo $value['id'] ?>" class="btn btn-dark" title="Edit Shipping Information"><i class="fas fa-pen"></i></a>
                             <a href="<?php echo base_url() ?>shipment/shipment_assign/<?php echo $value['id'] ?>" class="btn btn-success" title="Assign Shipment"><i class="fas fa-sign-in-alt"></i></a>
-                            <?php if($value['status'] == "Picked up"): ?>
+                            <?php if ($value['status'] == "Picked up") : ?>
                               <a href="<?php echo base_url() ?>shipment/shipment_package_detail/<?php echo $value['id'] ?>" class="btn btn-secondary" title="Check Shipment Packages"><i class="fas fa-box"></i></a>
                             <?php endif; ?>
                           <?php endif; ?>
@@ -250,14 +250,14 @@ $page_permission = array(
                             <button type="button" class="btn btn btn-warning dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><i class="fas fa-print m-0"></i> <i class="ik ik-chevron-down m-0"></i></button>
                             <div class="dropdown-menu">
                               <?php if ($page_permission[11] == 1) : ?>
-                              <a class="dropdown-item" target="_blank" href="<?php echo base_url() ?>shipment/shipment_tracking_label_pdf/<?php echo $value['id'] ?>">Label</a>
+                                <a class="dropdown-item" target="_blank" href="<?php echo base_url() ?>shipment/shipment_tracking_label_pdf/<?php echo $value['id'] ?>">Label</a>
                               <?php endif; ?>
                               <?php if ($page_permission[8] == 1) : ?>
-                              <a class="dropdown-item" target="_blank" href="<?php echo base_url() ?>shipment/shipment_receipt_pdf/<?php echo $value['id'] ?>">Receipt</a>
+                                <a class="dropdown-item" target="_blank" href="<?php echo base_url() ?>shipment/shipment_receipt_pdf/<?php echo $value['id'] ?>">Receipt</a>
                               <?php endif; ?>
                               <?php if ($page_permission[2] == 1) : ?>
-                              <a class="dropdown-item" target="_blank" href="<?php echo base_url() ?>shipment/shipment_awb_pdf/<?php echo $value['id'] ?>">WayBill</a>
-                              <a class="dropdown-item" target="_blank" href="<?php echo base_url() ?>shipment/shipment_do_pdf/<?php echo $value['id'] ?>">Delivery Order</a>
+                                <a class="dropdown-item" target="_blank" href="<?php echo base_url() ?>shipment/shipment_awb_pdf/<?php echo $value['id'] ?>">WayBill</a>
+                                <a class="dropdown-item" target="_blank" href="<?php echo base_url() ?>shipment/shipment_do_pdf/<?php echo $value['id'] ?>">Delivery Order</a>
                               <?php endif; ?>
                             </div>
                           <?php endif; ?>

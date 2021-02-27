@@ -50,11 +50,15 @@ if (!isset($cargo_list)) {
                     <div class="col-md-6">
                       <div class="form-group">
                         <label>Type of Shipment</label>
-                        <select class="form-control" name="type_of_shipment" required>
-                          <option value="">-- Select One --</option>
-                          <option value="International Shipping" <?php echo (@$quotation['type_of_shipment'] == "International Shipping" ? "selected" : "") ?>>International Shipping</option>
-                          <option value="Domestic Shipping" <?php echo (@$quotation['type_of_shipment'] == "Domestic Shipping" ? "selected" : "") ?>>Domestic Shipping</option>
-                        </select>
+                        <?php if ($this->session->userdata('role') != "Customer") { ?>
+                          <select class="form-control" name="type_of_shipment" required>
+                            <option value="">-- Select One --</option>
+                            <option value="International Shipping" <?php echo (@$quotation['type_of_shipment'] == "International Shipping" ? "selected" : "") ?>>International Shipping</option>
+                            <option value="Domestic Shipping" <?php echo (@$quotation['type_of_shipment'] == "Domestic Shipping" ? "selected" : "") ?>>Domestic Shipping</option>
+                          </select>
+                        <?php } else { ?>
+                          <input type="text" class="form-control" name="type_of_shipment" value="<?php echo @$quotation['type_of_shipment'] ?>" placeholder="Type of Shipment" readonly required>
+                        <?php } ?>
                       </div>
                     </div>
                     <div class="col-md-6">
@@ -64,30 +68,42 @@ if (!isset($cargo_list)) {
                     <div class="col-md-6">
                       <div class="form-group">
                         <label>Type of Mode</label>
-                        <select class="form-control" name="type_of_mode" onchange="get_vol_weight()" required>
-                          <option value="">- Select One -</option>
-                          <option value="Sea Transport" <?php echo (@$quotation['type_of_transport'] == "Sea Transport" ? "selected" : "") ?>>Sea Transport</option>
-                          <option value="Land Shipping" <?php echo (@$quotation['type_of_transport'] == "Land Shipping" ? "selected" : "") ?>>Land Shipping</option>
-                          <option value="Air Freight" <?php echo (@$quotation['type_of_transport'] == "Air Freight" ? "selected" : "") ?>>Air Freight</option>
-                        </select>
+                        <?php if ($this->session->userdata('role') != "Customer") { ?>
+                          <select class="form-control" name="type_of_mode" onchange="get_vol_weight()" required>
+                            <option value="">- Select One -</option>
+                            <option value="Sea Transport" <?php echo (@$quotation['type_of_transport'] == "Sea Transport" ? "selected" : "") ?>>Sea Transport</option>
+                            <option value="Land Shipping" <?php echo (@$quotation['type_of_transport'] == "Land Shipping" ? "selected" : "") ?>>Land Shipping</option>
+                            <option value="Air Freight" <?php echo (@$quotation['type_of_transport'] == "Air Freight" ? "selected" : "") ?>>Air Freight</option>
+                          </select>
+                        <?php } else { ?>
+                          <input type="text" class="form-control" name="type_of_mode" value="<?php echo @$quotation['type_of_transport'] ?>" placeholder="Type of Mode" readonly required>
+                        <?php } ?>
                       </div>
                     </div>
                     <div class="col-md-6">
                       <div class="form-group" style="<?php echo (@$quotation['type_of_transport'] == 'Sea Transport' ? '' : 'display: none;') ?>">
                         <label>Sea</label>
-                        <select class="form-control" name="sea" title="sea" required <?php echo (@$quotation['type_of_transport'] == 'Sea Transport' ? '' : 'disabled') ?>>
-                          <option value="">- Select Sea -</option>
-                          <option value="LCL" <?php echo (@$quotation['sea'] == "LCL" ? "selected" : "") ?>>LCL</option>
-                          <option value="FCL" <?php echo (@$quotation['sea'] == "FCL" ? "selected" : "") ?>>FCL</option>
-                        </select>
+                        <?php if ($this->session->userdata('role') != "Customer") { ?>
+                          <select class="form-control" name="sea" title="sea" required <?php echo (@$quotation['type_of_transport'] == 'Sea Transport' ? '' : 'disabled') ?>>
+                            <option value="">- Select Sea -</option>
+                            <option value="LCL" <?php echo (@$quotation['sea'] == "LCL" ? "selected" : "") ?>>LCL</option>
+                            <option value="FCL" <?php echo (@$quotation['sea'] == "FCL" ? "selected" : "") ?>>FCL</option>
+                          </select>
+                        <?php } else { ?>
+                          <input type="text" class="form-control" name="sea" value="-" placeholder="Sea" readonly required>
+                        <?php } ?>
                       </div>
                       <div class="form-group" style="<?php echo (@$quotation['type_of_transport'] == 'Air Freight' ? '' : 'display: none;') ?>">
                         <label>Type</label>
-                        <select class="form-control" name="sea" title="air" required <?php echo (@$quotation['type_of_transport'] == 'Air Freight' ? '' : 'disabled') ?>>
-                          <option value="">- Select Sea -</option>
-                          <option value="Express" <?php echo (@$quotation['sea'] == "Express" ? "selected" : "") ?>>Express</option>
-                          <option value="Reguler" <?php echo (@$quotation['sea'] == "Reguler" ? "selected" : "") ?>>Reguler</option>
-                        </select>
+                        <?php if ($this->session->userdata('role') != "Customer") { ?>
+                          <select class="form-control" name="sea" title="air" required <?php echo (@$quotation['type_of_transport'] == 'Air Freight' ? '' : 'disabled') ?>>
+                            <option value="">- Select Type -</option>
+                            <option value="Express" <?php echo (@$quotation['sea'] == "Express" ? "selected" : "") ?>>Express</option>
+                            <option value="Reguler" <?php echo (@$quotation['sea'] == "Reguler" ? "selected" : "") ?>>Reguler</option>
+                          </select>
+                        <?php } else { ?>
+                          <input type="text" class="form-control" name="sea" value="Reguler" placeholder="Type" readonly required>
+                        <?php } ?>
                       </div>
                     </div>
                   </div>
@@ -107,40 +123,44 @@ if (!isset($cargo_list)) {
                       <h6 class="font-weight-bold">Shipper Information</h6>
                       <div class="form-group">
                         <label>Shipper Name</label>
-                        <input type="text" class="form-control" name="shipper_name" value="<?php echo @$quotation['shipper_name'] ?>" placeholder="Shipper Name" required>
+                        <input type="text" class="form-control" name="shipper_name" value="<?php echo @$quotation['shipper_name'] ?>" placeholder="Shipper Name" <?= ($this->session->userdata('role') == "Customer") ? 'readonly' : '' ?> required>
                       </div>
                       <div class="form-group">
                         <label>Address</label>
-                        <textarea class="form-control" name="shipper_address" placeholder="Address" required><?php echo @$quotation['shipper_address'] ?></textarea>
+                        <textarea class="form-control" name="shipper_address" placeholder="Address" <?= ($this->session->userdata('role') == "Customer") ? 'readonly' : '' ?> required><?php echo @$quotation['shipper_address'] ?></textarea>
                       </div>
                       <div class="form-group">
                         <label>Country</label>
-                        <select class="form-control select2" name="shipper_country" required onchange="select_country(this)">
-                          <option value="">- Select One -</option>
-                          <?php foreach ($country as $data) { ?>
-                            <option value="<?= $data['country'] ?>" <?php echo (@$quotation['shipper_country'] == $data['country'] ? 'selected' : '') ?>><?= $data['country'] ?></option>
-                          <?php } ?>
-                        </select>
+                        <?php if ($this->session->userdata('role') != "Customer") { ?>
+                          <select class="form-control select2" name="shipper_country" required onchange="select_country(this)">
+                            <option value="">- Select One -</option>
+                            <?php foreach ($country as $data) { ?>
+                              <option value="<?= $data['country'] ?>" <?php echo (@$quotation['shipper_country'] == $data['country'] ? 'selected' : '') ?>><?= $data['country'] ?></option>
+                            <?php } ?>
+                          </select>
+                        <?php } else { ?>
+                          <input type="text" class="form-control" name="shipper_country" value="<?php echo @$quotation['shipper_country'] ?>" placeholder="Shipper Country" <?= ($this->session->userdata('role') == "Customer") ? 'readonly' : '' ?> required>
+                        <?php } ?>
                       </div>
                       <div class="form-group">
                         <label>City</label>
-                        <input type="text" class="form-control" name="shipper_city" value="<?php echo @$quotation['shipper_city'] ?>" placeholder="City">
+                        <input type="text" class="form-control" name="shipper_city" value="<?php echo @$quotation['shipper_city'] ?>" placeholder="City" <?= ($this->session->userdata('role') == "Customer") ? 'readonly' : '' ?>>
                       </div>
                       <div class="form-group">
                         <label>Postcode</label>
-                        <input type="text" class="form-control" name="shipper_postcode" value="<?php echo @$quotation['shipper_postcode'] ?>" placeholder="Postcode">
+                        <input type="text" class="form-control" name="shipper_postcode" value="<?php echo @$quotation['shipper_postcode'] ?>" placeholder="Postcode" <?= ($this->session->userdata('role') == "Customer") ? 'readonly' : '' ?>>
                       </div>
                       <div class="form-group">
                         <label>Contact Person</label>
-                        <input type="text" class="form-control" name="shipper_contact_person" value="<?php echo @$quotation['shipper_contact_person'] ?>" placeholder="Contact Person" required>
+                        <input type="text" class="form-control" name="shipper_contact_person" value="<?php echo @$quotation['shipper_contact_person'] ?>" placeholder="Contact Person" <?= ($this->session->userdata('role') == "Customer") ? 'readonly' : '' ?> required>
                       </div>
                       <div class="form-group">
                         <label>Phone Number</label>
-                        <input type="text" class="form-control" name="shipper_phone_number" value="<?php echo @$quotation['shipper_phone_number'] ?>" placeholder="Phone Number" required>
+                        <input type="text" class="form-control" name="shipper_phone_number" value="<?php echo @$quotation['shipper_phone_number'] ?>" placeholder="Phone Number" <?= ($this->session->userdata('role') == "Customer") ? 'readonly' : '' ?> required>
                       </div>
                       <div class="form-group">
                         <label>Email</label>
-                        <input type="email" class="form-control" name="shipper_email" value="<?php echo @$quotation['shipper_email'] ?>" placeholder="Email">
+                        <input type="email" class="form-control" name="shipper_email" value="<?php echo @$quotation['shipper_email'] ?>" placeholder="Email" <?= ($this->session->userdata('role') == "Customer") ? 'readonly' : '' ?>>
                       </div>
                     </div>
                     <div class="col-md-6">
@@ -155,16 +175,20 @@ if (!isset($cargo_list)) {
                       </div>
                       <div class="form-group">
                         <label>Country</label>
-                        <select class="form-control select2" name="consignee_country" required  onchange="select_country(this)">
-                          <option value="">- Select One -</option>
-                          <?php foreach ($country as $data) { ?>
-                            <option value="<?= $data['country'] ?>" <?php echo (@$quotation['consignee_country'] == $data['country'] ? 'selected' : '') ?>><?= $data['country'] ?></option>
-                          <?php } ?>
-                        </select>
+                        <?php if ($this->session->userdata('role') != "Customer") { ?>
+                          <select class="form-control select2" name="consignee_country" required onchange="select_country(this)">
+                            <option value="">- Select One -</option>
+                            <?php foreach ($country as $data) { ?>
+                              <option value="<?= $data['country'] ?>" <?php echo (@$quotation['consignee_country'] == $data['country'] ? 'selected' : '') ?>><?= $data['country'] ?></option>
+                            <?php } ?>
+                          </select>
+                        <?php } else { ?>
+                          <input type="text" class="form-control" name="consignee_country" value="<?php echo @$quotation['consignee_country'] ?>" placeholder="Consignee Country" <?= ($this->session->userdata('role') == "Customer") ? 'readonly' : '' ?> required>
+                        <?php } ?>
                       </div>
                       <div class="form-group">
                         <label>City</label>
-                        <input type="text" class="form-control" name="consignee_city" value="<?php echo @$quotation['consignee_city'] ?>" placeholder="City">
+                        <input type="text" class="form-control" name="consignee_city" value="<?php echo @$quotation['consignee_city'] ?>" placeholder="City" <?= ($this->session->userdata('role') == "Customer") ? 'readonly' : '' ?>>
                       </div>
                       <div class="form-group">
                         <label>Postcode</label>
@@ -201,7 +225,7 @@ if (!isset($cargo_list)) {
                         <div class="col-md-6">
                           <div class="form-group">
                             <label>Incoterms</label>
-                            <select class="form-control" name="incoterms" required>
+                            <select class="form-control select2" name="incoterms" <?php echo (@$quotation['type_of_shipment'] == 'Domestic Shipping' ? 'disabled' : '') ?>>
                               <option value="">-- Select One --</option>
                               <option value="EXW (ExWorks)" <?php echo (@$quotation['incoterms'] == "EXW (ExWorks)" ? 'selected' : '') ?>>EXW (ExWorks)</option>
                               <option value="FCA (Free Carrier)" <?php echo (@$quotation['incoterms'] == "FCA (Free Carrier)" ? 'selected' : '') ?>>FCA (Free Carrier)</option>
@@ -239,12 +263,12 @@ if (!isset($cargo_list)) {
                       </div>
                       <div class="form-group">
                         <label>HSCode</label>
-                        <input type="text" class="form-control" name="hscode" placeholder="HSCode" data-inputmask='"mask": "9999.99.99", "type": "reverse"' value="0000.00.00" data-mask>
+                        <input type="text" class="form-control" name="hscode" placeholder="HSCode" data-inputmask='"mask": "9999.99.99", "type": "reverse"' <?php echo (@$quotation['type_of_shipment'] == 'Domestic Shipping' ? 'readonly' : '') ?> value="0000.00.00" data-mask>
                         <!-- <input type="text" class="form-control" name="hscode" placeholder="HSCode" required> -->
                       </div>
                       <div class="form-group">
                         <label>COO (Country of Origin)</label>
-                        <select class="form-control select2" name="coo">
+                        <select class="form-control select2" name="coo" <?php echo (@$quotation['type_of_shipment'] == 'Domestic Shipping' ? 'disabled' : '') ?>>
                           <option value="">- Select One -</option>
                           <?php foreach ($country as $data) { ?>
                             <option value="<?= $data['country'] ?>"><?= $data['country'] ?></option>
@@ -259,7 +283,7 @@ if (!isset($cargo_list)) {
                       </div>
                       <div class="form-group">
                         <label>Currency</label>
-                        <select class="form-control" name="currency" required>
+                        <select class="form-control" name="currency" <?php echo (@$quotation['type_of_shipment'] == 'Domestic Shipping' ? 'disabled' : '') ?> required>
                           <option value="">-- Select One --</option>
                           <option value="AED">AED</option>
                           <option value="AUD">AUD</option>
@@ -294,7 +318,9 @@ if (!isset($cargo_list)) {
                             <th class="text-white font-weight-bold">Width(cm)</th>
                             <th class="text-white font-weight-bold">Height(cm)</th>
                             <th class="text-white font-weight-bold">Weight(kg)</th>
-                            <th class="text-white font-weight-bold"></th>
+                            <?php if ($this->session->userdata('role') != 'Customer') { ?>
+                              <th class="text-white font-weight-bold"></th>
+                            <?php } ?>
                           </tr>
                         </thead>
                         <tbody>
@@ -302,16 +328,21 @@ if (!isset($cargo_list)) {
                             <?php foreach ($cargo_list as $key => $value) : ?>
                               <tr>
                                 <td>
-                                  <input type="number" class="form-control" oninput="get_vol_weight()" step="any" name="qty[]" value="<?php echo $value['qty'] ?>">
-                                  <input type="hidden" class="form-control" name="id_detail[]" value="<?php echo @$value['id'] ?>">
+                                  <input type="number" class="form-control" oninput="get_vol_weight()" step="any" name="qty[]" value="<?php echo $value['qty'] ?>" <?= ($this->session->userdata('role') == 'Customer') ? 'readonly' : ''; ?>>
+                                  <?php if ($this->session->userdata('role') != 'Customer') { ?>
+                                    <input type="hidden" class="form-control" name="id_detail[]" value="<?php echo @$value['id'] ?>">
+                                  <?php } ?>
                                 </td>
                                 <td>
-                                  <select class="form-control" name="piece_type[]" title="NONFCL" value="<?php echo $value['piece_type'] ?>">
+                                  <select class="form-control" name="piece_type[]" title="NONFCL" value="<?php echo $value['piece_type'] ?>" <?= ($this->session->userdata('role') == 'Customer') ? 'disabled' : ''; ?>>
                                     <option value="">-- Select One --</option>
                                     <?php foreach ($package_type as $data) : ?>
                                       <option value="<?= $data['name'] ?>" <?php echo ($value['piece_type'] == $data['name'] ? 'selected' : '') ?>><?= $data['name'] ?></option>
                                     <?php endforeach; ?>
                                   </select>
+                                  <?php if ($this->session->userdata('role') == 'Customer') { ?>
+                                    <input type="hidden" class="form-control" name="piece_type[]" title="NONFCL" value="<?php echo $value['piece_type'] ?>" />
+                                  <?php } ?>
                                   <select class="form-control d-none" name="piece_type[]" title="FCL" disabled>
                                     <option value="">-- Select One --</option>
                                     <option value="General Purpose" <?php echo ($value['piece_type'] == 'General Purpose' ? 'selected' : '') ?>>General Purpose</option>
@@ -320,7 +351,7 @@ if (!isset($cargo_list)) {
                                   </select>
                                 </td>
                                 <td>
-                                  <input type="number" class="form-control" oninput="get_vol_weight()" step="any" name="length[]" title="NONFCL" value="<?php echo $value['length'] + 0 ?>">
+                                  <input type="number" class="form-control" oninput="get_vol_weight()" step="any" name="length[]" title="NONFCL" value="<?php echo $value['length'] + 0 ?>" <?= ($this->session->userdata('role') == 'Customer') ? 'readonly' : ''; ?>>
                                   <select class="form-control d-none" name="size[]" title="FCL">
                                     <option value="">-- Select One --</option>
                                     <option value="20 feet" <?php echo ($value['size'] == '20 feet' ? 'selected' : '') ?>>20 feet</option>
@@ -329,28 +360,30 @@ if (!isset($cargo_list)) {
                                   </select>
                                 </td>
                                 <td>
-                                  <input type="number" class="form-control" oninput="get_vol_weight()" step="any" name="width[]" title="NONFCL" value="<?php echo $value['width'] + 0 ?>">
+                                  <input type="number" class="form-control" oninput="get_vol_weight()" step="any" name="width[]" title="NONFCL" value="<?php echo $value['width'] + 0 ?>" <?= ($this->session->userdata('role') == 'Customer') ? 'readonly' : ''; ?>>
                                   <input type="text" class="form-control d-none" step="any" name="container_no[]" title="FCL" value="<?php echo $value['container_no'] ?>">
                                 </td>
                                 <td>
-                                  <input type="number" class="form-control" oninput="get_vol_weight()" step="any" name="height[]" title="NONFCL" value="<?php echo $value['height'] + 0 ?>">
+                                  <input type="number" class="form-control" oninput="get_vol_weight()" step="any" name="height[]" title="NONFCL" value="<?php echo $value['height'] + 0 ?>" <?= ($this->session->userdata('role') == 'Customer') ? 'readonly' : ''; ?>>
                                   <input type="text" class="form-control d-none" step="any" name="seal_no[]" title="FCL" value="<?php echo $value['seal_no'] ?>">
                                 </td>
-                                <td><input type="number" class="form-control" oninput="get_vol_weight()" step="any" name="weight[]" value="<?php echo $value['weight'] + 0 ?>"></td>
-                                <td>
-                                  <?php if ($key == 0) : ?>
-                                    <button type="button" class="btn btn-primary" onclick="addrow(this)"><i class="fas fa-plus m-0"></i></button>
-                                  <?php else : ?>
-                                    <button type="button" onclick="deletepackage('<?php echo $value['id'] ?>', this)" class="btn btn-danger"><i class="fas fa-trash m-0"></i></button>
-                                  <?php endif; ?>
-                                </td>
+                                <td><input type="number" class="form-control" oninput="get_vol_weight()" step="any" name="weight[]" value="<?php echo $value['weight'] + 0 ?>" <?= ($this->session->userdata('role') == 'Customer') ? 'readonly' : ''; ?>></td>
+                                <?php if ($this->session->userdata('role') != 'Customer') { ?>
+                                  <td>
+                                    <?php if ($key == 0) : ?>
+                                      <button type="button" class="btn btn-primary" onclick="addrow(this)"><i class="fas fa-plus m-0"></i></button>
+                                    <?php else : ?>
+                                      <button type="button" onclick="deletepackage('<?php echo $value['id'] ?>', this)" class="btn btn-danger"><i class="fas fa-trash m-0"></i></button>
+                                    <?php endif; ?>
+                                  </td>
+                                <?php } ?>
                               </tr>
                             <?php endforeach; ?>
                           <?php else : ?>
                             <tr>
                               <td><input type="number" class="form-control" step="any" name="qty[]" oninput="get_vol_weight()"></td>
                               <td>
-                                <select class="form-control" name="piece_type[]" title="NONFCL">
+                                <select class="form-control" name="piece_type[]" title="NONFCL" <?= ($this->session->userdata('role') == 'Customer') ? 'disabled' : '' ?>>
                                   <option value="">-- Select One --</option>
                                   <?php foreach ($package_type as $data) : ?>
                                     <option value="<?= $data['name'] ?>"><?= $data['name'] ?></option>
@@ -435,53 +468,53 @@ if (!isset($cargo_list)) {
                           </div>
                         </div>
                       </div>
-                      <div class="form-group">
-                        <label>Same as</label>
-                        <select class="form-control" name="pickup_same_as" onchange="pickup_same(this)" disabled required>
-                          <option value="None">-- None --</option>
-                          <option value="Shipper">Shipper</option>
-                          <option value="Consignee">Consignee</option>
-                        </select>
-                      </div>
-                      <?php if($this->session->userdata('role') != "Customer"): ?>
-                      <div class="form-group">
-                        <label>Name</label>
-                        <input type="text" class="form-control" name="pickup_name" placeholder="Name" readonly required>
-                      </div>
-                      <div class="form-group">
-                        <label>Address</label>
-                        <textarea class="form-control" name="pickup_address" placeholder="Address" readonly required></textarea>
-                      </div>
-                      <div class="form-group">
-                        <label>Country</label>
-                        <input type="hidden" class="form-control" name="pickup_country" placeholder="Country" readonly required>
-                        <select class="form-control select2" name="pickup_country_view" required  onchange="$('input[name=pickup_country]').val($(this).val()); select_country(this)">
-                          <option value="">- Select One -</option>
-                          <?php foreach ($country as $data) { ?>
-                            <option value="<?= $data['country'] ?>"><?= $data['country'] ?></option>
-                          <?php } ?>
-                        </select>
-                      </div>
-                      <div class="form-group">
-                        <label>City</label>
-                        <input type="text" class="form-control" name="pickup_city" placeholder="City" readonly>
-                      </div>
-                      <div class="form-group">
-                        <label>Postcode</label>
-                        <input type="text" class="form-control" name="pickup_postcode" placeholder="Postcode" readonly>
-                      </div>
-                      <div class="form-group">
-                        <label>Contact Person</label>
-                        <input type="text" class="form-control" name="pickup_contact_person" placeholder="Contact Person" readonly required>
-                      </div>
-                      <div class="form-group">
-                        <label>Phone Number</label>
-                        <input type="text" class="form-control" name="pickup_phone_number" placeholder="Phone" readonly required>
-                      </div>
-                      <div class="form-group">
-                        <label>Email</label>
-                        <input type="email" class="form-control" name="pickup_email" placeholder="Email" readonly>
-                      </div>
+                      <?php if ($this->session->userdata('role') != "Customer") : ?>
+                        <div class="form-group">
+                          <label>Same as</label>
+                          <select class="form-control" name="pickup_same_as" onchange="pickup_same(this)" disabled required>
+                            <option value="None">-- None --</option>
+                            <option value="Shipper">Shipper</option>
+                            <option value="Consignee">Consignee</option>
+                          </select>
+                        </div>
+                        <div class="form-group">
+                          <label>Name</label>
+                          <input type="text" class="form-control" name="pickup_name" placeholder="Name" readonly required>
+                        </div>
+                        <div class="form-group">
+                          <label>Address</label>
+                          <textarea class="form-control" name="pickup_address" placeholder="Address" readonly required></textarea>
+                        </div>
+                        <div class="form-group">
+                          <label>Country</label>
+                          <input type="hidden" class="form-control" name="pickup_country" placeholder="Country" readonly required>
+                          <select class="form-control select2" name="pickup_country_view" required onchange="$('input[name=pickup_country]').val($(this).val()); select_country(this)">
+                            <option value="">- Select One -</option>
+                            <?php foreach ($country as $data) { ?>
+                              <option value="<?= $data['country'] ?>"><?= $data['country'] ?></option>
+                            <?php } ?>
+                          </select>
+                        </div>
+                        <div class="form-group">
+                          <label>City</label>
+                          <input type="text" class="form-control" name="pickup_city" placeholder="City" readonly>
+                        </div>
+                        <div class="form-group">
+                          <label>Postcode</label>
+                          <input type="text" class="form-control" name="pickup_postcode" placeholder="Postcode" readonly>
+                        </div>
+                        <div class="form-group">
+                          <label>Contact Person</label>
+                          <input type="text" class="form-control" name="pickup_contact_person" placeholder="Contact Person" readonly required>
+                        </div>
+                        <div class="form-group">
+                          <label>Phone Number</label>
+                          <input type="text" class="form-control" name="pickup_phone_number" placeholder="Phone" readonly required>
+                        </div>
+                        <div class="form-group">
+                          <label>Email</label>
+                          <input type="email" class="form-control" name="pickup_email" placeholder="Email" readonly>
+                        </div>
                       <?php endif; ?>
                       <div class="row clearfix">
                         <div class="col-md-6">
@@ -601,127 +634,6 @@ if (!isset($cargo_list)) {
                     </div>
                   </div>
                 </div>
-                <!-- <div class="tab-pane fade" id="shipping-info" role="tabpanel" aria-labelledby="shipping-info-tab">
-                  <br>
-                  <div class="row clearfix">
-                    <div class="col-md-6">
-                      <h6 class="font-weight-bold">Main Agent</h6>
-                      <div class="form-group">
-                        <label>MAWB / MBL</label>
-                        <input type="date" class="form-control" name="main_agent_mawb_mbl" placeholder="MAWB / MBL">
-                      </div>
-                      <div class="form-group">
-                        <label>Carrier</label>
-                        <input type="text" class="form-control" name="main_agent_carrier" placeholder="Carrier" required>
-                      </div>
-                      <div class="form-group">
-                        <label>Voyage/Flight No.</label>
-                        <input type="date" class="form-control" name="main_agent_voyage_flight_no" placeholder="Voyage/Flight No." required>
-                      </div>
-                    </div>
-                    <div class="col-md-6">
-                      <h6 class="font-weight-bold">Secondary Agent</h6>
-                      <div class="form-group">
-                        <label>MAWB / MBL</label>
-                        <input type="date" class="form-control" name="secondary_agent_mawb_mbl" placeholder="MAWB / MBL">
-                      </div>
-                      <div class="form-group">
-                        <label>Carrier</label>
-                        <input type="text" class="form-control" name="secondary_agent_carrier" placeholder="Carrier" required>
-                      </div>
-                      <div class="form-group">
-                        <label>Voyage/Flight No.</label>
-                        <input type="date" class="form-control" name="secondary_agent_voyage_flight_no" placeholder="Voyage/Flight No." required>
-                      </div>
-                    </div>
-                    <div class="col-md-6">
-                      <div class="form-group">
-                        <label>Port of Loading</label>
-                        <input type="text" class="form-control" name="port_of_loading" placeholder="Port of Loading" required>
-                      </div>
-                      <div class="form-group">
-                        <label>Port of Discharge</label>
-                        <input type="text" class="form-control" name="port_of_discharge" placeholder="Port of Discharge" required>
-                      </div>
-                      <div class="form-group">
-                        <label>Container No</label>
-                        <input type="text" class="form-control" name="container_no" placeholder="Container No." required>
-                      </div>
-                    </div>
-                    <div class="col-md-6">
-                      <div class="form-group">
-                        <label>Seal No.</label>
-                        <input type="text" class="form-control" name="seal_no" placeholder="Seal No." required>
-                      </div>
-                      <div class="form-group">
-                        <label>CIPL No.</label>
-                        <input type="text" class="form-control" name="cipl_no" placeholder="CIPL No." required>
-                      </div>
-                      <div class="form-group">
-                        <label>Permit No.</label>
-                        <input type="text" class="form-control" name="permit_no" placeholder="Permit No." required>
-                      </div>
-                    </div>
-                  </div>
-                  <div class="mt-2 row">
-                    <div class="text-left col-6">
-                      <span class="btn btn-danger previous-tab">Back</span>
-                    </div>
-                    <div class="text-right col-6">
-                      <span class="btn btn-info next-tab">Next</span>
-                    </div>
-                  </div>
-                </div>
-                <div class="tab-pane fade" id="assign-shipment" role="tabpanel" aria-labelledby="assign-shipment-tab">
-                  <br>
-                  <div class="row clearfix">
-                    <div class="col-md-12">
-                      <h6 class="font-weight-bold">Assign Shipment</h6>
-                    </div>
-                    <div class="col-md-6">
-                      <div class="form-group">
-                        <label>Employee</label>
-                        <select class="form-control" name="assign_employee" required>
-                          <option value="">-- Select One --</option>
-                        </select>
-                      </div>
-                      <div class="form-group">
-                        <label>Client</label>
-                        <select class="form-control" name="assign_client" required>
-                          <option value="">-- Select One --</option>
-                        </select>
-                      </div>
-                      <div class="form-group">
-                        <label>Agent</label>
-                        <select class="form-control" name="assign_agent" required>
-                          <option value="">-- Select One --</option>
-                        </select>
-                      </div>
-                    </div>
-                    <div class="col-md-6">
-                      <div class="form-group">
-                        <label>Branch Manager</label>
-                        <select class="form-control" name="assign_branch" required>
-                          <option value="">-- Select One --</option>
-                        </select>
-                      </div>
-                      <div class="form-group">
-                        <label>Driver</label>
-                        <select class="form-control" name="assign_driver" required>
-                          <option value="">-- Select One --</option>
-                        </select>
-                      </div>
-                    </div>
-                  </div>
-                  <div class="mt-2 row">
-                    <div class="text-left col-6">
-                      <span class="btn btn-danger previous-tab">Back</span>
-                    </div>
-                    <div class="text-right col-6">
-                      <button type="submit" class="btn btn-success" onclick="return confirm('Apakah Anda Yakin?')">Submit</button>
-                    </div>
-                  </div>
-                </div> -->
               </div>
             </div>
           </div>
@@ -904,12 +816,12 @@ if (!isset($cargo_list)) {
   });
 
   function change_sea(text, delete_data = 1) {
-    if(delete_data == 1){
+    if (delete_data == 1) {
       $("#table_packages input[type=text]").val('');
       $("#table_packages input[type=number]").val(0);
       $("#table_packages select").val('').trigger('change');
     }
-    if(text == 'FCL'){
+    if (text == 'FCL') {
       $("#table_packages th:nth-child(2)").html('Container Type');
       $("#table_packages th:nth-child(3)").html('Container Size');
       $("#table_packages th:nth-child(4)").html('Container No.');
@@ -919,8 +831,7 @@ if (!isset($cargo_list)) {
       $("#table_packages input[title=NONFCL], #table_packages select[title=NONFCL]").addClass('d-none');
       $("#table_packages select[name='piece_type[]'][title=FCL]").removeAttr("disabled");
       $("#table_packages select[name='piece_type[]'][title=NONFCL]").attr("disabled", "disabled");
-    }
-    else{
+    } else {
       $("#table_packages th:nth-child(2)").html('Package Type');
       $("#table_packages th:nth-child(3)").html('Length(cm)');
       $("#table_packages th:nth-child(4)").html('Width(cm)');
@@ -991,7 +902,11 @@ if (!isset($cargo_list)) {
   // });
 
   function get_vol_weight() {
-    var type_of_mode = $("select[name=type_of_mode]").val();
+    <?php if (isset($is_customer)) { ?>
+      var type_of_mode = $("input[name=type_of_mode]").val();
+    <?php } else { ?>
+      var type_of_mode = $("select[name=type_of_mode]").val();
+    <?php } ?>
     var per = 1;
     var total_act_weight = 0;
     var total_vol_weight = 0;
@@ -1069,9 +984,10 @@ if (!isset($cargo_list)) {
 
   $(document).ready(function() {
     get_vol_weight();
-    change_sea($("select[name=sea]").val(), 0);
-    <?php if($this->session->userdata('role') == "Customer"): ?>
+    <?php if ($this->session->userdata('role') == "Customer") : ?>
       check_custumer($("select[name=billing_account]"));
+    <?php else : ?>
+      change_sea($("select[name=sea]").val(), 0);
     <?php endif; ?>
   });
 
@@ -1120,21 +1036,23 @@ if (!isset($cargo_list)) {
           $("input[name=billing_phone_number]").val(data.phone_number);
           $("input[name=billing_email]").val(data.email);
 
-          <?php if($this->session->userdata('role') == "Customer"): ?>
-          $("#billing input, #billing textarea").attr("readonly", "readonly");
-          // $("#billing select[name=billing_account], #billing select[name=billing_country_view]").select2('destroy')
-          // $("#billing select").attr("readonly", "readonly").css({'-moz-appearance': 'none','-webkit-appearance': 'none'});
-          $("#billing select[name=billing_account], #billing select[name=billing_country_view]").select2({"readonly": true});
+          <?php if ($this->session->userdata('role') == "Customer") : ?>
+            $("#billing input, #billing textarea").attr("readonly", "readonly");
+            // $("#billing select[name=billing_account], #billing select[name=billing_country_view]").select2('destroy')
+            // $("#billing select").attr("readonly", "readonly").css({'-moz-appearance': 'none','-webkit-appearance': 'none'});
+            $("#billing select[name=billing_account], #billing select[name=billing_country_view]").select2({
+              "readonly": true
+            });
 
-          var data_select = $("#billing select[name=billing_account]").val();
-          $("#billing select[name=billing_account]").parent().append("<input type='hidden' class='form-control' name='billing_account' value='"+data_select+"'>");
-          $("#billing select[name=billing_account]").select2('destroy').attr("disabled", true).attr("name", "billing_account_view");
-          
-          data_select = $("#billing select[name=billing_same_as]").val();
-          $("#billing select[name=billing_same_as]").parent().append("<input type='hidden' class='form-control' name='billing_same_as' value='"+data_select+"'>");
-          $("#billing select[name=billing_same_as]").attr("disabled", true).attr("name", "billing_same_as_view");
+            var data_select = $("#billing select[name=billing_account]").val();
+            $("#billing select[name=billing_account]").parent().append("<input type='hidden' class='form-control' name='billing_account' value='" + data_select + "'>");
+            $("#billing select[name=billing_account]").select2('destroy').attr("disabled", true).attr("name", "billing_account_view");
 
-          $("#billing select[name=billing_country_view]").select2('destroy').attr("disabled", true);
+            data_select = $("#billing select[name=billing_same_as]").val();
+            $("#billing select[name=billing_same_as]").parent().append("<input type='hidden' class='form-control' name='billing_same_as' value='" + data_select + "'>");
+            $("#billing select[name=billing_same_as]").attr("disabled", true).attr("name", "billing_same_as_view");
+
+            $("#billing select[name=billing_country_view]").select2('destroy').attr("disabled", true);
           <?php endif; ?>
         }
       }
@@ -1145,58 +1063,56 @@ if (!isset($cargo_list)) {
     var select_city;
     var name_city;
     var disable = "";
-    if($(input).attr("name") == "shipper_country"){
+    if ($(input).attr("name") == "shipper_country") {
       select_city = $("[name=shipper_city]");
       name_city = "shipper_city";
-    }
-    else if($(input).attr("name") == "consignee_country"){
+    } else if ($(input).attr("name") == "consignee_country") {
       select_city = $("[name=consignee_city ]");
       name_city = "consignee_city";
-    }
-    else if($(input).attr("name") == "pickup_country_view"){
+    } else if ($(input).attr("name") == "pickup_country_view") {
       select_city = $("[name=pickup_city]");
       name_city = "pickup_city";
-      if($("select[name=pickup_same_as]").val() != "None"){
+      if ($("select[name=pickup_same_as]").val() != "None") {
         disable = "disabled";
       }
-    }
-    else if($(input).attr("name") == "billing_country_view"){
+    } else if ($(input).attr("name") == "billing_country_view") {
       select_city = $("[name=billing_city]");
       name_city = "billing_city";
     }
-    $.ajax( {
+    $.ajax({
       url: "<?php echo base_url() ?>country/city_autocomplete",
       dataType: "json",
       data: {
         // term: request.term,
         country: $(input).val(),
       },
-      success: function( data ) {
+      success: function(data) {
         console.log(data);
         // data = JSON.parse(data);
         // console.log(data);
         var content = $(select_city).parent();
-        $("select[name="+name_city+"]").select2("destroy");
+        $("select[name=" + name_city + "]").select2("destroy");
         $(select_city).remove();
-        if(data.length > 0){
-          var html = '<select class="form-control select2" name="'+name_city+'" required '+disable+'>';
+        if (data.length > 0) {
+          var html = '<select class="form-control select2" name="' + name_city + '" required ' + disable + '>';
           $.each(data, function(index, value) {
-            html += "<option value='"+value+"'>"+value+"</option>";
+            html += "<option value='" + value + "'>" + value + "</option>";
           });
           html += "</select>";
           $(content).append(html);
-          if(disable == ""){
-            $("[name="+name_city+"]").select2({theme: "bootstrap4"});
+          if (disable == "") {
+            $("[name=" + name_city + "]").select2({
+              theme: "bootstrap4"
+            });
           }
-        }
-        else{
-          var html = '<input type="text" class="form-control" name="'+name_city+'" placeholder="City" '+disable+'>';
+        } else {
+          var html = '<input type="text" class="form-control" name="' + name_city + '" placeholder="City" ' + disable + '>';
           $(content).append(html);
         }
       }
     });
 
-    
+
 
   }
 

@@ -19,28 +19,29 @@ class Quotation extends CI_Controller
 	 * map to /index.php/welcome/<method_name>
 	 * @see https://codeigniter.com/agent_guide/general/urls.html
 	 */
-	public function __construct(){
+	public function __construct()
+	{
 		parent::__construct();
 		cek_login();
 		$this->load->model('home_mod');
 		$this->load->model('quotation_mod');
 	}
 
-	public function index(){
+	public function index()
+	{
 		redirect("quotation/quotation_create");
 	}
 
-	public function quotation_list(){
-	  if($this->session->userdata('role') == "Commercial"){
+	public function quotation_list()
+	{
+		if ($this->session->userdata('role') == "Commercial") {
 			$where['created_by'] = $this->session->userdata('id');
-	    $data['quotation_list'] = $this->quotation_mod->quotation_list_db($where);
-		}
-		elseif($this->session->userdata('role') == "Finance"){
-	    $where['tracking_no !='] = "";
-	    $data['quotation_list'] = $this->quotation_mod->quotation_list_db($where);
-		}
-		else{
-	    $data['quotation_list'] = $this->quotation_mod->quotation_list_db();   
+			$data['quotation_list'] = $this->quotation_mod->quotation_list_db($where);
+		} elseif ($this->session->userdata('role') == "Finance") {
+			$where['tracking_no !='] = "";
+			$data['quotation_list'] = $this->quotation_mod->quotation_list_db($where);
+		} else {
+			$data['quotation_list'] = $this->quotation_mod->quotation_list_db();
 		}
 
 		$data['subview'] 			= 'quotation/quotation_list';
@@ -48,7 +49,8 @@ class Quotation extends CI_Controller
 		$this->load->view('index', $data);
 	}
 
-	public function quotation_create(){
+	public function quotation_create()
+	{
 		$data['country'] = json_decode(file_get_contents("./assets/country/country.json"), true);
 		$data['payment_terms_list'] = $this->home_mod->payment_terms_list();
 		$data['uom_list'] = $this->home_mod->uom_list();
@@ -60,11 +62,12 @@ class Quotation extends CI_Controller
 		$this->load->view('index', $data);
 	}
 
-	public function quotation_create_process(){
+	public function quotation_create_process()
+	{
 		$post = $this->input->post();
 
 		$quotation_no = "";
-		if(!isset($post['sea'])){
+		if (!isset($post['sea'])) {
 			$post['sea'] = "";
 		}
 
@@ -82,30 +85,30 @@ class Quotation extends CI_Controller
 		$where = [
 			'branch' 													=> $this->session->userdata('branch'),
 			'type_of_service' 								=> $post['type_of_service'],
-			"MONTH(date) = '".date('n')."'" 		=> NULL,
-			"YEAR(date) = '".date('Y')."'" 	=> NULL,
+			"MONTH(date) = '" . date('n') . "'" 		=> NULL,
+			"YEAR(date) = '" . date('Y') . "'" 	=> NULL,
 		];
 		$quotation_no = $this->quotation_mod->quotation_generate_no_db($where);
-		$quotation_no = $quotation_no."/".$branch['code']."-".$post['type_of_service']."/".date('m')."/".date('Y');
-		
+		$quotation_no = $quotation_no . "/" . $branch['code'] . "-" . $post['type_of_service'] . "/" . date('m') . "/" . date('Y');
+
 		$term_condition = join("\n", $post['term_condition']);
 
-		if(!isset($post['shipper_tba'])){
+		if (!isset($post['shipper_tba'])) {
 			$post['shipper_tba'] = 0;
 		}
-		if(!isset($post['consignee_tba'])){
+		if (!isset($post['consignee_tba'])) {
 			$post['consignee_tba'] = 0;
 		}
 
-		if(isset($post['type_of_shipment'])){
+		if (isset($post['type_of_shipment'])) {
 			$type_of_shipment = $post['type_of_shipment'];
-		}else{
+		} else {
 			$type_of_shipment = '';
 		}
 
-		if(isset($post['incoterms'])){
+		if (isset($post['incoterms'])) {
 			$incoterms = $post['incoterms'];
-		}else{
+		} else {
 			$incoterms = '';
 		}
 
@@ -185,7 +188,8 @@ class Quotation extends CI_Controller
 		redirect($_SERVER['HTTP_REFERER']);
 	}
 
-	public function quotation_update($id){
+	public function quotation_update($id)
+	{
 		$where['id'] 						= $id;
 		$quotation_list 				= $this->quotation_mod->quotation_list_db($where);
 
@@ -205,7 +209,7 @@ class Quotation extends CI_Controller
 		$where["id"] 	= $quotation_list[0]['created_by'];
 		$user_list 		= $this->home_mod->user_list($where);
 		$user_list  	= $user_list[0]['name'];
-		
+
 		$data['user_list'] = $user_list;
 
 		$data['country'] = json_decode(file_get_contents("./assets/country/country.json"), true);
@@ -223,7 +227,8 @@ class Quotation extends CI_Controller
 		$this->load->view('index', $data);
 	}
 
-	public function quotation_view($id){
+	public function quotation_view($id)
+	{
 		$where['id'] 						= $id;
 		$quotation_list 				= $this->quotation_mod->quotation_list_db($where);
 
@@ -243,7 +248,7 @@ class Quotation extends CI_Controller
 		$where["id"] 	= $quotation_list[0]['created_by'];
 		$user_list 		= $this->home_mod->user_list($where);
 		$user_list  	= $user_list[0]['name'];
-		
+
 		$data['user_list'] = $user_list;
 
 		$data['country'] = json_decode(file_get_contents("./assets/country/country.json"), true);
@@ -265,22 +270,22 @@ class Quotation extends CI_Controller
 		$post = $this->input->post();
 		$term_condition = join("\n", $post['term_condition']);
 
-		if(!isset($post['shipper_tba'])){
+		if (!isset($post['shipper_tba'])) {
 			$post['shipper_tba'] = 0;
 		}
-		if(!isset($post['consignee_tba'])){
+		if (!isset($post['consignee_tba'])) {
 			$post['consignee_tba'] = 0;
 		}
 
-		if(isset($post['type_of_shipment'])){
+		if (isset($post['type_of_shipment'])) {
 			$type_of_shipment = $post['type_of_shipment'];
-		}else{
+		} else {
 			$type_of_shipment = '';
 		}
 
-		if(isset($post['incoterms'])){
+		if (isset($post['incoterms'])) {
 			$incoterms = $post['incoterms'];
-		}else{
+		} else {
 			$incoterms = '';
 		}
 
@@ -327,8 +332,8 @@ class Quotation extends CI_Controller
 		unset($where);
 
 		$cargo_temp = explode("|", $post['temp_cargo_id']);
-		foreach($cargo_temp as $cargo){
-			if(!in_array($cargo, $post['id_cargo'])){
+		foreach ($cargo_temp as $cargo) {
+			if (!in_array($cargo, $post['id_cargo'])) {
 				$where['id'] = $cargo;
 				$this->quotation_mod->quotation_cargo_delete_process_db($where);
 			}
@@ -336,8 +341,8 @@ class Quotation extends CI_Controller
 		unset($where);
 
 		$charges_temp = explode("|", $post['temp_charges_id']);
-		foreach($charges_temp as $charges){
-			if(!in_array($charges, $post['id_charges'])){
+		foreach ($charges_temp as $charges) {
+			if (!in_array($charges, $post['id_charges'])) {
 				echo $charges;
 				$where['id'] = $charges;
 				$this->quotation_mod->quotation_charges_delete_process_db($where);
@@ -431,29 +436,30 @@ class Quotation extends CI_Controller
 		$this->quotation_mod->quotation_charges_delete_process_db($where);
 	}
 
-	public function quotation_approval_process($id, $action){
+	public function quotation_approval_process($id, $action)
+	{
 		$form_data = array(
 			'status' 					=> $action,
 		);
 
-		if(isset($_POST['remarks'])){
+		if (isset($_POST['remarks'])) {
 			$form_data['remarks'] = $_POST['remarks'];
 		}
-		
+
 		$where['id'] = $id;
 		$this->quotation_mod->quotation_update_process_db($form_data, $where);
 
-		if($action == "1"){
+		if ($action == "1") {
 			$text = "Approved";
-		}
-		else{
+		} else {
 			$text = "Rejected";
 		}
-		$this->session->set_flashdata('success', 'Your Quotation data has been '.$text.'!');
+		$this->session->set_flashdata('success', 'Your Quotation data has been ' . $text . '!');
 		redirect("quotation/quotation_list");
 	}
 
-	public function shipment_create($id){
+	public function shipment_create($id)
+	{
 		$data['subview'] 			= 'shipment/shipment_create';
 		$data['meta_title'] 	= 'Create Shipment';
 
@@ -465,6 +471,8 @@ class Quotation extends CI_Controller
 		}
 		$data['quotation'] 			= $quotation_list[0];
 		$data['id_quotation'] 	= $id;
+		$datadb 	= $this->home_mod->branch_list(["name" => $data['quotation']['branch']]);
+		$data["branch"] = $datadb[0];
 
 		unset($where);
 		$where['id_quotation'] 	= $id;
@@ -475,8 +483,9 @@ class Quotation extends CI_Controller
 		$this->load->view('index', $data);
 	}
 
-	public function quotation_pdf($id){
-    $where['id'] 						= $id;
+	public function quotation_pdf($id)
+	{
+		$where['id'] 						= $id;
 		$quotation_list 				= $this->quotation_mod->quotation_list_db($where);
 
 		if (count($quotation_list) <= 0) {
@@ -500,13 +509,14 @@ class Quotation extends CI_Controller
 		$data['charges_list'] 	= $charges_list;
 		$data['user_list'] 			= $user_list;
 
-    $this->load->library('pdf');
+		$this->load->library('pdf');
 		$this->pdf->setPaper('A4', 'potrait');
 		$this->pdf->filename = "Quotation-" . date('Y-m-d H:i:s') . ".pdf";
-    $this->pdf->load_view('quotation/quotation_pdf', $data);
+		$this->pdf->load_view('quotation/quotation_pdf', $data);
 	}
-	
-	public function quotation_reject($id, $action){
+
+	public function quotation_reject($id, $action)
+	{
 		$where['id'] 						= $id;
 		$quotation_list 				= $this->quotation_mod->quotation_list_db($where);
 
@@ -521,5 +531,4 @@ class Quotation extends CI_Controller
 		$data['meta_title'] 	= 'Quotation Reject';
 		$this->load->view('index', $data);
 	}
-		
 }

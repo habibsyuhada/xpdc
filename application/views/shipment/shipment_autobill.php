@@ -34,7 +34,6 @@
                 </div>
                 <?php if(isset($quotation)){ ?>
                 <div class="col-6 text-right">
-                  
                   <a href="<?=base_url()?>quotation/quotation_view/<?=$quotation['id']?>" target="_blank" class="btn btn-warning btn-sm"><i class="fa fa-eye"></i> Quotation View</a>
                   <a href="<?=base_url()?>quotation/quotation_pdf/<?=$quotation['id']?>" target="_blank" class="btn btn-primary btn-sm"><i class="fa fa-print"></i> Quotation PDF</a>
                 </div>
@@ -90,11 +89,16 @@
                         </div>
                       </div>
                     </td>
-                    <td rowspan="4" style='vertical-align: top;'>
+                    <td rowspan="5" style='vertical-align: top;'>
                       <b>Shipper</b><br>
                       <?php echo $shipment_list['shipper_name'] ?><br>
                       <?php echo $shipment_list['shipper_address'] ?><br>
                       <?php echo $shipment_list['shipper_city'] ?>, <?php echo $shipment_list['shipper_country'] ?>
+                      <br><br><br>
+                      <b>Consignee</b><br>
+                      <?php echo $shipment_list['consignee_name'] ?><br>
+                      <?php echo $shipment_list['consignee_address'] ?><br>
+                      <?php echo $shipment_list['consignee_city'] ?>, <?php echo $shipment_list['consignee_country'] ?>
                     </td>
                   </tr>
                   <tr>
@@ -137,47 +141,10 @@
                     <td>
                       <div class="row">
                         <div class="col">
-                          <b>Price/Kg (Rp.)</b>
-                        </div>
-                        <div class="col text-right">
-                          Rp.<?php echo number_format($shipment_list['check_price_weight'], 2)."(".$shipment_list['check_price_term'].")"; ?>
-                        </div>
-                      </div>
-                    </td>
-                    <td rowspan="3" style='vertical-align: top;'>
-                      <b>Consignee</b><br>
-                      <?php echo $shipment_list['consignee_name'] ?><br>
-                      <?php echo $shipment_list['consignee_address'] ?><br>
-                      <?php echo $shipment_list['consignee_city'] ?>, <?php echo $shipment_list['consignee_country'] ?>
-                    </td>
-                  </tr>
-                  <?php
-                    $total_weight = 0;
-                    foreach ($packages_list as $key => $value){
-                      $total_weight += ($value['qty']*$value['weight']);
-                    }
-                    $total_bill = $total_weight*$shipment_list['check_price_weight'];
-                  ?>
-                  <tr>
-                    <td>
-                      <div class="row">
-                        <div class="col">
-                          <b>Total Weight</b>
-                        </div>
-                        <div class="col text-right">
-                          <?php echo $total_weight ?>
-                        </div>
-                      </div>
-                    </td>
-                  </tr>
-                  <tr>
-                    <td>
-                      <div class="row">
-                        <div class="col">
                           <b>Total Bill</b>
                         </div>
                         <div class="col text-right">
-                          Rp.<?php echo number_format($total_bill, 2) ?>
+                          Rp.<?php echo number_format($shipment_list['check_price_weight'], 2)."(".$shipment_list['check_price_term'].")"; ?>
                         </div>
                       </div>
                     </td>

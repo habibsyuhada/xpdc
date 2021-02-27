@@ -273,6 +273,12 @@ class Shipment extends CI_Controller
 		);
 		$id_shipment = $this->shipment_mod->shipment_create_process_db($form_data);
 
+		if($this->session->userdata('role') == 'Customer'){
+			$status_finance = 1;
+		}else{
+			$status_finance = 0;
+		}
+
 		if ($post['status_pickup'] == 'Dropoff') {
 			$form_data = array(
 				'id_shipment' 							=> $id_shipment,
@@ -317,6 +323,8 @@ class Shipment extends CI_Controller
 				'billing_contact_person' 		=> $post['billing_contact_person'],
 				'billing_phone_number' 			=> $post['billing_phone_number'],
 				'billing_email' 						=> $post['billing_email'],
+
+				'status_bill'					=> $status_finance,
 			);
 		}
 		if (isset($post['pickup_same_as'])) {

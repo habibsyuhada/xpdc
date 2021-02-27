@@ -466,7 +466,7 @@ $page_permission = array(
                   if ($data_input['status_pickup'] == 'Dropoff') {
                     $hide_pickup = 'd-none';
                   }
-                  else{
+                  elseif($this->session->userdata('role') != "Customer"){
                     $data_input['pickup_name'] = $data_input['shipper_name'];
                     $data_input['pickup_address'] = $data_input['shipper_address'];
                     $data_input['pickup_country'] = $data_input['shipper_country'];

@@ -438,12 +438,13 @@ if (!isset($cargo_list)) {
                       <div class="form-group">
                         <label>Same as</label>
                         <select class="form-control" name="pickup_same_as" onchange="pickup_same(this)" disabled required>
-                          <!-- <option value="None">-- None --</option> -->
+                          <option value="None">-- None --</option>
                           <option value="Shipper">Shipper</option>
-                          <!-- <option value="Consignee">Consignee</option> -->
+                          <option value="Consignee">Consignee</option>
                         </select>
                       </div>
-                      <!-- <div class="form-group">
+                      <?php if($this->session->userdata('role') != "Customer"): ?>
+                      <div class="form-group">
                         <label>Name</label>
                         <input type="text" class="form-control" name="pickup_name" placeholder="Name" readonly required>
                       </div>
@@ -480,7 +481,8 @@ if (!isset($cargo_list)) {
                       <div class="form-group">
                         <label>Email</label>
                         <input type="email" class="form-control" name="pickup_email" placeholder="Email" readonly>
-                      </div> -->
+                      </div>
+                      <?php endif; ?>
                       <div class="row clearfix">
                         <div class="col-md-6">
                           <div class="form-group">
@@ -937,7 +939,6 @@ if (!isset($cargo_list)) {
       $("#address_info").css('display', 'block');
       $("select[name=pickup_same_as]").attr("disabled", "disabled");
       $("input[name=pickup_name]").attr("readonly", "readonly");
-      console.log("asd");
       $("textarea[name=pickup_address]").attr("readonly", "readonly");
       $("input[name=pickup_city]").attr("readonly", "readonly");
       $("input[name=pickup_country]").attr("readonly", "readonly");
@@ -967,7 +968,7 @@ if (!isset($cargo_list)) {
       $("input[name=pickup_time_to]").removeAttr('readonly');
       $("textarea[name=pickup_notes]").removeAttr('readonly');
     }
-    $("select[name=pickup_same_as]").val('None').trigger('change');
+    $("select[name=pickup_same_as]").val('Shipper').trigger('change');
     $("input[name=pickup_name]").val('');
     $("input[name=pickup_account]").val('');
     $("textarea[name=pickup_address]").val('');
@@ -982,6 +983,7 @@ if (!isset($cargo_list)) {
     $("input[name=pickup_time]").val("");
     $("input[name=pickup_time_to]").val("");
     $("textarea[name=pickup_address]").val('');
+    pickup_same($("select[name=pickup_same_as]"));
   });
 
   // $(document).on("keypress", "input[name='length[]'], input[name='width[]'], input[name='height[]']", function() {

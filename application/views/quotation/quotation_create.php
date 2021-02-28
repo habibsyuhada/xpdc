@@ -100,8 +100,8 @@
                     <label>Type of Shipment</label>
                     <select class="form-control" name="type_of_shipment" required>
                       <option value="">-- Select One --</option>
-                      <option value="International shipping">International shipping</option>
-                      <option value="Domestic shipping">Domestic shipping</option>
+                      <option value="International Shipping">International Shipping</option>
+                      <option value="Domestic Shipping">Domestic Shipping</option>
                     </select>
                   </div>
                 </div>

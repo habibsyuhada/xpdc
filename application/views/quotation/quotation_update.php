@@ -101,8 +101,8 @@
                     <label>Type of Shipment</label>
                     <select class="form-control" name="type_of_shipment" required <?=($quotation['type_of_service'] == 'CH' || $quotation['type_of_service'] == 'WH') ? 'disabled' : ''?>>
                       <option value="">-- Select One --</option>
-                      <option value="International shipping" <?php echo ($quotation['type_of_shipment'] == 'International shipping' ? 'selected' : '' ) ?>>International shipping</option>
-                      <option value="Domestic shipping" <?php echo ($quotation['type_of_shipment'] == 'Domestic shipping' ? 'selected' : '' ) ?>>Domestic shipping</option>
+                      <option value="International Shipping" <?php echo ($quotation['type_of_shipment'] == 'International Shipping' ? 'selected' : '' ) ?>>International Shipping</option>
+                      <option value="Domestic Shipping" <?php echo ($quotation['type_of_shipment'] == 'Domestic Shipping' ? 'selected' : '' ) ?>>Domestic Shipping</option>
                     </select>
                   </div>
                 </div>

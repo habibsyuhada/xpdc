@@ -25,6 +25,7 @@ class Quotation extends CI_Controller
 		cek_login();
 		$this->load->model('home_mod');
 		$this->load->model('quotation_mod');
+		$this->load->model('shipment_mod');
 	}
 
 	public function index()
@@ -479,7 +480,8 @@ class Quotation extends CI_Controller
 		$cargo_list 						= $this->quotation_mod->quotation_cargo_list_db($where);
 		$data['cargo_list'] 		= $cargo_list;
 
-		$data['country'] = json_decode(file_get_contents("./assets/country/country.json"), true);
+		$data['country'] = $this->shipment_mod->country_list_db();
+		$data['customer'] = $this->shipment_mod->customer_list_db();
 		$this->load->view('index', $data);
 	}
 

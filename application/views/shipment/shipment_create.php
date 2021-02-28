@@ -220,40 +220,42 @@ if (!isset($cargo_list)) {
                     <div class="col-md-12">
                       <h6 class="font-weight-bold">Shipment Information</h6>
                     </div>
-                    <div class="col-md-12">
-                      <div class="row clearfix">
-                        <div class="col-md-6">
-                          <div class="form-group">
-                            <label>Incoterms</label>
-                            <select class="form-control select2" name="incoterms" <?php echo (@$quotation['type_of_shipment'] == 'Domestic Shipping' ? 'disabled' : '') ?>>
-                              <option value="">-- Select One --</option>
-                              <option value="EXW (ExWorks)" <?php echo (@$quotation['incoterms'] == "EXW (ExWorks)" ? 'selected' : '') ?>>EXW (ExWorks)</option>
-                              <option value="FCA (Free Carrier)" <?php echo (@$quotation['incoterms'] == "FCA (Free Carrier)" ? 'selected' : '') ?>>FCA (Free Carrier)</option>
-                              <option value="FAS (Free Alongside Ship)" <?php echo (@$quotation['incoterms'] == "FAS (Free Alongside Ship)" ? 'selected' : '') ?>>FAS (Free Alongside Ship)</option>
-                              <option value="FOB (Free On Board)" <?php echo (@$quotation['incoterms'] == "FOB (Free On Board)" ? 'selected' : '') ?>>FOB (Free On Board)</option>
-                              <option value="CFR (Cost and Freight" <?php echo (@$quotation['incoterms'] == "CFR (Cost and Freight" ? 'selected' : '') ?>>CFR (Cost and Freight</option>
-                              <option value="CIF (Cost Insurance Freight)" <?php echo (@$quotation['incoterms'] == "CIF (Cost Insurance Freight)" ? 'selected' : '') ?>>CIF (Cost Insurance Freight)</option>
-                              <option value="CIP (Carriage and Insurance Paid)" <?php echo (@$quotation['incoterms'] == "CIP (Carriage and Insurance Paid)" ? 'selected' : '') ?>>CIP (Carriage and Insurance Paid)</option>
-                              <option value="CPT (Carriage Paid To)" <?php echo (@$quotation['incoterms'] == "CPT (Carriage Paid To)" ? 'selected' : '') ?>>CPT (Carriage Paid To)</option>
-                              <option value="DAF (Delivered at Frontier)" <?php echo (@$quotation['incoterms'] == "DAF (Delivered at Frontier)" ? 'selected' : '') ?>>DAF (Delivered at Frontier)</option>
-                              <option value="DES (Delivered Ex Ship)" <?php echo (@$quotation['incoterms'] == "DES (Delivered Ex Ship)" ? 'selected' : '') ?>>DES (Delivered Ex Ship)</option>
-                              <option value="DEQ (Delivered Ex Quay)" <?php echo (@$quotation['incoterms'] == "DEQ (Delivered Ex Quay)" ? 'selected' : '') ?>>DEQ (Delivered Ex Quay)</option>
-                              <option value="DDU (Delivered Duty Unpaid)" <?php echo (@$quotation['incoterms'] == "DDU (Delivered Duty Unpaid)" ? 'selected' : '') ?>>DDU (Delivered Duty Unpaid)</option>
-                              <option value="DDP (Delivered Duty Paid)" <?php echo (@$quotation['incoterms'] == "DDP (Delivered Duty Paid)" ? 'selected' : '') ?>>DDP (Delivered Duty Paid)</option>
-                              <option value="DAT (Delivered At Terminal)" <?php echo (@$quotation['incoterms'] == "DAT (Delivered At Terminal)" ? 'selected' : '') ?>>DAT (Delivered At Terminal)</option>
-                              <option value="DAP (Delivered At Place)" <?php echo (@$quotation['incoterms'] == "DAP (Delivered At Place)" ? 'selected' : '') ?>>DAP (Delivered At Place)</option>
-                            </select>
-                          </div>
-                        </div>
-                        <div class="col-md-6">
-                          <div class="form-group">
-                            <label>Insurance</label>
-                            <select class="form-control" name="insurance" required>
-                              <option value="No">No</option>
-                              <option value="Yes">Yes</option>
-                            </select>
-                          </div>
-                        </div>
+
+                    <?php if($this->session->userdata('role') == 'Customer'): ?>
+                    <input type="hidden" name="incoterms" value="">
+                    <?php else: ?>
+                    <div class="col-md-6">
+                      <div class="form-group">
+                        <label>Incoterms</label>
+                        <select class="form-control select2" name="incoterms" <?php echo (@$quotation['type_of_shipment'] == 'Domestic Shipping' ? 'disabled' : '') ?>>
+                          <option value="">-- Select One --</option>
+                          <option value="EXW (ExWorks)" <?php echo (@$quotation['incoterms'] == "EXW (ExWorks)" ? 'selected' : '') ?>>EXW (ExWorks)</option>
+                          <option value="FCA (Free Carrier)" <?php echo (@$quotation['incoterms'] == "FCA (Free Carrier)" ? 'selected' : '') ?>>FCA (Free Carrier)</option>
+                          <option value="FAS (Free Alongside Ship)" <?php echo (@$quotation['incoterms'] == "FAS (Free Alongside Ship)" ? 'selected' : '') ?>>FAS (Free Alongside Ship)</option>
+                          <option value="FOB (Free On Board)" <?php echo (@$quotation['incoterms'] == "FOB (Free On Board)" ? 'selected' : '') ?>>FOB (Free On Board)</option>
+                          <option value="CFR (Cost and Freight" <?php echo (@$quotation['incoterms'] == "CFR (Cost and Freight" ? 'selected' : '') ?>>CFR (Cost and Freight</option>
+                          <option value="CIF (Cost Insurance Freight)" <?php echo (@$quotation['incoterms'] == "CIF (Cost Insurance Freight)" ? 'selected' : '') ?>>CIF (Cost Insurance Freight)</option>
+                          <option value="CIP (Carriage and Insurance Paid)" <?php echo (@$quotation['incoterms'] == "CIP (Carriage and Insurance Paid)" ? 'selected' : '') ?>>CIP (Carriage and Insurance Paid)</option>
+                          <option value="CPT (Carriage Paid To)" <?php echo (@$quotation['incoterms'] == "CPT (Carriage Paid To)" ? 'selected' : '') ?>>CPT (Carriage Paid To)</option>
+                          <option value="DAF (Delivered at Frontier)" <?php echo (@$quotation['incoterms'] == "DAF (Delivered at Frontier)" ? 'selected' : '') ?>>DAF (Delivered at Frontier)</option>
+                          <option value="DES (Delivered Ex Ship)" <?php echo (@$quotation['incoterms'] == "DES (Delivered Ex Ship)" ? 'selected' : '') ?>>DES (Delivered Ex Ship)</option>
+                          <option value="DEQ (Delivered Ex Quay)" <?php echo (@$quotation['incoterms'] == "DEQ (Delivered Ex Quay)" ? 'selected' : '') ?>>DEQ (Delivered Ex Quay)</option>
+                          <option value="DDU (Delivered Duty Unpaid)" <?php echo (@$quotation['incoterms'] == "DDU (Delivered Duty Unpaid)" ? 'selected' : '') ?>>DDU (Delivered Duty Unpaid)</option>
+                          <option value="DDP (Delivered Duty Paid)" <?php echo (@$quotation['incoterms'] == "DDP (Delivered Duty Paid)" ? 'selected' : '') ?>>DDP (Delivered Duty Paid)</option>
+                          <option value="DAT (Delivered At Terminal)" <?php echo (@$quotation['incoterms'] == "DAT (Delivered At Terminal)" ? 'selected' : '') ?>>DAT (Delivered At Terminal)</option>
+                          <option value="DAP (Delivered At Place)" <?php echo (@$quotation['incoterms'] == "DAP (Delivered At Place)" ? 'selected' : '') ?>>DAP (Delivered At Place)</option>
+                        </select>
+                      </div>
+                    </div>
+                    <?php endif; ?>
+
+                    <div class="col-md-6">
+                      <div class="form-group">
+                        <label>Insurance</label>
+                        <select class="form-control" name="insurance" required>
+                          <option value="No">No</option>
+                          <option value="Yes">Yes</option>
+                        </select>
                       </div>
                     </div>
                     <div class="col-md-6">
@@ -261,28 +263,32 @@ if (!isset($cargo_list)) {
                         <label>Description of Goods</label>
                         <input type="text" class="form-control" name="description_of_goods" placeholder="Description of Goods" value="<?php echo @$quotation['description_of_goods'] ?>" required>
                       </div>
-                      <div class="form-group">
-                        <label>HSCode</label>
-                        <input type="text" class="form-control" name="hscode" placeholder="HSCode" data-inputmask='"mask": "9999.99.99", "type": "reverse"' <?php echo (@$quotation['type_of_shipment'] == 'Domestic Shipping' ? 'readonly' : '') ?> value="0000.00.00" data-mask>
-                        <!-- <input type="text" class="form-control" name="hscode" placeholder="HSCode" required> -->
-                      </div>
-                      <div class="form-group">
-                        <label>COO (Country of Origin)</label>
-                        <select class="form-control select2" name="coo" <?php echo (@$quotation['type_of_shipment'] == 'Domestic Shipping' ? 'disabled' : '') ?>>
-                          <option value="">- Select One -</option>
-                          <?php foreach ($country as $data) { ?>
-                            <option value="<?= $data['country'] ?>"><?= $data['country'] ?></option>
-                          <?php } ?>
-                        </select>
-                      </div>
                     </div>
                     <div class="col-md-6">
                       <div class="form-group">
                         <label>Declared Value</label>
                         <input type="text" class="form-control" name="declared_value" placeholder="Declared Value" required>
                       </div>
+                    </div>
+
+                    <?php if($this->session->userdata('role') == 'Customer'): ?>
+                    <input type="hidden" name="hscode" value="0000.00.00">
+                    <?php else: ?>
+                    <div class="col-md-6">
+                      <div class="form-group">
+                        <label>HSCode</label>
+                        <input type="text" class="form-control" name="hscode" placeholder="HSCode" data-inputmask='"mask": "9999.99.99", "type": "reverse"' <?php echo (@$quotation['type_of_shipment'] == 'Domestic Shipping' ? 'readonly' : '') ?> value="0000.00.00" data-mask>
+                        <!-- <input type="text" class="form-control" name="hscode" placeholder="HSCode" required> -->
+                      </div>
+                    </div>
+                    <?php endif; ?>
+
+                    <div class="col-md-6">
                       <div class="form-group">
                         <label>Currency</label>
+                        <?php if($this->session->userdata('role') == 'Customer'): ?>
+                        <input type="text" class="form-control" name="coo" value="IDR" readonly>
+                        <?php else: ?>
                         <select class="form-control" name="currency" <?php echo (@$quotation['type_of_shipment'] == 'Domestic Shipping' ? 'disabled' : '') ?> required>
                           <option value="">-- Select One --</option>
                           <option value="AED">AED</option>
@@ -301,7 +307,27 @@ if (!isset($cargo_list)) {
                           <option value="TWD">TWD</option>
                           <option value="USD">USD</option>
                         </select>
+                        <?php endif; ?>
                       </div>
+                    </div>
+
+                    <?php if($this->session->userdata('role') == 'Customer'): ?>
+                    <input type="hidden" name="coo" value="">
+                    <?php else: ?>
+                    <div class="col-md-6">
+                      <div class="form-group">
+                        <label>COO (Country of Origin)</label>
+                        <select class="form-control select2" name="coo" <?php echo (@$quotation['type_of_shipment'] == 'Domestic Shipping' ? 'disabled' : '') ?>>
+                          <option value="">- Select One -</option>
+                          <?php foreach ($country as $data) { ?>
+                            <option value="<?= $data['country'] ?>"><?= $data['country'] ?></option>
+                          <?php } ?>
+                        </select>
+                      </div>
+                    </div>
+                    <?php endif; ?>
+
+                    <div class="col-md-6">
                       <div class="form-group">
                         <label>Ref No.</label>
                         <input type="text" class="form-control" name="ref_no" placeholder="Ref No.">
@@ -334,16 +360,19 @@ if (!isset($cargo_list)) {
                                   <?php } ?>
                                 </td>
                                 <td>
-                                  <select class="form-control" name="piece_type[]" title="NONFCL" value="<?php echo $value['piece_type'] ?>" <?= ($this->session->userdata('role') == 'Customer') ? 'disabled' : ''; ?>>
-                                    <option value="">-- Select One --</option>
-                                    <?php foreach ($package_type as $data) : ?>
-                                      <option value="<?= $data['name'] ?>" <?php echo ($value['piece_type'] == $data['name'] ? 'selected' : '') ?>><?= $data['name'] ?></option>
-                                    <?php endforeach; ?>
-                                  </select>
-                                  <?php if ($this->session->userdata('role') == 'Customer') { ?>
-                                    <input type="hidden" class="form-control" name="piece_type[]" title="NONFCL" value="<?php echo $value['piece_type'] ?>" />
-                                  <?php } ?>
-                                  <select class="form-control d-none" name="piece_type[]" title="FCL" disabled>
+                                  
+                                  <?php if ($this->session->userdata('role') == 'Customer') : ?>
+                                    <input type="input" class="form-control" name="piece_type[]" title="NONFCL" value="<?php echo $value['piece_type'] ?>" readonly />
+                                  <?php else: ?>
+                                    <select class="form-control" name="piece_type[]" title="NONFCL" value="<?php echo $value['piece_type'] ?>" <?= ($this->session->userdata('role') == 'Customer') ? 'disabled' : ''; ?>>
+                                      <option value="">-- Select One --</option>
+                                      <?php foreach ($package_type as $data) : ?>
+                                        <option value="<?= $data['name'] ?>" <?php echo ($value['piece_type'] == $data['name'] ? 'selected' : '') ?>><?= $data['name'] ?></option>
+                                      <?php endforeach; ?>
+                                    </select>
+                                  <?php endif ?>
+
+                                  <select class="form-control d-none" name="piece_type[]" title="FCL">
                                     <option value="">-- Select One --</option>
                                     <option value="General Purpose" <?php echo ($value['piece_type'] == 'General Purpose' ? 'selected' : '') ?>>General Purpose</option>
                                     <option value="High Cube" <?php echo ($value['piece_type'] == 'High Cube' ? 'selected' : '') ?>>High Cube</option>
@@ -488,7 +517,7 @@ if (!isset($cargo_list)) {
                         <div class="form-group">
                           <label>Country</label>
                           <input type="hidden" class="form-control" name="pickup_country" placeholder="Country" readonly required>
-                          <select class="form-control select2" name="pickup_country_view" required onchange="$('input[name=pickup_country]').val($(this).val()); select_country(this)">
+                          <select class="form-control select2" name="pickup_country_view" disabled required onchange="$('input[name=pickup_country]').val($(this).val()); select_country(this)">
                             <option value="">- Select One -</option>
                             <?php foreach ($country as $data) { ?>
                               <option value="<?= $data['country'] ?>"><?= $data['country'] ?></option>
@@ -566,7 +595,13 @@ if (!isset($cargo_list)) {
                         <select class="form-control select2" name="billing_account" onchange="check_custumer(this)">
                           <option value="">XPDC Account No. (if any)</option>
                           <?php foreach ($customer as $data) : ?>
-                            <option value="<?= $data['account_no'] ?>" <?php echo ($this->session->userdata('role') == "Customer" ? "selected" : "") ?>><?= $data['account_no'] . " - " . $data['name'] ?></option>
+                            <?php if($this->session->userdata('role') == "Customer"): ?>
+                            <option value="<?= $data['account_no'] ?>" selected><?= $data['account_no'] . " - " . $data['name'] ?></option>
+                            <?php elseif(@$quotation['customer_account'] == $data['account_no']): ?>
+                            <option value="<?= $data['account_no'] ?>" selected><?= $data['account_no'] . " - " . $data['name'] ?></option>
+                            <?php else: ?>
+                            <option value="<?= $data['account_no'] ?>"><?= $data['account_no'] . " - " . $data['name'] ?></option>
+                            <?php endif; ?>
                           <?php endforeach; ?>
                         </select>
                         <!-- <input type="text" class="form-control" name="billing_account" placeholder="XPDC Account No. (if any)" oninput="check_custumer(this);"> -->
@@ -868,6 +903,7 @@ if (!isset($cargo_list)) {
       $("input[name=pickup_name]").removeAttr('readonly');
       $("textarea[name=pickup_address]").removeAttr('readonly');
       $("input[name=pickup_city]").removeAttr('readonly');
+      $("input[name=pickup_city]").removeAttr('disabled');
       $("input[name=pickup_country]").removeAttr('readonly');
       $("input[name=pickup_postcode]").removeAttr('readonly');
       $("input[name=pickup_contact_person]").removeAttr('readonly');
@@ -984,11 +1020,8 @@ if (!isset($cargo_list)) {
 
   $(document).ready(function() {
     get_vol_weight();
-    <?php if ($this->session->userdata('role') == "Customer") : ?>
-      check_custumer($("select[name=billing_account]"));
-    <?php else : ?>
-      change_sea($("select[name=sea]").val(), 0);
-    <?php endif; ?>
+    check_custumer($("select[name=billing_account]"));
+    change_sea($("select[name=sea]").val(), 0);
   });
 
   var settime_billing_account;
@@ -1072,8 +1105,8 @@ if (!isset($cargo_list)) {
     } else if ($(input).attr("name") == "pickup_country_view") {
       select_city = $("[name=pickup_city]");
       name_city = "pickup_city";
-      if ($("select[name=pickup_same_as]").val() != "None") {
-        disable = "disabled";
+      if ($("[name=pickup_same_as]").val() != "None") {
+        disable = "readonly";
       }
     } else if ($(input).attr("name") == "billing_country_view") {
       select_city = $("[name=billing_city]");
@@ -1092,21 +1125,20 @@ if (!isset($cargo_list)) {
         // console.log(data);
         var content = $(select_city).parent();
         $("select[name=" + name_city + "]").select2("destroy");
+        var val_default = $(select_city).val();
         $(select_city).remove();
-        if (data.length > 0) {
-          var html = '<select class="form-control select2" name="' + name_city + '" required ' + disable + '>';
+        if (data.length > 0 && disable != "") {
+          var html = '<select class="form-control select2" name="' + name_city + '" required>';
           $.each(data, function(index, value) {
             html += "<option value='" + value + "'>" + value + "</option>";
           });
           html += "</select>";
           $(content).append(html);
-          if (disable == "") {
-            $("[name=" + name_city + "]").select2({
-              theme: "bootstrap4"
-            });
-          }
+          $("[name=" + name_city + "]").select2({
+            theme: "bootstrap4"
+          });
         } else {
-          var html = '<input type="text" class="form-control" name="' + name_city + '" placeholder="City" ' + disable + '>';
+          var html = '<input type="text" class="form-control" name="' + name_city + '" placeholder="City" value="'+val_default+'" ' + disable + '>';
           $(content).append(html);
         }
       }

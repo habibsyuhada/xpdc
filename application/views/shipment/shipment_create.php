@@ -18,6 +18,17 @@ if (!isset($cargo_list)) {
           <div class="card">
             <div class="card-body">
               <ul class="nav nav-tabs" id="myTab" role="tablist">
+                <?php if($this->session->userdata('role') == "Customer"): ?>
+                <li class="nav-item active">
+                  <a class="nav-link" id="shipper-consignee-tab" data-toggle="tab" href="#shipper-consignee" role="tab" aria-controls="shipper-consignee" aria-selected="false">Shipper & Consignee Information</a>
+                </li>
+                <li class="nav-item">
+                  <a class="nav-link" id="shipment-info-tab" data-toggle="tab" href="#shipment-info" role="tab" aria-controls="shipment-info" aria-selected="false">Shipment Information</a>
+                </li>
+                <li class="nav-item">
+                  <a class="nav-link" id="pickup-info-tab" data-toggle="tab" href="#pickup-info" role="tab" aria-controls="pickup-info" aria-selected="false">Pick Up Information</a>
+                </li>
+                <?php else: ?>
                 <li class="nav-item">
                   <a class="nav-link active" id="service-tab" data-toggle="tab" href="#service" role="tab" aria-controls="service" aria-selected="true">Service Information</a>
                 </li>
@@ -39,9 +50,10 @@ if (!isset($cargo_list)) {
                 <li class="nav-item">
                   <a class="nav-link" id="assign-shipment-tab" data-toggle="tab" href="#assign-shipment" role="tab" aria-controls="assign-shipment" aria-selected="false">Assign Shipment</a>
                 </li> -->
+                <?php endif; ?>
               </ul>
               <div class="tab-content" id="myTabContent">
-                <div class="tab-pane fade show active" id="service" role="tabpanel" aria-labelledby="service-tab">
+                <div class="tab-pane fade <?php echo ($this->session->userdata('role') != "Customer" ? 'show active': '') ?>" id="service" role="tabpanel" aria-labelledby="service-tab">
                   <br>
                   <div class="row clearfix">
                     <div class="col-md-12">
@@ -116,7 +128,7 @@ if (!isset($cargo_list)) {
                     </div>
                   </div>
                 </div>
-                <div class="tab-pane fade" id="shipper-consignee" role="tabpanel" aria-labelledby="shipper-consignee-tab">
+                <div class="tab-pane fade <?php echo ($this->session->userdata('role') == "Customer" ? 'show active': '') ?>" id="shipper-consignee" role="tabpanel" aria-labelledby="shipper-consignee-tab">
                   <br>
                   <div class="row clearfix">
                     <div class="col-md-6">
@@ -578,7 +590,11 @@ if (!isset($cargo_list)) {
                       <span class="btn btn-danger previous-tab">Back</span>
                     </div>
                     <div class="text-right col-6">
+                      <?php if($this->session->userdata('role') == "Customer"): ?>
+                      <button type="submit" class="btn btn-success" onclick="$('input, select, textarea').removeClass('is-invalid'); return confirm('Apakah Anda Yakin?')">Submit</button>
+                      <?php else: ?>
                       <span class="btn btn-info next-tab">Next</span>
+                      <?php endif; ?>
                     </div>
                   </div>
                 </div>

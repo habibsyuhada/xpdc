@@ -96,7 +96,7 @@
                       </tr>
                     </tbody>
                   </table>
-                  <div class="row">
+                  <!-- <div class="row">
                     <div class="col-md-4">
                       Act. Weight : <span id="act_weight">0</span> Kg
                     </div>
@@ -106,7 +106,7 @@
                     <div class="col-md-4">
                       Measurement : <span id="measurement">0</span> M<sup>3</sup>
                     </div>
-                  </div>
+                  </div> -->
                   <br>
                 </div>
                 <div class="col-md-3">
@@ -172,7 +172,7 @@
     } else if (type_of_mode == 'Land Shipping') {
       per = 4000;
     } else if (type_of_mode == 'Sea Transport') {
-      per = 5000;
+      per = 4000;
     }
 
     $("#table_packages input[name='length[]']").each(function(index, value) {
@@ -221,25 +221,25 @@
       total_measurement += measurement;
     });
 
-    $("#act_weight").html(total_act_weight.toLocaleString('en-US', {
-      maximumFractionDigits: 2,
-      minimumFractionDigits: 2
-    }));
+    // $("#act_weight").html(total_act_weight.toLocaleString('en-US', {
+    //   maximumFractionDigits: 2,
+    //   minimumFractionDigits: 2
+    // }));
     $("input[name=act_weight]").val(total_act_weight.toLocaleString('en-US', {
       maximumFractionDigits: 2,
       minimumFractionDigits: 2
     }));
 
-    $("#vol_weight").html("<br>Airfreight ("+total_vol_weight_airfreight.toLocaleString('en-US', {
-      maximumFractionDigits: 2,
-      minimumFractionDigits: 2
-    }) + ") Kg <br> Landfreight ("+total_vol_weight_landfreight.toLocaleString('en-US', {
-      maximumFractionDigits: 2,
-      minimumFractionDigits: 2
-    })+") Kg <br> Seafreight ("+total_vol_weight_seafreight.toLocaleString('en-US', {
-      maximumFractionDigits: 2,
-      minimumFractionDigits: 2
-    })+") Kg");
+    // $("#vol_weight").html("<br>Airfreight ("+total_vol_weight_airfreight.toLocaleString('en-US', {
+    //   maximumFractionDigits: 2,
+    //   minimumFractionDigits: 2
+    // }) + ") Kg <br> Landfreight ("+total_vol_weight_landfreight.toLocaleString('en-US', {
+    //   maximumFractionDigits: 2,
+    //   minimumFractionDigits: 2
+    // })+") Kg <br> Seafreight ("+total_vol_weight_seafreight.toLocaleString('en-US', {
+    //   maximumFractionDigits: 2,
+    //   minimumFractionDigits: 2
+    // })+") Kg");
     $("input[name=vol_weight_airfreight]").val(total_vol_weight_airfreight.toLocaleString('en-US', {
       maximumFractionDigits: 2,
       minimumFractionDigits: 2
@@ -253,10 +253,10 @@
       minimumFractionDigits: 2
     }));
 
-    $("#measurement").html(total_measurement.toLocaleString('en-US', {
-      maximumFractionDigits: 2,
-      minimumFractionDigits: 2
-    }));
+    // $("#measurement").html(total_measurement.toLocaleString('en-US', {
+    //   maximumFractionDigits: 2,
+    //   minimumFractionDigits: 2
+    // }));
     $("input[name=measurement]").val(total_measurement.toLocaleString('en-US', {
       maximumFractionDigits: 2,
       minimumFractionDigits: 2

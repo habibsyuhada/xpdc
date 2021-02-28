@@ -36,7 +36,7 @@
   <table class="table table-bordered text-center">
     <?php if ($result != null) { ?>
       <tr>
-        <td>Price Airfreight (Rp.)</td>
+        <td>Estimate Price Airfreight (Rp.)</td>
         <td>Price Landfreight (Rp.)</td>
         <td>Price Seafreight (Rp.)</td>
       </tr>
@@ -46,9 +46,9 @@
         <td><?= ($seafreight_weight != 0) ? "Rp. " . number_format($seafreight_weight, 2) . " (" . $result['seafreight_term'] . ")" : '<button type="button" class=" btn btn-danger btn-sm btn-block">Not Available</button>'; ?></td>
       </tr>
       <tr>
-        <td>Weight : <?= $weight_fix_airfreight ?> Kg</td>
-        <td>Weight : <?= $weight_fix_landfreight ?> Kg</td>
-        <td>Weight : <?= $weight_fix_seafreight ?> Kg</td>
+        <td>Estimate Chargeable Weight : <?= $weight_fix_airfreight ?> Kg</td>
+        <td>Estimate Chargeable Weight : <?= $weight_fix_landfreight ?> Kg</td>
+        <td>Estimate Chargeable Weight : <?= $weight_fix_seafreight ?> Kg</td>
       </tr>
       <?php if ($this->session->userdata('role') == 'Customer') { ?>
         <tr>

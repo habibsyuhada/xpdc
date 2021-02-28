@@ -73,6 +73,7 @@ class Customer extends CI_Controller
     }else{
       $weight_fix_airfreight = $post['vol_weight_airfreight'];
     }
+    $weight_fix_airfreight = ceil($weight_fix_airfreight);
 
     $weight_fix_landfreight = 0;
     if($post['act_weight'] > $post['vol_weight_landfreight']){
@@ -80,6 +81,7 @@ class Customer extends CI_Controller
     }else{
       $weight_fix_landfreight = $post['vol_weight_landfreight'];
     }
+    $weight_fix_landfreight = ceil($weight_fix_landfreight);
 
     $weight_fix_seafreight = 0;
     if($post['act_weight'] > $post['vol_weight_seafreight']){
@@ -87,6 +89,7 @@ class Customer extends CI_Controller
     }else{
       $weight_fix_seafreight = $post['vol_weight_seafreight'];
     }
+    $weight_fix_seafreight = ceil($weight_fix_seafreight);
 
     $data['weight_fix_airfreight'] = $weight_fix_airfreight;
     $data['weight_fix_landfreight'] = $weight_fix_landfreight;

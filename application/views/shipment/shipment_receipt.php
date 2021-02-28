@@ -264,6 +264,8 @@ $page_permission = array(
                       <input type="hidden" name="ref_no" value="<?php echo $data_input['ref_no'] ?>">
                     </div>
                   </div>
+
+                  <?php if($this->session->userdata('role') != "Customer"): ?>
                   <div class="form-group row m-0">
                     <label class="col-sm-3 col-form-label">CIPL No.</label>
                     <div class="col-sm-9">
@@ -272,16 +274,21 @@ $page_permission = array(
                       <?php else : ?>
                         <label class="col-form-label">: <?php echo @$data_input['cipl_no'] ?></label>
                       <?php endif; ?>
-                      <input type="hidden" name="cipl_no" value="<?php echo @$data_input['cipl_no'] ?>">
                     </div>
                   </div>
+                  <?php endif; ?>
+                  <input type="hidden" name="cipl_no" value="<?php echo @$data_input['cipl_no'] ?>">
+
+                  <?php if($this->session->userdata('role') != "Customer"): ?>
                   <div class="form-group row m-0">
                     <label class="col-sm-3 col-form-label">Permit No</label>
                     <div class="col-sm-9">
                       <label class="col-form-label">: <?php echo @$data_input['permit_no'] ?></label>
-                      <input type="hidden" name="permit_no" value="<?php echo @$data_input['permit_no'] ?>">
                     </div>
                   </div>
+                  <?php endif; ?>
+                  <input type="hidden" name="permit_no" value="<?php echo @$data_input['permit_no'] ?>">
+                  
                 </div>
               </div>
               <br>

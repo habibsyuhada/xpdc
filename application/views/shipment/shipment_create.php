@@ -20,7 +20,7 @@ if (!isset($cargo_list)) {
               <ul class="nav nav-tabs" id="myTab" role="tablist">
                 <?php if($this->session->userdata('role') == "Customer"): ?>
                 <li class="nav-item active">
-                  <a class="nav-link" id="shipper-consignee-tab" data-toggle="tab" href="#shipper-consignee" role="tab" aria-controls="shipper-consignee" aria-selected="false">Shipper & Consignee Information</a>
+                  <a class="nav-link" id="shipper-consignee-tab" data-toggle="tab" href="#shipper-consignee" role="tab" aria-controls="shipper-consignee" aria-selected="true">Shipper & Consignee Information</a>
                 </li>
                 <li class="nav-item">
                   <a class="nav-link" id="shipment-info-tab" data-toggle="tab" href="#shipment-info" role="tab" aria-controls="shipment-info" aria-selected="false">Shipment Information</a>

@@ -377,6 +377,54 @@ class Shipment extends CI_Controller
 		}
 
 		if(@$post['check_price_weight'] != ""){
+
+			$where['name'] = $this->session->userdata('branch');
+			$branch = $this->home_mod->branch_list($where);
+			unset($where);
+			$branch = $branch[0];
+
+			$where['YEAR(create_date)'] = date("Y");
+			$where["SUBSTRING_INDEX(SUBSTRING_INDEX(invoice_no,'-',1), '/', -1) = '" . $branch['code'] . "'"] = NULL;
+			$invoice_no = $this->shipment_mod->shipment_generate_invoice_no_db($where);
+			unset($where);
+			$invoice_no = $invoice_no . "/" . $branch['code'] . "-FH" . "/" . date("Y");
+			$form_data = array(
+				'id_shipment' 		=> $id_shipment,
+				'invoice_no' 			=> $invoice_no,
+				'invoice_date' 		=> date("Y-m-d"),
+				'create_by' 			=> $this->session->userdata('id'),
+
+				'payment_terms' 		=> "",
+				'vat' 							=> 0,
+				'discount' 					=> 0,
+				'notes' 						=> "",
+				'beneficiary_name'	=> "",
+				'acc_no'						=> "",
+				'bank_name'					=> "",
+			);
+			$id_bill = $this->shipment_mod->shipment_invoice_create_process_db($form_data);
+
+			$form_data = array(
+				'status_bill' 		=> 1,
+			);
+			$where['id_shipment'] = $id_shipment;
+			$this->shipment_mod->shipment_detail_update_process_db($form_data, $where);
+
+			foreach ($post['qty'] as $key => $value) {
+				$form_data = array(
+					'id_shipment' 			=> $id_shipment,
+					'description' 			=> "Freight Handling",
+					'qty' 							=> $post['qty'][$key],
+					'uom' 							=> "Kg",
+					'currency' 					=> "IDR",
+					'unit_price' 				=> $post['check_price_weight'],
+					'exchange_rate' 		=> 1,
+					'remarks' 					=> "",
+					'category' 					=> "costumer",
+				);
+				$this->shipment_mod->shipment_cost_create_process_db($form_data);
+			}
+
 			$this->session->set_flashdata('success', 'Your Shipment data has been Created!');
 			redirect('shipment/shipment_autobill/'.$id_shipment);
 		}
@@ -1484,35 +1532,39 @@ class Shipment extends CI_Controller
 	{
 		$where['id'] 						= $id;
 		$shipment_list 					= $this->shipment_mod->shipment_list_db($where);
+		$data['shipment_list'] 	= $shipment_list[0];
 
 		unset($where);
 		$where['id_shipment'] 	= $id;
-		$packages_list 					= $this->shipment_mod->shipment_packages_list_db($where);
+		$shipment_invoice 			= $this->shipment_mod->shipment_invoice_list_db($where);
+		if (count($shipment_invoice) > 0) {
+			$data['invoice'] 				= $shipment_invoice[0];
+		}
+
+		$quotation = $this->shipment_mod->quotation_list_db(array('tracking_no' => $shipment_list[0]['tracking_no']));
+		if (count($quotation) > 0) {
+			$data['quotation'] = $quotation[0];
+		}
+
+		unset($where);
+		echo $id;
 		$where['id_shipment'] 	= $id;
-		$history_list 					= $this->shipment_mod->shipment_history_list_db($where);
-
-		if (count($shipment_list) <= 0) {
-			$this->session->set_flashdata('error', 'Shipment not Found!');
-			redirect("shipment/shipment_list");
+		$cost_list 							= $this->shipment_mod->shipment_cost_list_db($where);
+		$main_agent 						= array();
+		$secondary_agent				= array();
+		$costumer								= array();
+		foreach ($cost_list as $key => $value) {
+			if ($value['category'] == "costumer") {
+				$costumer[] = $value;
+			}
 		}
+		$data['main_agent'] 			= $main_agent;
+		$data['secondary_agent'] 	= $secondary_agent;
+		$data['costumer'] 				= $costumer;
 
-		$t = 'sein';
-		if ($this->input->get('t')) {
-			$t = $this->input->get('t');
-		}
-		$data['t'] = $t;
+		$data['payment_terms_list'] = $this->home_mod->payment_terms_list();
+		$data['uom_list'] = $this->home_mod->uom_list();
 
-		$data['country'] = $this->shipment_mod->country_list_db();
-
-		$datadb 	= $this->home_mod->branch_list(["name" => $shipment_list[0]["branch"]]);
-		$data["branch"] 	= $datadb[0];
-
-		$data['shipment_list'] 			= $shipment_list[0];
-		$data['packages_list'] 	= $packages_list;
-		$data['history_list'] 	= $history_list;
-		$data['customer'] 			= $this->shipment_mod->customer_list_db();
-		$data['package_type'] 	= $this->shipment_mod->package_type_list_db();
-		// $data['t'] 							= 'g';
 		$data['subview'] 				= 'shipment/shipment_autobill';
 		$data['meta_title'] 		= 'Shipment Bill';
 		$this->load->view('index', $data);

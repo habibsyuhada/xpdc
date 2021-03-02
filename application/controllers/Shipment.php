@@ -1569,4 +1569,17 @@ class Shipment extends CI_Controller
 		$data['meta_title'] 		= 'Shipment Bill';
 		$this->load->view('index', $data);
 	}
+
+	public function shipment_autobill_process(){
+		$post = $this->input->post();
+
+		$form_data = array(
+			'payment_terms' 		=> $post['payment_terms'],
+		);
+		$where['id'] = $post['id_invoice'];
+		$this->shipment_mod->shipment_invoice_update_process_db($form_data, $where);
+
+		$this->session->set_flashdata('success', 'Your Shipment data has been Updated!');
+		redirect('shipment/shipment_list');
+	}
 }

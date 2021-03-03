@@ -384,6 +384,7 @@ class Shipment extends CI_Controller
 			$datadb 	= $this->home_mod->customer_list($where);
 			$customer = $datadb[0];
 
+			unset($where);
 			$where['name'] = $this->session->userdata('branch');
 			$branch = $this->home_mod->branch_list($where);
 			unset($where);

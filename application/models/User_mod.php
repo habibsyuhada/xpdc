@@ -37,4 +37,36 @@ class User_mod extends CI_Model {
     $this->db->delete('user');
   }
 
+  function target_list_db($where = null){
+		if(isset($where)){
+      if(count($where) > 0){
+        $this->db->where($where);
+      }
+		}
+		$this->db->order_by("year", "DESC");
+		$this->db->order_by("month", "DESC");
+		$query = $this->db->get('commercial_target');
+		
+		return $query->result_array();
+	}
+
+  public function target_create_process_db($data)
+  {
+    $this->db->insert('commercial_target', $data);
+    $insert_id = $this->db->insert_id();
+    return $insert_id;
+  }
+	
+	public function target_update_process_db($data, $where)
+  {
+    $this->db->where($where);
+    $this->db->update('commercial_target', $data);
+  }
+	
+	public function target_delete_process_db($where)
+  {
+    $this->db->where($where);
+    $this->db->delete('commercial_target');
+  }
+
 }

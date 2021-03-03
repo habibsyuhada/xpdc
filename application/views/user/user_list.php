@@ -81,6 +81,9 @@
                           <a href="<?php echo base_url() ?>user/user_update/<?php echo $value['id'] ?>" class="btn btn-primary" title="Update"><i class="fas fa-edit m-0"></i></a>
                           <a href="<?php echo base_url() ?>user/user_rest_password/<?php echo $value['id'] ?>" class="btn btn-success" title="Reset" onclick="return confirm('Are You Sure?')"><i class="fas fa-redo-alt"></i></a>
                           <a href="<?php echo base_url() ?>user/user_delete_process/<?php echo $value['id'] ?>" class="btn btn-danger" title="Delete" onclick="return confirm('Are You Sure?')"><i class="fas fa-trash m-0"></i></a>
+                          <?php if($value['role'] == "Commercial"): ?>
+                          <a href="<?php echo base_url() ?>user/user_target_commercial/<?php echo $value['id'] ?>" class="btn btn-info" title="Target"><i class="fas fa-bullseye"></i></i></a>
+                          <?php endif; ?>
                         </td>
                       </tr>
                     <?php endforeach; ?>

@@ -24,6 +24,21 @@ class User extends CI_Controller
 		cek_login();
 		$this->load->model('home_mod');
 		$this->load->model('user_mod');
+		$this->months = array(
+			'January',
+			'February',
+			'March',
+			'April',
+			'May',
+			'June',
+			'July ',
+			'August',
+			'September',
+			'October',
+			'November',
+			'December',
+		);
+	
 	}
 
 	public function index(){
@@ -92,7 +107,7 @@ class User extends CI_Controller
 		$where['id'] 				= $id;
 		$user_list 					= $this->user_mod->user_list_db($where);
 		if(count($user_list) < 1){
-			// $this->session->set_flashdata('error', 'User Not Found!');
+			$this->session->set_flashdata('error', 'User Not Found!');
 			redirect("user/user_list");
 		}
 		$data['user_list'] 	= $user_list[0];
@@ -182,6 +197,62 @@ class User extends CI_Controller
 
 		$this->session->set_flashdata('success', 'Your Password has been Changed!');
 		redirect('user/user_password');
+	}
+
+	public function user_target_commercial($id){
+		$where['id'] 				= $id;
+		$user_list 					= $this->user_mod->user_list_db($where);
+		if(count($user_list) < 1){
+			$this->session->set_flashdata('error', 'User Not Found!');
+			redirect("user/user_list");
+		}
+		$data['user'] 	= $user_list[0];
+
+		$where = [
+			"id_user" => $id
+		];
+		$target_list 					= $this->user_mod->target_list_db($where);
+		$data['target_list'] 	= $target_list;
+
+		$data['month_list'] 	= $this->months;
+
+		$data['subview'] 				= 'user/user_target_commercial';
+		$data['meta_title'] 		= 'Commercial Target';
+		$this->load->view('index', $data);
+	}
+
+	public function user_target_commercial_create_process(){
+		$post = $this->input->post();
+
+		$where = [
+			"id_user" => $post['id_user'],
+			"month" 	=> $post['month'],
+			"year" 		=> $post['year'],
+		];
+		$user_list 			= $this->user_mod->target_list_db($where);
+		if(count($user_list) > 0){
+			$this->session->set_flashdata('error', 'Duplicate Data!');
+			redirect($_SERVER['HTTP_REFERER']);
+		}
+
+    $form_data = array(
+			'id_user' 		=> $post['id_user'],
+			'month' 			=> $post['month'],
+			'year' 				=> $post['year'],
+			'target' 			=> $post['target'],
+		);
+		$id_user = $this->user_mod->target_create_process_db($form_data);
+
+		$this->session->set_flashdata('success', 'Your data has been Created!');
+		redirect($_SERVER['HTTP_REFERER']);
+	}
+
+	public function user_target_commercial_delete_process($id){
+		$where['id'] = $id;
+		$this->user_mod->target_delete_process_db($where);
+
+		$this->session->set_flashdata('success', 'Your data has been Deleted!');
+		redirect($_SERVER['HTTP_REFERER']);
 	}
 		
 }

@@ -462,6 +462,7 @@ $page_permission = array(
                     <div class="col-sm-9">
                       <label class="col-form-label">: <?php echo ($data_input['type_of_shipment'] == 'International Shipping') ? $data_input['currency'] : 'IDR'; ?> <?php echo number_format($data_input['check_price_weight'], 2) ?> <?= ($data_input['type_of_shipment'] == "Domestic Shipping") ? "(" . $data_input['check_price_term'] . ")" : ''; ?></label>
                       <input type="hidden" name="check_price_weight" value="<?php echo $data_input['check_price_weight'] ?>">
+                      <input type="hidden" name="check_price_weight_fix" value="<?php echo $data_input['check_price_weight_fix'] ?>">
                       <input type="hidden" name="check_price_term" value="<?php echo $data_input['check_price_term'] ?>">
                     </div>
                   </div>

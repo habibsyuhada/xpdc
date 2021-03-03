@@ -12,6 +12,7 @@ if (!isset($cargo_list)) {
       <?php if (isset($quotation['check_price_term'])) : ?>
         <input type="hidden" name="check_price_term" value="<?php echo $quotation['check_price_term'] ?>">
         <input type="hidden" name="check_price_weight" value="<?php echo $quotation['check_price_weight'] ?>">
+        <input type="hidden" name="check_price_weight_fix" value="<?php echo $quotation['check_price_weight_fix'] ?>">
       <?php endif; ?>
       <div class="row clearfix">
         <div class="col-md-12">
@@ -19,8 +20,8 @@ if (!isset($cargo_list)) {
             <div class="card-body">
               <ul class="nav nav-tabs" id="myTab" role="tablist">
                 <?php if($this->session->userdata('role') == "Customer"): ?>
-                <li class="nav-item active">
-                  <a class="nav-link" id="shipper-consignee-tab" data-toggle="tab" href="#shipper-consignee" role="tab" aria-controls="shipper-consignee" aria-selected="true">Shipper & Consignee Information</a>
+                <li class="nav-item">
+                  <a class="nav-link active" id="shipper-consignee-tab" data-toggle="tab" href="#shipper-consignee" role="tab" aria-controls="shipper-consignee" aria-selected="true">Shipper & Consignee Information</a>
                 </li>
                 <li class="nav-item">
                   <a class="nav-link" id="shipment-info-tab" data-toggle="tab" href="#shipment-info" role="tab" aria-controls="shipment-info" aria-selected="false">Shipment Information</a>
@@ -561,7 +562,7 @@ if (!isset($cargo_list)) {
                         <div class="col-md-6">
                           <div class="form-group">
                             <label>Pick Up Date From</label>
-                            <input type="date" class="form-control" name="pickup_date" placeholder="Pick Up Date" readonly required>
+                            <input type="date" class="form-control" name="pickup_date" <?php echo ($this->session->userdata('role') == "Customer" ? "min='".date("Y-m-d")."'" : "") ?> placeholder="Pick Up Date" readonly required>
                           </div>
                           <div class="form-group">
                             <label>Pick Up Time From</label>
@@ -571,7 +572,7 @@ if (!isset($cargo_list)) {
                         <div class="col-md-6">
                           <div class="form-group">
                             <label>Pick Up Date To</label>
-                            <input type="date" class="form-control" name="pickup_date_to" placeholder="Pick Up Date" readonly required>
+                            <input type="date" class="form-control" name="pickup_date_to" <?php echo ($this->session->userdata('role') == "Customer" ? "min='".date("Y-m-d")."'" : "") ?> placeholder="Pick Up Date" readonly required>
                           </div>
                           <div class="form-group">
                             <label>Pick Up Time To</label>

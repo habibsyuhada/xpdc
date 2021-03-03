@@ -65,6 +65,7 @@
                 <input type="hidden" name="vol_weight" value="<?= $vol_weight_airfreight_post ?>">
                 <input type="hidden" name="measurement" value="<?= $measurement_post ?>">
                 <input type="hidden" name="check_price_weight" value="<?= $airfreight_weight ?>">
+                <input type="hidden" name="check_price_weight_fix" value="<?= $weight_fix_airfreight ?>">
                 <input type="hidden" name="check_price_term" value="<?= $result['airfreight_term'] ?>">
 
                 <?php foreach ($post['qty'] as $key => $value) : ?>
@@ -98,6 +99,7 @@
                 <input type="hidden" name="vol_weight" value="<?= $vol_weight_landfreight_post ?>">
                 <input type="hidden" name="measurement" value="<?= $measurement_post ?>">
                 <input type="hidden" name="check_price_weight" value="<?= $landfreight_weight ?>">
+                <input type="hidden" name="check_price_weight_fix" value="<?= $weight_fix_landfreight ?>">
                 <input type="hidden" name="check_price_term" value="<?= $result['landfreight_term'] ?>">
 
                 <?php foreach ($post['qty'] as $key => $value) : ?>
@@ -131,6 +133,7 @@
                 <input type="hidden" name="vol_weight" value="<?= $vol_weight_seafreight_post ?>">
                 <input type="hidden" name="measurement" value="<?= $measurement_post ?>">
                 <input type="hidden" name="check_price_weight" value="<?= $seafreight_weight ?>">
+                <input type="hidden" name="check_price_weight_fix" value="<?= $weight_fix_seafreight ?>">
                 <input type="hidden" name="check_price_term" value="<?= $result['seafreight_term'] ?>">
 
                 <?php foreach ($post['qty'] as $key => $value) : ?>
@@ -222,6 +225,7 @@
             <input type="hidden" name="vol_weight" value="<?= $vol_weight_airfreight_post ?>">
             <input type="hidden" name="measurement" value="<?= $measurement_post ?>">
             <input type="hidden" name="check_price_weight" value="<?= ($result['price'] * $weight_fix_airfreight) ?>">
+            <input type="hidden" name="check_price_weight_fix" value="<?= $weight_fix_airfreight ?>">
             <input type="hidden" name="check_price_term" value="0">
 
             <?php foreach ($post['qty'] as $key => $value) : ?>

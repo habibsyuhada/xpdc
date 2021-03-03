@@ -377,6 +377,12 @@ class Shipment extends CI_Controller
 		}
 
 		if(@$post['check_price_weight'] != ""){
+			$where = [
+				"status_delete" => 1,
+				"account_no" 		=> $post['billing_account'],
+			];
+			$datadb 	= $this->home_mod->customer_list($where);
+			$customer = $datadb[0];
 
 			$where['name'] = $this->session->userdata('branch');
 			$branch = $this->home_mod->branch_list($where);
@@ -394,13 +400,13 @@ class Shipment extends CI_Controller
 				'invoice_date' 		=> date("Y-m-d"),
 				'create_by' 			=> $this->session->userdata('id'),
 
-				'payment_terms' 		=> "",
+				'payment_terms' 		=> $customer['payment_terms'],
 				'vat' 							=> 0,
 				'discount' 					=> 0,
 				'notes' 						=> "",
-				'beneficiary_name'	=> "",
-				'acc_no'						=> "",
-				'bank_name'					=> "",
+				'beneficiary_name'	=> "PT. XENA PRANADIPA DHIA CAKRA",
+				'acc_no'						=> "1090089892020",
+				'bank_name'					=> "BANK MANDIRI",
 			);
 			$id_bill = $this->shipment_mod->shipment_invoice_create_process_db($form_data);
 
@@ -414,7 +420,7 @@ class Shipment extends CI_Controller
 				$form_data = array(
 					'id_shipment' 			=> $id_shipment,
 					'description' 			=> "Freight Handling",
-					'qty' 							=> $post['qty'][$key],
+					'qty' 							=> $post['check_price_weight_fix'],
 					'uom' 							=> "Kg",
 					'currency' 					=> "IDR",
 					'unit_price' 				=> $post['check_price_weight'],

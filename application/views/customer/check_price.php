@@ -211,7 +211,7 @@
       var actual_weight = qty_array[index] * weight_array[index];
       var volume_weight_airfreight = qty_array[index] * (length_array[index] * width_array[index] * height_array[index]) / 6000;
       var volume_weight_landfreight = qty_array[index] * (length_array[index] * width_array[index] * height_array[index]) / 4000;
-      var volume_weight_seafreight = qty_array[index] * (length_array[index] * width_array[index] * height_array[index]) / 5000;
+      var volume_weight_seafreight = qty_array[index] * (length_array[index] * width_array[index] * height_array[index]) / 4000;
       var measurement = qty_array[index] * (length_array[index] * width_array[index] * height_array[index]) / 1000000;
 
       total_act_weight += actual_weight;

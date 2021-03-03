@@ -287,6 +287,7 @@ class Customer extends CI_Controller
       "consignee_country"       => $post['consignee_country'],
       "act_weight"              => $post['act_weight'],
       "check_price_weight"      => $post['check_price_weight'],
+      "check_price_weight_fix"  => $post['check_price_weight_fix'],
       "check_price_term"        => $post['check_price_term'],
     ];
 

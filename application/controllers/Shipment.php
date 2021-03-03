@@ -423,7 +423,7 @@ class Shipment extends CI_Controller
 					'qty' 							=> $post['check_price_weight_fix'],
 					'uom' 							=> "Kg",
 					'currency' 					=> "IDR",
-					'unit_price' 				=> $post['check_price_weight'],
+					'unit_price' 				=> ($post['check_price_weight']/$post['check_price_weight_fix']),
 					'exchange_rate' 		=> 1,
 					'remarks' 					=> "",
 					'category' 					=> "costumer",

@@ -70,5 +70,8 @@
     .overflow-auto {
       overflow: auto;
     }
+    body{
+      font-family: helvetica;
+    }
   </style>
 </head>

@@ -96,6 +96,7 @@ class Commercial extends CI_Controller
             'account_phone_number'  => $post['account_phone_number'],
 
             'create_by'         => $this->session->userdata('id'),
+            'assign_to'         => $this->session->userdata('id'),
             'status_delete'     => 1
         );
 

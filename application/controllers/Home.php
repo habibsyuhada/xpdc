@@ -23,6 +23,7 @@ class Home extends CI_Controller {
 		parent::__construct();
 		$this->load->model('user_mod');
 		$this->load->model('shipment_mod');
+		$this->load->model('commercial_mod');
 		if($this->session->userdata('id') == "Guest"){
 			$this->session->unset_userdata('id');
 			session_destroy();
@@ -68,7 +69,9 @@ class Home extends CI_Controller {
 		if(!$this->session->userdata('id')){
 			redirect('home/login');
 		}
-		// redirect('shipment/shipment_list');
+		if($this->session->userdata('role') == "Commercial"){
+			redirect('home/home_commercial');
+		}
 
 		$where['shipment.status_delete'] 	= 1;
 		if($this->session->userdata('branch')){
@@ -88,6 +91,70 @@ class Home extends CI_Controller {
 		$data['summary_list'] 	= $summary_list[0];
 
 		$data['subview'] 			= 'home/home';
+		$data['meta_title'] 	= 'Home';
+		$this->load->view('index', $data);
+	}
+
+	public function home_commercial(){
+		if(!$this->session->userdata('id')){
+			redirect('home/login');
+		}
+		if($this->session->userdata('role') != "Commercial"){
+			redirect('home/home');
+		}
+
+		$where = [
+			"assign_to" => $this->session->userdata('id'),
+			"status_delete" => 1
+		];
+		$customer = $this->commercial_mod->customer_list_db($where);
+		$account_no = [];
+		foreach ($customer as $key => $value) {
+			$account_no[] = $value['account_no'];
+		}
+
+		$where = [
+			"billing_account IN ('".join("', '", $account_no)."')" => NULL,
+			"status_bill > 0" => NULL,
+			"MONTH(created_date)" => date("n"),
+			"YEAR(created_date)" => date("Y"),
+			"status_delete" => 1,
+		];
+		$shipment = $this->shipment_mod->shipment_list_db($where);
+		$id_shipment = [];
+		foreach ($shipment as $key => $value) {
+			$id_shipment[] = $value['id_shipment'];
+			$shipment[$value['id_shipment']] = $value;
+		}
+
+		$where = [
+			"id_shipment IN ('".join("', '", $id_shipment)."')" => NULL,
+			"category" => "costumer",
+			"status_delete" => 1
+		];
+		$cost_list = $this->shipment_mod->shipment_cost_list_db($where);
+		$summary = [];
+		foreach ($cost_list as $key => $value) {
+			$type_of_shipment = $shipment[$value['id_shipment']]['type_of_shipment'];
+			$type_of_mode = $shipment[$value['id_shipment']]['type_of_mode'];
+			$summary[$type_of_shipment][$type_of_mode] = @$summary[$type_of_shipment][$type_of_mode] + $value['qty']*$value['unit_price']*$value['exchange_rate'] + 0;
+		}
+
+		$where = [
+			"id_user" => $this->session->userdata('id'),
+			"month" => date("n"),
+			"year" => date("Y"),
+		];
+		$target = $this->user_mod->target_list_db($where);
+		$target = @$target[0]['target'] + 0;
+
+		$data['summary'] = $summary;
+		$data['target'] = $target;
+		$data['total_shipment'] = count($shipment);
+		$data['total_customer'] = count($customer);
+		$data['total_quotation'] = 0;
+
+		$data['subview'] 			= 'home/home_commercial';
 		$data['meta_title'] 	= 'Home';
 		$this->load->view('index', $data);
 	}

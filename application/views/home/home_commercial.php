@@ -7,9 +7,9 @@
   );
 ?>
 <style>
-  /* .widget{
+  .widget{
     cursor: pointer;
-  } */
+  }
 </style>
 <div class="main-content">
 	<div class="container-fluid">
@@ -214,7 +214,7 @@
     </div>
     <div class="row justify-content-center clearfix">
       <div class="col-xl-4 col-lg-4 col-md-4 col-sm-12">
-        <div class="widget status-driver">
+        <div class="widget">
           <div class="widget-body">
             <div class="d-flex justify-content-between align-items-center">
               <div class="state">
@@ -233,7 +233,7 @@
         </div>
       </div>
       <div class="col-xl-4 col-lg-4 col-md-4 col-sm-12">
-        <div class="widget status-driver">
+        <div class="widget">
           <div class="widget-body">
             <div class="d-flex justify-content-between align-items-center">
               <div class="state">
@@ -252,7 +252,7 @@
         </div>
       </div>
       <div class="col-xl-4 col-lg-4 col-md-4 col-sm-12">
-        <div class="widget status-driver">
+        <div class="widget">
           <div class="widget-body">
             <div class="d-flex justify-content-between align-items-center">
               <div class="state">

@@ -35,7 +35,7 @@ class Shipment extends CI_Controller
 			$where["(driver_pickup = " . $this->session->userdata('id') . " OR driver_deliver = " . $this->session->userdata('id') . ")"] 	= NULL;
 		} elseif ($this->session->userdata('role') == "Commercial") {
 			unset($where);
-			$datadb 	= $this->home_mod->customer_list(array("status_delete" => 1, "create_by" => $this->session->userdata('id')));
+			$datadb 	= $this->home_mod->customer_list(array("status_delete" => 1, "assign_to" => $this->session->userdata('id')));
 			$customer_list = [];
 			foreach ($datadb as $key => $value) {
 				if ($value['account_no'] != "") {

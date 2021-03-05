@@ -24,6 +24,7 @@ class Home extends CI_Controller {
 		$this->load->model('user_mod');
 		$this->load->model('shipment_mod');
 		$this->load->model('commercial_mod');
+		$this->load->model('quotation_mod');
 		if($this->session->userdata('id') == "Guest"){
 			$this->session->unset_userdata('id');
 			session_destroy();
@@ -104,6 +105,13 @@ class Home extends CI_Controller {
 		}
 
 		$where = [
+			"created_by" => $this->session->userdata('id'),
+			"MONTH(created_date)" => date("n"),
+			"YEAR(created_date)" => date("Y"),
+		];
+		$quotation = $this->quotation_mod->quotation_list_db($where);
+		
+		$where = [
 			"assign_to" => $this->session->userdata('id'),
 			"status_delete" => 1
 		];
@@ -114,15 +122,15 @@ class Home extends CI_Controller {
 		}
 
 		$where = [
-			"billing_account IN ('".join("', '", $account_no)."')" => NULL,
+			"(billing_account IN ('".join("', '", $account_no)."') OR created_by = ".$this->session->userdata('id').")" => NULL,
 			"status_bill > 0" => NULL,
 			"MONTH(created_date)" => date("n"),
 			"YEAR(created_date)" => date("Y"),
 			"status_delete" => 1,
 		];
-		$shipment = $this->shipment_mod->shipment_list_db($where);
+		$datadb = $this->shipment_mod->shipment_list_db($where);
 		$id_shipment = [];
-		foreach ($shipment as $key => $value) {
+		foreach ($datadb as $key => $value) {
 			$id_shipment[] = $value['id_shipment'];
 			$shipment[$value['id_shipment']] = $value;
 		}
@@ -152,7 +160,7 @@ class Home extends CI_Controller {
 		$data['target'] = $target;
 		$data['total_shipment'] = count($shipment);
 		$data['total_customer'] = count($customer);
-		$data['total_quotation'] = 0;
+		$data['total_quotation'] = count($quotation);
 
 		$data['subview'] 			= 'home/home_commercial';
 		$data['meta_title'] 	= 'Home';

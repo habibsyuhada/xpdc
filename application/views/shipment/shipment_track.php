@@ -139,7 +139,7 @@
                   <td><a class="btn btn-danger btn-sm" onclick="return confirm('Are you sure?')" href="<?=base_url()?>shipment/shipment_history_delete_db/<?php echo $value['id']?>/<?php echo $value['id_shipment']?>"><i class="fa fa-trash"></i></a></td>
                   <?php endif; ?>
                 </tr>
-                <?php endforeach; $id_shipment = $value['id_shipment']; ?>
+                <?php endforeach; $id_shipment = $shipment['id_shipment']; ?>
               </tbody>
             </table>
           </div>

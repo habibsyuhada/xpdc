@@ -15,7 +15,7 @@
 	<div class="container-fluid">
     <div class="row justify-content-center clearfix">
       <div class="col-xl-4 col-lg-4 col-md-4 col-sm-12">
-        <div class="widget">
+        <div class="widget" data-link="<?php echo base_url() ?>shipment/shipment_list?type_of_shipment=Domestic+Shipping&type_of_mode=Air+Freight">
           <div class="widget-body">
             <div class="d-flex justify-content-between align-items-center">
               <div class="state">
@@ -53,7 +53,7 @@
         </div>
       </div>
       <div class="col-xl-4 col-lg-4 col-md-4 col-sm-12">
-        <div class="widget">
+        <div class="widget" data-link="<?php echo base_url() ?>shipment/shipment_list?type_of_shipment=Domestic+Shipping&type_of_mode=Land+Shipping">
           <div class="widget-body">
             <div class="d-flex justify-content-between align-items-center">
               <div class="state">
@@ -91,7 +91,7 @@
         </div>
       </div>
       <div class="col-xl-4 col-lg-4 col-md-4 col-sm-12">
-        <div class="widget">
+        <div class="widget" data-link="<?php echo base_url() ?>shipment/shipment_list?type_of_shipment=Domestic+Shipping&type_of_mode=Sea+Transport">
           <div class="widget-body">
             <div class="d-flex justify-content-between align-items-center">
               <div class="state">
@@ -131,7 +131,7 @@
     </div>
     <div class="row justify-content-center clearfix">
       <div class="col-xl-4 col-lg-4 col-md-4 col-sm-12">
-        <div class="widget">
+        <div class="widget" data-link="<?php echo base_url() ?>shipment/shipment_list?type_of_shipment=International+Shipping&type_of_mode=Air+Freight">
           <div class="widget-body">
             <div class="d-flex justify-content-between align-items-center">
               <div class="state">
@@ -158,7 +158,7 @@
         </div>
       </div>
       <div class="col-xl-4 col-lg-4 col-md-4 col-sm-12">
-        <div class="widget">
+        <div class="widget" data-link="<?php echo base_url() ?>shipment/shipment_list?type_of_shipment=International+Shipping&type_of_mode=Land+Shipping">
           <div class="widget-body">
             <div class="d-flex justify-content-between align-items-center">
               <div class="state">
@@ -185,7 +185,7 @@
         </div>
       </div>
       <div class="col-xl-4 col-lg-4 col-md-4 col-sm-12">
-        <div class="widget">
+        <div class="widget" data-link="<?php echo base_url() ?>shipment/shipment_list?type_of_shipment=International+Shipping&type_of_mode=Sea+Transport">
           <div class="widget-body">
             <div class="d-flex justify-content-between align-items-center">
               <div class="state">
@@ -214,7 +214,7 @@
     </div>
     <div class="row justify-content-center clearfix">
       <div class="col-xl-4 col-lg-4 col-md-4 col-sm-12">
-        <div class="widget">
+        <div class="widget" data-link="<?php echo base_url() ?>shipment/shipment_list">
           <div class="widget-body">
             <div class="d-flex justify-content-between align-items-center">
               <div class="state">
@@ -233,7 +233,7 @@
         </div>
       </div>
       <div class="col-xl-4 col-lg-4 col-md-4 col-sm-12">
-        <div class="widget">
+        <div class="widget" data-link="<?php echo base_url() ?>commercial/customer_list">
           <div class="widget-body">
             <div class="d-flex justify-content-between align-items-center">
               <div class="state">
@@ -252,7 +252,7 @@
         </div>
       </div>
       <div class="col-xl-4 col-lg-4 col-md-4 col-sm-12">
-        <div class="widget">
+        <div class="widget" data-link="<?php echo base_url() ?>quotation/quotation_list">
           <div class="widget-body">
             <div class="d-flex justify-content-between align-items-center">
               <div class="state">
@@ -274,16 +274,8 @@
 	</div>
 </div>
 <script>
-	// $('.widget.status').on('click', function() {
-  //   var status = $(this).find('h6').attr("name");
-	// 	window.location = "<?php echo base_url() ?>shipment/shipment_list?status="+status;
-  // });
-  // $('.widget.status-driver').on('click', function() {
-  //   var status = $(this).find('h6').attr("name");
-	// 	window.location = "<?php echo base_url() ?>shipment/shipment_list?status_driver="+status;
-  // });
-  // $('.widget.status-bill').on('click', function() {
-  //   var status = $(this).find('h6').attr("name");
-	// 	window.location = "<?php echo base_url() ?>shipment/shipment_list?status_bill="+status;
-  // });
+  $('.widget').on('click', function() {
+    var link = $(this).attr('data-link');
+		window.location = link;
+  });
 </script>

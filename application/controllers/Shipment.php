@@ -46,7 +46,7 @@ class Shipment extends CI_Controller
 				$customer_list[] = "0";
 			}
 			$where['status_delete'] 	= 1;
-			$where["shipment_detail.billing_account IN ('" . join("', '", $customer_list) . "') OR created_by = '" . $this->session->userdata('id') . "'"] 	= NULL;
+			$where["(shipment_detail.billing_account IN ('" . join("', '", $customer_list) . "') OR created_by = '" . $this->session->userdata('id') . "')"] 	= NULL;
 			// $where["created_by"] 	= $this->session->userdata('id');
 		} elseif ($this->session->userdata('role') == "Customer") {
 			unset($where);
@@ -82,7 +82,8 @@ class Shipment extends CI_Controller
 		if ($this->session->userdata('role') == "Driver") {
 			$order_by["assign_driver_date"] = "DESC";
 		}
-		// test_var($where);
+		
+
 		$datadb 				= $this->shipment_mod->shipment_list_db($where, null, $order_by);
 		$shipment_list 	= [];
 		$express_list 	= [];

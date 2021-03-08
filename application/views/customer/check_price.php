@@ -62,7 +62,7 @@
                           <select class="form-control" name="piece_type[]" title="NONFCL" onchange="get_vol_weight()" required>
                             <option value="">-- Select One --</option>
                             <?php foreach ($package_type as $data) : ?>
-                              <option value="<?= $data['name'] ?>"><?= $data['name'] ?></option>
+                              <option value="<?= $data['name'] ?>" <?php echo ($data['name'] == 'Package' ? 'selected' : '') ?>><?= $data['name'] ?></option>
                             <?php endforeach; ?>
                           </select>
                           <select class="form-control d-none" name="piece_type[]" title="FCL" disabled>

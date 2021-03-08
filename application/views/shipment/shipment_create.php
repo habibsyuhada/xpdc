@@ -180,7 +180,11 @@ if (!isset($cargo_list)) {
                       <h6 class="font-weight-bold">Consignee Information</h6>
                       <div class="form-group">
                         <label>Consignee Name</label>
+                        <?php if ($this->session->userdata('role') != "Customer"): ?>
                         <input type="text" class="form-control" name="consignee_name" value="<?php echo @$quotation['consignee_name'] ?>" placeholder="Receiver Name" required>
+                        <?php else: ?>
+                        <input type="text" class="form-control" name="consignee_name" value="<?php echo @$quotation['consignee_name'] ?>" placeholder="Receiver Name" required oninput="$('[name=consignee_contact_person]').val($(this).val())">
+                        <?php endif; ?>
                       </div>
                       <div class="form-group">
                         <label>Address</label>
@@ -1137,14 +1141,14 @@ if (!isset($cargo_list)) {
         country: $(input).val(),
       },
       success: function(data) {
-        console.log(data);
+        console.log(disable);
         // data = JSON.parse(data);
         // console.log(data);
         var content = $(select_city).parent();
         $("select[name=" + name_city + "]").select2("destroy");
         var val_default = $(select_city).val();
         $(select_city).remove();
-        if (data.length > 0 && disable != "") {
+        if (data.length > 0 && disable == "") {
           var html = '<select class="form-control select2" name="' + name_city + '" required>';
           $.each(data, function(index, value) {
             html += "<option value='" + value + "'>" + value + "</option>";
@@ -1160,8 +1164,6 @@ if (!isset($cargo_list)) {
         }
       }
     });
-
-
 
   }
 

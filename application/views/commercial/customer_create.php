@@ -21,12 +21,6 @@
                     <textarea class="form-control" name="address" placeholder="Address" required></textarea>
                   </div>
                   <div class="form-group">
-                    <label>City</label>
-                    <input type="text" class="form-control" name="city" placeholder="City" required>
-                  </div>
-                </div>
-                <div class="col-md-6">
-                  <div class="form-group">
                     <label>Country</label>
                     <select class="form-control select2" name="country" required onchange="select_country(this)">>
                       <option value="">- Select One -</option>
@@ -35,6 +29,12 @@
                       <?php } ?>
                     </select>
                   </div>
+                  <div class="form-group">
+                    <label>City</label>
+                    <input type="text" class="form-control" name="city" placeholder="City" required>
+                  </div>
+                </div>
+                <div class="col-md-6">
                   <div class="form-group">
                     <label>Postcode</label>
                     <input type="text" class="form-control" name="postcode" placeholder="Postcode" required>
@@ -47,10 +47,6 @@
                     <label>Phone Number</label>
                     <input type="text" class="form-control" name="phone_number" placeholder="Phone Number" required>
                   </div>
-                </div>
-              </div>
-              <div class="row clearfix">
-                <div class="col-md-6">
                   <div class="form-group">
                     <label>Payment Terms</label>
                     <select class="form-control" name="payment_terms" required>
@@ -67,14 +63,12 @@
                     </select>
                   </div>
                   <div class="form-group">
-                    <label>Discount</label>
-                    <input type="number" class="form-control" name="discount" step="0.01" placeholder="Discount" required>
-                  </div>
-                </div>
-                <div class="col-md-6">
-                  <div class="form-group">
                     <label>Tax Registration</label>
                     <input type="text" class="form-control" name="vat" placeholder="Tax Registration" required>
+                  </div>
+                  <div class="form-group">
+                    <label>Discount</label>
+                    <input type="number" class="form-control" name="discount" step="0.01" placeholder="Discount" required>
                   </div>
                 </div>
               </div>

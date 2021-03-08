@@ -39,7 +39,6 @@
             <div class="mb-4 alert alert-dark text-center" role="alert">
               <b>SHIPMENT STATUS: <?php echo strtoupper($shipment['status']) ?></b>
             </div> -->
-
             <?php if($page_permission[0] == 1): ?>
             <p class="mt-4 pt-4 border-bottom"><b>UPDATE SHIPMENT HISTORY</b></p>
             <button id="btn_collapse" class="btn btn-block btn-primary" type="button" data-toggle="collapse" data-target="#update_shipment_history" aria-expanded="false" aria-controls="update_shipment_history" onclick="$('#btn_collapse').addClass('d-none')">Click to Update Shipment History</button>
@@ -57,7 +56,7 @@
                       <select class="form-control select2" name="country_history_location" onchange="select_country(this)" required>
                         <option value="">- Select One -</option>
                         <?php foreach ($country as $value) { ?>
-                          <option value="<?= $value['country'] ?>"><?= $value['country'] ?></option>
+                          <option value="<?= $value['country'] ?>" <?php echo ($shipment['type_of_shipment'] == "Domestic Shipping" && $value['country'] == "Indonesia" ? "selected" : "") ?>><?= $value['country'] ?></option>
                         <?php } ?>
                       </select>
                     </div>
@@ -271,4 +270,8 @@
     });
   });
   <?php endif; ?>
+
+  $(document).ready(function () {
+    select_country($("[name=country_history_location]"));
+  });
 </script>

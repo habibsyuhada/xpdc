@@ -28,15 +28,9 @@ $page_permission = array(
                     <input type="email" class="form-control" name="email" placeholder="E-Mail" value="<?php echo $customer_list['email'] ?>" required readonly>
                   </div>
                   <div class="form-group">
-                    <label>City</label>
-                    <input type="text" class="form-control" name="city" placeholder="City" value="<?php echo $customer_list['city'] ?>" required>
-                  </div>
-                  <div class="form-group">
                     <label>Address</label>
                     <textarea class="form-control" name="address" placeholder="Address" required><?php echo $customer_list['address'] ?></textarea>
                   </div>
-                </div>
-                <div class="col-md-6">
                   <div class="form-group">
                     <label>Country</label>
                     <select class="form-control select2" name="country" required onchange="select_country(this)">>
@@ -46,6 +40,12 @@ $page_permission = array(
                       <?php } ?>
                     </select>
                   </div>
+                  <div class="form-group">
+                    <label>City</label>
+                    <input type="text" class="form-control" name="city" placeholder="City" value="<?php echo $customer_list['city'] ?>" required>
+                  </div>
+                </div>
+                <div class="col-md-6">
                   <div class="form-group">
                     <label>Postcode</label>
                     <input type="text" class="form-control" name="postcode" placeholder="Postcode" value="<?php echo $customer_list['postcode'] ?>" required>
@@ -58,11 +58,6 @@ $page_permission = array(
                     <label>Phone Number</label>
                     <input type="text" class="form-control" name="phone_number" placeholder="Phone Number" value="<?php echo $customer_list['phone_number'] ?>" required>
                   </div>
-                </div>
-              </div>
-
-              <div class="row clearfix">
-                <div class="col-md-6">
                   <div class="form-group">
                     <label>Payment Terms</label>
                     <select class="form-control" name="payment_terms" required>
@@ -79,14 +74,12 @@ $page_permission = array(
                     </select>
                   </div>
                   <div class="form-group">
-                    <label>Discount</label>
-                    <input type="number" class="form-control" name="discount" value="<?php echo @$customer_list['discount']+0 ?>" step="0.01" placeholder="Discount" required>
-                  </div>
-                </div>
-                <div class="col-md-6">
-                  <div class="form-group">
                     <label>Tax Registration</label>
                     <input type="text" class="form-control" name="vat" value="<?php echo @$customer_list['vat'] ?>" placeholder="Tax Registration" required>
+                  </div>
+                  <div class="form-group">
+                    <label>Discount</label>
+                    <input type="number" class="form-control" name="discount" value="<?php echo @$customer_list['discount']+0 ?>" step="0.01" placeholder="Discount" required>
                   </div>
                 </div>
               </div>

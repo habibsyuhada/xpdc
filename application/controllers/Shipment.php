@@ -22,7 +22,6 @@ class Shipment extends CI_Controller
 	{
 		// test_var($this->input->get());
 		$where = array();
-		$where['status_delete'] 	= 1;
 		if ($this->session->userdata('branch')) {
 			if ($this->session->userdata('branch') != "NONE") {
 				$where["(assign_branch LIKE '%" . $this->session->userdata('branch') . "%' OR branch LIKE '%" . $this->session->userdata('branch') . "%')"] 	= NULL;
@@ -83,7 +82,7 @@ class Shipment extends CI_Controller
 			$order_by["assign_driver_date"] = "DESC";
 		}
 		
-
+		$where['status_delete'] 	= 1;
 		$datadb 				= $this->shipment_mod->shipment_list_db($where, null, $order_by);
 		$shipment_list 	= [];
 		$express_list 	= [];

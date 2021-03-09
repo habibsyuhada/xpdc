@@ -8,6 +8,7 @@
   <thead>
     <tr>
       <th>Tracking No</th>
+      <th>Shipment Date</th>
       <th>Shipper Name</th>
       <th>Shipper Address</th>
       <th>Consignee Name</th>
@@ -29,6 +30,7 @@
     <?php foreach ($shipment_list as $key => $shipment): ?>
     <tr>
       <td><?php echo $shipment['tracking_no'] ?></td>
+      <td><?php echo $shipment['created_date'] ?></td>
       <td><?php echo $shipment['shipper_name'] ?></td>
       <td><?php echo $shipment['shipper_address'] ?></td>
       <td><?php echo $shipment['consignee_name'] ?></td>

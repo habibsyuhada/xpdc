@@ -7,7 +7,7 @@
             <div class="card-body">
               <div class="row clearfix">
                 <div class="col-md-6">
-                  <h6 class="font-weight-bold"><?php echo $meta_title ?>/h6>
+                  <h6 class="font-weight-bold"><?php echo $meta_title ?></h6>
                   <div class="form-group">
                     <label>Date From</label>
                     <input type="date" class="form-control" name="date_from" placeholder="---" required>

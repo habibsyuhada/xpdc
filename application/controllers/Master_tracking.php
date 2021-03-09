@@ -28,6 +28,7 @@ class Master_tracking extends CI_Controller {
 		$this->load->model('master_tracking_mod');
 		$this->load->model('shipment_mod');
 		$this->load->model('home_mod');
+		$this->load->model('country_mod');
 	}
 
 	public function index(){
@@ -90,25 +91,73 @@ class Master_tracking extends CI_Controller {
 		}
 
 		$where['shipment.id IN ('.$post['id'].')'] = NULL;
-		$where['shipment.master_tracking !='] = "";
 		$shipment_list 					= $this->shipment_mod->shipment_list_db($where);
-		unset($where);
-		if(count($shipment_list) > 0){
-			foreach ($shipment_list as $key => $value) {
+		$shipment = [];
+		$city_origin = [];
+		$city_destiny = [];
+		$country = [];
+		$city = [];
+		foreach ($shipment_list as $key => $value) {
+			if($value['master_tracking'] != ''){
 				$shipment[] = $value['tracking_no'];
+				if(!in_array($value['shipper_country'].";".$value['shipper_city'], $city_origin)){
+					$city_origin[] = $value['shipper_country'].";".$value['shipper_city'];
+					$country[] = $value['shipper_country'];
+					$city[] = $value['shipper_city'];
+				}
+				if(!in_array($value['consignee_country'].";".$value['consignee_city'], $city_destiny)){
+					$city_destiny[] = $value['consignee_country'].";".$value['consignee_city'];
+					$country[] = $value['consignee_country'];
+					$city[] = $value['consignee_city'];
+				}
 			}
+		}
+		if(count($shipment) > 0){
 			$this->session->set_flashdata('error', 'All Documents above already have master tracking!<br>'.join('<br>', $shipment));
-			redirect('shipment/shipment_list');
+			redirect($_SERVER['HTTP_REFERER']);
+		}
+		elseif(count($city_origin) > 1){
+			$this->session->set_flashdata('error', 'Origin must same for each shipment!<br>'.join('<br>', $city_origin));
+			redirect($_SERVER['HTTP_REFERER']);
+		}
+		elseif(count($city_destiny) > 1){
+			$this->session->set_flashdata('error', 'Destination must same for each shipment!<br>'.join('<br>', $city_destiny));
+			redirect($_SERVER['HTTP_REFERER']);
 		}
 
+		$datadb = $this->country_mod->country_list_db(["country IN (".join(", ", $country).")"]);
+		$id_country = [];
+		$country_code = [];
+		foreach ($datadb as $key => $value) {
+			$id_country = $value['id'];
+			$country_code[$value['country']] = $value['country_code'];
+		}
+		if(count($id_country) == 0){
+			$this->session->set_flashdata('error', 'Country Not Found for some shipment!');
+			redirect($_SERVER['HTTP_REFERER']);
+		}
+
+		$datadb = $this->country_mod->city_list_db(["id_country IN (".join(", ", $id_country).")"]);
+		$city_code = [];
+		foreach ($datadb as $key => $value) {
+			$city_code[$value['city']] = $value['city_code'];
+		}
+		if(count($city_code) == 0){
+			$this->session->set_flashdata('error', 'City Not Found for some shipment!');
+			redirect($_SERVER['HTTP_REFERER']);
+		}
+
+		$master_tracking = $country_code[$shipment_list[0]['shipper_country']].$city_code[$shipment_list[0]['shipper_city']]."-".$country_code[$shipment_list[0]['consignee_city']].$city_code[$shipment_list[0]['consignee_city']]."-";
+		$master_tracking	.= $this->master_tracking_mod->generate_master_tracking($master_tracking);
+		test_var($master_tracking);
 		$form_data = array(
-			'master_tracking' 	=> $post['master_tracking'],
+			'master_tracking' 	=> $master_tracking,
 			'remarks' 					=> $post['remarks'],
 		);
 		$id_insert	= $this->master_tracking_mod->master_tracking_create_process_db($form_data);
 
 		$form_data = array(
-			'master_tracking' 	=> $post['master_tracking'],
+			'master_tracking' 	=> $master_tracking,
 		);
 		$where['id IN ('.$post['id'].')'] = NULL;
 		$this->shipment_mod->shipment_update_process_db($form_data, $where);

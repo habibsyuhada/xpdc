@@ -66,7 +66,7 @@ class Master_tracking extends CI_Controller {
 		$this->load->view('index', $data);
 	}
 	
-	public function master_tracking_create(){
+	public function master_tracking_create_deleted(){
 		$data['subview'] 			= 'master_tracking/master_tracking_create';
 		$data['meta_title'] 	= 'Create Master Tracking';
 		$this->load->view('index', $data);
@@ -147,9 +147,9 @@ class Master_tracking extends CI_Controller {
 			redirect($_SERVER['HTTP_REFERER']);
 		}
 
-		$master_tracking = $country_code[$shipment_list[0]['shipper_country']].$city_code[$shipment_list[0]['shipper_city']]."-".$country_code[$shipment_list[0]['consignee_city']].$city_code[$shipment_list[0]['consignee_city']]."-";
+		$master_tracking = $country_code[$shipment_list[0]['shipper_country']].$city_code[$shipment_list[0]['shipper_city']]."-".$country_code[$shipment_list[0]['consignee_country']].$city_code[$shipment_list[0]['consignee_city']]."-";
 		$master_tracking	.= $this->master_tracking_mod->generate_master_tracking($master_tracking);
-		test_var($master_tracking);
+		
 		$form_data = array(
 			'master_tracking' 	=> $master_tracking,
 			'remarks' 					=> $post['remarks'],

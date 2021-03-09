@@ -10,6 +10,7 @@ class Master_tracking_mod extends CI_Model {
 		if(isset($where)){
 			$this->db->where($where);
     }
+		$this->db->order_by('created_date','DESC');
 		$query = $this->db->get('master_tracking');
 		return $query->result_array();
   }
@@ -21,7 +22,7 @@ class Master_tracking_mod extends CI_Model {
   }
   
   public function generate_master_tracking($master_tracking){
-		$this->db->select('RIGHT(master_tracking,4) as kode', FALSE);
+		$this->db->select('RIGHT(master_tracking,3) as kode', FALSE);
 		$this->db->order_by('master_tracking','DESC');
 		$this->db->limit(1);
 		$this->db->where("master_tracking LIKE '".$master_tracking."%' ", NULL);

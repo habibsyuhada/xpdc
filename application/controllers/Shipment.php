@@ -608,6 +608,10 @@ class Shipment extends CI_Controller
 			}
 		}
 
+		if($post['check_price_weight'] != "" && $post['check_price_weight'] != "0"){
+
+		}
+
 		if (isset($post['has_updated_packages'])) {
 			$form_data = array(
 				'id_shipment' 	=> $post['id'],

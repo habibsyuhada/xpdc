@@ -276,7 +276,7 @@ $page_permission = array(
                       <form id="form_master_tracking" method="POST" action="<?php echo base_url(); ?>master_tracking/master_tracking_multi_create_process">
                         <div class="form-group">
                           <label>You tick <b class="text-success num_ticker">0</b> documents to <b class="text-success">Console</b>.</label>
-                          <input type="text" class="form-control" name="master_tracking" placeholder="Master Tracking">
+                          <input type="text" class="form-control" name="master_tracking" placeholder="Master Tracking" value="Master Tracking No. will Auto Generate" readonly>
                         </div>
                         <div class="form-group">
                           <input type="text" class="form-control" name="remarks" placeholder="Remarks">

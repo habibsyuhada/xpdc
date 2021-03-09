@@ -122,18 +122,10 @@ $side_permission = array(
 										</div>
 									</div>
 								<?php endif; ?>
-								<?php if ($side_permission[4] == 1 || $side_permission[5] == 1) : ?>
-									<div class="nav-item has-sub">
-										<a href="javascript:void(0)"><i class="fas fa-box"></i><span>Master Tracking</span></a>
-										<div class="submenu-content">
-											<?php if ($side_permission[4] == 1) : ?>
-												<a href="<?php echo base_url() ?>master_tracking/master_tracking_list" class="menu-item">Master Tracking List</a>
-											<?php endif; ?>
-											<?php if ($side_permission[5] == 1) : ?>
-												<a href="<?php echo base_url() ?>master_tracking/master_tracking_create" class="menu-item">Create Master Tracking</a>
-											<?php endif; ?>
-										</div>
-									</div>
+								<?php if ($side_permission[4] == 1) : ?>
+								<div class="nav-item">
+									<a href="<?php echo base_url() ?>master_tracking/master_tracking_list"><i class="fas fa-box"></i><span>Master Tracking</span></a>
+								</div>
 								<?php endif; ?>
 								<?php if ($side_permission[6] == 1) : ?>
 									<div class="nav-item">

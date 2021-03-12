@@ -56,7 +56,7 @@ class Shipment extends CI_Controller
 			}
 			$account_no = $datadb[0]["account_no"];
 			$where['status_delete'] 	= 1;
-			$where["(shipment_detail.billing_account = '".$account_no."' OR created_by = '" . $this->session->userdata('id') . "')"] 	= NULL;
+			$where["(shipment_detail.billing_account = '" . $account_no . "' OR created_by = '" . $this->session->userdata('id') . "')"] 	= NULL;
 		}
 
 		if ($this->input->get('status_driver')) {
@@ -82,7 +82,7 @@ class Shipment extends CI_Controller
 		if ($this->session->userdata('role') == "Driver") {
 			$order_by["assign_driver_date"] = "DESC";
 		}
-		
+
 
 		$datadb 				= $this->shipment_mod->shipment_list_db($where, null, $order_by);
 		$shipment_list 	= [];
@@ -135,8 +135,7 @@ class Shipment extends CI_Controller
 
 		if ($this->session->userdata('role') == "Customer") {
 			$data['customer'] = $this->shipment_mod->customer_list_db(array("status_delete" => 1, "email" => $this->session->userdata('email')));
-		}
-		else{
+		} else {
 			$data['customer'] = $this->shipment_mod->customer_list_db();
 		}
 
@@ -274,9 +273,9 @@ class Shipment extends CI_Controller
 		);
 		$id_shipment = $this->shipment_mod->shipment_create_process_db($form_data);
 
-		if($this->session->userdata('role') == 'Customer'){
+		if ($this->session->userdata('role') == 'Customer') {
 			$status_finance = 1;
-		}else{
+		} else {
 			$status_finance = 0;
 		}
 
@@ -334,10 +333,9 @@ class Shipment extends CI_Controller
 
 		$this->shipment_mod->shipment_detail_create_process_db($form_data);
 		$remarks = "";
-		if($post['status_pickup'] == "Dropoff"){
+		if ($post['status_pickup'] == "Dropoff") {
 			$remarks = "Tracking number has been created and shipment will be DROPPED OFF";
-		}
-		elseif($post['status_pickup'] == "Picked Up"){
+		} elseif ($post['status_pickup'] == "Picked Up") {
 			$remarks = "Tracking number has been created and shipment is preparing to be PICKED UP";
 		}
 		$form_data = array(
@@ -377,7 +375,7 @@ class Shipment extends CI_Controller
 			$this->quotation_mod->quotation_update_process_db($form_data, $where);
 		}
 
-		if(@$post['check_price_weight'] != ""){
+		if (@$post['check_price_weight'] != "") {
 			$where = [
 				"status_delete" => 1,
 				"account_no" 		=> $post['billing_account'],
@@ -425,7 +423,7 @@ class Shipment extends CI_Controller
 					'qty' 							=> $post['check_price_weight_fix'],
 					'uom' 							=> "Kg",
 					'currency' 					=> "IDR",
-					'unit_price' 				=> ($post['check_price_weight']/$post['check_price_weight_fix']),
+					'unit_price' 				=> ($post['check_price_weight'] / $post['check_price_weight_fix']),
 					'exchange_rate' 		=> 1,
 					'remarks' 					=> "",
 					'category' 					=> "costumer",
@@ -434,7 +432,7 @@ class Shipment extends CI_Controller
 			}
 
 			$this->session->set_flashdata('success', 'Your Shipment data has been Created!');
-			redirect('shipment/shipment_autobill/'.$id_shipment);
+			redirect('shipment/shipment_autobill/' . $id_shipment);
 		}
 
 		$this->session->set_flashdata('success', 'Your Shipment data has been Created!');
@@ -540,7 +538,7 @@ class Shipment extends CI_Controller
 			'cipl_no'										=> $post['cipl_no'],
 			'permit_no'									=> $post['permit_no']
 		);
-		if($post['status_pickup'] == "Picked Up"){
+		if ($post['status_pickup'] == "Picked Up") {
 			$form_data['pickup_name'] = $post['shipper_name'];
 			$form_data['pickup_address'] = $post['shipper_address'];
 			$form_data['pickup_city'] = $post['shipper_city'];
@@ -1331,6 +1329,7 @@ class Shipment extends CI_Controller
 
 	public function shipment_history_update()
 	{
+		$data['country'] = $this->shipment_mod->country_list_db();
 		$data['subview'] 				= 'shipment/shipment_history_update';
 		$data['meta_title'] 		= 'Shipment History Update';
 		$this->load->view('index', $data);
@@ -1578,7 +1577,8 @@ class Shipment extends CI_Controller
 		$this->load->view('index', $data);
 	}
 
-	public function shipment_autobill_process(){
+	public function shipment_autobill_process()
+	{
 		$post = $this->input->post();
 
 		$form_data = array(

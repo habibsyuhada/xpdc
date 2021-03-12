@@ -10,7 +10,7 @@ $side_permission = array(
 	6 => (in_array($role, array("Super Admin", "Operator")) ? 1 : 0), //Share Link
 	7 => (in_array($role, array("Driver", "Super Admin")) ? 1 : 0), //Driver
 	8 => (in_array($role, array("Super Admin")) ? 1 : 0), //User Management
-	9 => (in_array($role, array("Super Admin", "Finance")) ? 1 : 0), //Finance Report
+	9 => (in_array($role, array("Super Admin", "Finance", "Commercial")) ? 1 : 0), //Report
 	10 => (in_array($role, array("Super Admin", "Commercial")) ? 1 : 0), //Commercial Customer
 	11 => (in_array($role, array("Super Admin", "Commercial")) ? 1 : 0), //View Quotation
 	12 => (in_array($role, array("Super Admin", "Commercial")) ? 1 : 0), //Create Quotation
@@ -122,18 +122,10 @@ $side_permission = array(
 										</div>
 									</div>
 								<?php endif; ?>
-								<?php if ($side_permission[4] == 1 || $side_permission[5] == 1) : ?>
-									<div class="nav-item has-sub">
-										<a href="javascript:void(0)"><i class="fas fa-box"></i><span>Master Tracking</span></a>
-										<div class="submenu-content">
-											<?php if ($side_permission[4] == 1) : ?>
-												<a href="<?php echo base_url() ?>master_tracking/master_tracking_list" class="menu-item">Master Tracking List</a>
-											<?php endif; ?>
-											<?php if ($side_permission[5] == 1) : ?>
-												<a href="<?php echo base_url() ?>master_tracking/master_tracking_create" class="menu-item">Create Master Tracking</a>
-											<?php endif; ?>
-										</div>
-									</div>
+								<?php if ($side_permission[4] == 1) : ?>
+								<div class="nav-item">
+									<a href="<?php echo base_url() ?>master_tracking/master_tracking_list"><i class="fas fa-box"></i><span>Master Tracking</span></a>
+								</div>
 								<?php endif; ?>
 								<?php if ($side_permission[6] == 1) : ?>
 									<div class="nav-item">

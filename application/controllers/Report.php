@@ -38,9 +38,31 @@ class Report extends CI_Controller
 
 	public function summary_report_process(){
     $post = $this->input->post();
+    if ($this->session->userdata('branch') != "NONE") {
+      $where["(assign_branch LIKE '%" . $this->session->userdata('branch') . "%' OR branch LIKE '%" . $this->session->userdata('branch') . "%')"] 	= NULL;
+    }
 
+    if ($this->session->userdata('role') == "Commercial") {
+			unset($where);
+			$datadb 	= $this->home_mod->customer_list(array("status_delete" => 1, "assign_to" => $this->session->userdata('id')));
+			$customer_list = [];
+			foreach ($datadb as $key => $value) {
+				if ($value['account_no'] != "") {
+					$customer_list[] = $value['account_no'];
+				}
+			}
+			if (count($customer_list) == 0) {
+				$customer_list[] = "0";
+			}
+			$where['status_delete'] 	= 1;
+			$where["(shipment_detail.billing_account IN ('" . join("', '", $customer_list) . "') OR created_by = '" . $this->session->userdata('id') . "')"] 	= NULL;
+			// $where["created_by"] 	= $this->session->userdata('id');
+		}
+    
     $where['created_date >=']  = $post['date_from'];
     $where['created_date <=']  = $post['date_to'];
+		$where['status_delete'] 	 = 1;
+
 		$shipment_list 					  = $this->shipment_mod->shipment_list_db($where);
     $data['shipment_list'] 	  = $shipment_list;
     $id_shipment              = array();

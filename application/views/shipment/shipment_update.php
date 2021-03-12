@@ -18,6 +18,7 @@
     <form action="<?php echo base_url(); ?>shipment/shipment_update_process" method="POST" class="forms-sample" enctype="multipart/form-data">
       <input type="hidden" name="id" value="<?php echo $shipment['id'] ?>">
       <input type="hidden" name="tracking_no" value="<?php echo $shipment['tracking_no'] ?>">
+      <input type="hidden" name="check_price_weight" value="<?php echo $shipment['check_price_weight'] ?>">
       <div class="row clearfix">
         <div class="col-md-12">
           <div class="card">

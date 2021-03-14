@@ -135,6 +135,9 @@ class Shipment extends CI_Controller
 		if ($this->session->userdata('role') == "Customer") {
 			$data['customer'] = $this->shipment_mod->customer_list_db(array("status_delete" => 1, "email" => $this->session->userdata('email')));
 		}
+		elseif($this->session->userdata('role') == "Commercial"){
+			$data['customer'] = $this->shipment_mod->customer_list_db(["assign_to" => $this->session->userdata('id')]);
+		}
 		else{
 			$data['customer'] = $this->shipment_mod->customer_list_db();
 		}
@@ -470,7 +473,14 @@ class Shipment extends CI_Controller
 		$data['shipment'] 			= $shipment_list[0];
 		$data['packages_list'] 	= $packages_list;
 		$data['history_list'] 	= $history_list;
-		$data['customer'] = $this->shipment_mod->customer_list_db();
+
+		if($this->session->userdata('role') == "Commercial"){
+			$data['customer'] = $this->shipment_mod->customer_list_db(["assign_to" => $this->session->userdata('id')]);
+		}
+		else{
+			$data['customer'] = $this->shipment_mod->customer_list_db();
+		}
+
 		$data['package_type'] = $this->shipment_mod->package_type_list_db();
 		// $data['t'] 							= 'g';
 		$data['subview'] 				= 'shipment/shipment_update';
@@ -575,6 +585,7 @@ class Shipment extends CI_Controller
 		$where2['id_shipment'] = $post['id'];
 		$this->shipment_mod->shipment_detail_update_process_db($form_data, $where2);
 
+		$total_weight = 0;
 		foreach ($post['qty'] as $key => $value) {
 			unset($where);
 			if ($post['id_detail'][$key] == "") {
@@ -606,10 +617,24 @@ class Shipment extends CI_Controller
 				$where['id'] = $post['id_detail'][$key];
 				$this->shipment_mod->shipment_packages_update_process_db($form_data, $where);
 			}
+			$total_weight = $total_weight + ($post['qty'][$key]*$post['weight'][$key]);
 		}
 
 		if($post['check_price_weight'] != "" && $post['check_price_weight'] != "0"){
-
+			$cost = $this->shipment_mod->shipment_cost_list_db([
+				"status" 			=> 1,
+				"uom" 				=> 'Kg',
+				"category" 		=> 'costumer',
+				"id_shipment" => $post['id'],
+			]);
+			if(count($cost) > 0){
+				$cost = $cost[0];
+				$form_data = [
+					"qty" 					=> $total_weight,
+					"qty_costumer" 	=> $cost['qty'],
+				];
+				$this->shipment_mod->shipment_cost_update_process_db($form_data, ["id" => $cost['id']]);
+			}
 		}
 
 		if (isset($post['has_updated_packages'])) {

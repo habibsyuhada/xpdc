@@ -167,9 +167,16 @@ class Driver extends CI_Controller
 			return false;
 		}
 
+		$text_add_note = "";
+		if($post['status'] == 'pickup'){
+			$text_add_note = "Handovered by ";
+		}
+		elseif($post['status'] == 'deliver'){
+			$text_add_note = "Received by ";
+		}
 		$form_data = array(
 			'photo_driver_'.$post['status'] 	=> $this->upload->data('file_name'),
-			'notes_driver_'.$post['status'] 	=> $post['notes_driver_'.$post['status']],
+			'notes_driver_'.$post['status'] 	=> $text_add_note.$post['notes_driver_'.$post['status']],
 			'signature_driver_'.$post['status'] 	=> $post['signature_driver_'.$post['status']],
 			'status_driver_'.$post['status'] 	=> 2,
 		);
@@ -189,7 +196,7 @@ class Driver extends CI_Controller
 			'time' 					=> date("H:i:s"),
 			'location' 			=> $post['location_driver_'.$post['status']],
 			'status' 				=> $status_history,
-			'remarks' 			=> $post['notes_driver_'.$post['status']],
+			'remarks' 			=> $text_add_note.$post['notes_driver_'.$post['status']],
 		);
 		$id_history = $this->shipment_mod->shipment_history_create_process_db($form_data);
 		$this->shipment_update_last_history($post['id']);

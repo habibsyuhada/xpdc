@@ -17,7 +17,7 @@
   <div class="container-fluid">
     <div class="row clearfix">
       <div class="col-md-12">
-        <form action="<?php echo base_url() ?>quotation/quotation_update_process" method="POST">
+        <form action="<?php echo base_url() ?>quotation/quotation_update_process" method="POST" id="form_input">
           <input type="hidden" name="id" value="<?php echo $quotation['id'] ?>" required>
           <div class="card">
             <div class="card-body overflow-auto">
@@ -99,7 +99,7 @@
                 <div class="col-md-6">
                   <div class="form-group">
                     <label>Type of Shipment</label>
-                    <select class="form-control" name="type_of_shipment" required <?=($quotation['type_of_service'] == 'CH' || $quotation['type_of_service'] == 'WH') ? 'disabled' : ''?>>
+                    <select class="form-control" name="type_of_shipment" required <?=($quotation['type_of_service'] == 'CH' || $quotation['type_of_service'] == 'WH') ? 'disabled' : ''?> onchange="change_typeshipment(this)">
                       <option value="">-- Select One --</option>
                       <option value="International Shipping" <?php echo ($quotation['type_of_shipment'] == 'International Shipping' ? 'selected' : '' ) ?>>International Shipping</option>
                       <option value="Domestic Shipping" <?php echo ($quotation['type_of_shipment'] == 'Domestic Shipping' ? 'selected' : '' ) ?>>Domestic Shipping</option>
@@ -628,6 +628,8 @@
 
     select_country($("select[name=shipper_country]"));
     select_country($("select[name=consignee_country]"));
+
+    change_typeshipment("[name=type_of_shipment]");
   });
 
   function get_vol_weight() {
@@ -709,117 +711,137 @@
 
   }
 
-function get_total(input = "") {
-  if (input != "") {
-    var row = $(input).closest('tr');
-    var unit_price = $(row).find("input[name='charges_unit_price[]']").val();
-    var qty = $(row).find("input[name='charges_qty[]']").val();
-    var uom = $(row).find("select[name='charges_uom[]']").val();
-    if (uom == "%") {
-      qty = qty / 100;
-    }
-    var subtotal = qty * unit_price;
-    $(row).find("input[name='charges_subtotal[]']").val(subtotal);
-    $(row).find("input[name='charges_subtotal_view[]']").val(subtotal.toLocaleString('en-US', {maximumFractionDigits:2, minimumFractionDigits: 2}));
+  function get_total(input = "") {
+    if (input != "") {
+      var row = $(input).closest('tr');
+      var unit_price = $(row).find("input[name='charges_unit_price[]']").val();
+      var qty = $(row).find("input[name='charges_qty[]']").val();
+      var uom = $(row).find("select[name='charges_uom[]']").val();
+      if (uom == "%") {
+        qty = qty / 100;
+      }
+      var subtotal = qty * unit_price;
+      $(row).find("input[name='charges_subtotal[]']").val(subtotal);
+      $(row).find("input[name='charges_subtotal_view[]']").val(subtotal.toLocaleString('en-US', {maximumFractionDigits:2, minimumFractionDigits: 2}));
 
-    var exchange_rate = $(row).find("input[name='charges_exchange_rate[]']").val();
-    var total = subtotal * exchange_rate;
-    $(row).find("input[name='charges_total[]']").val(total);
-    $(row).find("input[name='charges_total_view[]']").val(total.toLocaleString('en-US', {
+      var exchange_rate = $(row).find("input[name='charges_exchange_rate[]']").val();
+      var total = subtotal * exchange_rate;
+      $(row).find("input[name='charges_total[]']").val(total);
+      $(row).find("input[name='charges_total_view[]']").val(total.toLocaleString('en-US', {
+        maximumFractionDigits: 0
+      }) + ".00");
+    }
+
+    var total_all = 0;
+    $("input[name='charges_total[]']").each(function(index, value) {
+      var total_row = parseFloat($(this).val());
+      total_all = total_all + total_row + 0;
+    });
+
+    // var vat = Number($("input[name=vat]").val());
+    // var discount = Number($("input[name=discount]").val());
+    // console.log(total_all);
+    // total_all = total_all + vat + 0;
+    // console.log(total_all);
+    // total_all = total_all - discount + 0;
+    // console.log(total_all);
+    // $(input).closest('form').find("span[name=total_all]").text(total_all);
+    $("#total_all").text(total_all.toLocaleString('en-US', {
       maximumFractionDigits: 0
     }) + ".00");
   }
 
-  var total_all = 0;
-  $("input[name='charges_total[]']").each(function(index, value) {
-    var total_row = parseFloat($(this).val());
-    total_all = total_all + total_row + 0;
-  });
-
-  // var vat = Number($("input[name=vat]").val());
-  // var discount = Number($("input[name=discount]").val());
-  // console.log(total_all);
-  // total_all = total_all + vat + 0;
-  // console.log(total_all);
-  // total_all = total_all - discount + 0;
-  // console.log(total_all);
-  // $(input).closest('form').find("span[name=total_all]").text(total_all);
-  $("#total_all").text(total_all.toLocaleString('en-US', {
-    maximumFractionDigits: 0
-  }) + ".00");
-}
-
-function tba_data(data_tba) {
-  var ro = $("input[name="+data_tba+"_name]").prop('readonly');
-  var req = $("input[name="+data_tba+"_name]").prop('required');
-  $("input[name="+data_tba+"_postcode]").val('').prop('readonly', !ro);
-  $("input[name="+data_tba+"_name]").val('').prop('readonly', !ro).prop('required', !req);
-  $("textarea[name="+data_tba+"_address]").val('').prop('readonly', !ro).prop('required', !req);
-  $("input[name="+data_tba+"_contact_person]").val('').prop('readonly', !ro).prop('required', !req);
-  $("input[name="+data_tba+"_phone_number]").val('').prop('readonly', !ro).prop('required', !req);
-  $("input[name="+data_tba+"_email]").val('').prop('readonly', !ro);
-}
-
-var first_shipper_city_load = true;
-var first_consignee_city_load = true;
-function select_country(input) {
-  var select_city;
-  var name_city
-  if($(input).attr("name") == "shipper_country"){
-    select_city = $("[name=shipper_city]");
-    name_city = "shipper_city";
+  function tba_data(data_tba) {
+    var ro = $("input[name="+data_tba+"_name]").prop('readonly');
+    var req = $("input[name="+data_tba+"_name]").prop('required');
+    $("input[name="+data_tba+"_postcode]").val('').prop('readonly', !ro);
+    $("input[name="+data_tba+"_name]").val('').prop('readonly', !ro).prop('required', !req);
+    $("textarea[name="+data_tba+"_address]").val('').prop('readonly', !ro).prop('required', !req);
+    $("input[name="+data_tba+"_contact_person]").val('').prop('readonly', !ro).prop('required', !req);
+    $("input[name="+data_tba+"_phone_number]").val('').prop('readonly', !ro).prop('required', !req);
+    $("input[name="+data_tba+"_email]").val('').prop('readonly', !ro);
   }
-  else if($(input).attr("name") == "consignee_country"){
-    select_city = $("[name=consignee_city ]");
-    name_city = "consignee_city";
-  }
-  $.ajax( {
-    url: "<?php echo base_url() ?>country/city_autocomplete",
-    dataType: "json",
-    data: {
-      // term: request.term,
-      country: $(input).val(),
-    },
-    success: function( data ) {
-      console.log(data);
-      // data = JSON.parse(data);
-      // console.log(data);
-      var content = $(select_city).parent();
-      $("select[name="+name_city+"]").select2("destroy");
-      $(select_city).remove();
-      if(data.length > 0){
-        var html = '<select class="form-control select2" name="'+name_city+'" required>';
-        $.each(data, function(index, value) {
-          html += "<option value='"+value+"'>"+value+"</option>";
-        });
-        html += "</select>";
-        $(content).append(html);
-        $("[name="+name_city+"]").select2({theme: "bootstrap4"});
-      }
-      else{
-        var html = '<input type="text" class="form-control" name="'+name_city+'" placeholder="City" required>';
-        $(content).append(html);
-      }
 
-      if(first_shipper_city_load == true && name_city == "shipper_city"){
-        if($("select[name="+name_city+"]").length){
-          $("select[name="+name_city+"]").val('<?php echo $quotation['shipper_city'] ?>').trigger('change');
-        }
-        else{
-          $("input[name="+name_city+"]").val('<?php echo $quotation['shipper_city'] ?>')
-        }
-        first_shipper_city_load = false;
-      }
-      if(first_consignee_city_load == true && name_city == "consignee_city"){
-        if($("select[name="+name_city+"]").length){
-          $("select[name="+name_city+"]").val('<?php echo $quotation['consignee_city'] ?>').trigger('change');
-        }
-        else{
-          $("input[name="+name_city+"]").val('<?php echo $quotation['consignee_city'] ?>')
-        }
-        first_consignee_city_load = false;
-      }
+  var first_shipper_city_load = true;
+  var first_consignee_city_load = true;
+  function select_country(input) {
+    var select_city;
+    var name_city
+    if($(input).attr("name") == "shipper_country"){
+      select_city = $("[name=shipper_city]");
+      name_city = "shipper_city";
     }
+    else if($(input).attr("name") == "consignee_country"){
+      select_city = $("[name=consignee_city ]");
+      name_city = "consignee_city";
+    }
+    $.ajax( {
+      url: "<?php echo base_url() ?>country/city_autocomplete",
+      dataType: "json",
+      data: {
+        // term: request.term,
+        country: $(input).val(),
+      },
+      success: function( data ) {
+        console.log(data);
+        // data = JSON.parse(data);
+        // console.log(data);
+        var content = $(select_city).parent();
+        $("select[name="+name_city+"]").select2("destroy");
+        $(select_city).remove();
+        if(data.length > 0){
+          var html = '<select class="form-control select2" name="'+name_city+'" required>';
+          $.each(data, function(index, value) {
+            html += "<option value='"+value+"'>"+value+"</option>";
+          });
+          html += "</select>";
+          $(content).append(html);
+          $("[name="+name_city+"]").select2({theme: "bootstrap4"});
+        }
+        else{
+          var html = '<input type="text" class="form-control" name="'+name_city+'" placeholder="City" required>';
+          $(content).append(html);
+        }
+
+        if(first_shipper_city_load == true && name_city == "shipper_city"){
+          if($("select[name="+name_city+"]").length){
+            $("select[name="+name_city+"]").val('<?php echo $quotation['shipper_city'] ?>').trigger('change');
+          }
+          else{
+            $("input[name="+name_city+"]").val('<?php echo $quotation['shipper_city'] ?>')
+          }
+          first_shipper_city_load = false;
+        }
+        if(first_consignee_city_load == true && name_city == "consignee_city"){
+          if($("select[name="+name_city+"]").length){
+            $("select[name="+name_city+"]").val('<?php echo $quotation['consignee_city'] ?>').trigger('change');
+          }
+          else{
+            $("input[name="+name_city+"]").val('<?php echo $quotation['consignee_city'] ?>')
+          }
+          first_consignee_city_load = false;
+        }
+      }
+    });
+  }
+
+  function change_typeshipment(input){
+    if($(input).val() == "Domestic Shipping"){
+      $('[name=shipper_country], [name=consignee_country]').val('Indonesia').trigger('change');
+      $("[name=shipper_country], [name=consignee_country]").select2({
+        'disabled': true
+      });
+    }
+    else{
+      $("[name=shipper_country], [name=consignee_country]").select2({
+        'disabled': false
+      });
+    }
+  }
+
+  $('#form_input').on('submit', function() {
+    $("[name=shipper_country], [name=consignee_country]").select2({
+      'disabled': false
+    });
   });
-}
 </script>

@@ -15,7 +15,7 @@
 </style>
 <div class="main-content">
   <div class="container-fluid">
-    <form action="<?php echo base_url(); ?>shipment/shipment_update_process" method="POST" class="forms-sample" enctype="multipart/form-data">
+    <form action="<?php echo base_url(); ?>shipment/shipment_update_process" method="POST" class="forms-sample" enctype="multipart/form-data" id="form_input">
       <input type="hidden" name="id" value="<?php echo $shipment['id'] ?>">
       <input type="hidden" name="tracking_no" value="<?php echo $shipment['tracking_no'] ?>">
       <input type="hidden" name="check_price_weight" value="<?php echo $shipment['check_price_weight'] ?>">
@@ -62,7 +62,7 @@
                     <div class="col-md-6">
                       <div class="form-group">
                         <label>Type of Shipment</label>
-                        <select class="form-control" name="type_of_shipment" required>
+                        <select class="form-control" name="type_of_shipment" required onchange="change_typeshipment(this);">
                           <option value="">-- Select One --</option>
                           <option value="International Shipping" <?= ($shipment['type_of_shipment'] == 'International Shipping') ? 'selected' : ''; ?>>International Shipping</option>
                           <option value="Domestic Shipping" <?= ($shipment['type_of_shipment'] == 'Domestic Shipping') ? 'selected' : ''; ?>>Domestic Shipping</option>
@@ -736,11 +736,11 @@
       $("input[name=pickup_phone_number]").val($("input[name=" + pickup_same_as + "_phone_number]").val());
       $("input[name=pickup_email]").val($("input[name=" + pickup_same_as + "_email]").val());
 
-      $("input[name=pickup_date]").val("");
-      $("input[name=pickup_date_to]").val("");
-      $("input[name=pickup_time]").val("");
-      $("input[name=pickup_time_to]").val("");
-      $("textarea[name=pickup_notes]").val("");
+      // $("input[name=pickup_date]").val("");
+      // $("input[name=pickup_date_to]").val("");
+      // $("input[name=pickup_time]").val("");
+      // $("input[name=pickup_time_to]").val("");
+      // $("textarea[name=pickup_notes]").val("");
     }
   }
 
@@ -844,11 +844,11 @@
     $("input[name=pickup_contact_person]").val('');
     $("input[name=pickup_phone_number]").val('');
     $("input[name=pickup_email]").val('');
-    $("input[name=pickup_date]").val("");
-    $("input[name=pickup_date_to]").val("");
-    $("input[name=pickup_time]").val("");
-    $("input[name=pickup_time_to]").val("");
-    $("textarea[name=pickup_address]").val('');
+    // $("input[name=pickup_date]").val("");
+    // $("input[name=pickup_date_to]").val("");
+    // $("input[name=pickup_time]").val("");
+    // $("input[name=pickup_time_to]").val("");
+    // $("textarea[name=pickup_notes]").val('');
   });
 
   // $(document).on("keypress", "input[name='length[]'], input[name='width[]'], input[name='height[]']", function() {
@@ -987,6 +987,7 @@
 
     select_country($("select[name=shipper_country]"));
     select_country($("select[name=consignee_country]"));
+    change_typeshipment("[name=type_of_shipment]");
   });
 
   var settime_billing_account;
@@ -1100,5 +1101,25 @@
       }
     });
   }
+
+  function change_typeshipment(input){
+    if($(input).val() == "Domestic Shipping"){
+      $('[name=shipper_country], [name=consignee_country]').val('Indonesia').trigger('change');
+      $("[name=shipper_country], [name=consignee_country]").select2({
+        'disabled': true
+      });
+    }
+    else{
+      $("[name=shipper_country], [name=consignee_country]").select2({
+        'disabled': false
+      });
+    }
+  }
+
+  $('#form_input').on('submit', function() {
+    $("[name=shipper_country], [name=consignee_country]").select2({
+      'disabled': false
+    });
+  });
 
 </script>

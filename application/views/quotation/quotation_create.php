@@ -17,7 +17,7 @@
   <div class="container-fluid">
     <div class="row clearfix">
       <div class="col-md-12">
-        <form action="<?php echo base_url() ?>quotation/quotation_create_process" method="POST">
+        <form action="<?php echo base_url() ?>quotation/quotation_create_process" method="POST" id="form_input">
           <div class="card">
             <div class="card-body overflow-auto">
               <h6 class="font-weight-bold border-bottom">Quotation Information</h6>
@@ -98,7 +98,7 @@
                 <div class="col-md-6">
                   <div class="form-group">
                     <label>Type of Shipment</label>
-                    <select class="form-control" name="type_of_shipment" required>
+                    <select class="form-control" name="type_of_shipment" required onchange="change_typeshipment(this)">
                       <option value="">-- Select One --</option>
                       <option value="International Shipping">International Shipping</option>
                       <option value="Domestic Shipping">Domestic Shipping</option>
@@ -901,4 +901,24 @@
       }
     });
   }
+
+  function change_typeshipment(input){
+    if($(input).val() == "Domestic Shipping"){
+      $('[name=shipper_country], [name=consignee_country]').val('Indonesia').trigger('change');
+      $("[name=shipper_country], [name=consignee_country]").select2({
+        'disabled': true
+      });
+    }
+    else{
+      $("[name=shipper_country], [name=consignee_country]").select2({
+        'disabled': false
+      });
+    }
+  }
+
+  $('#form_input').on('submit', function() {
+    $("[name=shipper_country], [name=consignee_country]").select2({
+      'disabled': false
+    });
+  });
 </script>

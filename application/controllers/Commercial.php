@@ -218,14 +218,15 @@ class Commercial extends CI_Controller
         do {
             $random_no = rand(0,9999);
             $random_no = str_pad($random_no, 4, '0', STR_PAD_LEFT);
+			$branch = $this->commercial_mod->branch_list_db(array('name' => $user_list['branch']));
             if($user_list['branch'] == 'TANGERANG'){
-                $random_no = "21".$random_no;
+                $random_no = $branch['code']."21".$random_no;
             }
             elseif($user_list['branch'] == 'BATAM'){
-                $random_no = "78".$random_no;
+                $random_no = $branch['code']."78".$random_no;
             }
             else{
-                $random_no = "00".$random_no;
+                $random_no = $branch['code']."00".$random_no;
             }
         } while(count($this->commercial_mod->customer_check_account_no($random_no)) > 0);
 

@@ -68,25 +68,25 @@ class Customer extends CI_Controller
     $data['measurement_post']  = $post['measurement'];
 
     $weight_fix_airfreight = 0;
-    if($post['act_weight'] > $post['vol_weight_airfreight']){
+    if ($post['act_weight'] > $post['vol_weight_airfreight']) {
       $weight_fix_airfreight = $post['act_weight'];
-    }else{
+    } else {
       $weight_fix_airfreight = $post['vol_weight_airfreight'];
     }
     $weight_fix_airfreight = ceil($weight_fix_airfreight);
 
     $weight_fix_landfreight = 0;
-    if($post['act_weight'] > $post['vol_weight_landfreight']){
+    if ($post['act_weight'] > $post['vol_weight_landfreight']) {
       $weight_fix_landfreight = $post['act_weight'];
-    }else{
+    } else {
       $weight_fix_landfreight = $post['vol_weight_landfreight'];
     }
     $weight_fix_landfreight = ceil($weight_fix_landfreight);
 
     $weight_fix_seafreight = 0;
-    if($post['act_weight'] > $post['vol_weight_seafreight']){
+    if ($post['act_weight'] > $post['vol_weight_seafreight']) {
       $weight_fix_seafreight = $post['act_weight'];
-    }else{
+    } else {
       $weight_fix_seafreight = $post['vol_weight_seafreight'];
     }
     $weight_fix_seafreight = ceil($weight_fix_seafreight);
@@ -98,7 +98,7 @@ class Customer extends CI_Controller
     unset($where);
     //domestic
     if ($post['type_of_shipment'] == 'Domestic Shipping') {
-      $qry = "SELECT * FROM table_rate_domestic WHERE (('" . $weight_fix_airfreight . "' BETWEEN airfreight_min_kg AND airfreight_max_kg) OR ('" . $weight_fix_landfreight . "' BETWEEN landfreight_min_kg AND landfreight_max_kg) OR ('" . $weight_fix_seafreight . "' BETWEEN seafreight_min_kg AND seafreight_max_kg)) AND city = '" . $post['city'] . "' AND id_customer = '" . $id_customer . "' ";
+      $qry = "SELECT * FROM table_rate_domestic WHERE (('" . $weight_fix_airfreight . "' BETWEEN airfreight_min_kg AND airfreight_max_kg) OR ('" . $weight_fix_landfreight . "' BETWEEN landfreight_min_kg AND landfreight_max_kg) OR ('" . $weight_fix_seafreight . "' BETWEEN seafreight_min_kg AND seafreight_max_kg)) AND city = '" . $post['city'] . "' AND id_customer = '" . $id_customer . "' AND id_branch = 0 ";
       $query = $this->customer_mod->select_manual_query($qry);
       if ($query->num_rows() > 0) {
         // if customer table rate exists
@@ -111,7 +111,7 @@ class Customer extends CI_Controller
         $data['type_of_shipment'] = $post['type_of_shipment'];
       } else {
         // if customer table rate not exists, get from branch
-        $qry = "SELECT * FROM table_rate_domestic WHERE (('" . $weight_fix_airfreight . "' BETWEEN airfreight_min_kg AND airfreight_max_kg) OR ('" . $weight_fix_landfreight . "' BETWEEN landfreight_min_kg AND landfreight_max_kg) OR ('" . $weight_fix_seafreight . "' BETWEEN seafreight_min_kg AND seafreight_max_kg)) AND city = '" . $post['city'] . "' AND id_branch = '" . $id_branch . "' ";
+        $qry = "SELECT * FROM table_rate_domestic WHERE (('" . $weight_fix_airfreight . "' BETWEEN airfreight_min_kg AND airfreight_max_kg) OR ('" . $weight_fix_landfreight . "' BETWEEN landfreight_min_kg AND landfreight_max_kg) OR ('" . $weight_fix_seafreight . "' BETWEEN seafreight_min_kg AND seafreight_max_kg)) AND city = '" . $post['city'] . "' AND id_branch = '" . $id_branch . "' AND id_customer = 0 ";
         $query = $this->customer_mod->select_manual_query($qry);
         if ($query->num_rows() > 0) {
           $row = $query->row_array();
@@ -135,7 +135,7 @@ class Customer extends CI_Controller
         //if city in subzone exists
         unset($where);
         //fix rate
-        $where = array('id_customer' => $id_customer, 'subzone' => $subzone['sub_zone'], 'default_value' => $weight_fix_airfreight, 'rate_type' => 'fix rate');
+        $where = array('id_customer' => $id_customer, 'subzone' => $subzone['sub_zone'], 'default_value' => $weight_fix_airfreight, 'rate_type' => 'fix rate', 'id_branch' => 0);
         $fix_rate = $this->customer_mod->table_rate_list_db($where);
 
         if ($fix_rate->num_rows() > 0) {
@@ -148,7 +148,7 @@ class Customer extends CI_Controller
         } else {
           //if fix rate not exists
           unset($where);
-          $where = array('id_customer' => $id_customer, 'subzone' => $subzone['sub_zone'], "'" . $weight_fix_airfreight . "' BETWEEN min_value AND max_value" => NULL, 'rate_type' => 'multiply rate');
+          $where = array('id_customer' => $id_customer, 'subzone' => $subzone['sub_zone'], "'" . $weight_fix_airfreight . "' BETWEEN min_value AND max_value" => NULL, 'rate_type' => 'multiply rate', 'id_branch' => 0);
           $multiply_rate = $this->customer_mod->table_rate_list_db($where);
           if ($multiply_rate->num_rows() > 0) {
             //if multiply rate exists
@@ -160,7 +160,7 @@ class Customer extends CI_Controller
           } else {
             //if multiply rate not exists, check branch fix rate
             unset($where);
-            $where = array('id_branch' => $id_branch, 'subzone' => $subzone['sub_zone'], 'default_value' => $weight_fix_airfreight, 'rate_type' => 'fix rate');
+            $where = array('id_branch' => $id_branch, 'subzone' => $subzone['sub_zone'], 'default_value' => $weight_fix_airfreight, 'rate_type' => 'fix rate', 'id_customer' => 0);
             $branch = $this->customer_mod->table_rate_list_db($where);
             if ($branch->num_rows() > 0) {
               // if fix rate branch is exists
@@ -172,7 +172,7 @@ class Customer extends CI_Controller
             } else {
               // if fix rate branch is not exists
               unset($where);
-              $where = array('id_branch' => $id_branch, 'subzone' => $subzone['sub_zone'], "'" . $weight_fix_airfreight . "' BETWEEN min_value AND max_value" => NULL, 'rate_type' => 'multiply rate');
+              $where = array('id_branch' => $id_branch, 'subzone' => $subzone['sub_zone'], "'" . $weight_fix_airfreight . "' BETWEEN min_value AND max_value" => NULL, 'rate_type' => 'multiply rate', 'id_customer' => 0);
               $branch = $this->customer_mod->table_rate_list_db($where);
               if ($branch->num_rows() > 0) {
                 $result = $branch->row_array();
@@ -199,7 +199,7 @@ class Customer extends CI_Controller
           //if country in zone exists
           unset($where);
           //fix rate
-          $where = array('id_customer' => $id_customer, 'zone' => $zone['zone_name'], 'default_value' => $weight_fix_airfreight, 'rate_type' => 'fix rate');
+          $where = array('id_customer' => $id_customer, 'zone' => $zone['zone_name'], 'default_value' => $weight_fix_airfreight, 'rate_type' => 'fix rate', 'id_branch' => 0);
           $fix_rate = $this->customer_mod->table_rate_list_db($where);
 
           if ($fix_rate->num_rows() > 0) {
@@ -211,7 +211,7 @@ class Customer extends CI_Controller
             $data['type_of_shipment'] = $post['type_of_shipment'];
           } else {
             unset($where);
-            $where = array('id_customer' => $id_customer, 'zone' => $zone['zone_name'], "'" . $weight_fix_airfreight . "' BETWEEN min_value AND max_value" => NULL, 'rate_type' => 'multiply rate');
+            $where = array('id_customer' => $id_customer, 'zone' => $zone['zone_name'], "'" . $weight_fix_airfreight . "' BETWEEN min_value AND max_value" => NULL, 'rate_type' => 'multiply rate', 'id_branch' => 0);
             $multiply_rate = $this->customer_mod->table_rate_list_db($where);
             if ($multiply_rate->num_rows() > 0) {
               //if multiply rate exists
@@ -223,7 +223,7 @@ class Customer extends CI_Controller
             } else {
               //if multiply rate not exists, check branch fix rate
               unset($where);
-              $where = array('id_branch' => $id_branch, 'zone' => $zone['zone_name'], 'default_value' => $weight_fix_airfreight, 'rate_type' => 'fix rate');
+              $where = array('id_branch' => $id_branch, 'zone' => $zone['zone_name'], 'default_value' => $weight_fix_airfreight, 'rate_type' => 'fix rate', 'id_customer' => 0);
               $branch = $this->customer_mod->table_rate_list_db($where);
               if ($branch->num_rows() > 0) {
                 // if fix rate branch is exists
@@ -235,7 +235,7 @@ class Customer extends CI_Controller
               } else {
                 // if fix rate branch is not exists
                 unset($where);
-                $where = array('id_branch' => $id_branch, 'zone' => $zone['zone_name'], "'" . $weight_fix_airfreight . "' BETWEEN min_value AND max_value" => NULL, 'rate_type' => 'multiply rate');
+                $where = array('id_branch' => $id_branch, 'zone' => $zone['zone_name'], "'" . $weight_fix_airfreight . "' BETWEEN min_value AND max_value" => NULL, 'rate_type' => 'multiply rate', 'id_customer' => 0);
                 $branch = $this->customer_mod->table_rate_list_db($where);
                 if ($branch->num_rows() > 0) {
                   //if multiply rate exists
@@ -272,7 +272,7 @@ class Customer extends CI_Controller
     $data['meta_title']   = 'Create Shipment';
 
     $data['customer'] = $this->shipment_mod->customer_list_db(array("status_delete" => 1, "email" => $this->session->userdata('email')));
-		$data['package_type'] = $this->shipment_mod->package_type_list_db();
+    $data['package_type'] = $this->shipment_mod->package_type_list_db();
 
     $data['quotation']     = [
       "type_of_shipment"        => $post['type_of_shipment'],

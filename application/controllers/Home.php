@@ -212,7 +212,29 @@ class Home extends CI_Controller {
 		redirect('home/login');
 	}
 
-	public function shipment_create($date_key = NULL){
+	public function shipment_create($branch, $date_key = NULL){
+		if(!$this->session->userdata('id')){
+			$session_user = array(
+				"id" 					=> "Guest",
+				"branch" 			=> $branch,
+				"role" 					=> "Customer",
+			);
+			$this->session->set_userdata($session_user);
+		}
+		if($this->session->userdata('id') != "Guest"){
+			$this->session->set_flashdata('error', 'You Cannot Access the Guest Page!');
+			redirect('shipment/shipment_list');
+		}
+		$date_key = $this->encryption->decrypt(strtr($date_key, '.-~', '+=/'));
+		if(date('Y-m-d') != date('Y-m-d', strtotime($date_key))){
+			$this->session->set_flashdata('error', 'This link is expired! Please contact your administrator!');
+			redirect('home/login');
+		}
+
+		redirect("customer/check_price");
+	}
+
+	public function shipment_create_old($branch, $date_key = NULL){
 		if(!$this->session->userdata('id')){
 			$session_user = array(
 				"id" 					=> "Guest",

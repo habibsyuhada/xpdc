@@ -136,11 +136,11 @@ if (!isset($cargo_list)) {
                       <h6 class="font-weight-bold">Shipper Information</h6>
                       <div class="form-group">
                         <label>Shipper Name</label>
-                        <input type="text" class="form-control" name="shipper_name" value="<?php echo @$quotation['shipper_name'] ?>" placeholder="Shipper Name" <?= ($this->session->userdata('role') == "Customer") ? 'readonly' : '' ?> required>
+                        <input type="text" class="form-control" name="shipper_name" value="<?php echo @$quotation['shipper_name'] ?>" placeholder="Shipper Name" <?= ($this->session->userdata('role') == "Customer" && $this->session->userdata('id') != "Guest") ? 'readonly' : '' ?> required>
                       </div>
                       <div class="form-group">
                         <label>Address</label>
-                        <textarea class="form-control" name="shipper_address" placeholder="Address" <?= ($this->session->userdata('role') == "Customer") ? 'readonly' : '' ?> required><?php echo @$quotation['shipper_address'] ?></textarea>
+                        <textarea class="form-control" name="shipper_address" placeholder="Address" <?= ($this->session->userdata('role') == "Customer" && $this->session->userdata('id') != "Guest") ? 'readonly' : '' ?> required><?php echo @$quotation['shipper_address'] ?></textarea>
                       </div>
                       <div class="form-group">
                         <label>Country</label>
@@ -152,28 +152,28 @@ if (!isset($cargo_list)) {
                             <?php } ?>
                           </select>
                         <?php } else { ?>
-                          <input type="text" class="form-control" name="shipper_country" value="<?php echo @$quotation['shipper_country'] ?>" placeholder="Shipper Country" <?= ($this->session->userdata('role') == "Customer") ? 'readonly' : '' ?> required>
+                          <input type="text" class="form-control" name="shipper_country" value="<?php echo @$quotation['shipper_country'] ?>" placeholder="Shipper Country" <?= ($this->session->userdata('role') == "Customer" && $this->session->userdata('id') != "Guest") ? 'readonly' : '' ?> required>
                         <?php } ?>
                       </div>
                       <div class="form-group">
                         <label>City</label>
-                        <input type="text" class="form-control" name="shipper_city" value="<?php echo @$quotation['shipper_city'] ?>" placeholder="City" <?= ($this->session->userdata('role') == "Customer") ? 'readonly' : '' ?>>
+                        <input type="text" class="form-control" name="shipper_city" value="<?php echo @$quotation['shipper_city'] ?>" placeholder="City" <?= ($this->session->userdata('role') == "Customer" && $this->session->userdata('id') != "Guest") ? 'readonly' : '' ?>>
                       </div>
                       <div class="form-group">
                         <label>Postcode</label>
-                        <input type="text" class="form-control" name="shipper_postcode" value="<?php echo @$quotation['shipper_postcode'] ?>" placeholder="Postcode" <?= ($this->session->userdata('role') == "Customer") ? 'readonly' : '' ?>>
+                        <input type="text" class="form-control" name="shipper_postcode" value="<?php echo @$quotation['shipper_postcode'] ?>" placeholder="Postcode" <?= ($this->session->userdata('role') == "Customer" && $this->session->userdata('id') != "Guest") ? 'readonly' : '' ?>>
                       </div>
                       <div class="form-group">
                         <label>Contact Person</label>
-                        <input type="text" class="form-control" name="shipper_contact_person" value="<?php echo @$quotation['shipper_contact_person'] ?>" placeholder="Contact Person" <?= ($this->session->userdata('role') == "Customer") ? 'readonly' : '' ?> required>
+                        <input type="text" class="form-control" name="shipper_contact_person" value="<?php echo @$quotation['shipper_contact_person'] ?>" placeholder="Contact Person" <?= ($this->session->userdata('role') == "Customer" && $this->session->userdata('id') != "Guest") ? 'readonly' : '' ?> required>
                       </div>
                       <div class="form-group">
                         <label>Phone Number</label>
-                        <input type="text" class="form-control" name="shipper_phone_number" value="<?php echo @$quotation['shipper_phone_number'] ?>" placeholder="Phone Number" <?= ($this->session->userdata('role') == "Customer") ? 'readonly' : '' ?> required>
+                        <input type="text" class="form-control" name="shipper_phone_number" value="<?php echo @$quotation['shipper_phone_number'] ?>" placeholder="Phone Number" <?= ($this->session->userdata('role') == "Customer" && $this->session->userdata('id') != "Guest") ? 'readonly' : '' ?> required>
                       </div>
                       <div class="form-group">
                         <label>Email</label>
-                        <input type="email" class="form-control" name="shipper_email" value="<?php echo @$quotation['shipper_email'] ?>" placeholder="Email" <?= ($this->session->userdata('role') == "Customer") ? 'readonly' : '' ?>>
+                        <input type="email" class="form-control" name="shipper_email" value="<?php echo @$quotation['shipper_email'] ?>" placeholder="Email" <?= ($this->session->userdata('role') == "Customer" && $this->session->userdata('id') != "Guest") ? 'readonly' : '' ?>>
                       </div>
                     </div>
                     <div class="col-md-6">
@@ -616,7 +616,7 @@ if (!isset($cargo_list)) {
                         <select class="form-control select2" name="billing_account" onchange="check_custumer(this)">
                           <option value="">XPDC Account No. (if any)</option>
                           <?php foreach ($customer as $data) : ?>
-                            <?php if($this->session->userdata('role') == "Customer"): ?>
+                            <?php if($this->session->userdata('role') == "Customer" && $this->session->userdata('id') != "Guest"): ?>
                             <option value="<?= $data['account_no'] ?>" selected><?= $data['account_no'] . " - " . $data['name'] ?></option>
                             <?php elseif(@$quotation['customer_account'] == $data['account_no']): ?>
                             <option value="<?= $data['account_no'] ?>" selected><?= $data['account_no'] . " - " . $data['name'] ?></option>
@@ -1043,6 +1043,9 @@ if (!isset($cargo_list)) {
     get_vol_weight();
     check_custumer($("select[name=billing_account]"));
     change_sea($("select[name=sea]").val(), 0);
+    <?php if($this->session->userdata('id') == "Guest"): ?>
+    $("[name=billing_same_as]").val("Shipper").trigger("change");
+    <?php endif; ?>
   });
 
   var settime_billing_account;

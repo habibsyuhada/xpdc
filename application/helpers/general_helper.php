@@ -28,7 +28,7 @@
 		if(!$CI->session->userdata('id')){
 			redirect('home/login');
     }
-    if($CI->session->userdata('id') == "Guest" && !in_array($link[4].'/'.$link[5], array('home/shipment_create', 'shipment/shipment_receipt', 'shipment/shipment_create_process'))){
+    if($CI->session->userdata('id') == "Guest" && !in_array($link[4].'/'.$link[5], array('home/shipment_create', 'customer/check_price', 'customer/check_price_process', 'customer/shipment_create', 'shipment/shipment_receipt', 'shipment/shipment_create_process', 'country/city_autocomplete', "shipment/check_custumer"))){
       redirect('home/login');
     }
   }

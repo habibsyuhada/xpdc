@@ -251,8 +251,8 @@
                     </div>
                   </div>
                   <div class="form-group">
-                    <label>Note</label>
-                    <textarea class="form-control" name="notes_driver_pickup" placeholder="Notes" required>Handovered by </textarea>
+                    <label>Handovered by</label>
+                    <input type="text" class="form-control" name="notes_driver_pickup" required>
                   </div>
 
                   <div id="signature" style="width: 100%"></div>
@@ -308,8 +308,8 @@
                     </div>
                   </div>
                   <div class="form-group">
-                    <label>Note</label>
-                    <textarea class="form-control" name="notes_driver_deliver" placeholder="Notes" required>Received by </textarea>
+                    <label>Received by</label>
+                    <input type="text" class="form-control" name="notes_driver_deliver" required>
                   </div>
 
                   <div id="signature2" style="width: 100%"></div>

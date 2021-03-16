@@ -353,6 +353,10 @@ class Country extends CI_Controller
         $country = $this->input->get("country");
         $where['country']       = $country;
         $country_list           = $this->country_mod->country_list_db($where);
+        if(count($country_list) == 0){
+            echo json_encode([]);
+            return false;
+        }
         $country_list           = $country_list[0];
         
         unset($where);

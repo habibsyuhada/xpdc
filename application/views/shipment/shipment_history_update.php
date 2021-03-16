@@ -1,5 +1,5 @@
 <div class="main-content">
-	<div class="container-fluid">
+  <div class="container-fluid">
     <div class="row clearfix">
       <div class="col-md-12">
         <div class="card">
@@ -7,7 +7,7 @@
             <h3>Shipment History</h3>
           </div>
           <div class="card-body">
-            <form id='form_history' action="<?php echo base_url(); ?>shipment/shipment_history_update_process" method="POST" class="forms-sample" >
+            <form id='form_history' action="<?php echo base_url(); ?>shipment/shipment_history_update_process" method="POST" class="forms-sample">
               <!-- <div class="form-group">
                 <label>Date</label>
                 <input type="date" class="form-control" name="history_date" value="<?php echo date("Y-m-d") ?>" required readonly>
@@ -20,7 +20,12 @@
               <input type="hidden" class="form-control" name="history_date" value="<?php echo date("Y-m-d") ?>" required readonly>
               <div class="form-group">
                 <label>Country</label>
-                <input type="text" class="form-control" name="country_history_location" required>
+                <select class="form-control select2" name="country_history_location" required onchange="select_country(this)">
+                  <option value="">- Select One -</option>
+                  <?php foreach ($country as $data) { ?>
+                    <option value="<?= $data['country'] ?>"><?= $data['country'] ?></option>
+                  <?php } ?>
+                </select>
               </div>
               <div class="form-group">
                 <label>City</label>
@@ -90,14 +95,14 @@
                 </tr>
               </thead>
               <tbody>
-                
+
               </tbody>
             </table>
           </div>
         </div>
       </div>
     </div>
-	</div>
+  </div>
 </div>
 <script type="text/javascript">
   var num_scanned = 0;
@@ -110,23 +115,22 @@
       type: "POST",
       url: url,
       data: $("#form_history").serialize(), // serializes the form's elements.
-      success: function(data){
+      success: function(data) {
         $('input[name=tracking_no]').val('');
-        if(data.includes('Error') == true){
+        if (data.includes('Error') == true) {
           showDangerToast(data);
-        }
-        else{
+        } else {
           data = JSON.parse(data);
           num_scanned++;
-          markup = "<tr>"
-            +"<td>"+num_scanned+"</td>"
-            +"<td>"+data.tracking_no+"</td>"
-            +"<td>"+data.date+"</td>"
-            +"<td>"+data.time+"</td>"
-            +"<td>"+data.location+"</td>"
-            +"<td>"+data.status+"</td>"
-            +"<td>"+data.remarks+"</td>"
-            +"<tr>";
+          markup = "<tr>" +
+            "<td>" + num_scanned + "</td>" +
+            "<td>" + data.tracking_no + "</td>" +
+            "<td>" + data.date + "</td>" +
+            "<td>" + data.time + "</td>" +
+            "<td>" + data.location + "</td>" +
+            "<td>" + data.status + "</td>" +
+            "<td>" + data.remarks + "</td>" +
+            "<tr>";
           $("#table_history tbody").prepend(markup);
           showSuccessToast('Your Data has been submitted!');
         }
@@ -135,4 +139,41 @@
       }
     });
   });
+
+  $("[name=country_history_location]").select2({
+    theme: "bootstrap4"
+  });
+
+
+  function select_country(input) {
+    var select_city = $("[name=city_history_location]");
+    var name_city = "city_history_location";
+    $.ajax({
+      url: "<?php echo base_url() ?>country/city_autocomplete",
+      dataType: "json",
+      data: {
+        country: $(input).val(),
+      },
+      success: function(data) {
+        console.log(data);
+        var content = $(select_city).parent();
+        $("select[name=" + name_city + "]").select2("destroy");
+        $(select_city).remove();
+        if (data.length > 0) {
+          var html = '<select class="form-control select2" name="' + name_city + '" required>';
+          $.each(data, function(index, value) {
+            html += "<option value='" + value + "'>" + value + "</option>";
+          });
+          html += "</select>";
+          $(content).append(html);
+          $("[name=" + name_city + "]").select2({
+            theme: "bootstrap4"
+          });
+        } else {
+          var html = '<input type="text" class="form-control" name="' + name_city + '" placeholder="City">';
+          $(content).append(html);
+        }
+      }
+    });
+  }
 </script>

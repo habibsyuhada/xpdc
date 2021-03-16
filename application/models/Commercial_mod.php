@@ -24,13 +24,23 @@ class Commercial_mod extends CI_Model
 
     function customer_list_db($where = null)
     {
-        if($where){
+        if ($where) {
             $this->db->where($where);
         }
         $this->db->from('customer');
         $this->db->where(array('customer.status_delete' => 1));
         $query = $this->db->get();
         return $query->result_array();
+    }
+
+    function branch_list_db($where = null)
+    {
+        if ($where) {
+            $this->db->where($where);
+        }
+        $this->db->from('branch');
+        $query = $this->db->get();
+        return $query->row_array();
     }
 
     public function customer_create_process_db($data)
@@ -62,6 +72,12 @@ class Commercial_mod extends CI_Model
     public function customer_delete_process_db($where)
     {
         $this->db->where($where);
+        $this->db->delete('customer');
+    }
+
+    public function user_delete_process_db($where)
+    {
+        $this->db->where($where);
         $this->db->delete('user');
     }
 
@@ -90,7 +106,7 @@ class Commercial_mod extends CI_Model
     {
         $this->db->from('customer');
         $this->db->where("status_delete", 1);
-        $this->db->where("RIGHT(account_no, 6)", $account_no);
+        $this->db->where("RIGHT(account_no, 6) = '$account_no'");
         $query = $this->db->get();
         return $query->result_array();
     }

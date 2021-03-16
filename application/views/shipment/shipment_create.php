@@ -5,7 +5,7 @@ if (!isset($cargo_list)) {
 ?>
 <div class="main-content">
   <div class="container-fluid">
-    <form action="<?php echo base_url(); ?>shipment/shipment_receipt" method="POST" class="forms-sample" enctype="multipart/form-data">
+    <form action="<?php echo base_url(); ?>shipment/shipment_receipt" method="POST" class="forms-sample" enctype="multipart/form-data" id="form_input">
       <?php if (isset($id_quotation)) : ?>
         <input type="hidden" name="id_quotation" value="<?php echo $id_quotation ?>">
       <?php endif; ?>
@@ -64,7 +64,7 @@ if (!isset($cargo_list)) {
                       <div class="form-group">
                         <label>Type of Shipment</label>
                         <?php if ($this->session->userdata('role') != "Customer") { ?>
-                          <select class="form-control" name="type_of_shipment" required>
+                          <select class="form-control" name="type_of_shipment" required onchange="change_typeshipment(this);">
                             <option value="">-- Select One --</option>
                             <option value="International Shipping" <?php echo (@$quotation['type_of_shipment'] == "International Shipping" ? "selected" : "") ?>>International Shipping</option>
                             <option value="Domestic Shipping" <?php echo (@$quotation['type_of_shipment'] == "Domestic Shipping" ? "selected" : "") ?>>Domestic Shipping</option>
@@ -827,11 +827,11 @@ if (!isset($cargo_list)) {
       $("input[name=pickup_phone_number]").val($("input[name=" + pickup_same_as + "_phone_number]").val());
       $("input[name=pickup_email]").val($("input[name=" + pickup_same_as + "_email]").val());
 
-      $("input[name=pickup_date]").val("");
-      $("input[name=pickup_date_to]").val("");
-      $("input[name=pickup_time]").val("");
-      $("input[name=pickup_time_to]").val("");
-      $("textarea[name=pickup_notes]").val("");
+      // $("input[name=pickup_date]").val("");
+      // $("input[name=pickup_date_to]").val("");
+      // $("input[name=pickup_time]").val("");
+      // $("input[name=pickup_time_to]").val("");
+      // $("textarea[name=pickup_notes]").val("");
     }
   }
 
@@ -946,11 +946,11 @@ if (!isset($cargo_list)) {
     $("input[name=pickup_contact_person]").val('');
     $("input[name=pickup_phone_number]").val('');
     $("input[name=pickup_email]").val('');
-    $("input[name=pickup_date]").val("");
-    $("input[name=pickup_date_to]").val("");
-    $("input[name=pickup_time]").val("");
-    $("input[name=pickup_time_to]").val("");
-    $("textarea[name=pickup_address]").val('');
+    // $("input[name=pickup_date]").val("");
+    // $("input[name=pickup_date_to]").val("");
+    // $("input[name=pickup_time]").val("");
+    // $("input[name=pickup_time_to]").val("");
+    // $("textarea[name=pickup_notes]").val('');
     pickup_same($("select[name=pickup_same_as]"));
   });
 
@@ -1043,6 +1043,7 @@ if (!isset($cargo_list)) {
     get_vol_weight();
     check_custumer($("select[name=billing_account]"));
     change_sea($("select[name=sea]").val(), 0);
+    change_typeshipment("[name=type_of_shipment]");
     <?php if($this->session->userdata('id') == "Guest"): ?>
     $("[name=billing_same_as]").val("Shipper").trigger("change");
     <?php endif; ?>
@@ -1170,36 +1171,25 @@ if (!isset($cargo_list)) {
 
   }
 
-  // $("input[name=shipper_city], input[name=consignee_city]").autocomplete({
-  //   source: function( request, response ) {
-  //     var country = "";
-  //     var input = this.element;
-  //     if($(input).attr("name") == "shipper_city"){
-  //       country = $("select[name=shipper_country]").val();
-  //       // console.log(country);
-  //     }
-  //     else if($(input).attr("name") == "consignee_city"){
-  //       country = $("select[name=consignee_country]").val();
-  //     }
-  //     console.log(country);
-  //     $.ajax( {
-  //       url: "<?php echo base_url() ?>country/city_autocomplete",
-  //       dataType: "jsonp",
-  //       data: {
-  //         term: request.term,
-  //         country: country,
-  //       },
-  //       success: function( data ) {
-  //         console.log(data);
-  //         response( data );
-  //       }
-  //     } );
-  //   },
-  //   minLength: 0,
-  //   // select: function( event, ui ) {
-  //   //   log( "Selected: " + ui.item.value + " aka " + ui.item.id );
-  //   // }
-  // });
+  function change_typeshipment(input){
+    if($(input).val() == "Domestic Shipping"){
+      $('[name=shipper_country], [name=consignee_country]').val('Indonesia').trigger('change');
+      $("[name=shipper_country], [name=consignee_country]").select2({
+        'disabled': true
+      });
+    }
+    else{
+      $("[name=shipper_country], [name=consignee_country]").select2({
+        'disabled': false
+      });
+    }
+  }
+
+  $('#form_input').on('submit', function() {
+    $("[name=shipper_country], [name=consignee_country]").select2({
+      'disabled': false
+    });
+  });
 
   $(function() {
     $('#pickup_from').datetimepicker({

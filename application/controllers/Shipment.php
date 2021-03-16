@@ -179,7 +179,7 @@ class Shipment extends CI_Controller
 		}
 
 		$data['data_input'] 			= $post;
-		$data['meta_title'] 			= 'Shipment ' . (isset($post['tracking_no']) ? "Preview" : "Receipt");
+		$data['meta_title'] 			= 'Shipment ' . (isset($post['tracking_no']) ? "Receipt" : "Preview");
 		$data['subview']    			= 'shipment/shipment_receipt';
 		$this->load->view('index', $data);
 	}
@@ -1601,8 +1601,9 @@ class Shipment extends CI_Controller
 		$data['payment_terms_list'] = $this->home_mod->payment_terms_list();
 		$data['uom_list'] = $this->home_mod->uom_list();
 
-		$data['subview'] 				= 'shipment/shipment_autobill';
-		$data['meta_title'] 		= 'Shipment Bill';
+		$data['subview'] 						= 'shipment/shipment_autobill';
+		$data['meta_title'] 				= 'Shipment Bill';
+		$data['autobill_status'] 		= 0;
 		$this->load->view('index', $data);
 	}
 
@@ -1617,6 +1618,60 @@ class Shipment extends CI_Controller
 		$this->shipment_mod->shipment_invoice_update_process_db($form_data, $where);
 
 		$this->session->set_flashdata('success', 'Your Shipment data has been Updated!');
-		redirect('shipment/shipment_list');
+		redirect('shipment/shipment_autobill_complete/'.strtr($this->encryption->encrypt($post['id']), '+=/', '.-~'));
+	}
+
+	public function shipment_autobill_complete($id)
+	{
+		if($this->session->userdata('id') == "Guest"){
+			// $this->session->unset_userdata('id');
+			// $this->session->unset_userdata('nama');
+			// $this->session->unset_userdata('email');
+			// $this->session->unset_userdata('role');
+			// $this->session->unset_userdata('departemen');
+			// session_destroy();
+		}
+
+		$id = $this->encryption->decrypt(strtr($id, '.-~', '+=/'));
+
+		$where['id'] 						= $id;
+		$shipment_list 					= $this->shipment_mod->shipment_list_db($where);
+		$data['shipment_list'] 	= $shipment_list[0];
+
+		unset($where);
+		$where['id_shipment'] 	= $id;
+		$shipment_invoice 			= $this->shipment_mod->shipment_invoice_list_db($where);
+		if (count($shipment_invoice) > 0) {
+			$data['invoice'] 				= $shipment_invoice[0];
+		}
+
+		$quotation = $this->shipment_mod->quotation_list_db(array('tracking_no' => $shipment_list[0]['tracking_no']));
+		if (count($quotation) > 0) {
+			$data['quotation'] = $quotation[0];
+		}
+
+		unset($where);
+		echo $id;
+		$where['id_shipment'] 	= $id;
+		$cost_list 							= $this->shipment_mod->shipment_cost_list_db($where);
+		$main_agent 						= array();
+		$secondary_agent				= array();
+		$costumer								= array();
+		foreach ($cost_list as $key => $value) {
+			if ($value['category'] == "costumer") {
+				$costumer[] = $value;
+			}
+		}
+		$data['main_agent'] 			= $main_agent;
+		$data['secondary_agent'] 	= $secondary_agent;
+		$data['costumer'] 				= $costumer;
+
+		$data['payment_terms_list'] = $this->home_mod->payment_terms_list();
+		$data['uom_list'] = $this->home_mod->uom_list();
+
+		$data['subview'] 						= 'shipment/shipment_autobill';
+		$data['meta_title'] 				= 'Shipment Bill';
+		$data['autobill_status'] 		= 1;
+		$this->load->view('index', $data);
 	}
 }

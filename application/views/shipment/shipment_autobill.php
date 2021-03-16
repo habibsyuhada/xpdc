@@ -63,14 +63,8 @@
                   </div>
                   <div class="form-group">
                     <label>Payment Terms</label>
-                    <select class="form-control" name="payment_terms" required>
+                    <select class="form-control" name="payment_terms" <?php echo ($autobill_status == 0 ? "required" : "disabled") ?>>
                       <option value="">- Select One -</option>
-                      <!-- <option value="Cash In Advance" <?= (@$invoice['payment_terms'] == 'Cash In Advance') ? 'selected' : ''; ?>>Cash In Advance</option>
-                      <option value="Cash In Delivery" <?= (@$invoice['payment_terms'] == 'Cash In Delivery') ? 'selected' : ''; ?>>Cash In Delivery</option>
-                      <option value="15 Days" <?= (@$invoice['payment_terms'] == '15 Days') ? 'selected' : ''; ?>>15 Days</option>
-                      <option value="30 Days" <?= (@$invoice['payment_terms'] == '30 Days') ? 'selected' : ''; ?>>30 Days</option>
-                      <option value="45 Days" <?= (@$invoice['payment_terms'] == '45 Days') ? 'selected' : ''; ?>>45 Days</option>
-                      <option value="60 Days" <?= (@$invoice['payment_terms'] == '60 Days') ? 'selected' : ''; ?>>60 Days</option> -->
                       <?php foreach ($payment_terms_list as $key => $value) : ?>
                         <option value="<?php echo $value['name'] ?>" <?= (@$invoice['payment_terms'] == $value['name']) ? 'selected' : ''; ?>><?php echo $value['name'] ?></option>
                       <?php endforeach; ?>
@@ -241,7 +235,11 @@
               <br>
               <div class="row clearfix">
                 <div class="col-md text-right">
+                  <?php if($autobill_status == 0): ?>
                   <button type="submit" class="btn btn-success">Submit</button>
+                  <?php else: ?>
+                  <a class="btn btn-warning" target="_blank" href="<?php echo base_url() ?>shipment/shipment_tracking_label_pdf/<?php echo $shipment_list['id'] ?>"><i class="fas fa-print m-0"></i> Label</a>
+                  <?php endif; ?>
                 </div>
               </div>
 

@@ -136,7 +136,7 @@ if (!isset($cargo_list)) {
                       <h6 class="font-weight-bold">Shipper Information</h6>
                       <div class="form-group">
                         <label>Shipper Name</label>
-                        <input type="text" class="form-control" name="shipper_name" value="<?php echo @$quotation['shipper_name'] ?>" placeholder="Shipper Name" <?= ($this->session->userdata('role') == "Customer" && $this->session->userdata('id') != "Guest") ? 'readonly' : '' ?> required>
+                        <input type="text" class="form-control" name="shipper_name" value="<?php echo @$quotation['shipper_name'] ?>" placeholder="Shipper Name" <?= ($this->session->userdata('role') == "Customer" && $this->session->userdata('id') != "Guest") ? 'readonly' : '' ?> oninput="$('[name=shipper_contact_person]').val(this.value)" required>
                       </div>
                       <div class="form-group">
                         <label>Address</label>
@@ -180,11 +180,7 @@ if (!isset($cargo_list)) {
                       <h6 class="font-weight-bold">Consignee Information</h6>
                       <div class="form-group">
                         <label>Consignee Name</label>
-                        <?php if ($this->session->userdata('role') != "Customer"): ?>
-                        <input type="text" class="form-control" name="consignee_name" value="<?php echo @$quotation['consignee_name'] ?>" placeholder="Receiver Name" required>
-                        <?php else: ?>
-                        <input type="text" class="form-control" name="consignee_name" value="<?php echo @$quotation['consignee_name'] ?>" placeholder="Receiver Name" required oninput="$('[name=consignee_contact_person]').val($(this).val())">
-                        <?php endif; ?>
+                        <input type="text" class="form-control" name="consignee_name" value="<?php echo @$quotation['consignee_name'] ?>" placeholder="Receiver Name" required oninput="$('[name=consignee_contact_person]').val(this.value)">
                       </div>
                       <div class="form-group">
                         <label>Address</label>

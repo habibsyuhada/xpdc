@@ -88,7 +88,7 @@ foreach ($post['qty'] as $key => $value) {
           </td>
         <?php endif; ?>
         <td class="text-center" width="50%">
-          <h1>SHIPMENT RECEIPT</h1>
+          <h1><?php echo strtoupper('Shipment ' . (isset($post['tracking_no']) ? "Receipt" : "Preview")); ?></h1>
         </td>
       </tr>
     </tbody>
@@ -205,11 +205,13 @@ foreach ($post['qty'] as $key => $value) {
                   <td><?php echo date("d-m-Y", strtotime($post['created_date'])) ?></td>
                 </tr>
               <?php endif; ?>
+              <?php if($this->session->userdata('role') != "Customer"): ?>
               <tr>
                 <td>Incoterms</td>
                 <td>:</td>
                 <td><?php echo $post['incoterms'] ?></td>
               </tr>
+              <?php endif; ?>
               <tr>
                 <td>Insurance</td>
                 <td>:</td>
@@ -225,11 +227,13 @@ foreach ($post['qty'] as $key => $value) {
                 <td>:</td>
                 <td><?php echo $post['hscode'] ?></td>
               </tr>
+              <?php if($this->session->userdata('role') != "Customer"): ?>
               <tr>
                 <td>COO (Country of Origin)</td>
                 <td>:</td>
                 <td><?php echo $post['coo'] ?></td>
               </tr>
+              <?php endif; ?>
               <tr>
                 <td>Declared Value</td>
                 <td>:</td>

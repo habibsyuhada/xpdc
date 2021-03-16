@@ -1,6 +1,6 @@
 <?php if ($type_of_shipment == 'Domestic Shipping') { ?>
   <table class="table table-bordered">
-    <?php if ($this->session->userdata('role') == 'Customer') { ?>
+    <?php if ($this->session->userdata('role') == 'Customer' && $this->session->userdata('id') != 'Guest') { ?>
       <tr>
         <td>Customer Name</td>
         <td>:</td>

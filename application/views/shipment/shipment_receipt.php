@@ -14,7 +14,7 @@ $page_permission = array(
         <div class="col-md-12">
           <div class="card">
             <div class="card-header">
-              <h3>Shipment <?php echo (isset($data_input['tracking_no']) ? "Preview" : "Receipt") ?></h3>
+              <h3><?php echo $meta_title ?></h3>
             </div>
             <div class="card-body">
               <div class="row">
@@ -184,13 +184,17 @@ $page_permission = array(
               <?php endif; ?>
               <div class="row">
                 <div class="col-md-6">
+                
+                  <input type="hidden" name="incoterms" value="<?php echo (isset($data_input['incoterms'])) ? $data_input['incoterms'] :  ''; ?>">
+                  <?php if($this->session->userdata('role') != "Customer"): ?>
                   <div class="form-group row m-0">
                     <label class="col-sm-3 col-form-label">Incoterms</label>
                     <div class="col-sm-9">
                       <label class="col-form-label">: <?php echo (isset($data_input['incoterms'])) ? $data_input['incoterms'] : '-'; ?></label>
-                      <input type="hidden" name="incoterms" value="<?php echo (isset($data_input['incoterms'])) ? $data_input['incoterms'] : ''; ?>">
                     </div>
                   </div>
+                  <?php endif; ?>
+
                   <div class="form-group row m-0">
                     <label class="col-sm-3 col-form-label">Insurance</label>
                     <div class="col-sm-9">
@@ -231,13 +235,15 @@ $page_permission = array(
                   </div> -->
                 </div>
                 <div class="col-md-6">
+                  <input type="hidden" name="coo" value="<?php echo (isset($data_input['coo'])) ? $data_input['coo'] : '' ?>">
+                  <?php if($this->session->userdata('role') != "Customer"): ?>
                   <div class="form-group row m-0">
                     <label class="col-sm-3 col-form-label">COO (Country of Origin)</label>
                     <div class="col-sm-9">
                       <label class="col-form-label">: <?php echo (isset($data_input['coo'])) ? $data_input['coo'] : '-' ?></label>
-                      <input type="hidden" name="coo" value="<?php echo (isset($data_input['coo'])) ? $data_input['coo'] : '' ?>">
                     </div>
                   </div>
+                  <?php endif; ?>
                   <div class="form-group row m-0">
                     <label class="col-sm-3 col-form-label">Declared Value</label>
                     <div class="col-sm-9">

@@ -144,7 +144,7 @@ if (!isset($cargo_list)) {
                       </div>
                       <div class="form-group">
                         <label>Country</label>
-                        <?php if ($this->session->userdata('role') != "Customer") { ?>
+                        <?php if ($this->session->userdata('role') != "Customer" || $this->session->userdata('id') == "Guest") { ?>
                           <select class="form-control select2" name="shipper_country" required onchange="select_country(this)">
                             <option value="">- Select One -</option>
                             <?php foreach ($country as $data) { ?>
@@ -595,7 +595,9 @@ if (!isset($cargo_list)) {
                       <span class="btn btn-danger previous-tab">Back</span>
                     </div>
                     <div class="text-right col-6">
-                      <?php if($this->session->userdata('role') == "Customer"): ?>
+                      <?php if($this->session->userdata('id') == "Guest"): ?>
+                      <button type="submit" class="btn btn-success" onclick="$('[name=billing_same_as]').val('Shipper').trigger('change');$('input, select, textarea').removeClass('is-invalid'); return confirm('Apakah Anda Yakin?')">Submit</button>
+                      <?php elseif($this->session->userdata('role') == "Customer"): ?>
                       <button type="submit" class="btn btn-success" onclick="$('input, select, textarea').removeClass('is-invalid'); return confirm('Apakah Anda Yakin?')">Submit</button>
                       <?php else: ?>
                       <span class="btn btn-info next-tab">Next</span>
@@ -813,6 +815,7 @@ if (!isset($cargo_list)) {
     }
 
     var pickup_same_as = $('select[name=pickup_same_as]').val();
+    <?php if($this->session->userdata('role') != "Customer"): ?>
     pickup_same_as = pickup_same_as.toLowerCase();
     console.log(pickup_same_as);
     if (pickup_same_as != 'none') {
@@ -833,6 +836,7 @@ if (!isset($cargo_list)) {
       // $("input[name=pickup_time_to]").val("");
       // $("textarea[name=pickup_notes]").val("");
     }
+    <?php endif; ?>
   }
 
   function addrow(btn) {
@@ -1043,10 +1047,7 @@ if (!isset($cargo_list)) {
     get_vol_weight();
     check_custumer($("select[name=billing_account]"));
     change_sea($("select[name=sea]").val(), 0);
-    change_typeshipment("[name=type_of_shipment]");
-    <?php if($this->session->userdata('id') == "Guest"): ?>
-    $("[name=billing_same_as]").val("Shipper").trigger("change");
-    <?php endif; ?>
+    change_typeshipment("[name=type_of_shipment]").trigger("change");
   });
 
   var settime_billing_account;

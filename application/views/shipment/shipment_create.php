@@ -562,7 +562,7 @@ if (!isset($cargo_list)) {
                         <div class="col-md-6">
                           <div class="form-group">
                             <label>Pick Up Date From</label>
-                            <input type="date" class="form-control" name="pickup_date" <?php echo ($this->session->userdata('role') == "Customer" ? "min='".date("Y-m-d")."'" : "") ?> placeholder="Pick Up Date" readonly required>
+                            <input type="date" class="form-control" name="pickup_date" <?php echo ($this->session->userdata('role') == "Customer" ? "min='".date("Y-m-d")."'" : "") ?> placeholder="Pick Up Date" value="<?=date('Y-m-d')?>" readonly required>
                           </div>
                           <div class="form-group">
                             <label>Pick Up Time From</label>
@@ -572,7 +572,7 @@ if (!isset($cargo_list)) {
                         <div class="col-md-6">
                           <div class="form-group">
                             <label>Pick Up Date To</label>
-                            <input type="date" class="form-control" name="pickup_date_to" <?php echo ($this->session->userdata('role') == "Customer" ? "min='".date("Y-m-d")."'" : "") ?> placeholder="Pick Up Date" readonly required>
+                            <input type="date" class="form-control" name="pickup_date_to" <?php echo ($this->session->userdata('role') == "Customer" ? "min='".date("Y-m-d")."'" : "") ?> placeholder="Pick Up Date" value="<?=date('Y-m-d')?>" readonly required>
                           </div>
                           <div class="form-group">
                             <label>Pick Up Time To</label>
@@ -1198,6 +1198,8 @@ if (!isset($cargo_list)) {
       format: 'HH:mm'
     });
     $('[data-mask]').inputmask();
+    $("#pickup_from").val('08:00');
+    $("#pickup_to").val('17:00');
   });
 
   /**** JQuery *******/

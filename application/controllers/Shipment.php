@@ -67,10 +67,16 @@ class Shipment extends CI_Controller
 			}
 		}
 		foreach ($this->input->get() as $key => $value) {
-			if ($this->input->get($key) || $value == 0) {
-				$exc_filter = array("status_driver");
+			if ($value != "" || $value == "0") {
+				$exc_filter = array("status_driver", "created_date_from", "created_date_to");
 				if (!in_array($key, $exc_filter)) {
 					$where[$key . " LIKE '%" . $value . "%'"] 	= NULL;
+				}
+				elseif($key == "created_date_from"){
+					$where["DATE(created_date) <= '" . $value . "'"] 	= NULL;
+				}
+				elseif($key == "created_date_to"){
+					$where["DATE(created_date) >= '" . $value . "'"] 	= NULL;
 				}
 			}
 		}

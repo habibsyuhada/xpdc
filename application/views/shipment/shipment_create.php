@@ -562,7 +562,7 @@ if (!isset($cargo_list)) {
                         <div class="col-md-6">
                           <div class="form-group">
                             <label>Pick Up Date From</label>
-                            <input type="date" class="form-control" name="pickup_date" <?php echo ($this->session->userdata('role') == "Customer" ? "min='".date("Y-m-d")."'" : "") ?> placeholder="Pick Up Date" readonly required>
+                            <input type="date" class="form-control" name="pickup_date" <?php echo ($this->session->userdata('role') == "Customer" ? "min='".date("Y-m-d")."'" : "") ?> placeholder="Pick Up Date" value="<?=date('Y-m-d')?>" readonly required>
                           </div>
                           <div class="form-group">
                             <label>Pick Up Time From</label>
@@ -572,7 +572,7 @@ if (!isset($cargo_list)) {
                         <div class="col-md-6">
                           <div class="form-group">
                             <label>Pick Up Date To</label>
-                            <input type="date" class="form-control" name="pickup_date_to" <?php echo ($this->session->userdata('role') == "Customer" ? "min='".date("Y-m-d")."'" : "") ?> placeholder="Pick Up Date" readonly required>
+                            <input type="date" class="form-control" name="pickup_date_to" <?php echo ($this->session->userdata('role') == "Customer" ? "min='".date("Y-m-d")."'" : "") ?> placeholder="Pick Up Date" value="<?=date('Y-m-d')?>" readonly required>
                           </div>
                           <div class="form-group">
                             <label>Pick Up Time To</label>
@@ -1041,14 +1041,14 @@ if (!isset($cargo_list)) {
 
   $(document).ready(function() {
     get_vol_weight();
-    check_custumer($("select[name=billing_account]"));
+    check_custumer($("select[name=billing_account]"), 1);
     change_sea($("select[name=sea]").val(), 0);
     change_typeshipment("[name=type_of_shipment]").trigger("change");
   });
 
   var settime_billing_account;
 
-  function check_custumer(input) {
+  function check_custumer(input, init_billing = 0) {
     var billing_account = $(input).val();
     $.ajax({
       url: '<?php echo base_url() ?>shipment/check_custumer',
@@ -1058,22 +1058,24 @@ if (!isset($cargo_list)) {
       },
       success: function(data) {
         if (data.includes("Error")) {
-          $(input).addClass('is-invalid');
-          var invalid_elem = '<div class="invalid-feedback">' + data + '</div>';
-          $('.invalid-feedback').remove();
-          $(invalid_elem).insertAfter(input);
-          showDangerToast(data);
-
-          $("input[name=billing_name]").val('');
-          $("input[name=billing_account]").val('');
-          $("textarea[name=billing_address]").val('');
-          $("[name=billing_city]").val('');
-          $("select[name=billing_country_view]").val('').trigger('change');
-          $("input[name=billing_country]").val('');
-          $("input[name=billing_postcode]").val('');
-          $("input[name=billing_contact_person]").val('');
-          $("input[name=billing_phone_number]").val('');
-          $("input[name=billing_email]").val('');
+          if(init_billing == 0){
+            $(input).addClass('is-invalid');
+            var invalid_elem = '<div class="invalid-feedback">' + data + '</div>';
+            $('.invalid-feedback').remove();
+            $(invalid_elem).insertAfter(input);
+            showDangerToast(data);
+  
+            $("input[name=billing_name]").val('');
+            $("input[name=billing_account]").val('');
+            $("textarea[name=billing_address]").val('');
+            $("[name=billing_city]").val('');
+            $("select[name=billing_country_view]").val('').trigger('change');
+            $("input[name=billing_country]").val('');
+            $("input[name=billing_postcode]").val('');
+            $("input[name=billing_contact_person]").val('');
+            $("input[name=billing_phone_number]").val('');
+            $("input[name=billing_email]").val('');
+          }
         } else {
           data = JSON.parse(data);
           $(input).removeClass('is-invalid');
@@ -1196,6 +1198,8 @@ if (!isset($cargo_list)) {
       format: 'HH:mm'
     });
     $('[data-mask]').inputmask();
+    $("#pickup_from").val('08:00');
+    $("#pickup_to").val('17:00');
   });
 
   /**** JQuery *******/

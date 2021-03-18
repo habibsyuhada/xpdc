@@ -27,6 +27,27 @@
                 </div>
                 <div class="col-md-6">
                   <div class="form-group">
+                    <label>Type of Shipment</label>
+                    <select class="form-control" name="type_of_shipment" required>
+                      <option value="">-- Select One --</option>
+                      <option value="International Shipping">International Shipping</option>
+                      <option value="Domestic Shipping">Domestic Shipping</option>
+                    </select>
+                  </div>
+                </div>
+                <div class="col-md-6">
+                  <div class="form-group">
+                    <label>Type of Mode</label>
+                    <select class="form-control" name="type_of_mode" required>
+                      <option value="">-- Select One --</option>
+                      <option value="Sea Transport">Sea Transport</option>
+                      <option value="Land Shipping">Land Shipping</option>
+                      <option value="Air Freight">Air Freight</option>
+                    </select>
+                  </div>
+                </div>
+                <div class="col-md-6">
+                  <div class="form-group">
                     <label>Month</label>
                     <select class="form-control" name="month" required>
                       <?php foreach ($month_list as $key => $value) : ?>
@@ -55,6 +76,8 @@
                 <table class="table text-center data_table">
                   <thead>
                     <tr class="bg-info">
+                      <th class="text-white font-weight-bold">Type of Shipment</th>
+                      <th class="text-white font-weight-bold">Type of Mode</th>
                       <th class="text-white font-weight-bold">Month</th>
                       <th class="text-white font-weight-bold">Year</th>
                       <th class="text-white font-weight-bold">Target</th>
@@ -64,6 +87,8 @@
                   <tbody>
                     <?php foreach ($target_list as $key => $value) : ?>
                     <tr>
+                      <td><?php echo $value['type_of_shipment'] ?></td>
+                      <td><?php echo $value['type_of_mode'] ?></td>
                       <td><?php echo $month_list[($value['month'] - 1)] ?></td>
                       <td><?php echo $value['year'] ?></td>
                       <td>Rp. <?php echo number_format($value['target'], 2) ?></td>

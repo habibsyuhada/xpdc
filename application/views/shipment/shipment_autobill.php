@@ -1,3 +1,8 @@
+<?php 
+  if($autobill_status == 0){
+    $invoice['payment_terms'] = "Cash In Advance";
+  }
+?>
 <style type="text/css">
   a.nav-link.active {
     border-width: 4px;
@@ -225,6 +230,30 @@
                     <?php endforeach; ?>
                   </tbody>
                 </table>
+              </div>
+              <br>
+              <h6 class="font-weight-bold border-bottom">Pay Information</h6>
+              <div class="row clearfix">
+                <div class="col-md-6">
+                  <div class="form-group">
+                    <label>Beneficiary Name</label>
+                    <input type="text" class="form-control" name="beneficiary_name" value="<?php echo @$invoice['beneficiary_name'] ?>" placeholder="Beneficiary Name" readonly>
+                  </div>
+                  <div class="form-group">
+                    <label>Bank Name</label>
+                    <input type="text" class="form-control" name="bank_name" value="<?php echo @$invoice['bank_name'] ?>" placeholder="Bank Name" readonly>
+                  </div>
+                </div>
+                <div class="col-md-6">
+                  <div class="form-group">
+                    <label>Acc. No.</label>
+                    <input type="text" class="form-control" name="acc_no" value="<?php echo @$invoice['acc_no'] ?>" placeholder="Acc. No." readonly>
+                  </div>
+                  <div class="form-group">
+                    <label>Notes</label>
+                    <textarea class="form-control" name="notes" readonly><?php echo @$invoice['notes'] ?></textarea>
+                  </div>
+                </div>
               </div>
               <br>
               <div class="row clearfix">

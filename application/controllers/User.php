@@ -225,9 +225,11 @@ class User extends CI_Controller
 		$post = $this->input->post();
 
 		$where = [
-			"id_user" => $post['id_user'],
-			"month" 	=> $post['month'],
-			"year" 		=> $post['year'],
+			"id_user" 					=> $post['id_user'],
+			"type_of_shipment" 	=> $post['type_of_shipment'],
+			"type_of_mode" 			=> $post['type_of_mode'],
+			"month" 						=> $post['month'],
+			"year" 							=> $post['year'],
 		];
 		$user_list 			= $this->user_mod->target_list_db($where);
 		if(count($user_list) > 0){
@@ -236,10 +238,12 @@ class User extends CI_Controller
 		}
 
     $form_data = array(
-			'id_user' 		=> $post['id_user'],
-			'month' 			=> $post['month'],
-			'year' 				=> $post['year'],
-			'target' 			=> $post['target'],
+			'id_user' 					=> $post['id_user'],
+			"type_of_shipment" 	=> $post['type_of_shipment'],
+			"type_of_mode" 			=> $post['type_of_mode'],
+			'month' 						=> $post['month'],
+			'year' 							=> $post['year'],
+			'target' 						=> $post['target'],
 		);
 		$id_user = $this->user_mod->target_create_process_db($form_data);
 

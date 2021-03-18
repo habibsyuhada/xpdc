@@ -81,8 +81,12 @@ $page_permission = array(
                     </select>
                   </div>
                   <div class="form-group">
-                    <label>Shipment Date</label>
-                    <input type="date" class="form-control" name="created_date" value="<?php echo @$this->input->get('created_date') ?>" placeholder="Shipment Date">
+                    <label>Shipment Date From</label>
+                    <input type="date" class="form-control" name="created_date_to" value="<?php echo @$this->input->get('created_date_to') ?>" placeholder="Shipment Date">
+                  </div>
+                  <div class="form-group">
+                    <label>Shipment Date To</label>
+                    <input type="date" class="form-control" name="created_date_from" value="<?php echo @$this->input->get('created_date_from') ?>" placeholder="Shipment Date">
                   </div>
                 </div>
                 <div class="col-md-6">

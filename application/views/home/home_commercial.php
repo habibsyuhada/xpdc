@@ -15,7 +15,7 @@
 	<div class="container-fluid">
     <div class="row justify-content-center clearfix">
       <div class="col-xl-4 col-lg-4 col-md-4 col-sm-12">
-        <div class="widget" data-link="<?php echo base_url() ?>shipment/shipment_list?type_of_shipment=Domestic+Shipping&type_of_mode=Air+Freight">
+        <div class="widget" data-link="<?php echo base_url() ?>shipment/shipment_list?type_of_shipment=Domestic+Shipping&type_of_mode=Air+Freight&created_date_from=<?php echo date("Y-m-"); ?>01&created_date_to=<?php echo date("Y-m-t"); ?>">
           <div class="widget-body">
             <div class="d-flex justify-content-between align-items-center">
               <div class="state">
@@ -29,11 +29,11 @@
             <!-- <small class="text-small mt-10 d-block">6% higher than last month</small> -->
           </div>
           <?php
-            if((@$target + 0) == 0){
+            if((@$target['Domestic Shipping']['Air Freight'] + 0) == 0){
               $progress = 100;
             }
             else{
-              $progress = (@$summary['Domestic Shipping']['Air Freight'] + 0)/(@$target+0)*100;
+              $progress = (@$summary['Domestic Shipping']['Air Freight'] + 0)/(@$target['Domestic Shipping']['Air Freight']+0)*100;
               if($progress > 100){
                 $progress = 100;
               }
@@ -45,7 +45,7 @@
           <div class="widget-body py-1">
             <div class="d-flex justify-content-end align-items-center">
               <div class="state">
-                <span><?php echo number_format(@$summary['Domestic Shipping']['Air Freight'] + 0, 2) ?> / <?php echo number_format(@$target + 0, 2) ?></span>
+                <span><?php echo number_format(@$summary['Domestic Shipping']['Air Freight'] + 0, 2) ?> / <?php echo number_format(@$target['Domestic Shipping']['Air Freight'] + 0, 2) ?></span>
               </div>
             </div>
             <!-- <small class="text-small mt-10 d-block">6% higher than last month</small> -->
@@ -53,7 +53,7 @@
         </div>
       </div>
       <div class="col-xl-4 col-lg-4 col-md-4 col-sm-12">
-        <div class="widget" data-link="<?php echo base_url() ?>shipment/shipment_list?type_of_shipment=Domestic+Shipping&type_of_mode=Land+Shipping">
+        <div class="widget" data-link="<?php echo base_url() ?>shipment/shipment_list?type_of_shipment=Domestic+Shipping&type_of_mode=Land+Shipping&created_date_from=<?php echo date("Y-m-"); ?>01&created_date_to=<?php echo date("Y-m-t"); ?>">
           <div class="widget-body">
             <div class="d-flex justify-content-between align-items-center">
               <div class="state">
@@ -67,11 +67,11 @@
             <!-- <small class="text-small mt-10 d-block">6% higher than last month</small> -->
           </div>
           <?php
-            if((@$target + 0) == 0){
+            if((@$target['Domestic Shipping']['Land Shipping'] + 0) == 0){
               $progress = 100;
             }
             else{
-              $progress = (@$summary['Domestic Shipping']['Land Shipping'] + 0)/(@$target+0)*100;
+              $progress = (@$summary['Domestic Shipping']['Land Shipping'] + 0)/(@$target['Domestic Shipping']['Land Shipping']+0)*100;
               if($progress > 100){
                 $progress = 100;
               }
@@ -83,7 +83,7 @@
           <div class="widget-body py-1">
             <div class="d-flex justify-content-end align-items-center">
               <div class="state">
-                <span><?php echo number_format(@$summary['Domestic Shipping']['Land Shipping'] + 0, 2) ?> / <?php echo number_format(@$target + 0, 2) ?></span>
+                <span><?php echo number_format(@$summary['Domestic Shipping']['Land Shipping'] + 0, 2) ?> / <?php echo number_format(@$target['Domestic Shipping']['Land Shipping'] + 0, 2) ?></span>
               </div>
             </div>
             <!-- <small class="text-small mt-10 d-block">6% higher than last month</small> -->
@@ -91,7 +91,7 @@
         </div>
       </div>
       <div class="col-xl-4 col-lg-4 col-md-4 col-sm-12">
-        <div class="widget" data-link="<?php echo base_url() ?>shipment/shipment_list?type_of_shipment=Domestic+Shipping&type_of_mode=Sea+Transport">
+        <div class="widget" data-link="<?php echo base_url() ?>shipment/shipment_list?type_of_shipment=Domestic+Shipping&type_of_mode=Sea+Transport&created_date_from=<?php echo date("Y-m-"); ?>01&created_date_to=<?php echo date("Y-m-t"); ?>">
           <div class="widget-body">
             <div class="d-flex justify-content-between align-items-center">
               <div class="state">
@@ -105,11 +105,11 @@
             <!-- <small class="text-small mt-10 d-block">6% higher than last month</small> -->
           </div>
           <?php
-            if((@$target + 0) == 0){
+            if((@$target['Domestic Shipping']['Sea Transport'] + 0) == 0){
               $progress = 100;
             }
             else{
-              $progress = (@$summary['Domestic Shipping']['Sea Transport'] + 0)/(@$target+0)*100;
+              $progress = (@$summary['Domestic Shipping']['Sea Transport'] + 0)/(@$target['Domestic Shipping']['Sea Transport']+0)*100;
               if($progress > 100){
                 $progress = 100;
               }
@@ -121,7 +121,7 @@
           <div class="widget-body py-1">
             <div class="d-flex justify-content-end align-items-center">
               <div class="state">
-                <span><?php echo number_format(@$summary['Domestic Shipping']['Sea Transport'] + 0, 2) ?> / <?php echo number_format(@$target + 0, 2) ?></span>
+                <span><?php echo number_format(@$summary['Domestic Shipping']['Sea Transport'] + 0, 2) ?> / <?php echo number_format(@$target['Domestic Shipping']['Sea Transport'] + 0, 2) ?></span>
               </div>
             </div>
             <!-- <small class="text-small mt-10 d-block">6% higher than last month</small> -->
@@ -131,7 +131,7 @@
     </div>
     <div class="row justify-content-center clearfix">
       <div class="col-xl-4 col-lg-4 col-md-4 col-sm-12">
-        <div class="widget" data-link="<?php echo base_url() ?>shipment/shipment_list?type_of_shipment=International+Shipping&type_of_mode=Air+Freight">
+        <div class="widget" data-link="<?php echo base_url() ?>shipment/shipment_list?type_of_shipment=International+Shipping&type_of_mode=Air+Freight&created_date_from=<?php echo date("Y-m-"); ?>01&created_date_to=<?php echo date("Y-m-t"); ?>">
           <div class="widget-body">
             <div class="d-flex justify-content-between align-items-center">
               <div class="state">
@@ -144,13 +144,24 @@
             </div>
             <!-- <small class="text-small mt-10 d-block">6% higher than last month</small> -->
           </div>
+          <?php
+            if((@$target['International Shipping']['Air Freight'] + 0) == 0){
+              $progress = 100;
+            }
+            else{
+              $progress = (@$summary['International Shipping']['Air Freight'] + 0)/(@$target['International Shipping']['Air Freight']+0)*100;
+              if($progress > 100){
+                $progress = 100;
+              }
+            }
+          ?>
           <div class="progress progress-sm">
-            <div class="progress-bar progress-bar-striped progress-bar-animated bg-primary" role="progressbar" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100" style="width: 100%;"></div>
+            <div class="progress-bar progress-bar-striped progress-bar-animated bg-primary" role="progressbar" aria-valuenow="<?php echo $progress ?>" aria-valuemin="0" aria-valuemax="100" style="width: <?php echo $progress ?>%;"></div>
           </div>
           <div class="widget-body py-1">
             <div class="d-flex justify-content-end align-items-center">
               <div class="state">
-                <span><?php echo number_format(@$summary['International Shipping']['Air Freight'] + 0, 2) ?> / <?php echo number_format(@$target + 0, 2) ?></span>
+                <span><?php echo number_format(@$summary['International Shipping']['Air Freight'] + 0, 2) ?> / <?php echo number_format(@$target['International Shipping']['Air Freight'] + 0, 2) ?></span>
               </div>
             </div>
             <!-- <small class="text-small mt-10 d-block">6% higher than last month</small> -->
@@ -158,7 +169,7 @@
         </div>
       </div>
       <div class="col-xl-4 col-lg-4 col-md-4 col-sm-12">
-        <div class="widget" data-link="<?php echo base_url() ?>shipment/shipment_list?type_of_shipment=International+Shipping&type_of_mode=Land+Shipping">
+        <div class="widget" data-link="<?php echo base_url() ?>shipment/shipment_list?type_of_shipment=International+Shipping&type_of_mode=Land+Shipping&created_date_from=<?php echo date("Y-m-"); ?>01&created_date_to=<?php echo date("Y-m-t"); ?>">
           <div class="widget-body">
             <div class="d-flex justify-content-between align-items-center">
               <div class="state">
@@ -171,13 +182,24 @@
             </div>
             <!-- <small class="text-small mt-10 d-block">6% higher than last month</small> -->
           </div>
+          <?php
+            if((@$target['International Shipping']['Land Shipping'] + 0) == 0){
+              $progress = 100;
+            }
+            else{
+              $progress = (@$summary['International Shipping']['Land Shipping'] + 0)/(@$target['International Shipping']['Land Shipping']+0)*100;
+              if($progress > 100){
+                $progress = 100;
+              }
+            }
+          ?>
           <div class="progress progress-sm">
-            <div class="progress-bar progress-bar-striped progress-bar-animated bg-primary" role="progressbar" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100" style="width: 100%;"></div>
+            <div class="progress-bar progress-bar-striped progress-bar-animated bg-primary" role="progressbar" aria-valuenow="<?php echo $progress ?>" aria-valuemin="0" aria-valuemax="100" style="width: <?php echo $progress ?>%;"></div>
           </div>
           <div class="widget-body py-1">
             <div class="d-flex justify-content-end align-items-center">
               <div class="state">
-                <span><?php echo number_format(@$summary['International Shipping']['Land Shipping'] + 0, 2) ?> / <?php echo number_format(@$target + 0, 2) ?></span>
+                <span><?php echo number_format(@$summary['International Shipping']['Land Shipping'] + 0, 2) ?> / <?php echo number_format(@$target['International Shipping']['Land Shipping'] + 0, 2) ?></span>
               </div>
             </div>
             <!-- <small class="text-small mt-10 d-block">6% higher than last month</small> -->
@@ -185,7 +207,7 @@
         </div>
       </div>
       <div class="col-xl-4 col-lg-4 col-md-4 col-sm-12">
-        <div class="widget" data-link="<?php echo base_url() ?>shipment/shipment_list?type_of_shipment=International+Shipping&type_of_mode=Sea+Transport">
+        <div class="widget" data-link="<?php echo base_url() ?>shipment/shipment_list?type_of_shipment=International+Shipping&type_of_mode=Sea+Transport&created_date_from=<?php echo date("Y-m-"); ?>01&created_date_to=<?php echo date("Y-m-t"); ?>">
           <div class="widget-body">
             <div class="d-flex justify-content-between align-items-center">
               <div class="state">
@@ -198,13 +220,24 @@
             </div>
             <!-- <small class="text-small mt-10 d-block">6% higher than last month</small> -->
           </div>
+          <?php
+            if((@$target['International Shipping']['Sea Transport'] + 0) == 0){
+              $progress = 100;
+            }
+            else{
+              $progress = (@$summary['International Shipping']['Sea Transport'] + 0)/(@$target['International Shipping']['Sea Transport']+0)*100;
+              if($progress > 100){
+                $progress = 100;
+              }
+            }
+          ?>
           <div class="progress progress-sm">
-            <div class="progress-bar progress-bar-striped progress-bar-animated bg-primary" role="progressbar" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100" style="width: 100%;"></div>
+            <div class="progress-bar progress-bar-striped progress-bar-animated bg-primary" role="progressbar" aria-valuenow="<?php echo $progress ?>" aria-valuemin="0" aria-valuemax="100" style="width: <?php echo $progress ?>%;"></div>
           </div>
           <div class="widget-body py-1">
             <div class="d-flex justify-content-end align-items-center">
               <div class="state">
-                <span><?php echo number_format(@$summary['International Shipping']['Sea Transport'] + 0, 2) ?> / <?php echo number_format(@$target + 0, 2) ?></span>
+                <span><?php echo number_format(@$summary['International Shipping']['Sea Transport'] + 0, 2) ?> / <?php echo number_format(@$target['International Shipping']['Sea Transport'] + 0, 2) ?></span>
               </div>
             </div>
             <!-- <small class="text-small mt-10 d-block">6% higher than last month</small> -->
@@ -214,7 +247,7 @@
     </div>
     <div class="row justify-content-center clearfix">
       <div class="col-xl-4 col-lg-4 col-md-4 col-sm-12">
-        <div class="widget" data-link="<?php echo base_url() ?>shipment/shipment_list">
+        <div class="widget" data-link="<?php echo base_url() ?>shipment/shipment_list&created_date_from=<?php echo date("Y-m-"); ?>01&created_date_to=<?php echo date("Y-m-t"); ?>">
           <div class="widget-body">
             <div class="d-flex justify-content-between align-items-center">
               <div class="state">

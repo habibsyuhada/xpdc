@@ -153,8 +153,11 @@ class Home extends CI_Controller {
 			"month" => date("n"),
 			"year" => date("Y"),
 		];
-		$target = $this->user_mod->target_list_db($where);
-		$target = @$target[0]['target'] + 0;
+		$datadb = $this->user_mod->target_list_db($where);
+		$target = [];
+		foreach ($datadb as $key => $value) {
+			$target[$value['type_of_shipment']][$value['type_of_mode']] = $value['target'] + 0;
+		}
 
 		$data['summary'] = $summary;
 		$data['target'] = $target;

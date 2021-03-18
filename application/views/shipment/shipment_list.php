@@ -93,10 +93,10 @@ $page_permission = array(
                   </div>
                   <div class="form-group">
                     <label>Country</label>
-                    <select class="form-control select2" name="shipper_country">
+                    <select class="form-control select2" name="shipper_country" onchange="select_country(this)">
                       <option value="">- Select One -</option>
-                      <?php foreach ($country['data'] as $data) { ?>
-                        <option value="<?= $data['location'] ?>" <?php echo ($this->input->get('shipper_country') == $data['location'] ? 'selected' : '') ?>><?= $data['location'] ?></option>
+                      <?php foreach ($country as $value) { ?>
+                        <option value="<?= $value['country'] ?>" <?php echo (@$quotation['shipper_country'] == $value['country'] ? 'selected' : '') ?>><?= $value['country'] ?></option>
                       <?php } ?>
                     </select>
                   </div>
@@ -113,10 +113,10 @@ $page_permission = array(
                   </div>
                   <div class="form-group">
                     <label>Country</label>
-                    <select class="form-control select2" name="consignee_country">
+                    <select class="form-control select2" name="consignee_country" onchange="select_country(this)">
                       <option value="">- Select One -</option>
-                      <?php foreach ($country['data'] as $data) { ?>
-                        <option value="<?= $data['location'] ?>" <?php echo ($this->input->get('consignee_country') == $data['location'] ? 'selected' : '') ?>><?= $data['location'] ?></option>
+                      <?php foreach ($country as $value) { ?>
+                        <option value="<?= $value['country'] ?>" <?php echo (@$quotation['shipper_country'] == $value['country'] ? 'selected' : '') ?>><?= $value['country'] ?></option>
                       <?php } ?>
                     </select>
                   </div>
@@ -352,4 +352,58 @@ $page_permission = array(
   $(".select2").select2({
     theme: "bootstrap4"
   });
+
+  function select_country(input) {
+    var select_city;
+    var name_city;
+    var disable = "";
+    if ($(input).attr("name") == "shipper_country") {
+      select_city = $("[name=shipper_city]");
+      name_city = "shipper_city";
+    } else if ($(input).attr("name") == "consignee_country") {
+      select_city = $("[name=consignee_city ]");
+      name_city = "consignee_city";
+    } else if ($(input).attr("name") == "pickup_country_view") {
+      select_city = $("[name=pickup_city]");
+      name_city = "pickup_city";
+      if ($("[name=pickup_same_as]").val() != "None") {
+        disable = "readonly";
+      }
+    } else if ($(input).attr("name") == "billing_country_view") {
+      select_city = $("[name=billing_city]");
+      name_city = "billing_city";
+    }
+    $.ajax({
+      url: "<?php echo base_url() ?>country/city_autocomplete",
+      dataType: "json",
+      data: {
+        // term: request.term,
+        country: $(input).val(),
+      },
+      success: function(data) {
+        console.log(disable);
+        // data = JSON.parse(data);
+        // console.log(data);
+        var content = $(select_city).parent();
+        $("select[name=" + name_city + "]").select2("destroy");
+        var val_default = $(select_city).val();
+        $(select_city).remove();
+        if (data.length > 0 && disable == "") {
+          var html = '<select class="form-control select2" name="' + name_city + '" required>';
+          $.each(data, function(index, value) {
+            html += "<option value='" + value + "'>" + value + "</option>";
+          });
+          html += "</select>";
+          $(content).append(html);
+          $("[name=" + name_city + "]").select2({
+            theme: "bootstrap4"
+          });
+        } else {
+          var html = '<input type="text" class="form-control" name="' + name_city + '" placeholder="City" value="'+val_default+'" ' + disable + '>';
+          $(content).append(html);
+        }
+      }
+    });
+
+  }
 </script>

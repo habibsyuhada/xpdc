@@ -82,11 +82,11 @@ $page_permission = array(
                   </div>
                   <div class="form-group">
                     <label>Shipment Date From</label>
-                    <input type="date" class="form-control" name="created_date_to" value="<?php echo @$this->input->get('created_date_to') ?>" placeholder="Shipment Date">
+                    <input type="date" class="form-control" name="created_date_from" value="<?php echo @$this->input->get('created_date_from') ?>" placeholder="Shipment Date">
                   </div>
                   <div class="form-group">
                     <label>Shipment Date To</label>
-                    <input type="date" class="form-control" name="created_date_from" value="<?php echo @$this->input->get('created_date_from') ?>" placeholder="Shipment Date">
+                    <input type="date" class="form-control" name="created_date_to" value="<?php echo @$this->input->get('created_date_to') ?>" placeholder="Shipment Date">
                   </div>
                 </div>
                 <div class="col-md-6">
@@ -212,12 +212,6 @@ $page_permission = array(
                         <td><a target="_blank" class="font-weight-bold" href="<?php echo base_url() ?>shipment/shipment_tracking/<?php echo $value['id'] ?>"><?php echo $value['status'] ?></a></td>
                         <?php if ($page_permission[6] == 1 || $page_permission[12] == 1) : ?>
                           <td>
-                            <!-- <?php if ($value['status_cost'] == 1) : ?>
-                        <span class="badge badge-sm badge-success mb-1">Paid</span>
-                        <?php else : ?>
-                        <span class="badge badge-sm badge-danger mb-1">Unpaid</span>
-                        <?php endif; ?>
-                        <br> -->
                             <?php if ($value['status_bill'] == 1) : ?>
                               <a href="<?php echo base_url() ?>shipment/shipment_invoice_pdf/<?php echo $value['id'] ?>" target="_blank" class="badge badge-sm badge-warning mb-1">Billed</a>
                             <?php elseif ($value['status_bill'] == 2) : ?>

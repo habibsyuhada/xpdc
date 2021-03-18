@@ -73,10 +73,10 @@ class Shipment extends CI_Controller
 					$where[$key . " LIKE '%" . $value . "%'"] 	= NULL;
 				}
 				elseif($key == "created_date_from"){
-					$where["DATE(created_date) <= '" . $value . "'"] 	= NULL;
+					$where["DATE(created_date) >= '" . $value . "'"] 	= NULL;
 				}
 				elseif($key == "created_date_to"){
-					$where["DATE(created_date) >= '" . $value . "'"] 	= NULL;
+					$where["DATE(created_date) <= '" . $value . "'"] 	= NULL;
 				}
 			}
 		}

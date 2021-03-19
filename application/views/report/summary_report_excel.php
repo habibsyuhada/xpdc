@@ -14,6 +14,7 @@
       <th>Consignee Name</th>
       <th>Consignee Address</th>
       <th>Status</th>
+      <th>Finance Status</th>
       <th>Main Agent Name</th>
       <th>Total Cost Main Agent</th>
       <th>Secondary Agent Name</th>
@@ -36,6 +37,19 @@
       <td><?php echo $shipment['consignee_name'] ?></td>
       <td><?php echo $shipment['consignee_address'] ?></td>
       <td><?php echo $shipment['status'] ?></td>
+      <td>
+        <?php
+          if($shipment['status_bill'] == 1){
+            echo "Billed";
+          }
+          elseif($shipment['status_bill'] == 2){
+            echo "Paid";
+          }
+          else{
+            echo "Unbilled";
+          }
+        ?>
+      </td>
       <td><?php echo $shipment['main_agent_name'] ?></td>
       <td><?php echo number_format(@$total[$shipment['id']]['main-agent'], 0).".00" ?></td>
       <td><?php echo $shipment['secondary_agent_name'] ?></td>

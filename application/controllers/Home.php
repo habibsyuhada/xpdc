@@ -143,9 +143,13 @@ class Home extends CI_Controller {
 		$cost_list = $this->shipment_mod->shipment_cost_list_db($where);
 		$summary = [];
 		foreach ($cost_list as $key => $value) {
+			$persen = 1;
+			if($value['uom'] == '%'){
+				$persen = 100;
+			}
 			$type_of_shipment = $shipment[$value['id_shipment']]['type_of_shipment'];
 			$type_of_mode = $shipment[$value['id_shipment']]['type_of_mode'];
-			$summary[$type_of_shipment][$type_of_mode] = @$summary[$type_of_shipment][$type_of_mode] + $value['qty']*$value['unit_price']*$value['exchange_rate'] + 0;
+			$summary[$type_of_shipment][$type_of_mode] = @$summary[$type_of_shipment][$type_of_mode] + ($value['qty'] / $persen)*$value['unit_price']*$value['exchange_rate'] + 0;
 		}
 
 		$where = [

@@ -361,4 +361,15 @@ class Master_tracking extends CI_Controller {
 		$this->session->set_flashdata('success', 'Your Shipment data has been Updated!');
 		redirect($_SERVER['HTTP_REFERER']);
 	}
+
+	public function shipment_takeout_process($master_tracking, $id){
+		$form_data = array(
+			'master_tracking' 	=> NULL,
+		);
+		$where['id'] = $id;
+		$this->shipment_mod->shipment_update_process_db($form_data, $where);
+		
+		$this->session->set_flashdata('success', 'Your Master Tracking data has been Updated!');
+		redirect('master_tracking/master_tracking_detail/'.$master_tracking);
+	}
 }

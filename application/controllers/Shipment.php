@@ -24,7 +24,11 @@ class Shipment extends CI_Controller
 		$where = array();
 		if ($this->session->userdata('branch')) {
 			if ($this->session->userdata('branch') != "NONE") {
-				$where["(assign_branch LIKE '%" . $this->session->userdata('branch') . "%' OR branch LIKE '%" . $this->session->userdata('branch') . "%')"] 	= NULL;
+				if($this->session->userdata('role') == 'Operator'){
+					$where["((assign_branch LIKE '%" . $this->session->userdata('branch') . "%' AND assign_branch IS NOT NULL) OR (assign_branch IS NULL AND branch LIKE '%" . $this->session->userdata('branch') . "%'))"] 	= NULL;
+				}else{
+					$where["(assign_branch LIKE '%" . $this->session->userdata('branch') . "%' OR branch LIKE '%" . $this->session->userdata('branch') . "%')"] 	= NULL;	
+				}
 			}
 		} else {
 			redirect('home/logout');

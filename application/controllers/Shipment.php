@@ -24,7 +24,11 @@ class Shipment extends CI_Controller
 		$where = array();
 		if ($this->session->userdata('branch')) {
 			if ($this->session->userdata('branch') != "NONE") {
-				$where["(assign_branch LIKE '%" . $this->session->userdata('branch') . "%' OR branch LIKE '%" . $this->session->userdata('branch') . "%')"] 	= NULL;
+				if($this->session->userdata('role') == 'Operator'){
+					$where["((assign_branch LIKE '%" . $this->session->userdata('branch') . "%' AND assign_branch IS NOT NULL) OR (assign_branch IS NULL AND branch LIKE '%" . $this->session->userdata('branch') . "%'))"] 	= NULL;
+				}else{
+					$where["(assign_branch LIKE '%" . $this->session->userdata('branch') . "%' OR branch LIKE '%" . $this->session->userdata('branch') . "%')"] 	= NULL;	
+				}
 			}
 		} else {
 			redirect('home/logout');
@@ -71,11 +75,9 @@ class Shipment extends CI_Controller
 				$exc_filter = array("status_driver", "created_date_from", "created_date_to");
 				if (!in_array($key, $exc_filter)) {
 					$where[$key . " LIKE '%" . $value . "%'"] 	= NULL;
-				}
-				elseif($key == "created_date_from"){
+				} elseif ($key == "created_date_from") {
 					$where["DATE(created_date) >= '" . $value . "'"] 	= NULL;
-				}
-				elseif($key == "created_date_to"){
+				} elseif ($key == "created_date_to") {
 					$where["DATE(created_date) <= '" . $value . "'"] 	= NULL;
 				}
 			}
@@ -87,7 +89,7 @@ class Shipment extends CI_Controller
 		if ($this->session->userdata('role') == "Driver") {
 			$order_by["assign_driver_date"] = "DESC";
 		}
-		
+
 		$where['status_delete'] 	= 1;
 		$datadb 				= $this->shipment_mod->shipment_list_db($where, null, $order_by);
 		$shipment_list 	= [];
@@ -140,11 +142,9 @@ class Shipment extends CI_Controller
 
 		if ($this->session->userdata('role') == "Customer") {
 			$data['customer'] = $this->shipment_mod->customer_list_db(array("status_delete" => 1, "email" => $this->session->userdata('email')));
-		}
-		elseif($this->session->userdata('role') == "Commercial"){
+		} elseif ($this->session->userdata('role') == "Commercial") {
 			$data['customer'] = $this->shipment_mod->customer_list_db(["assign_to" => $this->session->userdata('id')]);
-		}
-		else{
+		} else {
 			$data['customer'] = $this->shipment_mod->customer_list_db();
 		}
 
@@ -154,6 +154,56 @@ class Shipment extends CI_Controller
 		$data['country'] = $this->shipment_mod->country_list_db();
 		$data['package_type'] = $this->shipment_mod->package_type_list_db();
 		$this->load->view('index', $data);
+	}
+
+	public function pickup_price()
+	{
+		$post = $this->input->post();
+		$id_customer = $this->session->userdata('id');
+		$city = $post['city'];
+
+		$branch = $this->session->userdata('branch');
+		$where['name'] = $branch;
+		$branch = $this->shipment_mod->branch_list_db($where);
+		$id_branch = $branch[0]['id'];
+
+		$where = array('default_value' => $post['weight'], 'city' => $city, 'id_customer' => $id_customer, 'rate_type' => 'fix rate');
+		$query = $this->shipment_mod->table_rate_pickup_list_db($where);
+		if ($query->num_rows() > 0) {
+			$row = $query->row_array();
+			$pickup_rate = $row['price'] * $post['weight'];
+		} else {
+			//multiply rate
+			unset($where);
+			$where = array("'" . $post['weight'] . "' BETWEEN min_value AND max_value" => NULL, 'city' => $city, 'id_customer' => $id_customer, 'rate_type' => 'multiply rate');
+			$query = $this->shipment_mod->table_rate_pickup_list_db($where);
+			if ($query->num_rows() > 0) {
+				$row = $query->row_array();
+				$pickup_rate = $row['price'] * $post['weight'];
+			} else {
+				//fix rate branch
+				unset($where);
+				$where = array('city' => $city, 'default_value' => $post['weight'], 'id_branch' => $id_branch, 'rate_type' => 'fix rate');
+				$query = $this->shipment_mod->table_rate_pickup_list_db($where);
+				if ($query->num_rows() > 0) {
+					$row = $query->row_array();
+					$pickup_rate = $row['price'] * $post['weight'];
+				} else {
+					//multiply rate branch
+					unset($where);
+					$where = array('city' => $city, "'" . $post['weight'] . "' BETWEEN min_value AND max_value" => NULL, 'id_branch' => $id_branch, 'rate_type' => 'multiply rate');
+					$query = $this->shipment_mod->table_rate_pickup_list_db($where);
+					if ($query->num_rows() > 0) {
+						$row = $query->row_array();
+						$pickup_rate = $row['price'] * $post['weight'];
+					} else {
+						$pickup_rate = 0;
+					}
+				}
+			}
+		}
+
+		echo $pickup_rate;
 	}
 
 	public function shipment_receipt($id = NULL)
@@ -278,6 +328,7 @@ class Shipment extends CI_Controller
 			'branch'				=> $this->session->userdata('branch'),
 			'check_price_weight'					=> @$post['check_price_weight'],
 			'check_price_term'					=> @$post['check_price_term'],
+			'pickup_price'					=> @$post['pickup_price'],
 			'insurance'					=> $post['insurance'],
 		);
 		$id_shipment = $this->shipment_mod->shipment_create_process_db($form_data);
@@ -479,10 +530,9 @@ class Shipment extends CI_Controller
 		$data['packages_list'] 	= $packages_list;
 		$data['history_list'] 	= $history_list;
 
-		if($this->session->userdata('role') == "Commercial"){
+		if ($this->session->userdata('role') == "Commercial") {
 			$data['customer'] = $this->shipment_mod->customer_list_db(["assign_to" => $this->session->userdata('id')]);
-		}
-		else{
+		} else {
 			$data['customer'] = $this->shipment_mod->customer_list_db();
 		}
 
@@ -622,16 +672,16 @@ class Shipment extends CI_Controller
 				$where['id'] = $post['id_detail'][$key];
 				$this->shipment_mod->shipment_packages_update_process_db($form_data, $where);
 			}
-			$total_weight = $total_weight + ($post['qty'][$key]*$post['weight'][$key]);
+			$total_weight = $total_weight + ($post['qty'][$key] * $post['weight'][$key]);
 		}
 
-		if($post['check_price_weight'] != "" && $post['check_price_weight'] != "0"){
+		if ($post['check_price_weight'] != "" && $post['check_price_weight'] != "0") {
 			$cost = $this->shipment_mod->shipment_cost_list_db([
 				"uom" 				=> 'Kg',
 				"category" 		=> 'costumer',
 				"id_shipment" => $post['id'],
 			]);
-			if(count($cost) > 0){
+			if (count($cost) > 0) {
 				$cost = $cost[0];
 				$form_data = [
 					"qty" 					=> $total_weight,
@@ -1637,12 +1687,12 @@ class Shipment extends CI_Controller
 		$this->shipment_mod->shipment_invoice_update_process_db($form_data, $where);
 
 		$this->session->set_flashdata('success', 'Your Shipment data has been Updated!');
-		redirect('shipment/shipment_autobill_complete/'.strtr($this->encryption->encrypt($post['id']), '+=/', '.-~'));
+		redirect('shipment/shipment_autobill_complete/' . strtr($this->encryption->encrypt($post['id']), '+=/', '.-~'));
 	}
 
 	public function shipment_autobill_complete($id)
 	{
-		if($this->session->userdata('id') == "Guest"){
+		if ($this->session->userdata('id') == "Guest") {
 			// $this->session->unset_userdata('id');
 			// $this->session->unset_userdata('nama');
 			// $this->session->unset_userdata('email');

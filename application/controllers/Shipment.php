@@ -639,6 +639,20 @@ class Shipment extends CI_Controller
 					"qty_costumer" 	=> $cost['qty'],
 				];
 				$this->shipment_mod->shipment_cost_update_process_db($form_data, ["id" => $cost['id']]);
+
+				$form_data = ["status" => "Pending Payment"];
+				$where = ["id" => $post['id']];
+				$this->shipment_mod->shipment_update_process_db($form_data, $where);
+
+				$form_data = array(
+					'id_shipment' 	=> $post['id'],
+					'date' 					=> date("Y-m-d"),
+					'time' 					=> date("H:i:s"),
+					'location' 			=> $post['consignee_city'] . ", " . $post['consignee_country'],
+					'status' 				=> "Pending Payment",
+					'remarks' 			=> "Shipment information updated.",
+				);
+				$id_history = $this->shipment_mod->shipment_history_create_process_db($form_data);
 			}
 		}
 

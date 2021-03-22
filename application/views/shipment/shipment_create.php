@@ -760,7 +760,7 @@ if (!isset($cargo_list)) {
       $("input[name=pickup_account]").val('');
       $("textarea[name=pickup_address]").val('');
       // $("textarea[name=pickup_notes]").val('');
-      $("input[name=pickup_city]").val('');
+      $("[name=pickup_city]").val('');
       $("select[name=pickup_country_view]").val('').trigger('change');
       $("input[name=pickup_country]").val('');
       $("input[name=pickup_postcode]").val('');
@@ -817,7 +817,7 @@ if (!isset($cargo_list)) {
     if (pickup_same_as != 'none') {
       $("input[name=pickup_name]").val($("input[name=" + pickup_same_as + "_name]").val());
       $("textarea[name=pickup_address]").val($("textarea[name=" + pickup_same_as + "_address]").val());
-      $("input[name=pickup_city]").val($("input[name=" + pickup_same_as + "_city]").val());
+      $("[name=pickup_city]").val($("[name=" + pickup_same_as + "_city]").val());
       var select_country = $("select[name=" + pickup_same_as + "_country]").val()
       $("select[name=pickup_country_view]").val(select_country).trigger('change');
       $("input[name=pickup_country]").val(select_country);
@@ -907,7 +907,7 @@ if (!isset($cargo_list)) {
       $("select[name=pickup_same_as]").attr("disabled", "disabled");
       $("input[name=pickup_name]").attr("readonly", "readonly");
       $("textarea[name=pickup_address]").attr("readonly", "readonly");
-      $("input[name=pickup_city]").attr("readonly", "readonly");
+      $("[name=pickup_city]").attr("readonly", "readonly");
       $("input[name=pickup_country]").attr("readonly", "readonly");
       $("input[name=pickup_postcode]").attr("readonly", "readonly");
       $("input[name=pickup_contact_person]").attr("readonly", "readonly");
@@ -923,8 +923,8 @@ if (!isset($cargo_list)) {
       $("select[name=pickup_same_as]").removeAttr("disabled");
       $("input[name=pickup_name]").removeAttr('readonly');
       $("textarea[name=pickup_address]").removeAttr('readonly');
-      $("input[name=pickup_city]").removeAttr('readonly');
-      $("input[name=pickup_city]").removeAttr('disabled');
+      $("[name=pickup_city]").removeAttr('readonly');
+      $("[name=pickup_city]").removeAttr('disabled');
       $("input[name=pickup_country]").removeAttr('readonly');
       $("input[name=pickup_postcode]").removeAttr('readonly');
       $("input[name=pickup_contact_person]").removeAttr('readonly');
@@ -940,7 +940,7 @@ if (!isset($cargo_list)) {
     $("input[name=pickup_name]").val('');
     $("input[name=pickup_account]").val('');
     $("textarea[name=pickup_address]").val('');
-    $("input[name=pickup_city]").val('');
+    $("[name=pickup_city]").val('');
     $("input[name=pickup_country]").val('');
     $("input[name=pickup_postcode]").val('');
     $("input[name=pickup_contact_person]").val('');

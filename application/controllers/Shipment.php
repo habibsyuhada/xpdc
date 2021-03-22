@@ -627,7 +627,6 @@ class Shipment extends CI_Controller
 
 		if($post['check_price_weight'] != "" && $post['check_price_weight'] != "0"){
 			$cost = $this->shipment_mod->shipment_cost_list_db([
-				"status" 			=> 1,
 				"uom" 				=> 'Kg',
 				"category" 		=> 'costumer',
 				"id_shipment" => $post['id'],
@@ -1693,5 +1692,33 @@ class Shipment extends CI_Controller
 		$data['meta_title'] 				= 'Shipment Bill';
 		$data['autobill_status'] 		= 1;
 		$this->load->view('index', $data);
+	}
+
+	public function shipment_multipaid_process(){
+		$post = $this->input->post();
+
+		$where['shipment.id IN ('.$post['id'].')'] = NULL;
+		$shipment_list 					= $this->shipment_mod->shipment_list_db($where);
+
+		$not_bill = [];
+		foreach ($shipment_list as $key => $value) {
+			if($value['status_bill'] != 1){
+				$not_bill[] = $value['tracking_no'];
+			}
+		}
+		if(count($not_bill) > 0){
+			$this->session->set_flashdata('error', 'All shipment below is not already billed!<br>'.join('<br>', $not_bill));
+			redirect($_SERVER['HTTP_REFERER']);
+		}
+
+		$form_data = [
+			"status_bill" => 2,
+			"date_paid" 	=> date("Y-m-d"),
+		];
+		$where = ['id_shipment IN ('.$post['id'].')' => NULL];
+		$this->shipment_mod->shipment_detail_update_process_db($form_data, $where);
+
+		$this->session->set_flashdata('success', 'Your Shipment data has been Updated!');
+		redirect($_SERVER['HTTP_REFERER']);
 	}
 }

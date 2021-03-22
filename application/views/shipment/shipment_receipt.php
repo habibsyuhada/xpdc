@@ -190,16 +190,16 @@ $page_permission = array(
                     if($this->session->userdata('id') == "Guest"){
                       $incoterms_val = 'DAP (Delivered At Place)';
                     }
-                    elseif(isset($data_input['incoterms'])){
+                    elseif(isset($incoterms_val)){
                       $incoterms_val = $data_input['incoterms'];
                     }
                   ?>
-                  <input type="hidden" name="incoterms" value="<?php echo (isset($data_input['incoterms'])) ? $data_input['incoterms'] :  ''; ?>">
+                  <input type="hidden" name="incoterms" value="<?php echo (isset($incoterms_val)) ? $incoterms_val :  ''; ?>">
                   <?php if($this->session->userdata('role') != "Customer"): ?>
                   <div class="form-group row m-0">
                     <label class="col-sm-3 col-form-label">Incoterms</label>
                     <div class="col-sm-9">
-                      <label class="col-form-label">: <?php echo (isset($data_input['incoterms'])) ? $data_input['incoterms'] : '-'; ?></label>
+                      <label class="col-form-label">: <?php echo ($incoterms_val != "") ? $incoterms_val : '-'; ?></label>
                     </div>
                   </div>
                   <?php endif; ?>

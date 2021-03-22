@@ -184,24 +184,23 @@ $page_permission = array(
               <?php endif; ?>
               <div class="row">
                 <div class="col-md-6">
-                  
+
                   <?php
-                    $incoterms_val = '';
-                    if($this->session->userdata('id') == "Guest"){
-                      $incoterms_val = 'DAP (Delivered At Place)';
-                    }
-                    elseif(isset($data_input['incoterms'])){
-                      $incoterms_val = $data_input['incoterms'];
-                    }
+                  $incoterms_val = '';
+                  if ($this->session->userdata('id') == "Guest") {
+                    $incoterms_val = 'DAP (Delivered At Place)';
+                  } elseif (isset($data_input['incoterms'])) {
+                    $incoterms_val = $data_input['incoterms'];
+                  }
                   ?>
                   <input type="hidden" name="incoterms" value="<?php echo (isset($data_input['incoterms'])) ? $data_input['incoterms'] :  ''; ?>">
-                  <?php if($this->session->userdata('role') != "Customer"): ?>
-                  <div class="form-group row m-0">
-                    <label class="col-sm-3 col-form-label">Incoterms</label>
-                    <div class="col-sm-9">
-                      <label class="col-form-label">: <?php echo (isset($data_input['incoterms'])) ? $data_input['incoterms'] : '-'; ?></label>
+                  <?php if ($this->session->userdata('role') != "Customer") : ?>
+                    <div class="form-group row m-0">
+                      <label class="col-sm-3 col-form-label">Incoterms</label>
+                      <div class="col-sm-9">
+                        <label class="col-form-label">: <?php echo (isset($data_input['incoterms'])) ? $data_input['incoterms'] : '-'; ?></label>
+                      </div>
                     </div>
-                  </div>
                   <?php endif; ?>
 
                   <div class="form-group row m-0">
@@ -245,13 +244,13 @@ $page_permission = array(
                 </div>
                 <div class="col-md-6">
                   <input type="hidden" name="coo" value="<?php echo (isset($data_input['coo'])) ? $data_input['coo'] : '' ?>">
-                  <?php if($this->session->userdata('role') != "Customer"): ?>
-                  <div class="form-group row m-0">
-                    <label class="col-sm-3 col-form-label">COO (Country of Origin)</label>
-                    <div class="col-sm-9">
-                      <label class="col-form-label">: <?php echo (isset($data_input['coo'])) ? $data_input['coo'] : '-' ?></label>
+                  <?php if ($this->session->userdata('role') != "Customer") : ?>
+                    <div class="form-group row m-0">
+                      <label class="col-sm-3 col-form-label">COO (Country of Origin)</label>
+                      <div class="col-sm-9">
+                        <label class="col-form-label">: <?php echo (isset($data_input['coo'])) ? $data_input['coo'] : '-' ?></label>
+                      </div>
                     </div>
-                  </div>
                   <?php endif; ?>
                   <div class="form-group row m-0">
                     <label class="col-sm-3 col-form-label">Declared Value</label>
@@ -280,30 +279,30 @@ $page_permission = array(
                     </div>
                   </div>
 
-                  <?php if($this->session->userdata('role') != "Customer"): ?>
-                  <div class="form-group row m-0">
-                    <label class="col-sm-3 col-form-label">CIPL No.</label>
-                    <div class="col-sm-9">
-                      <?php if (isset($data_input['cipl_no_atc']) && @$data_input['cipl_no_atc'] != "") : ?>
-                        <label class="col-form-label">: <a href="<?php echo base_url() . "file/agent/" . $data_input['cipl_no_atc'] ?>" target="_blank" class="font-weight-bold text-primary" title="Attachment"><?php echo $data_input['cipl_no'] ?></a></label>
-                      <?php else : ?>
-                        <label class="col-form-label">: <?php echo @$data_input['cipl_no'] ?></label>
-                      <?php endif; ?>
+                  <?php if ($this->session->userdata('role') != "Customer") : ?>
+                    <div class="form-group row m-0">
+                      <label class="col-sm-3 col-form-label">CIPL No.</label>
+                      <div class="col-sm-9">
+                        <?php if (isset($data_input['cipl_no_atc']) && @$data_input['cipl_no_atc'] != "") : ?>
+                          <label class="col-form-label">: <a href="<?php echo base_url() . "file/agent/" . $data_input['cipl_no_atc'] ?>" target="_blank" class="font-weight-bold text-primary" title="Attachment"><?php echo $data_input['cipl_no'] ?></a></label>
+                        <?php else : ?>
+                          <label class="col-form-label">: <?php echo @$data_input['cipl_no'] ?></label>
+                        <?php endif; ?>
+                      </div>
                     </div>
-                  </div>
                   <?php endif; ?>
                   <input type="hidden" name="cipl_no" value="<?php echo @$data_input['cipl_no'] ?>">
 
-                  <?php if($this->session->userdata('role') != "Customer"): ?>
-                  <div class="form-group row m-0">
-                    <label class="col-sm-3 col-form-label">Permit No</label>
-                    <div class="col-sm-9">
-                      <label class="col-form-label">: <?php echo @$data_input['permit_no'] ?></label>
+                  <?php if ($this->session->userdata('role') != "Customer") : ?>
+                    <div class="form-group row m-0">
+                      <label class="col-sm-3 col-form-label">Permit No</label>
+                      <div class="col-sm-9">
+                        <label class="col-form-label">: <?php echo @$data_input['permit_no'] ?></label>
+                      </div>
                     </div>
-                  </div>
                   <?php endif; ?>
                   <input type="hidden" name="permit_no" value="<?php echo @$data_input['permit_no'] ?>">
-                  
+
                 </div>
               </div>
               <br>
@@ -471,16 +470,16 @@ $page_permission = array(
                       <input type="hidden" name="billing_email" value="<?php echo $data_input['billing_email'] ?>">
                     </div>
                   </div>
-                  <?php if(isset($data_input['check_price_weight'])){ ?>
-                  <div class="form-group row m-0">
-                    <label class="col-sm-3 col-form-label">Total Price</label>
-                    <div class="col-sm-9">
-                      <label class="col-form-label">: <?php echo ($data_input['type_of_shipment'] == 'International Shipping') ? $data_input['currency'] : 'IDR'; ?> <?php echo number_format($data_input['check_price_weight'], 2) ?> <?= ($data_input['type_of_shipment'] == "Domestic Shipping") ? "(" . $data_input['check_price_term'] . ")" : ''; ?></label>
-                      <input type="hidden" name="check_price_weight" value="<?php echo $data_input['check_price_weight'] ?>">
-                      <input type="hidden" name="check_price_weight_fix" value="<?php echo $data_input['check_price_weight_fix'] ?>">
-                      <input type="hidden" name="check_price_term" value="<?php echo $data_input['check_price_term'] ?>">
+                  <?php if (isset($data_input['check_price_weight'])) { ?>
+                    <div class="form-group row m-0">
+                      <label class="col-sm-3 col-form-label">Total Price</label>
+                      <div class="col-sm-9">
+                        <label class="col-form-label">: <?php echo ($data_input['type_of_shipment'] == 'International Shipping') ? $data_input['currency'] : 'IDR'; ?> <?php echo number_format($data_input['check_price_weight'], 2) ?> <?= ($data_input['type_of_shipment'] == "Domestic Shipping") ? "(" . $data_input['check_price_term'] . ")" : ''; ?></label>
+                        <input type="hidden" name="check_price_weight" value="<?php echo $data_input['check_price_weight'] ?>">
+                        <input type="hidden" name="check_price_weight_fix" value="<?php echo $data_input['check_price_weight_fix'] ?>">
+                        <input type="hidden" name="check_price_term" value="<?php echo $data_input['check_price_term'] ?>">
+                      </div>
                     </div>
-                  </div>
                   <?php } ?>
                 </div>
                 <div class="col-md-6">
@@ -581,6 +580,15 @@ $page_permission = array(
                       <input type="hidden" name="pickup_time_to" value="<?php echo $data_input['pickup_time_to'] ?>">
                     </div>
                   </div>
+                  <?php if (isset($data_input['pickup_price'])) { ?>
+                    <div class="form-group row m-0 <?php echo $hide_pickup; ?>">
+                      <label class="col-sm-3 col-form-label">Pickup Price</label>
+                      <div class="col-sm-9">
+                        <label class="col-form-label">: <?php echo ($data_input['type_of_shipment'] == 'International Shipping') ? $data_input['currency'] : 'IDR'; ?> <?php echo number_format($data_input['pickup_price'], 2) ?></label>
+                        <input type="hidden" name="pickup_price" value="<?php echo $data_input['pickup_price'] ?>">
+                      </div>
+                    </div>
+                  <?php } ?>
                   <div class="form-group row m-0 <?php echo $hide_pickup; ?>">
                     <label class="col-sm-3 col-form-label">Notes</label>
                     <div class="col-sm-9">

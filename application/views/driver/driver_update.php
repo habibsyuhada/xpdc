@@ -310,7 +310,7 @@
           </div>
         </div>
         <?php endif; ?>
-        <?php if($this->session->userdata('role') == "Driver"): ?>
+        <?php if($this->session->userdata('role') != "Driver"): ?>
         <div class="card">
           <div class="card-body">
             <div class="row">

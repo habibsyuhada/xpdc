@@ -14,6 +14,7 @@ $page_permission = array(
   10 => (in_array($role, array("Super Admin", "Driver", "Operator", "Finance")) ? 1 : 0), //show master tracking column
   11 => (in_array($role, array("Super Admin", "Customer", "Operator", "Finance")) ? 1 : 0), //Print label
   12 => (in_array($role, array("Customer")) ? 1 : 0),
+  13 => (in_array($role, array("Super Admin", "Finance")) ? 1 : 0), //Bulk Paid
 );
 ?>
 <style>
@@ -312,7 +313,7 @@ $page_permission = array(
                       </form>
                     </div>
                   <?php endif; ?>
-                  <?php if ($page_permission[5] == 1) : ?>
+                  <?php if ($page_permission[13] == 1) : ?>
                     <div class="col-md-4 border-left border-right">
                       <form id="form_paid" method="POST" action="<?php echo base_url(); ?>shipment/shipment_multipaid_process">
                         <div class="form-group">

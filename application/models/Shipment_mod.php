@@ -95,6 +95,14 @@ class Shipment_mod extends CI_Model
 
     return $query->result_array();
   }
+  function table_rate_pickup_list_db($where)
+  {
+    if (isset($where)) {
+      $this->db->where($where);
+    }
+    $query = $this->db->get('table_rate_pickup');
+    return $query;
+  }
 
   public function package_type_list_db($where = null)
   {

@@ -222,17 +222,18 @@
             </div>
           </div>
         </div>
+        <?php if(($shipment['status_driver_pickup'] == 1 && $shipment["driver_pickup"] == $this->session->userdata('id')) || ($shipment['status_driver_deliver'] == 1 && $shipment["driver_deliver"] == $this->session->userdata('id'))): ?>
         <div class="card">
           <div class="card-body">
             <div class="row">
-              <div class="col-md-6">
+              <?php if($shipment['status_driver_pickup'] == 1 && $shipment["driver_pickup"] == $this->session->userdata('id')): ?>
+              <div class="col-md">
                 <h6 class="font-weight-bold">PickUp Detail</h6>
                 <hr>
                 <div class="form-group">
                   <label>Driver</label>
                   <input type="text" class="form-control" name="driver_pickup" value="<?php echo (@$driver_list[$shipment["driver_pickup"]]['name'] == "" ? "Not Assigned" : @$driver_list[$shipment["driver_pickup"]]['name']) ?>" readonly>
                 </div>
-                <?php if($shipment['status_driver_pickup'] == 1): ?>
                 <form action="<?php echo base_url(); ?>driver/driver_update_process" method="POST" class="forms-sample signature" enctype="multipart/form-data">
                   <input type="hidden" name="id" value="<?php echo $shipment['id'] ?>">
                   <input type="hidden" name="status" value="pickup">
@@ -263,33 +264,16 @@
 
                   <button type="submit" class="btn btn-info" onclick="return confirm('Are You Sure?')">Submit</button>
                 </form>
-                <?php elseif($shipment['status_driver_pickup'] == 2): ?>
-                <div class="form-group">
-                  <label>Location</label>
-                  <input type="text" class="form-control" name="location_driver_pickup" value="<?php echo $shipment["pickup_city"].", ".$shipment["pickup_country"] ?>" readonly>
-                </div>
-                <div class="form-group">
-                  <label>Photo upload</label><br>
-                  <img height="150px" src="<?php echo base_url()."file/driver/".$shipment['photo_driver_pickup'] ?>">
-                </div>
-                <div class="form-group">
-                  <label>Note</label>
-                  <textarea class="form-control" name="notes_driver_pickup" placeholder="Notes" readonly><?php echo $shipment['notes_driver_pickup'] ?></textarea>
-                </div>
-                <div class="form-group">
-                  <label>Signature</label><br>
-                  <img height="150px" src="<?php echo $shipment['signature_driver_pickup'] ?>">
-                </div>
-                <?php endif; ?>
               </div>
-              <div class="col-md-6">
+              <?php endif; ?>
+              <?php if($shipment['status_driver_deliver'] == 1 && $shipment["driver_deliver"] == $this->session->userdata('id')): ?>
+              <div class="col-md">
                 <h6 class="font-weight-bold">Deliver Detail</h6>
                 <hr>
                 <div class="form-group">
                   <label>Driver</label>
                   <input type="text" class="form-control" name="driver_deliver" value="<?php echo (@$driver_list[$shipment["driver_deliver"]]['name'] == "" ? "Not Assigned" : @$driver_list[$shipment["driver_deliver"]]['name']) ?>" readonly>
                 </div>
-                <?php if($shipment['status_driver_deliver'] == 1): ?>
                 <form action="<?php echo base_url(); ?>driver/driver_update_process" method="POST" class="forms-sample signature2" enctype="multipart/form-data">
                   <input type="hidden" name="id" value="<?php echo $shipment['id'] ?>">
                   <input type="hidden" name="status" value="deliver">
@@ -320,7 +304,50 @@
 
                   <button type="submit" class="btn btn-info" onclick="return confirm('Are You Sure?')">Submit</button>
                 </form>
-                <?php elseif($shipment['status_driver_deliver'] == 2): ?>
+              </div>
+              <?php endif; ?>
+            </div>
+          </div>
+        </div>
+        <?php endif; ?>
+        <?php if($this->session->userdata('role') != "Driver"): ?>
+        <div class="card">
+          <div class="card-body">
+            <div class="row">
+              <div class="col-md-6">
+                <h6 class="font-weight-bold">PickUp Detail</h6>
+                <hr>
+                <div class="form-group">
+                  <label>Driver</label>
+                  <input type="text" class="form-control" name="driver_pickup" value="<?php echo (@$driver_list[$shipment["driver_pickup"]]['name'] == "" ? "Not Assigned" : @$driver_list[$shipment["driver_pickup"]]['name']) ?>" readonly>
+                </div>
+                <?php if($shipment['status_driver_pickup'] == 2): ?>
+                <div class="form-group">
+                  <label>Location</label>
+                  <input type="text" class="form-control" name="location_driver_pickup" value="<?php echo $shipment["pickup_city"].", ".$shipment["pickup_country"] ?>" readonly>
+                </div>
+                <div class="form-group">
+                  <label>Photo upload</label><br>
+                  <img height="150px" src="<?php echo base_url()."file/driver/".$shipment['photo_driver_pickup'] ?>">
+                </div>
+                <div class="form-group">
+                  <label>Note</label>
+                  <textarea class="form-control" name="notes_driver_pickup" placeholder="Notes" readonly><?php echo $shipment['notes_driver_pickup'] ?></textarea>
+                </div>
+                <div class="form-group">
+                  <label>Signature</label><br>
+                  <img height="150px" src="<?php echo $shipment['signature_driver_pickup'] ?>">
+                </div>
+                <?php endif; ?>
+              </div>
+              <div class="col-md-6">
+                <h6 class="font-weight-bold">Deliver Detail</h6>
+                <hr>
+                <div class="form-group">
+                  <label>Driver</label>
+                  <input type="text" class="form-control" name="driver_deliver" value="<?php echo (@$driver_list[$shipment["driver_deliver"]]['name'] == "" ? "Not Assigned" : @$driver_list[$shipment["driver_deliver"]]['name']) ?>" readonly>
+                </div>
+                <?php if($shipment['status_driver_deliver'] == 2): ?>
                 <div class="form-group">
                   <label>Location</label>
                   <input type="text" class="form-control" name="location_driver_deliver" value="<?php echo $shipment["consignee_city"].", ".$shipment["consignee_country"] ?>" readonly>
@@ -342,6 +369,7 @@
             </div>
           </div>
         </div>
+        <?php endif; ?>
       </div>
     </div>
   </div>

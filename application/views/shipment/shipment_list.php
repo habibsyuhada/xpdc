@@ -270,10 +270,10 @@ $page_permission = array(
 
                 <div class="row clearfix">
                   <?php if ($page_permission[4] == 1) : ?>
-                    <div class="col-md-6  border-left border-right">
+                    <div class="col-md-4  border-left border-right">
                       <form id="form_master_tracking" method="POST" action="<?php echo base_url(); ?>master_tracking/master_tracking_multi_create_process">
                         <div class="form-group">
-                          <label>You tick <b class="text-success num_ticker">0</b> documents to <b class="text-success">Console</b>.</label>
+                          <label>You tick <b class="text-success num_ticker">0</b> shipment to <b class="text-success">Console</b>.</label>
                           <input type="text" class="form-control" name="master_tracking" placeholder="Master Tracking" value="Master Tracking No. will Auto Generate" readonly>
                         </div>
                         <div class="form-group">
@@ -287,10 +287,10 @@ $page_permission = array(
                     </div>
                   <?php endif; ?>
                   <?php if ($page_permission[5] == 1) : ?>
-                    <div class="col-md-6 border-left border-right">
+                    <div class="col-md-4 border-left border-right">
                       <form id="form_assign_driver" method="POST" action="<?php echo base_url(); ?>driver/assign_driver_process">
                         <div class="form-group">
-                          <label>You tick <b class="text-info num_ticker">0</b> documents to <b class="text-info">Assign Driver</b>.</label>
+                          <label>You tick <b class="text-info num_ticker">0</b> shipment to <b class="text-info">Assign Driver</b>.</label>
                           <select class="form-control" name="driver">
                             <option value="">--- Choose Driver ---</option>
                             <?php foreach ($driver_list as $key => $value) : ?>
@@ -308,6 +308,19 @@ $page_permission = array(
                         <div class="form-group">
                           <input type="hidden" class="form-control" name="id">
                           <button type="submit" class="btn btn-info" onclick="return confirm('Apakah Anda Yakin?')">Assign</button>
+                        </div>
+                      </form>
+                    </div>
+                  <?php endif; ?>
+                  <?php if ($page_permission[5] == 1) : ?>
+                    <div class="col-md-4 border-left border-right">
+                      <form id="form_paid" method="POST" action="<?php echo base_url(); ?>shipment/shipment_multipaid_process">
+                        <div class="form-group">
+                          <label>You tick <b class="text-warning num_ticker">0</b> shipment to <b class="text-warning">change to paid</b>.</label>
+                        </div>
+                        <div class="form-group">
+                          <input type="hidden" class="form-control" name="id">
+                          <button type="submit" class="btn btn-warning" onclick="return confirm('Apakah Anda Yakin?')">Change Status</button>
                         </div>
                       </form>
                     </div>
@@ -339,6 +352,9 @@ $page_permission = array(
 
   $('#form_assign_driver').submit(function() {
     $("#form_assign_driver input[name=id]").val(data_checkbox.join(", "));
+  });
+  $('#form_paid').submit(function() {
+    $("#form_paid input[name=id]").val(data_checkbox.join(", "));
   });
 
   $('.widget').on('click', function() {

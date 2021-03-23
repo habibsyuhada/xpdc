@@ -37,7 +37,7 @@
         $link_check = $link[3].'/'.$link[4];
       }
     } 
-    if($CI->session->userdata('id') == "Guest" && !in_array($link_check, array('home/shipment_create', 'customer/check_price', 'customer/check_price_process', 'customer/shipment_create', 'shipment/shipment_receipt', 'shipment/shipment_create_process', 'country/city_autocomplete', "shipment/check_custumer", "shipment/shipment_receipt_pdf", "shipment/shipment_autobill", "shipment/shipment_autobill_process", "shipment/shipment_autobill_complete", "shipment/shipment_tracking_label_pdf"))){
+    if($CI->session->userdata('id') == "Guest" && !in_array($link_check, array('home/shipment_create', 'customer/check_price', 'customer/check_price_process', 'customer/shipment_create', 'shipment/shipment_receipt', 'shipment/shipment_create_process', 'country/city_autocomplete', "shipment/check_custumer", "shipment/shipment_receipt_pdf", "shipment/shipment_autobill", "shipment/shipment_autobill_process", "shipment/shipment_autobill_complete", "shipment/shipment_tracking_label_pdf", "shipment/pickup_price"))){
       redirect('home/login');
     }
   }

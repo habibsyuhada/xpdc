@@ -1205,12 +1205,14 @@ class Shipment extends CI_Controller
 			$this->shipment_mod->shipment_invoice_update_process_db($form_data, $where);
 
 			unset($where);
-			$form_data = array(
-				'status_bill' 		=> $post['status_bill'],
-				'date_paid' 			=> $post['date_paid'],
-			);
-			$where['id_shipment'] = $post['id'];
-			$this->shipment_mod->shipment_detail_update_process_db($form_data, $where);
+			if(isset($post['status_bill'])){
+				$form_data = array(
+					'status_bill' 		=> $post['status_bill'],
+					'date_paid' 			=> $post['date_paid'],
+				);
+				$where['id_shipment'] = $post['id'];
+				$this->shipment_mod->shipment_detail_update_process_db($form_data, $where);
+			}
 		}
 
 		foreach ($post['unit_price'] as $key => $value) {

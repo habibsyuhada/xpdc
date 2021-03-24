@@ -1,3 +1,9 @@
+<?php
+$role = $this->session->userdata('role');
+$page_permission = array(
+  0 => (in_array($role, array("Super Admin")) ? 1 : 0), //Paid status
+);
+?>
 <style type="text/css">
   a.nav-link.active {
     border-width: 4px;
@@ -84,6 +90,7 @@
                   <?php endif; ?>
                 </div>
                 <?php if (@$invoice['invoice_no'] != "") : ?>
+                  <?php if ($page_permission[0] != 1) : ?>
                   <div class="col-md-6">
                     <div class="form-group">
                       <label>Status</label>
@@ -99,6 +106,7 @@
                       <input type="date" class="form-control" name="date_paid" value="<?php echo @$shipment_list['date_paid'] ?>" required>
                     </div>
                   </div>
+                  <?php endif; ?>
                 <?php endif; ?>
               </div>
               <?php

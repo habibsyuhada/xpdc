@@ -751,6 +751,7 @@ class Shipment extends CI_Controller
 	public function shipment_package_detail_process()
 	{
 		$post = $this->input->post();
+		
 		$form_data = array(
 			'incoterms' 						=> $post['incoterms'],
 			'description_of_goods'	=> $post['description_of_goods'],
@@ -765,7 +766,7 @@ class Shipment extends CI_Controller
 		}
 		$where['id'] = $post['id'];
 		$this->shipment_mod->shipment_update_process_db($form_data, $where);
-
+		$total_weight = 0;
 		foreach ($post['qty'] as $key => $value) {
 			unset($where);
 			if ($post['id_detail'][$key] == "") {
@@ -791,6 +792,7 @@ class Shipment extends CI_Controller
 				$where['id'] = $post['id_detail'][$key];
 				$this->shipment_mod->shipment_packages_update_process_db($form_data, $where);
 			}
+			$total_weight = $total_weight + ($post['qty'][$key] * $post['weight'][$key]);
 		}
 
 		if (isset($post['has_updated_packages'])) {
@@ -804,6 +806,36 @@ class Shipment extends CI_Controller
 			);
 			$id_history = $this->shipment_mod->shipment_history_create_process_db($form_data);
 			$this->shipment_update_last_history($post['id']);
+		}
+
+		if ($post['check_price_weight'] != "" && $post['check_price_weight'] != "0") {
+			$cost = $this->shipment_mod->shipment_cost_list_db([
+				"uom" 				=> 'Kg',
+				"category" 		=> 'costumer',
+				"id_shipment" => $post['id'],
+				]);
+			if (count($cost) > 0) {
+				$cost = $cost[0];
+				$form_data = [
+					"qty" 					=> $total_weight,
+					"qty_costumer" 	=> $cost['qty'],
+				];
+				$this->shipment_mod->shipment_cost_update_process_db($form_data, ["id" => $cost['id']]);
+
+				$form_data = ["status" => "Pending Payment"];
+				$where = ["id" => $post['id']];
+				$this->shipment_mod->shipment_update_process_db($form_data, $where);
+
+				$form_data = array(
+					'id_shipment' 	=> $post['id'],
+					'date' 					=> date("Y-m-d"),
+					'time' 					=> date("H:i:s"),
+					'location' 			=> $post['consignee_city'] . ", " . $post['consignee_country'],
+					'status' 				=> "Pending Payment",
+					'remarks' 			=> "Shipment information updated.",
+				);
+				$id_history = $this->shipment_mod->shipment_history_create_process_db($form_data);
+			}
 		}
 
 		$this->session->set_flashdata('success', 'Your Shipment data has been Updated!');

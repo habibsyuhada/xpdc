@@ -22,6 +22,7 @@
           <input type="hidden" name="has_updated_packages" value="1">
           <input type="hidden" name="shipper_city" value="<?php echo $shipment['shipper_city'] ?>">
           <input type="hidden" name="shipper_country" value="<?php echo $shipment['shipper_country'] ?>">
+          <input type="hidden" name="check_price_weight" value="<?php echo $shipment['check_price_weight'] ?>">
           <div class="card">
             <div class="card-body">
               <hr class="mt-0">

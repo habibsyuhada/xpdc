@@ -696,11 +696,17 @@ class Shipment extends CI_Controller
 				$where = ["id" => $post['id']];
 				$this->shipment_mod->shipment_update_process_db($form_data, $where);
 
+				$where = [
+					"id_shipment" => $post['id']
+				];
+				$datadb = $this->shipment_mod->shipment_history_list_db($where);
+				$history = $datadb[0];
+
 				$form_data = array(
 					'id_shipment' 	=> $post['id'],
 					'date' 					=> date("Y-m-d"),
 					'time' 					=> date("H:i:s"),
-					'location' 			=> $post['consignee_city'] . ", " . $post['consignee_country'],
+					'location' 			=> $history['location'],
 					'status' 				=> "Pending Payment",
 					'remarks' 			=> "Shipment information updated.",
 				);
@@ -826,11 +832,17 @@ class Shipment extends CI_Controller
 				$where = ["id" => $post['id']];
 				$this->shipment_mod->shipment_update_process_db($form_data, $where);
 
+				$where = [
+					"id_shipment" => $post['id']
+				];
+				$datadb = $this->shipment_mod->shipment_history_list_db($where);
+				$history = $datadb[0];
+
 				$form_data = array(
 					'id_shipment' 	=> $post['id'],
 					'date' 					=> date("Y-m-d"),
 					'time' 					=> date("H:i:s"),
-					'location' 			=> $post['consignee_city'] . ", " . $post['consignee_country'],
+					'location' 			=> $history['location'],
 					'status' 				=> "Pending Payment",
 					'remarks' 			=> "Shipment information updated.",
 				);

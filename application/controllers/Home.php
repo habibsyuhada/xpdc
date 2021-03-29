@@ -75,12 +75,15 @@ class Home extends CI_Controller {
 		}
 
 		$where['shipment.status_delete'] 	= 1;
-		if($this->session->userdata('branch')){
-			if($this->session->userdata('branch') != "NONE"){
-				$where["(shipment.assign_branch LIKE '%".$this->session->userdata('branch')."%' OR shipment.branch LIKE '%".$this->session->userdata('branch')."%')"] 	= NULL;
+		if ($this->session->userdata('branch')) {
+			if ($this->session->userdata('branch') != "NONE") {
+				if($this->session->userdata('role') == 'Operator'){
+					$where["((assign_branch LIKE '%" . $this->session->userdata('branch') . "%' AND assign_branch IS NOT NULL) OR (assign_branch IS NULL AND branch LIKE '%" . $this->session->userdata('branch') . "%'))"] 	= NULL;
+				}else{
+					$where["(assign_branch LIKE '%" . $this->session->userdata('branch') . "%' OR branch LIKE '%" . $this->session->userdata('branch') . "%')"] 	= NULL;	
+				}
 			}
-		}
-		else{
+		} else {
 			redirect('home/logout');
 		}
 

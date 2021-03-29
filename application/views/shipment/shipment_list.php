@@ -237,7 +237,7 @@ $page_permission = array(
                             <a href="<?php echo base_url() ?>driver/driver_update/<?php echo $value['id'] ?>" class="btn btn-info" title="Driver"><i class="fas fa-truck"></i></a>
                           <?php endif; ?>
                           <!-- <a target="_blank" href="<?php echo base_url() ?>shipment/shipment_tracking_label_pdf/<?php echo $value['id'] ?>" class="btn btn-warning" title="Print"><i class="fas fa-print m-0"></i></a> -->
-                          <?php if ($page_permission[1] == 1) : ?>
+                          <?php if ($page_permission[1] == 1 && ($this->session->userdata('role') == "Super Admin" || ($this->session->userdata('role') == "Operator" && $value['status'] != "Pending Payment"))) : ?>
                             <a href="<?php echo base_url() ?>shipment/shipment_update/<?php echo $value['id'] ?><?php echo ($value['status'] == "Picked up" ? "?t=shin" : "") ?>" class="btn btn-primary" title="Update"><i class="fas fa-edit m-0"></i></a>
                             <a href="<?php echo base_url() ?>shipment/shipment_edit/<?php echo $value['id'] ?>" class="btn btn-dark" title="Edit Shipping Information"><i class="fas fa-pen"></i></a>
                             <a href="<?php echo base_url() ?>shipment/shipment_assign/<?php echo $value['id'] ?>" class="btn btn-success" title="Assign Shipment"><i class="fas fa-sign-in-alt"></i></a>

@@ -119,6 +119,8 @@ class Commercial extends CI_Controller
 
         $data['payment_terms_list'] = $this->home_mod->payment_terms_list();
 
+				$data['commercial_list'] = $this->home_mod->user_list(["role" => "Commercial"]);
+
         $data['subview']            = 'commercial/customer_update';
         $data['meta_title']         = 'Customer Update';
         $this->load->view('index', $data);
@@ -149,6 +151,8 @@ class Commercial extends CI_Controller
             'account_name'          => $post['account_name'],
             'account_email'         => $post['account_email'],
             'account_phone_number'  => $post['account_phone_number'],
+
+            'assign_to'  => $post['assign_to'],
         );
         $where_detail['id'] = $id;
         $id_detail_customer = $this->commercial_mod->customer_detail_update_process_db($form_detail_data, $where_detail);

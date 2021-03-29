@@ -104,6 +104,21 @@ $page_permission = array(
                 </div>
               </div>
               
+              <h6 class="font-weight-bold border-bottom">Commercial</h6>
+              <div class="row clearfix">
+                <div class="col-md-6">
+                  <div class="form-group">
+                    <label>Assign to </label>
+                    <select class="form-control select2" name="assign_to" required>
+                      <option value="">- Select One -</option>
+                      <?php foreach ($commercial_list as $value) { ?>
+                        <option value="<?= $value['id'] ?>" <?php echo ($value['id'] == $customer_list['assign_to']) ? 'selected' : ''; ?>><?= $value['name'] ?></option>
+                      <?php } ?>
+                    </select>
+                  </div>
+                </div>
+              </div>
+              
               <?php if($page_permission[0] == 1): ?>
               <div class="mt-2 row">
                 <div class="col-12">

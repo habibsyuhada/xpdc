@@ -1817,6 +1817,25 @@ class Shipment extends CI_Controller
 		$where = ['id_shipment IN ('.$post['id'].')' => NULL];
 		$this->shipment_mod->shipment_detail_update_process_db($form_data, $where);
 
+		$id_arr = explode(", ", $post['id']);
+		foreach ($id_arr as $key => $value) {
+			$where = [
+				"id_shipment" => $value
+			];
+			$datadb = $this->shipment_mod->shipment_history_list_db($where);
+			$history = $datadb[0];
+
+			$form_data = array(
+				'id_shipment' 	=> $value,
+				'date' 					=> date("Y-m-d"),
+				'time' 					=> date("H:i:s"),
+				'location' 			=> $history['location'],
+				'status' 				=> "Service Center",
+				'remarks' 			=> "Shipment Bill is Paid.",
+			);
+			$id_history = $this->shipment_mod->shipment_history_create_process_db($form_data);
+		}
+
 		$this->session->set_flashdata('success', 'Your Shipment data has been Updated!');
 		redirect($_SERVER['HTTP_REFERER']);
 	}

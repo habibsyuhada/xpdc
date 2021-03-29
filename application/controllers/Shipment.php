@@ -144,10 +144,10 @@ class Shipment extends CI_Controller
 			$data['customer'] = $this->shipment_mod->customer_list_db(array("status_delete" => 1, "email" => $this->session->userdata('email')));
 		}
 		elseif($this->session->userdata('role') == "Commercial"){
-			$data['customer'] = $this->shipment_mod->customer_list_db(["status_approval" => 1, "status_delete" => 0, "assign_to" => $this->session->userdata('id')]);
+			$data['customer'] = $this->shipment_mod->customer_list_db(["status_approval" => 1, "status_delete" => 1, "assign_to" => $this->session->userdata('id')]);
 		}
 		else{
-			$data['customer'] = $this->shipment_mod->customer_list_db(["status_approval" => 1, "status_delete" => 0]);
+			$data['customer'] = $this->shipment_mod->customer_list_db(["status_approval" => 1, "status_delete" => 1]);
 		}
 
 		$datadb 	= $this->home_mod->branch_list(["name" => $this->session->userdata('branch')]);

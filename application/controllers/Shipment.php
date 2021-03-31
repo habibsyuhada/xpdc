@@ -1169,7 +1169,7 @@ class Shipment extends CI_Controller
 			$branch = $this->home_mod->branch_list($where);
 			unset($where);
 			if (count($branch) < 1) {
-				$this->session->set_flashdata('danger', 'Branch Not Found!');
+				$this->session->set_flashdata('error', 'Branch Not Found!');
 				redirect($_SERVER['HTTP_REFERER']);
 				return false;
 			}

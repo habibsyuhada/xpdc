@@ -13,6 +13,7 @@
 </style>
 <div class="main-content">
 	<div class="container-fluid">
+    <?php if($this->session->userdata('role') == "Super Admin"): ?>
     <div class="row clearfix">
       <div class="col-md-6">
         <div class="form-group">
@@ -26,6 +27,7 @@
         </div>
       </div>
     </div>
+    <?php endif; ?>
     <?php if($page_permission[0] == 1): ?>
 		<div class="row justify-content-center clearfix">
       <div class="col-xl-4 col-lg-4 col-md-4 col-sm-12">

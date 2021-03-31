@@ -83,6 +83,11 @@ class Home extends CI_Controller {
 					$where["(assign_branch LIKE '%" . $this->session->userdata('branch') . "%' OR branch LIKE '%" . $this->session->userdata('branch') . "%')"] 	= NULL;	
 				}
 			}
+			else{
+				if($this->input->get("branch")){
+					$where["(assign_branch LIKE '%" . $this->input->get("branch") . "%' OR branch LIKE '%" . $this->input->get("branch") . "%')"] 	= NULL;	
+				}
+			}
 		} else {
 			redirect('home/logout');
 		}
@@ -91,6 +96,7 @@ class Home extends CI_Controller {
 			$where["(shipment.driver_pickup = ".$this->session->userdata('id')." OR shipment.driver_deliver = ".$this->session->userdata('id').")"] 	= NULL;
 		}
 
+		$data['branch_list'] = $this->shipment_mod->branch_list_db(array("name != 'NONE'" => null));
 		$summary_list 					= $this->shipment_mod->summary_per_status($where);
 		$data['summary_list'] 	= $summary_list[0];
 

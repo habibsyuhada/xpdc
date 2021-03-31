@@ -216,7 +216,7 @@ $page_permission = array(
                             <?php if ($value['status_bill'] == 1) : ?>
                               <a href="<?php echo base_url() ?>shipment/shipment_invoice_pdf/<?php echo $value['id'] ?>" target="_blank" class="badge badge-sm badge-warning mb-1">Billed</a>
                             <?php elseif ($value['status_bill'] == 2) : ?>
-                              <span class="badge badge-sm badge-success mb-1">Paid</span>
+                              <a href="<?php echo base_url() ?>shipment/shipment_paid_attachment/<?php echo $value['id'] ?>" target="_blank" class="badge badge-sm badge-success mb-1">Paid</a>
                             <?php else : ?>
                               <span class="badge badge-sm badge-danger mb-1">Unbilled</span>
                             <?php endif; ?>
@@ -315,9 +315,18 @@ $page_permission = array(
                   <?php endif; ?>
                   <?php if ($page_permission[13] == 1) : ?>
                     <div class="col-md-4 border-left border-right">
-                      <form id="form_paid" method="POST" action="<?php echo base_url(); ?>shipment/shipment_multipaid_process">
+                      <form id="form_paid" method="POST" action="<?php echo base_url(); ?>shipment/shipment_multipaid_process" enctype="multipart/form-data">
                         <div class="form-group">
                           <label>You tick <b class="text-warning num_ticker">0</b> shipment to <b class="text-warning">change to paid</b>.</label>
+                        </div>
+                        <div class="form-group">
+                          <input type="file" name="file" class="file-upload-default">
+                          <div class="input-group col-xs-12">
+                            <input type="text" class="form-control file-upload-info" disabled placeholder="Upload Paid Attachment">
+                            <span class="input-group-append">
+                              <button class="file-upload-browse btn btn-warning" type="button">Upload</button>
+                            </span>
+                          </div>
                         </div>
                         <div class="form-group">
                           <input type="hidden" class="form-control" name="id">

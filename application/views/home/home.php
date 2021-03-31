@@ -13,6 +13,19 @@
 </style>
 <div class="main-content">
 	<div class="container-fluid">
+    <div class="row clearfix">
+      <div class="col-md-6">
+        <div class="form-group">
+          <label class='font-weight-bold'>Branch</label>
+          <select class="form-control" name="branch" onchange="window.location = '<?php echo base_url() ?>home/home?branch='+$(this).val()">
+            <option value="">All</option>
+            <?php foreach ($branch_list as $key => $value): ?>
+            <option value="<?php echo $value['name'] ?>" <?php echo ($this->input->get("branch") == $value['name'] ? "selected" : "") ?>><?php echo $value['name'] ?></option>
+            <?php endforeach; ?>
+          </select>
+        </div>
+      </div>
+    </div>
     <?php if($page_permission[0] == 1): ?>
 		<div class="row justify-content-center clearfix">
       <div class="col-xl-4 col-lg-4 col-md-4 col-sm-12">

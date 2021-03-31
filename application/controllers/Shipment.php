@@ -1795,6 +1795,21 @@ class Shipment extends CI_Controller
 
 	public function shipment_multipaid_process(){
 		$post = $this->input->post();
+		$id_arr = explode(", ", $post['id']);
+
+		$config['upload_path']          = 'file/invoice/';
+		$config['file_name']            = 'invoice_customer_' . $this->session->userdata('id') . '_' . date('YmsHis');
+		$config['allowed_types']        = '*';
+		$config['overwrite'] 						= TRUE;
+
+		$this->load->library('upload');
+		$this->upload->initialize($config);
+
+		if (!$this->upload->do_upload('file')) {
+			$this->session->set_flashdata('error', $this->upload->display_errors());
+			redirect($_SERVER['HTTP_REFERER']);
+			return false;
+		}
 
 		$where['shipment.id IN ('.$post['id'].')'] = NULL;
 		$shipment_list 					= $this->shipment_mod->shipment_list_db($where);
@@ -1809,6 +1824,12 @@ class Shipment extends CI_Controller
 			$this->session->set_flashdata('error', 'All shipment below is not already billed!<br>'.join('<br>', $not_bill));
 			redirect($_SERVER['HTTP_REFERER']);
 		}
+		
+		$form_data = [
+			"paid_attachment" => $this->upload->data("file_name"),
+		];
+		$where = ['id_shipment IN ('.$post['id'].')' => NULL];
+		$this->shipment_mod->shipment_invoice_update_process_db($form_data, $where);
 
 		$form_data = [
 			"status_bill" => 2,
@@ -1817,7 +1838,6 @@ class Shipment extends CI_Controller
 		$where = ['id_shipment IN ('.$post['id'].')' => NULL];
 		$this->shipment_mod->shipment_detail_update_process_db($form_data, $where);
 
-		$id_arr = explode(", ", $post['id']);
 		foreach ($id_arr as $key => $value) {
 			$where = [
 				"id_shipment" => $value
@@ -1838,5 +1858,21 @@ class Shipment extends CI_Controller
 
 		$this->session->set_flashdata('success', 'Your Shipment data has been Updated!');
 		redirect($_SERVER['HTTP_REFERER']);
+	}
+
+	public function shipment_paid_attachment($id){
+		$datadb = $this->shipment_mod->shipment_invoice_list_db(["id_shipment" => $id]);
+		if(count($datadb) == 0){
+			$this->session->set_flashdata('error', 'Paid Attachment is no uploaded!');
+			redirect($_SERVER['HTTP_REFERER']);
+		}
+		
+		$invoice = $datadb[0];
+		if($invoice['paid_attachment'] == ""){
+			$this->session->set_flashdata('error', 'Paid Attachment is no uploaded!');
+			redirect($_SERVER['HTTP_REFERER']);
+		}
+
+		redirect(base_url()."file/invoice/".$invoice['paid_attachment']);
 	}
 }

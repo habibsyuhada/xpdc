@@ -338,6 +338,10 @@
                   <label>Signature</label><br>
                   <img height="150px" src="<?php echo $shipment['signature_driver_pickup'] ?>">
                 </div>
+                <?php else: ?>
+                  <?php if(isset($driver_list[$shipment["driver_pickup"]]['name'])): ?>
+                  <a href="<?php echo base_url() ?>driver/driver_take_out/<?php echo $shipment['id_shipment'] ?>/pickup" class="btn btn-danger" title="Take Out From This Driver"><i class="fas fa-times"></i> Take Out</a>
+                  <?php endif; ?>
                 <?php endif; ?>
               </div>
               <div class="col-md-6">
@@ -364,6 +368,10 @@
                   <label>Signature</label><br>
                   <img height="150px" src="<?php echo $shipment['signature_driver_deliver'] ?>">
                 </div>
+                <?php else: ?>
+                  <?php if(isset($driver_list[$shipment["driver_deliver"]]['name'])): ?>
+                  <a href="<?php echo base_url() ?>driver/driver_take_out/<?php echo $shipment['id_shipment'] ?>/deliver" class="btn btn-danger" title="Take Out From This Driver"><i class="fas fa-times"></i> Take Out</a>
+                  <?php endif; ?>
                 <?php endif; ?>
               </div>
             </div>

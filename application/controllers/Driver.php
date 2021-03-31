@@ -218,5 +218,18 @@ class Driver extends CI_Controller
 		$where['id'] = $id;
 		$this->shipment_mod->shipment_update_process_db($form_data, $where);
 	}
+
+	public function driver_take_out($id, $type){
+		$form_data = array(
+			'driver_'.$type 	=> 0,
+			'status_driver_'.$type 	=> 0,
+			'assign_driver_date' 	=> date("Y-m-d H:i:s"),
+		);
+		$where['id'] = $id;
+		$this->shipment_mod->shipment_update_process_db($form_data, $where);
+
+		$this->session->set_flashdata('success', 'Your Driver data has been Taken Out!');
+		redirect($_SERVER['HTTP_REFERER']);
+	}
 		
 }

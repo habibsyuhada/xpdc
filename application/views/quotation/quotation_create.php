@@ -93,7 +93,7 @@
           </div>
           <div class="card">
             <div class="card-body overflow-auto">
-              <h6 class="font-weight-bold border-bottom">Shipment Information</h6>
+              <h6 class="font-weight-bold border-bottom">Service Information</h6>
               <div class="row clearfix">
                 <div class="col-md-6">
                   <div class="form-group">

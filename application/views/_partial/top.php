@@ -7,13 +7,13 @@ $side_permission = array(
 	3 => (in_array($role, array("Super Admin", "Operator")) ? 1 : 0), //Operation
 	4 => (in_array($role, array("Super Admin", "Operator")) ? 1 : 0), //Master Tracking List
 	5 => (in_array($role, array("Super Admin", "Operator")) ? 1 : 0), //Create Master Tracking
-	6 => (in_array($role, array("Super Admin", "Operator", "Commercial")) ? 1 : 0), //Share Link
+	6 => (in_array($role, array("Super Admin", "Commercial")) ? 1 : 0), //Share Link
 	7 => (in_array($role, array("Driver", "Super Admin")) ? 1 : 0), //Driver
 	8 => (in_array($role, array("Super Admin")) ? 1 : 0), //User Management
-	9 => (in_array($role, array("Super Admin", "Finance", "Commercial")) ? 1 : 0), //Report
+	9 => (in_array($role, array("Super Admin", "Finance")) ? 1 : 0), //Report
 	10 => (in_array($role, array("Super Admin", "Commercial")) ? 1 : 0), //Commercial Customer
 	11 => (in_array($role, array("Super Admin", "Commercial")) ? 1 : 0), //View Quotation
-	12 => (in_array($role, array("Super Admin", "Commercial")) ? 1 : 0), //Create Quotation
+	12 => (in_array($role, array("Super Admin", "Commercial")) ? 1 : 0), //Create Quotation (DELETED)
 	13 => (in_array($role, array("Super Admin", "Commercial", "Customer")) ? 1 : 0),
 );
 ?>
@@ -113,7 +113,7 @@ $side_permission = array(
 										<a href="javascript:void(0)"><i class="fas fa-cogs"></i><span>Operation</span></a>
 										<div class="submenu-content">
 											<a href="<?php echo base_url() ?>shipment/shipment_history_update" class="menu-item">Update History</a>
-											<a href="<?php echo base_url() ?>shipment/shipment_list?status=Picked up" class="menu-item">Picked up</a>
+											<a href="<?php echo base_url() ?>shipment/shipment_list?status=Picked up" class="menu-item">Reweight Shipment</a>
 											<!-- <a href="<?php echo base_url() ?>operation/service_center" class="menu-item">Service Center</a> -->
 											<!-- <a href="<?php echo base_url() ?>operation/departed" class="menu-item">Departed</a>
 									<a href="<?php echo base_url() ?>operation/arrived" class="menu-item">Arrived</a>
@@ -143,25 +143,13 @@ $side_permission = array(
 									</div>
 								<?php endif; ?>
 								<?php if ($side_permission[10] == 1) : ?>
-									<div class="nav-item has-sub">
-										<a href="javascript:void(0)"><i class="fas fa-address-card"></i><span>Commercial</span></a>
-										<div class="submenu-content">
-											<a href="<?php echo base_url() ?>commercial/customer_list" class="menu-item">Customer List</a>
-											<a href="<?php echo base_url() ?>commercial/customer_create" class="menu-item">Create Customer</a>
-										</div>
+									<div class="nav-item">
+										<a href="<?php echo base_url() ?>commercial/customer_list"><i class="fas fa-address-card"></i> <span>Customer List</span></a>
 									</div>
 								<?php endif; ?>
-								<?php if (in_array(1, array($side_permission[11], $side_permission[12]))) : ?>
-									<div class="nav-item has-sub">
-										<a href="javascript:void(0)"><i class="fas fa-hand-holding-usd"></i><span>Quotation</span></a>
-										<div class="submenu-content">
-											<?php if ($side_permission[11] == 1) : ?>
-												<a href="<?php echo base_url() ?>quotation/quotation_list" class="menu-item">Quotation List</a>
-											<?php endif; ?>
-											<?php if ($side_permission[12] == 1) : ?>
-												<a href="<?php echo base_url() ?>quotation/quotation_create" class="menu-item">Create Quotation</a>
-											<?php endif; ?>
-										</div>
+								<?php if ($side_permission[11] == 1) : ?>
+									<div class="nav-item">
+										<a href="<?php echo base_url() ?>quotation/quotation_list"><i class="fas fa-hand-holding-usd"></i> <span>Quotation List</span></a>
 									</div>
 								<?php endif; ?>
 								<?php if ($side_permission[8] == 1) : ?>

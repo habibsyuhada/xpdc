@@ -17,6 +17,7 @@ $page_permission = array(
           <div class="card-body overflow-auto">
             <div class="row">
               <div class="col-md-12">
+                <a href="<?= base_url() ?>commercial/customer_create" class="btn btn-success"><i class="fa fa-plus"></i> Add New Customer</a><br><br>
                 <table class="table data_table">
                   <thead>
                     <tr class="bg-info">

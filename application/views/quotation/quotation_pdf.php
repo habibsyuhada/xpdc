@@ -155,7 +155,7 @@
   <table class="td-valign-top" border="1" width="100%" cellspacing="0" cellpadding="2">
     <tbody>
       <tr>
-        <td colspan="2" class="header bg-orange"><b>Shipment Information</b></td>
+        <td colspan="2" class="header bg-orange"><b>Service Information</b></td>
       </tr>
       <tr>
         <td style="width: 50%"><b>Type of Service &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;:</b> <?php echo $type_of_service[$quotation['type_of_service']] ?></td>

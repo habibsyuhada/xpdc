@@ -2,6 +2,7 @@
 $role = $this->session->userdata('role');
 $page_permission = array(
   0 => (in_array($role, array("Super Admin")) ? 1 : 0), //Update
+  1 => (in_array($role, array("Super Admin")) ? 1 : 0), //Assign to
 );
 ?>
 <div class="main-content">
@@ -104,6 +105,7 @@ $page_permission = array(
                 </div>
               </div>
               
+              <?php if($page_permission[1] == 1): ?>
               <h6 class="font-weight-bold border-bottom">Commercial</h6>
               <div class="row clearfix">
                 <div class="col-md-6">
@@ -118,6 +120,7 @@ $page_permission = array(
                   </div>
                 </div>
               </div>
+              <?php endif; ?>
               
               <?php if($page_permission[0] == 1): ?>
               <div class="mt-2 row">

@@ -5,6 +5,7 @@
     1 => (in_array($role, array("Super Admin", "Commercial")) ? 1 : 0), //Approval Quotation
     2 => (in_array($role, array("Super Admin", "Commercial")) ? 1 : 0), //Add Tracking
     3 => (in_array($role, array("Super Admin", "Commercial")) ? 1 : 0), //Edit Quotation
+    4 => (in_array($role, array("Super Admin", "Commercial")) ? 1 : 0), //Create Quotation
   );
 ?>
 <div class="main-content">
@@ -65,6 +66,9 @@
           <div class="card-body">
             <div class="row">
               <div class="col-md-12">
+                <?php if ($page_permission[4] == 1) : ?>
+                <a href="<?= base_url() ?>quotation/quotation_create" class="btn btn-success"><i class="fa fa-plus"></i> Add New Quotation</a><br><br>
+                <?php endif; ?>
                 <table class="table data_table">
                   <thead>
                     <tr class="bg-info">

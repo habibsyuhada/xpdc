@@ -1,7 +1,7 @@
 <?php
 $role = $this->session->userdata('role');
 $page_permission = array(
-  0 => (in_array($role, array("Super Admin", "Driver", "Operator", "Finance", "Commercial")) ? 1 : 0), //Agent Information
+  0 => (in_array($role, array("Super Admin", "Driver", "Operator", "Finance")) ? 1 : 0), //Agent Information
 );
 ?>
 <div class="main-content">

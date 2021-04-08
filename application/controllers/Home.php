@@ -139,6 +139,7 @@ class Home extends CI_Controller {
 		];
 		$datadb = $this->shipment_mod->shipment_list_db($where);
 		$id_shipment = [];
+		$shipment = [];
 		foreach ($datadb as $key => $value) {
 			$id_shipment[] = $value['id_shipment'];
 			$shipment[$value['id_shipment']] = $value;

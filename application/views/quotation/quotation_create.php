@@ -97,22 +97,22 @@
               <div class="row clearfix">
                 <div class="col-md-6">
                   <div class="form-group">
-                    <label>Type of Shipment</label>
-                    <select class="form-control" name="type_of_shipment" required onchange="change_typeshipment(this)">
-                      <option value="">-- Select One --</option>
-                      <option value="International Shipping">International Shipping</option>
-                      <option value="Domestic Shipping">Domestic Shipping</option>
-                    </select>
-                  </div>
-                </div>
-                <div class="col-md-6">
-                  <div class="form-group">
                     <label>Type of Service</label>
                     <select class="form-control" name="type_of_service" required>
                       <option value="">-- Select One --</option>
                       <option value="FH">Freight Handling</option>
                       <option value="CH">Clearance Handling</option>
                       <option value="WH">Warehousing</option>
+                    </select>
+                  </div>
+                </div>
+                <div class="col-md-6">
+                  <div class="form-group">
+                    <label>Type of Shipment</label>
+                    <select class="form-control" name="type_of_shipment" required onchange="change_typeshipment(this)">
+                      <option value="">-- Select One --</option>
+                      <option value="International Shipping">International Shipping</option>
+                      <option value="Domestic Shipping">Domestic Shipping</option>
                     </select>
                   </div>
                 </div>
@@ -132,7 +132,7 @@
                 <div class="col-md-6">
                   <div class="form-group" style="display: none;">
                     <label>Sea</label>
-                    <select class="form-control" name="sea" title="sea" required disabled>
+                    <select class="form-control" name="sea" title="sea" disabled>
                       <option value="">- Select Sea -</option>
                       <option value="LCL">LCL</option>
                       <option value="FCL">FCL</option>
@@ -140,7 +140,7 @@
                   </div>
                   <div class="form-group" style="display: none;">
                     <label>Type</label>
-                    <select class="form-control" name="sea" title="air" required disabled>
+                    <select class="form-control" name="sea" title="air" disabled>
                       <option value="">- Select Sea -</option>
                       <option value="Express">Express</option>
                       <option value="Reguler">Reguler</option>
@@ -174,7 +174,7 @@
                 </div>
               </div>
               <br>
-              <div class="row clearfix">
+              <div class="row clearfix" id="shipper_consignee_info">
                 <div class="col-md-6">
                   <h6 class="font-weight-bold">Shipper Information</h6>
                   <div class="form-group">
@@ -264,7 +264,7 @@
               </div>
             </div>
           </div>
-          <div class="card">
+          <div class="card" id="cargo_info">
             <div class="card-body overflow-auto">
               <h6 class="font-weight-bold border-bottom">Cargo Information</h6>
               <div class="row clearfix">
@@ -420,6 +420,15 @@
                 </div>
               </div>
               <div class="row clearfix">
+                <div class="col-md-auto">
+                  <div class="form-group">
+                    <label>Hide Estimation Total Charges on PDF</label>
+                    <select class="form-control" name="hide_estimete_total_pdf">
+                      <option value="0">No</option>
+                      <option value="1">Yes</option>
+                    </select>
+                  </div>
+                </div>
                 <div class="col-md">
                   <h5 class="font-weight-bold text-right">Estimation Total Charges : IDR <span id="total_all" name="total_all">0.00</span></h5>
                 </div>
@@ -622,9 +631,13 @@
     if(value == 'CH' || value == 'WH'){
       $("select[name=type_of_shipment]").val('').attr("disabled", true);
       $("select[name=incoterms]").val('').attr("disabled", true);
+      $("[name=type_of_mode], [name=sea]").val('').attr("disabled", true);
+      $("#shipper_consignee_info, #cargo_info").slideUp("slow");
     }else{
       $("select[name=type_of_shipment]").removeAttr("disabled");
       $("select[name=incoterms]").removeAttr("disabled");
+      $("[name=type_of_mode], [name=sea]").removeAttr("disabled");
+      $("#shipper_consignee_info, #cargo_info").slideDown("slow");
     }
   });
 

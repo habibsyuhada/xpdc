@@ -1507,8 +1507,19 @@ class Shipment extends CI_Controller
 				echo "Error : You cannot depart shipment before fill up Shipping Information (" . $value['tracking_no'] . ")";
 				return false;
 				exit;
-			} elseif ($post['history_status'] == "Service Center" && $value['status'] == "Picked up" && $value['has_updated_packages'] != 1) {
+			} 
+			elseif ($post['history_status'] == "Service Center" && $value['status'] == "Picked up" && $value['has_updated_packages'] != 1) {
 				echo "Error : You need to edit shipment information / packages first to change status Service Center from Picked up (" . $value['tracking_no'] . ")";
+				return false;
+				exit;
+			}
+			elseif($post['history_status'] == "Arrived" && $value['status'] != "Departed"){
+				echo "Error : Status need to Departed first before update to Arrived (" . $value['tracking_no'] . ")";
+				return false;
+				exit;
+			}
+			elseif($post['history_status'] == "Service Center" && !in_array($value['status'], ["Arrived", "Clearance Complete"])){
+				echo "Error : Status need to Arrived/Clearance Complete first before update to Service Center (" . $value['tracking_no'] . ")";
 				return false;
 				exit;
 			}

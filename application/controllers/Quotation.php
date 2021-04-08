@@ -55,7 +55,13 @@ class Quotation extends CI_Controller
 		$data['country'] = json_decode(file_get_contents("./assets/country/country.json"), true);
 		$data['payment_terms_list'] = $this->home_mod->payment_terms_list();
 		$data['uom_list'] = $this->home_mod->uom_list();
-		$data['customer_list'] = $this->quotation_mod->customer_list_db();
+		if($this->session->userdata('role') == "Super Admin"){
+			$where = ["status_approval" => 1];
+		}
+		else{
+			$where = ["status_approval" => 1, "assign_to" => $this->session->userdata('id')];
+		}
+		$data['customer_list'] = $this->quotation_mod->customer_list_db($where);
 		$data['package_type'] = $this->quotation_mod->package_type_list_db();
 
 		$data['subview'] 			= 'quotation/quotation_create';
@@ -152,6 +158,7 @@ class Quotation extends CI_Controller
 			'term_condition' 						=> htmlentities($term_condition),
 			'branch' 										=> $this->session->userdata('branch'),
 			'created_by' 								=> $this->session->userdata('id'),
+			'hide_estimete_total_pdf' 	=> $post['hide_estimete_total_pdf'],
 		);
 		$id_quotation = $this->quotation_mod->quotation_create_process_db($form_data);
 
@@ -199,7 +206,13 @@ class Quotation extends CI_Controller
 		$cargo_list 						= $this->quotation_mod->quotation_cargo_list_db($where);
 		$where['id_quotation'] 	= $id;
 		$charges_list 					= $this->quotation_mod->quotation_charges_list_db($where);
-		$data['customer_list'] = $this->quotation_mod->customer_list_db();
+		if($this->session->userdata('role') == "Super Admin"){
+			$where = ["status_approval" => 1];
+		}
+		else{
+			$where = ["status_approval" => 1, "assign_to" => $this->session->userdata('id')];
+		}
+		$data['customer_list'] = $this->quotation_mod->customer_list_db($where);
 
 		if (count($quotation_list) <= 0) {
 			$this->session->set_flashdata('error', 'Quotation not Found!');
@@ -327,6 +340,7 @@ class Quotation extends CI_Controller
 			'consignee_email' 					=> $post['consignee_email'],
 			'status' 										=> 0,
 			'term_condition' 						=> htmlentities($term_condition),
+			'hide_estimete_total_pdf' 	=> $post['hide_estimete_total_pdf'],
 		);
 		$where['id'] = $post['id'];
 		$this->quotation_mod->quotation_update_process_db($form_data, $where);
@@ -528,6 +542,23 @@ class Quotation extends CI_Controller
 		}
 
 		$data['quotation'] = $quotation_list[0];
+
+		$data['subview'] 			= 'quotation/quotation_reject';
+		$data['meta_title'] 	= 'Quotation Reject';
+		$this->load->view('index', $data);
+	}
+
+	public function quotation_approval($id, $action){
+		$where['id'] 						= $id;
+		$quotation_list 				= $this->quotation_mod->quotation_list_db($where);
+
+		if (count($quotation_list) <= 0) {
+			$this->session->set_flashdata('error', 'Quotation not Found!');
+			redirect("quotation/quotation_list");
+		}
+
+		$data['quotation'] = $quotation_list[0];
+		$data['action'] = $action;
 
 		$data['subview'] 			= 'quotation/quotation_reject';
 		$data['meta_title'] 	= 'Quotation Reject';

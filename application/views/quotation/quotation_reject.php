@@ -17,16 +17,27 @@
   <div class="container-fluid">
     <div class="row clearfix">
       <div class="col-md-12">
-        <form action="<?php echo base_url() ?>quotation/quotation_approval_process/<?php echo $quotation['id'] ?>/2" method="POST">
+        <form action="<?php echo base_url() ?>quotation/quotation_approval_process/<?php echo $quotation['id'] ?>/<?php echo $action ?>" method="POST">
           <input type="hidden" name="id" value="<?php echo $quotation['id'] ?>" required>
           <div class="card">
             <div class="card-body overflow-auto">
-              <h6 class="font-weight-bold border-bottom">Quotation Reject</h6>
+              <h6 class="font-weight-bold border-bottom">Quotation Approval</h6>
               <div class="row clearfix">
                 <div class="col-md-6">
                   <div class="form-group">
                     <label>Quotation No</label>
                     <input type="text" class="form-control" value="<?php echo $quotation['quotation_no'] ?>" readonly>
+                  </div>
+                  <div class="form-group">
+                    <label>Approval Status</label><br>
+                    <?php
+                      if($action == 1){
+                        echo "<span class='font-weight-bold text-success'>Approve</span>";
+                      }
+                      elseif($action == 2){
+                        echo "<span class='font-weight-bold text-danger'>Reject</span>";
+                      }
+                    ?>
                   </div>
                   <div class="form-group">
                     <label>Remarks</label>

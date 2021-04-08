@@ -117,8 +117,8 @@
                         <a href="<?php echo base_url() ?>quotation/quotation_delete_process/<?php echo $value['id'] ?>" class="btn btn-danger" title="Delete" onclick="return confirm('Are You Sure?')"><i class="fas fa-trash m-0"></i></a>
                         <?php endif; ?>
                         <?php if($value['status'] == 0 && $page_permission[1] == 1): ?>
-                        <a href="<?php echo base_url() ?>quotation/quotation_approval_process/<?php echo $value['id'] ?>/1" class="btn btn-success" title="Approve" onclick="return confirm('Are You Sure to Approve this?')"><i class="fas fa-check m-0"></i></a>
-                        <a href="<?php echo base_url() ?>quotation/quotation_reject/<?php echo $value['id'] ?>/2" class="btn btn-danger" title="Reject"><i class="fas fa-times m-0"></i></a>
+                        <a href="<?php echo base_url() ?>quotation/quotation_approval/<?php echo $value['id'] ?>/1" class="btn btn-success" title="Approve"><i class="fas fa-check m-0"></i></a>
+                        <a href="<?php echo base_url() ?>quotation/quotation_approval/<?php echo $value['id'] ?>/2" class="btn btn-danger" title="Reject"><i class="fas fa-times m-0"></i></a>
                         <?php endif; ?>
                         <?php if($value['status'] == 1 && $value['tracking_no'] == "" && $page_permission[2] == 1): ?>
                         <a href="<?php echo base_url() ?>quotation/shipment_create/<?php echo $value['id'] ?>" class="btn btn-success" title="Create Shipment" onclick="return confirm('Are You Sure to Approve this?')"><i class="fas fa-plus m-0"></i></a>

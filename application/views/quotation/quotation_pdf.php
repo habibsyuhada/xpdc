@@ -309,7 +309,9 @@
     </tbody>
   </table>
   <div style="text-align: right">
+  <?php if($quotation['hide_estimete_total_pdf'] == 0): ?>
     <p><b>Estimate Total Charges : <?php echo "IDR " . number_format(($subtotal), 0) . ".00" ?></b></p>
+  <?php endif; ?>
     <!-- <tr>
         <td colspan="5" style="border-style: none;">
         </td>

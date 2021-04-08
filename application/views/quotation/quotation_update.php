@@ -98,16 +98,6 @@
               <div class="row clearfix">
                 <div class="col-md-6">
                   <div class="form-group">
-                    <label>Type of Shipment</label>
-                    <select class="form-control" name="type_of_shipment" required <?=($quotation['type_of_service'] == 'CH' || $quotation['type_of_service'] == 'WH') ? 'disabled' : ''?> onchange="change_typeshipment(this)">
-                      <option value="">-- Select One --</option>
-                      <option value="International Shipping" <?php echo ($quotation['type_of_shipment'] == 'International Shipping' ? 'selected' : '' ) ?>>International Shipping</option>
-                      <option value="Domestic Shipping" <?php echo ($quotation['type_of_shipment'] == 'Domestic Shipping' ? 'selected' : '' ) ?>>Domestic Shipping</option>
-                    </select>
-                  </div>
-                </div>
-                <div class="col-md-6">
-                  <div class="form-group">
                     <label>Type of Service</label>
                     <select class="form-control" name="type_of_service" required>
                       <option value="">-- Select One --</option>
@@ -117,12 +107,22 @@
                     </select>
                   </div>
                 </div>
+                <div class="col-md-6">
+                  <div class="form-group">
+                    <label>Type of Shipment</label>
+                    <select class="form-control" name="type_of_shipment" required <?=($quotation['type_of_service'] == 'CH' || $quotation['type_of_service'] == 'WH') ? 'disabled' : ''?> onchange="change_typeshipment(this)">
+                      <option value="">-- Select One --</option>
+                      <option value="International Shipping" <?php echo ($quotation['type_of_shipment'] == 'International Shipping' ? 'selected' : '' ) ?>>International Shipping</option>
+                      <option value="Domestic Shipping" <?php echo ($quotation['type_of_shipment'] == 'Domestic Shipping' ? 'selected' : '' ) ?>>Domestic Shipping</option>
+                    </select>
+                  </div>
+                </div>
               </div>
               <div class="row clearfix">
                 <div class="col-md-6">
                   <div class="form-group">
                     <label>Type of Mode</label>
-                    <select class="form-control" name="type_of_transport" onchange="get_vol_weight()" required>
+                    <select class="form-control" name="type_of_transport" onchange="get_vol_weight()" required <?=($quotation['type_of_transport'] == 'CH' || $quotation['type_of_transport'] == 'WH') ? 'disabled' : ''?>>
                       <option value="">- Select One -</option>
                       <option value="Sea Transport" <?php echo ($quotation['type_of_transport'] == 'Sea Transport' ? 'selected' : '') ?>>Sea Transport</option>
                       <option value="Land Shipping" <?php echo ($quotation['type_of_transport'] == 'Land Shipping' ? 'selected' : '') ?>>Land Shipping</option>
@@ -133,7 +133,7 @@
                 <div class="col-md-6">
                   <div class="form-group" style="<?php echo ($quotation['type_of_transport'] == 'Sea Transport' ? '' : 'display: none;') ?>">
                     <label>Sea</label>
-                    <select class="form-control" name="sea" title="sea" required <?php echo ($quotation['type_of_transport'] == 'Sea Transport' ? '' : 'disabled') ?>>
+                    <select class="form-control" name="sea" title="sea" <?php echo ($quotation['type_of_transport'] == 'Sea Transport' ? '' : 'disabled') ?>>
                       <option value="">- Select Sea -</option>
                       <option value="LCL" <?= ($quotation['sea'] == 'LCL') ? 'selected' : ''; ?>>LCL</option>
                       <option value="FCL" <?= ($quotation['sea'] == 'FCL') ? 'selected' : ''; ?>>FCL</option>
@@ -141,7 +141,7 @@
                   </div>
                   <div class="form-group" style="<?php echo ($quotation['type_of_transport'] == 'Air Freight' ? '' : 'display: none;') ?>">
                     <label>Sea</label>
-                    <select class="form-control" name="sea" title="air" required <?php echo ($quotation['type_of_transport'] == 'Air Freight' ? '' : 'disabled') ?>>
+                    <select class="form-control" name="sea" title="air" <?php echo ($quotation['type_of_transport'] == 'Air Freight' ? '' : 'disabled') ?>>
                       <option value="">- Select Sea -</option>
                       <option value="Express" <?= ($quotation['sea'] == 'Express') ? 'selected' : ''; ?>>Express</option>
                       <option value="Reguler" <?= ($quotation['sea'] == 'Reguler') ? 'selected' : ''; ?>>Reguler</option>
@@ -449,8 +449,17 @@
                   </table>
                 </div>
                 <div class="row clearfix">
+                  <div class="col-md-auto">
+                    <div class="form-group">
+                      <label>Hide Estimation Total Charges on PDF</label>
+                      <select class="form-control" name="hide_estimete_total_pdf">
+                        <option value="0" <?php echo ($quotation['hide_estimete_total_pdf'] == "0" ? "selected" : "") ?>>No</option>
+                        <option value="1" <?php echo ($quotation['hide_estimete_total_pdf'] == "1" ? "selected" : "") ?>>Yes</option>
+                      </select>
+                    </div>
+                  </div>
                   <div class="col-md">
-                    <h5 class="font-weight-bold text-right">Total All : IDR <span id="total_all" name="total_all"><?php echo number_format($total_all, 0).".00" ?></span></h5>
+                    <h5 class="font-weight-bold text-right">Estimation Total Charges : IDR <span id="total_all" name="total_all"><?php echo number_format($total_all, 0).".00" ?></span></h5>
                   </div>
                 </div>
               </div>
@@ -580,9 +589,13 @@
     if(value == 'CH' || value == 'WH'){
       $("select[name=type_of_shipment]").val('').attr("disabled", true);
       $("select[name=incoterms]").val('').attr("disabled", true);
+      $("[name=type_of_mode], [name=sea]").val('').attr("disabled", true);
+      $("#shipper_consignee_info, #cargo_info").slideUp("slow");
     }else{
       $("select[name=type_of_shipment]").removeAttr("disabled");
       $("select[name=incoterms]").removeAttr("disabled");
+      $("[name=type_of_mode], [name=sea]").removeAttr("disabled");
+      $("#shipper_consignee_info, #cargo_info").slideDown("slow");
     }
   });
 
@@ -630,6 +643,8 @@
     select_country($("select[name=consignee_country]"));
 
     change_typeshipment("[name=type_of_shipment]");
+
+    $("select[name=type_of_service]").val('<?php echo $quotation['type_of_service'] ?>').trigger('change');
   });
 
   function get_vol_weight() {
@@ -843,5 +858,6 @@
     $("[name=shipper_country], [name=consignee_country]").select2({
       'disabled': false
     });
+    $("[name=type_of_mode], [name=sea]").prop("disabled", false);
   });
 </script>

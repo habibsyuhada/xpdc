@@ -14,6 +14,46 @@
 <div class="main-content">
 	<div class="container-fluid">
     <div class="row justify-content-center clearfix">
+      <div class="col-xl-6 col-lg-6 col-md-6 col-sm-12">
+        <div class="widget" data-link="<?php echo base_url() ?>shipment/shipment_list?type_of_shipment=Domestic+Shipping&type_of_mode=Air+Freight&created_date_from=<?php echo date("Y-m-"); ?>01&created_date_to=<?php echo date("Y-m-t"); ?>">
+          <div class="widget-body">
+            <div class="d-flex justify-content-between align-items-center">
+              <div class="state">
+                <h6>Name</h6>
+                <h4 class="m-0 font-weight-bold"><?php echo $this->session->userdata('name'); ?></h4>
+              </div>
+              <div class="icon">
+                <i class="fas fa-user"></i>
+              </div>
+            </div>
+            <!-- <small class="text-small mt-10 d-block">6% higher than last month</small> -->
+          </div>
+        </div>
+      </div>
+      <div class="col-xl-6 col-lg-6 col-md-6 col-sm-12">
+        <div class="widget" data-link="<?php echo base_url() ?>shipment/shipment_list?type_of_shipment=Domestic+Shipping&type_of_mode=Air+Freight&created_date_from=<?php echo date("Y-m-"); ?>01&created_date_to=<?php echo date("Y-m-t"); ?>">
+          <div class="widget-body">
+            <div class="d-flex justify-content-between align-items-center">
+              <div class="state">
+                <h6>Total Selling for This Month</h6>
+                <?php
+                  $total_selling = 0;
+                  foreach ($summary as $key => $value) {
+                    foreach ($value as $key2 => $value2) {
+                      $total_selling += $value2;
+                    }
+                  } 
+                ?>
+                <h4 class="m-0 font-weight-bold">Rp. <?php echo number_format(@$total_selling + 0, 2) ?></h4>
+              </div>
+              <div class="icon">
+                <i class="fas fa-plane-departure"></i>
+              </div>
+            </div>
+            <!-- <small class="text-small mt-10 d-block">6% higher than last month</small> -->
+          </div>
+        </div>
+      </div>
       <div class="col-xl-4 col-lg-4 col-md-4 col-sm-12">
         <div class="widget" data-link="<?php echo base_url() ?>shipment/shipment_list?type_of_shipment=Domestic+Shipping&type_of_mode=Air+Freight&created_date_from=<?php echo date("Y-m-"); ?>01&created_date_to=<?php echo date("Y-m-t"); ?>">
           <div class="widget-body">

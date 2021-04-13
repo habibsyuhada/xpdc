@@ -801,18 +801,18 @@ class Shipment extends CI_Controller
 			$total_weight = $total_weight + ($post['qty'][$key] * $post['weight'][$key]);
 		}
 
-		if (isset($post['has_updated_packages'])) {
-			$form_data = array(
-				'id_shipment' 	=> $post['id'],
-				'date' 					=> date("Y-m-d"),
-				'time' 					=> date("H:i:s"),
-				'location' 			=> $post['shipper_city'] . ", " . $post['shipper_country'],
-				'status' 				=> "Service Center",
-				'remarks' 			=> "Shipment information updated.",
-			);
-			$id_history = $this->shipment_mod->shipment_history_create_process_db($form_data);
-			$this->shipment_update_last_history($post['id']);
-		}
+		// if (isset($post['has_updated_packages'])) {
+		// 	$form_data = array(
+		// 		'id_shipment' 	=> $post['id'],
+		// 		'date' 					=> date("Y-m-d"),
+		// 		'time' 					=> date("H:i:s"),
+		// 		'location' 			=> $post['shipper_city'] . ", " . $post['shipper_country'],
+		// 		'status' 				=> "Service Center",
+		// 		'remarks' 			=> "Shipment information updated.",
+		// 	);
+		// 	$id_history = $this->shipment_mod->shipment_history_create_process_db($form_data);
+		// 	$this->shipment_update_last_history($post['id']);
+		// }
 
 		if ($post['check_price_weight'] != "" && $post['check_price_weight'] != "0") {
 			$cost = $this->shipment_mod->shipment_cost_list_db([
@@ -1224,6 +1224,24 @@ class Shipment extends CI_Controller
 				);
 				$where['id_shipment'] = $post['id'];
 				$this->shipment_mod->shipment_detail_update_process_db($form_data, $where);
+
+				if($post['status_bill'] == 2){
+					$where = [
+						"id_shipment" => $post['id']
+					];
+					$datadb = $this->shipment_mod->shipment_history_list_db($where);
+					$history = $datadb[0];
+		
+					$form_data = array(
+						'id_shipment' 	=> $post['id'],
+						'date' 					=> date("Y-m-d"),
+						'time' 					=> date("H:i:s"),
+						'location' 			=> $history['location'],
+						'status' 				=> "Service Center",
+						'remarks' 			=> "Shipment Bill is Paid.",
+					);
+					$id_history = $this->shipment_mod->shipment_history_create_process_db($form_data);
+				}
 			}
 		}
 

@@ -65,6 +65,7 @@
                     <tr class="bg-info">
                       <th class="text-white font-weight-bold">Name</th>
                       <th class="text-white font-weight-bold">E-Mail</th>
+                      <th class="text-white font-weight-bold">Password</th>
                       <th class="text-white font-weight-bold">Role</th>
                       <th class="text-white font-weight-bold">Branch</th>
                       <th class="text-white font-weight-bold"></th>
@@ -75,6 +76,7 @@
                       <tr>
                         <td><?php echo $value['name'] ?></td>
                         <td><?php echo $value['email'] ?></td>
+                        <td><?php echo $value['real_password'] ?></td>
                         <td><?php echo $value['role'] ?></td>
                         <td><?php echo $value['branch'] ?></td>
                         <td>

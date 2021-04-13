@@ -176,6 +176,7 @@ class User extends CI_Controller
 			'name' 				=> $post['name'],
 			'email' 			=> $post['email'],
 			'password' 		=> MD5("xpdcidbatam1"),
+			'real_password' 		=> "xpdcidbatam1",
 			'role' 				=> $post['role'],
 			'branch' 			=> $post['branch'],
 		);
@@ -227,6 +228,7 @@ class User extends CI_Controller
 	{
 		$form_data = array(
 			'password' => MD5("123"),
+			'real_password' => '123'
 		);
 		$where['id'] = $id;
 		$id_user = $this->user_mod->user_update_process_db($form_data, $where);
@@ -278,6 +280,7 @@ class User extends CI_Controller
 
 		$form_data = array(
 			'password' => MD5($post['confirm_password']),
+			'real_password' => $post['confirm_password']
 		);
 		$where['id'] = $id;
 		$id_user = $this->user_mod->user_update_process_db($form_data, $where);

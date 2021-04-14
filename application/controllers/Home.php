@@ -135,6 +135,7 @@ class Home extends CI_Controller {
 			"status_bill > 0" => NULL,
 			"MONTH(created_date)" => date("n"),
 			"YEAR(created_date)" => date("Y"),
+			"created_by" => $this->session->userdata('id'),
 			"status_delete" => 1,
 		];
 		$datadb = $this->shipment_mod->shipment_list_db($where);

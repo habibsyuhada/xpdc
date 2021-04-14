@@ -1241,6 +1241,10 @@ class Shipment extends CI_Controller
 						'remarks' 			=> "Shipment Bill is Paid.",
 					);
 					$id_history = $this->shipment_mod->shipment_history_create_process_db($form_data);
+
+					$form_data 	= ["status" => "Service Center"];
+					$where 			= ["id" => $post['id']];
+					$this->shipment_mod->shipment_update_process_db($form_data, $where);
 				}
 			}
 		}
@@ -1883,6 +1887,10 @@ class Shipment extends CI_Controller
 				'remarks' 			=> "Shipment Bill is Paid.",
 			);
 			$id_history = $this->shipment_mod->shipment_history_create_process_db($form_data);
+
+			$form_data 	= ["status" => "Service Center"];
+			$where 			= ["id" => $value];
+			$this->shipment_mod->shipment_update_process_db($form_data, $where);
 		}
 
 		$this->session->set_flashdata('success', 'Your Shipment data has been Updated!');

@@ -90,7 +90,7 @@ $page_permission = array(
                   <?php endif; ?>
                 </div>
                 <?php if (@$invoice['invoice_no'] != "") : ?>
-                  <?php if ($page_permission[0] != 1) : ?>
+                  <?php if ($page_permission[0] == 1) : ?>
                   <div class="col-md-6">
                     <div class="form-group">
                       <label>Status</label>

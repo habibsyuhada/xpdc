@@ -221,6 +221,7 @@
     $(btn).closest("tbody").append("<tr>" + row_copy + "</tr>");
     var btn_delete = '<button type="button" class="btn btn-danger" onclick="deleterow(this)"><i class="fas fa-trash m-0"></i></button>';
     $(btn).closest("tbody").find("tr:last").find("td:last").html(btn_delete);
+    $(btn).closest("tbody").find("tr:last").find("[name='id_detail[]']").val('');
   }
 
   function deleterow(btn) {

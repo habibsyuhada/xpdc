@@ -448,6 +448,9 @@ class Shipment extends CI_Controller
 			];
 			$datadb 	= $this->home_mod->customer_list($where);
 			$customer = $datadb[0];
+			if(count($datadb) == 0){
+				$customer['payment_terms'] = "Cash In Advance";
+			}
 
 			unset($where);
 			$where['name'] = $this->session->userdata('branch');

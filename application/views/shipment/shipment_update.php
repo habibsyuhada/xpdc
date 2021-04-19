@@ -872,7 +872,7 @@
     } else if (type_of_mode == 'Land Shipping') {
       per = 4000;
     } else if (type_of_mode == 'Sea Transport') {
-      per = 5000;
+      per = 4000;
     }
 
     $("input[name='length[]']").each(function(index, value) {

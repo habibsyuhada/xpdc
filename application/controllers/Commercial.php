@@ -153,6 +153,7 @@ class Commercial extends CI_Controller
             'account_phone_number'  => $post['account_phone_number'],
 
             'assign_to'  => $post['assign_to'],
+            'create_by'  => $post['assign_to'],
         );
         $where_detail['id'] = $id;
         $id_detail_customer = $this->commercial_mod->customer_detail_update_process_db($form_detail_data, $where_detail);

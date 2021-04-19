@@ -252,12 +252,12 @@ foreach ($post['qty'] as $key => $value) {
               <tr>
                 <td>Act. Weight</td>
                 <td>:</td>
-                <td><?php echo number_format($total_act_weight, 2) ?> Kg</td>
+                <td><?php echo number_format(ceil($total_act_weight), 2) ?> Kg</td>
               </tr>
               <tr>
                 <td>Vol. Weight</td>
                 <td>:</td>
-                <td><?php echo number_format($total_vol_weight, 2) ?> Kg</td>
+                <td><?php echo number_format(ceil($total_vol_weight), 2) ?> Kg</td>
               </tr>
               <tr>
                 <td>Measurement</td>

@@ -186,22 +186,21 @@ $page_permission = array(
                 <div class="col-md-6">
 
                   <?php
-                    $incoterms_val = '';
-                    if($this->session->userdata('id') == "Guest"){
-                      $incoterms_val = 'DAP (Delivered At Place)';
-                    }
-                    elseif(isset($incoterms_val)){
-                      $incoterms_val = $data_input['incoterms'];
-                    }
+                  $incoterms_val = '';
+                  if ($this->session->userdata('id') == "Guest") {
+                    $incoterms_val = 'DAP (Delivered At Place)';
+                  } elseif (isset($incoterms_val)) {
+                    $incoterms_val = $data_input['incoterms'];
+                  }
                   ?>
                   <input type="hidden" name="incoterms" value="<?php echo (isset($incoterms_val)) ? $incoterms_val :  ''; ?>">
-                  <?php if($this->session->userdata('role') != "Customer"): ?>
-                  <div class="form-group row m-0">
-                    <label class="col-sm-3 col-form-label">Incoterms</label>
-                    <div class="col-sm-9">
-                      <label class="col-form-label">: <?php echo ($incoterms_val != "") ? $incoterms_val : '-'; ?></label>
+                  <?php if ($this->session->userdata('role') != "Customer") : ?>
+                    <div class="form-group row m-0">
+                      <label class="col-sm-3 col-form-label">Incoterms</label>
+                      <div class="col-sm-9">
+                        <label class="col-form-label">: <?php echo ($incoterms_val != "") ? $incoterms_val : '-'; ?></label>
+                      </div>
                     </div>
-                  </div>
                   <?php endif; ?>
 
                   <div class="form-group row m-0">
@@ -342,7 +341,7 @@ $page_permission = array(
                   <div class="form-group row m-0" style="font-size: 115%;">
                     <label class="col-sm-auto col-form-label font-weight-bold">Act. Weight</label>
                     <div class="col-sm">
-                      <label class="col-form-label">: <?php echo number_format($total_act_weight, 2) ?> Kg</label>
+                      <label class="col-form-label">: <?php echo number_format(ceil($total_act_weight), 2) ?> Kg</label>
                     </div>
                   </div>
                 </div>
@@ -350,7 +349,7 @@ $page_permission = array(
                   <div class="form-group row m-0" style="font-size: 115%;">
                     <label class="col-sm-auto col-form-label font-weight-bold">Vol. Weight</label>
                     <div class="col-sm">
-                      <label class="col-form-label">: <?php echo number_format($total_vol_weight, 2) ?> Kg</label>
+                      <label class="col-form-label">: <?php echo number_format(ceil($total_vol_weight), 2) ?> Kg</label>
                     </div>
                   </div>
                 </div>
@@ -359,6 +358,18 @@ $page_permission = array(
                     <label class="col-sm-auto col-form-label font-weight-bold">Measurement</label>
                     <div class="col-sm">
                       <label class="col-form-label">: <?php echo number_format($total_measurement, 2) ?> M<sub>3</sub></label>
+                    </div>
+                  </div>
+                </div>
+                <div class="col-md">
+                  <div class="form-group row m-0" style="font-size: 115%;">
+                    <label class="col-sm-auto col-form-label font-weight-bold">Chargeable Weight</label>
+                    <div class="col-sm">
+                      <?php if ($total_act_weight > $total_vol_weight) { ?>
+                        <label class="col-form-label">: <?php echo number_format(ceil($total_act_weight), 2) ?> Kg</label>
+                      <?php } else { ?>
+                        <label class="col-form-label">: <?php echo number_format(ceil($total_vol_weight), 2) ?> Kg</label>
+                      <?php } ?>
                     </div>
                   </div>
                 </div>

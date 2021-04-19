@@ -24,10 +24,16 @@ class Shipment extends CI_Controller
 		$where = array();
 		if ($this->session->userdata('branch')) {
 			if ($this->session->userdata('branch') != "NONE") {
-				if($this->session->userdata('role') == 'Operator'){
+				if ($this->session->userdata('role') == 'Operator') {
 					$where["((assign_branch LIKE '%" . $this->session->userdata('branch') . "%' AND assign_branch IS NOT NULL) OR (assign_branch IS NULL AND branch LIKE '%" . $this->session->userdata('branch') . "%'))"] 	= NULL;
-				}else{
-					$where["(assign_branch LIKE '%" . $this->session->userdata('branch') . "%' OR branch LIKE '%" . $this->session->userdata('branch') . "%')"] 	= NULL;	
+				} else {
+					$customer = $this->shipment_mod->customer_list_db(["customer_id IN(SELECT id FROM user WHERE role = 'Customer' AND branch = '" . $this->session->userdata('branch') . "')" => null]);
+					$row_data = [];
+					foreach ($customer as $row) {
+						$row_data[] = $row['account_no'];
+					}
+					$where_in = "'" . implode("','", $row_data) . "'";
+					$where["((assign_branch LIKE '%" . $this->session->userdata('branch') . "%' AND billing_account = '') OR (branch LIKE '%" . $this->session->userdata('branch') . "%' AND billing_account = '') OR billing_account IN(" . $where_in . "))"] 	= NULL;
 				}
 			}
 		} else {
@@ -142,11 +148,9 @@ class Shipment extends CI_Controller
 
 		if ($this->session->userdata('role') == "Customer") {
 			$data['customer'] = $this->shipment_mod->customer_list_db(array("status_delete" => 1, "email" => $this->session->userdata('email')));
-		}
-		elseif($this->session->userdata('role') == "Commercial"){
+		} elseif ($this->session->userdata('role') == "Commercial") {
 			$data['customer'] = $this->shipment_mod->customer_list_db(["status_approval" => 1, "status_delete" => 1, "assign_to" => $this->session->userdata('id')]);
-		}
-		else{
+		} else {
 			$data['customer'] = $this->shipment_mod->customer_list_db(["status_approval" => 1, "status_delete" => 1]);
 		}
 
@@ -532,11 +536,10 @@ class Shipment extends CI_Controller
 		$data['packages_list'] 	= $packages_list;
 		$data['history_list'] 	= $history_list;
 
-		if($this->session->userdata('role') == "Commercial"){
-			$data['customer'] = $this->shipment_mod->customer_list_db(["status_approval" => 1, "status_delete" => 0, "assign_to" => $this->session->userdata('id')]);
-		}
-		else{
-			$data['customer'] = $this->shipment_mod->customer_list_db(["status_approval" => 1, "status_delete" => 0]);
+		if ($this->session->userdata('role') == "Commercial") {
+			$data['customer'] = $this->shipment_mod->customer_list_db(["status_approval" => 1, "status_delete" => 1, "assign_to" => $this->session->userdata('id')]);
+		} else {
+			$data['customer'] = $this->shipment_mod->customer_list_db(["status_approval" => 1, "status_delete" => 1]);
 		}
 
 		$data['package_type'] = $this->shipment_mod->package_type_list_db();
@@ -757,7 +760,7 @@ class Shipment extends CI_Controller
 	public function shipment_package_detail_process()
 	{
 		$post = $this->input->post();
-		
+
 		$form_data = array(
 			'incoterms' 						=> $post['incoterms'],
 			'description_of_goods'	=> $post['description_of_goods'],
@@ -814,12 +817,12 @@ class Shipment extends CI_Controller
 		// 	$this->shipment_update_last_history($post['id']);
 		// }
 
-		if ($post['check_price_weight'] != "" && $post['check_price_weight'] != "0") {
+		if ($post['check_price_weight'] != "" || $post['check_price_weight'] != "0") {
 			$cost = $this->shipment_mod->shipment_cost_list_db([
-				"uom" 				=> 'Kg',
+				// "uom" 				=> 'Kg',
 				"category" 		=> 'costumer',
 				"id_shipment" => $post['id'],
-				]);
+			]);
 			if (count($cost) > 0) {
 				$cost = $cost[0];
 				$form_data = [
@@ -827,28 +830,37 @@ class Shipment extends CI_Controller
 					"qty_costumer" 	=> $cost['qty'],
 				];
 				$this->shipment_mod->shipment_cost_update_process_db($form_data, ["id" => $cost['id']]);
-
-				$form_data = ["status" => "Pending Payment"];
-				$where = ["id" => $post['id']];
-				$this->shipment_mod->shipment_update_process_db($form_data, $where);
-
-				$where = [
-					"id_shipment" => $post['id']
-				];
-				$datadb = $this->shipment_mod->shipment_history_list_db($where);
-				$history = $datadb[0];
-
-				$form_data = array(
-					'id_shipment' 	=> $post['id'],
-					'date' 					=> date("Y-m-d"),
-					'time' 					=> date("H:i:s"),
-					'location' 			=> $history['location'],
-					'status' 				=> "Pending Payment",
-					'remarks' 			=> "Shipment information updated.",
-				);
-				$id_history = $this->shipment_mod->shipment_history_create_process_db($form_data);
 			}
 		}
+
+		$where = ["id" => $post['id']];
+		$shipment_list = $this->shipment_mod->shipment_list_db($where);
+
+		if ($shipment_list[0]['billing_account'] == '' || $shipment_list[0]['billing_account'] == NULL) {
+			$status = 'Pending Payment';
+		} else {
+			$status = 'Service Center';
+		}
+
+		$form_data = ["status" => $status];
+
+		$this->shipment_mod->shipment_update_process_db($form_data, $where);
+
+		$where = [
+			"id_shipment" => $post['id']
+		];
+		$datadb = $this->shipment_mod->shipment_history_list_db($where);
+		$history = $datadb[0];
+
+		$form_data = array(
+			'id_shipment' 	=> $post['id'],
+			'date' 					=> date("Y-m-d"),
+			'time' 					=> date("H:i:s"),
+			'location' 			=> $history['location'],
+			'status' 				=> $status,
+			'remarks' 			=> "",
+		);
+		$id_history = $this->shipment_mod->shipment_history_create_process_db($form_data);
 
 		$this->session->set_flashdata('success', 'Your Shipment data has been Updated!');
 		redirect("shipment/shipment_list?status=Picked up");
@@ -1217,7 +1229,7 @@ class Shipment extends CI_Controller
 			$this->shipment_mod->shipment_invoice_update_process_db($form_data, $where);
 
 			unset($where);
-			if(isset($post['status_bill'])){
+			if (isset($post['status_bill'])) {
 				$form_data = array(
 					'status_bill' 		=> $post['status_bill'],
 					'date_paid' 			=> $post['date_paid'],
@@ -1225,13 +1237,13 @@ class Shipment extends CI_Controller
 				$where['id_shipment'] = $post['id'];
 				$this->shipment_mod->shipment_detail_update_process_db($form_data, $where);
 
-				if($post['status_bill'] == 2){
+				if ($post['status_bill'] == 2) {
 					$where = [
 						"id_shipment" => $post['id']
 					];
 					$datadb = $this->shipment_mod->shipment_history_list_db($where);
 					$history = $datadb[0];
-		
+
 					$form_data = array(
 						'id_shipment' 	=> $post['id'],
 						'date' 					=> date("Y-m-d"),
@@ -1529,18 +1541,15 @@ class Shipment extends CI_Controller
 				echo "Error : You cannot depart shipment before fill up Shipping Information (" . $value['tracking_no'] . ")";
 				return false;
 				exit;
-			} 
-			elseif ($post['history_status'] == "Service Center" && $value['status'] == "Picked up" && $value['has_updated_packages'] != 1) {
+			} elseif ($post['history_status'] == "Service Center" && $value['status'] == "Picked up" && $value['has_updated_packages'] != 1) {
 				echo "Error : You need to edit shipment information / packages first to change status Service Center from Picked up (" . $value['tracking_no'] . ")";
 				return false;
 				exit;
-			}
-			elseif($post['history_status'] == "Arrived" && $value['status'] != "Departed"){
+			} elseif ($post['history_status'] == "Arrived" && $value['status'] != "Departed") {
 				echo "Error : Status need to Departed first before update to Arrived (" . $value['tracking_no'] . ")";
 				return false;
 				exit;
-			}
-			elseif($post['history_status'] == "Service Center" && !in_array($value['status'], ["Arrived", "Clearance Complete"])){
+			} elseif ($post['history_status'] == "Service Center" && !in_array($value['status'], ["Arrived", "Clearance Complete"])) {
 				echo "Error : Status need to Arrived/Clearance Complete first before update to Service Center (" . $value['tracking_no'] . ")";
 				return false;
 				exit;
@@ -1826,7 +1835,8 @@ class Shipment extends CI_Controller
 		$this->load->view('index', $data);
 	}
 
-	public function shipment_multipaid_process(){
+	public function shipment_multipaid_process()
+	{
 		$post = $this->input->post();
 		$id_arr = explode(", ", $post['id']);
 
@@ -1844,31 +1854,31 @@ class Shipment extends CI_Controller
 			return false;
 		}
 
-		$where['shipment.id IN ('.$post['id'].')'] = NULL;
+		$where['shipment.id IN (' . $post['id'] . ')'] = NULL;
 		$shipment_list 					= $this->shipment_mod->shipment_list_db($where);
 
 		$not_bill = [];
 		foreach ($shipment_list as $key => $value) {
-			if($value['status_bill'] != 1){
+			if ($value['status_bill'] != 1) {
 				$not_bill[] = $value['tracking_no'];
 			}
 		}
-		if(count($not_bill) > 0){
-			$this->session->set_flashdata('error', 'All shipment below is not already billed!<br>'.join('<br>', $not_bill));
+		if (count($not_bill) > 0) {
+			$this->session->set_flashdata('error', 'All shipment below is not already billed!<br>' . join('<br>', $not_bill));
 			redirect($_SERVER['HTTP_REFERER']);
 		}
-		
+
 		$form_data = [
 			"paid_attachment" => $this->upload->data("file_name"),
 		];
-		$where = ['id_shipment IN ('.$post['id'].')' => NULL];
+		$where = ['id_shipment IN (' . $post['id'] . ')' => NULL];
 		$this->shipment_mod->shipment_invoice_update_process_db($form_data, $where);
 
 		$form_data = [
 			"status_bill" => 2,
 			"date_paid" 	=> date("Y-m-d"),
 		];
-		$where = ['id_shipment IN ('.$post['id'].')' => NULL];
+		$where = ['id_shipment IN (' . $post['id'] . ')' => NULL];
 		$this->shipment_mod->shipment_detail_update_process_db($form_data, $where);
 
 		foreach ($id_arr as $key => $value) {
@@ -1897,19 +1907,20 @@ class Shipment extends CI_Controller
 		redirect($_SERVER['HTTP_REFERER']);
 	}
 
-	public function shipment_paid_attachment($id){
+	public function shipment_paid_attachment($id)
+	{
 		$datadb = $this->shipment_mod->shipment_invoice_list_db(["id_shipment" => $id]);
-		if(count($datadb) == 0){
-			$this->session->set_flashdata('error', 'Paid Attachment is no uploaded!');
-			redirect($_SERVER['HTTP_REFERER']);
-		}
-		
-		$invoice = $datadb[0];
-		if($invoice['paid_attachment'] == ""){
+		if (count($datadb) == 0) {
 			$this->session->set_flashdata('error', 'Paid Attachment is no uploaded!');
 			redirect($_SERVER['HTTP_REFERER']);
 		}
 
-		redirect(base_url()."file/invoice/".$invoice['paid_attachment']);
+		$invoice = $datadb[0];
+		if ($invoice['paid_attachment'] == "") {
+			$this->session->set_flashdata('error', 'Paid Attachment is no uploaded!');
+			redirect($_SERVER['HTTP_REFERER']);
+		}
+
+		redirect(base_url() . "file/invoice/" . $invoice['paid_attachment']);
 	}
 }

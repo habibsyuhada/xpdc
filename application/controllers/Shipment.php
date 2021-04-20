@@ -337,6 +337,9 @@ class Shipment extends CI_Controller
 			'pickup_price'					=> @$post['pickup_price'],
 			'insurance'					=> $post['insurance'],
 		);
+		if ($this->session->userdata('id') == "Guest") {
+			$form_data['share_link'] = $this->session->userdata('id_link_commecial');
+		}
 		$id_shipment = $this->shipment_mod->shipment_create_process_db($form_data);
 
 		if ($this->session->userdata('role') == 'Customer') {

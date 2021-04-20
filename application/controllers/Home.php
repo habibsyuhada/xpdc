@@ -142,11 +142,10 @@ class Home extends CI_Controller
 		}
 
 		$where = [
-			"(billing_account IN ('" . join("', '", $account_no) . "') OR created_by = " . $this->session->userdata('id') . ")" => NULL,
+			"(share_link = " . $this->session->userdata('id') . " OR created_by = " . $this->session->userdata('id') . ")" => NULL,
 			"status_bill > 0" => NULL,
 			"MONTH(created_date)" => date("n"),
 			"YEAR(created_date)" => date("Y"),
-			"created_by" => $this->session->userdata('id'),
 			"status_delete" => 1,
 		];
 		$datadb = $this->shipment_mod->shipment_list_db($where);
@@ -243,13 +242,14 @@ class Home extends CI_Controller
 		redirect('home/login');
 	}
 
-	public function shipment_create($branch, $date_key = NULL)
+	public function shipment_create($branch, $date_key = NULL, $id_link_commecial)
 	{
 		if (!$this->session->userdata('id')) {
 			$session_user = array(
-				"id" 					=> "Guest",
-				"branch" 			=> $branch,
-				"role" 					=> "Customer",
+				"id" 								=> "Guest",
+				"branch" 						=> $branch,
+				"role" 							=> "Customer",
+				"id_link_commecial" => $id_link_commecial,
 			);
 			$this->session->set_userdata($session_user);
 		}

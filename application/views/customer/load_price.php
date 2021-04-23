@@ -210,7 +210,7 @@
       <tr>
         <td>Total Billing (Rp.)</td>
         <td>:</td>
-        <td>Rp. <?= number_format($result['price'] * $weight_fix_airfreight) ?></td>
+        <td>Rp. <?= number_format($int_price) ?></td>
       </tr>
       <tr>
         <td colspan="3">
@@ -224,7 +224,7 @@
             <input type="hidden" name="act_weight" value="<?= $weight_post ?>">
             <input type="hidden" name="vol_weight" value="<?= $vol_weight_airfreight_post ?>">
             <input type="hidden" name="measurement" value="<?= $measurement_post ?>">
-            <input type="hidden" name="check_price_weight" value="<?= ($result['price'] * $weight_fix_airfreight) ?>">
+            <input type="hidden" name="check_price_weight" value="<?= ($int_price) ?>">
             <input type="hidden" name="check_price_weight_fix" value="<?= $weight_fix_airfreight ?>">
             <input type="hidden" name="check_price_term" value="0">
 

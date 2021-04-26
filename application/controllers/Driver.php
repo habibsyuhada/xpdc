@@ -205,8 +205,7 @@ class Driver extends CI_Controller
 		redirect("driver/driver_update/".$post['id']);
 	}
 
-	public function shipment_update_last_history($id)
-	{
+	public function shipment_update_last_history($id){
 		$where['id_shipment'] 	= $id;
 		$history_list 					= $this->shipment_mod->shipment_history_list_db($where);
 		$history 								= $history_list[0];
@@ -229,6 +228,40 @@ class Driver extends CI_Controller
 		$this->shipment_mod->shipment_update_process_db($form_data, $where);
 
 		$this->session->set_flashdata('success', 'Your Driver data has been Taken Out!');
+		redirect($_SERVER['HTTP_REFERER']);
+	}
+
+	public function return_driver($type, $id_shipment){
+		$form_data = array(
+			'status_driver_'.$type 	=> 3,
+		);
+		$where['id'] = $id_shipment;
+		$this->shipment_mod->shipment_update_process_db($form_data, $where);
+
+		$where = ['shipment.id' => $id_shipment];
+		$shipment = $this->shipment_mod->shipment_list_db($where);
+		$shipment = $shipment[0];
+		if($type == 'pickup'){
+			$location = $shipment["pickup_city"].", ".$shipment["pickup_country"];
+			$remarks = "Shipper is not available";
+		}
+		elseif($type == 'deliver'){
+			$location = $shipment["consignee_city"].", ".$shipment["consignee_country"];
+			$remarks = "Consignee is not available";
+		}
+
+		$form_data = array(
+			'id_shipment' 	=> $id_shipment,
+			'date' 					=> date("Y-m-d"),
+			'time' 					=> date("H:i:s"),
+			'location' 			=> $location,
+			'status' 				=> "Returned",
+			'remarks' 			=> $remarks,
+		);
+		$id_history = $this->shipment_mod->shipment_history_create_process_db($form_data);
+		$this->shipment_update_last_history($id_shipment);
+
+		$this->session->set_flashdata('success', 'Shipment is Returned!');
 		redirect($_SERVER['HTTP_REFERER']);
 	}
 		

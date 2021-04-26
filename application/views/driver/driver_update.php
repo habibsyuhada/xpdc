@@ -223,6 +223,26 @@
           </div>
         </div>
         <?php if(($shipment['status_driver_pickup'] == 1 && $shipment["driver_pickup"] == $this->session->userdata('id')) || ($shipment['status_driver_deliver'] == 1 && $shipment["driver_deliver"] == $this->session->userdata('id'))): ?>
+          <?php if($shipment['status_driver_pickup'] == 1 && $shipment["driver_pickup"] == $this->session->userdata('id')): ?>
+          <div class="card">
+            <div class="card-header">
+              <h3>Failed to Pick Up</h3>
+            </div>
+            <div class="card-body">
+              <a href="<?php echo base_url() ?>driver/return_driver/pickup/<?php echo $shipment['id'] ?>" class="btn btn-danger text-white" onclick="return confirm('Are you sure to return this?')"><i class="fas fa-times"></i> Return Shipment</a>
+            </div>
+          </div>
+          <?php endif; ?>
+          <?php if($shipment['status_driver_deliver'] == 1 && $shipment["driver_deliver"] == $this->session->userdata('id')): ?>
+          <div class="card">
+            <div class="card-header">
+              <h3>Failed to Deliver</h3>
+            </div>
+            <div class="card-body">
+              <a href="<?php echo base_url() ?>driver/return_driver/deliver/<?php echo $shipment['id'] ?>" class="btn btn-danger text-white" onclick="return confirm('Are you sure to return this?')"><i class="fas fa-times"></i> Return Shipment</a>
+            </div>
+          </div>
+          <?php endif; ?>
         <div class="card">
           <div class="card-body">
             <div class="row">
@@ -253,7 +273,11 @@
                   </div>
                   <div class="form-group">
                     <label>Handovered by</label>
-                    <input type="text" class="form-control" name="notes_driver_pickup" required>
+                    <input type="text" class="form-control" name="by_driver_pickup" placeholder="Handovered by" required>
+                  </div>
+                  <div class="form-group">
+                    <label>Notes</label>
+                    <textarea class="form-control" name="notes_driver_pickup"></textarea>
                   </div>
 
                   <div id="signature" style="width: 100%"></div>
@@ -293,7 +317,11 @@
                   </div>
                   <div class="form-group">
                     <label>Received by</label>
-                    <input type="text" class="form-control" name="notes_driver_deliver" required>
+                    <input type="text" class="form-control" placeholder="Received by" name="by_driver_deliver" required>
+                  </div>
+                  <div class="form-group">
+                    <label>Notes</label>
+                    <textarea class="form-control" name="notes_driver_deliver"></textarea>
                   </div>
 
                   <div id="signature2" style="width: 100%"></div>
@@ -310,11 +338,12 @@
           </div>
         </div>
         <?php endif; ?>
-        <?php if($this->session->userdata('role') != "Driver"): ?>
+        <?php if($this->session->userdata('role') != "Driver" || (!in_array(1, [$shipment['status_driver_pickup'], $shipment['status_driver_deliver']]) && in_array($this->session->userdata('id'), [$shipment["driver_pickup"], $shipment["driver_deliver"]]) ) ): ?>
         <div class="card">
           <div class="card-body">
             <div class="row">
-              <div class="col-md-6">
+              <?php if($this->session->userdata('role') != "Driver" || $shipment["driver_pickup"] == $this->session->userdata('id')): ?>
+              <div class="col-md">
                 <h6 class="font-weight-bold">PickUp Detail</h6>
                 <hr>
                 <div class="form-group">
@@ -331,6 +360,10 @@
                   <img height="150px" src="<?php echo base_url()."file/driver/".$shipment['photo_driver_pickup'] ?>">
                 </div>
                 <div class="form-group">
+                  <label>Handovered by</label>
+                  <input class="form-control" name="by_driver_pickup" value="<?php echo $shipment['by_driver_pickup'] ?>" readonly>
+                </div>
+                <div class="form-group">
                   <label>Note</label>
                   <textarea class="form-control" name="notes_driver_pickup" placeholder="Notes" readonly><?php echo $shipment['notes_driver_pickup'] ?></textarea>
                 </div>
@@ -338,13 +371,17 @@
                   <label>Signature</label><br>
                   <img height="150px" src="<?php echo $shipment['signature_driver_pickup'] ?>">
                 </div>
+                <?php elseif($shipment['status_driver_pickup'] == 3): ?>
+                  <b>Shipper is not available<b>
                 <?php else: ?>
                   <?php if(isset($driver_list[$shipment["driver_pickup"]]['name'])): ?>
                   <a href="<?php echo base_url() ?>driver/driver_take_out/<?php echo $shipment['id_shipment'] ?>/pickup" class="btn btn-danger" title="Take Out From This Driver"><i class="fas fa-times"></i> Take Out</a>
                   <?php endif; ?>
                 <?php endif; ?>
               </div>
-              <div class="col-md-6">
+              <?php endif; ?>
+              <?php if($this->session->userdata('role') != "Driver" || $shipment["driver_deliver"] == $this->session->userdata('id')): ?>
+              <div class="col-md">
                 <h6 class="font-weight-bold">Deliver Detail</h6>
                 <hr>
                 <div class="form-group">
@@ -361,6 +398,10 @@
                   <img height="150px" src="<?php echo base_url()."file/driver/".$shipment['photo_driver_deliver'] ?>">
                 </div>
                 <div class="form-group">
+                    <label>Received by</label>
+                    <input type="text" class="form-control" name="by_driver_deliver" value="<?php echo $shipment['by_driver_deliver'] ?>" readonly>
+                  </div>
+                <div class="form-group">
                   <label>Note</label>
                   <textarea class="form-control" name="notes_driver_deliver" placeholder="Notes" readonly><?php echo $shipment['notes_driver_deliver'] ?></textarea>
                 </div>
@@ -368,12 +409,15 @@
                   <label>Signature</label><br>
                   <img height="150px" src="<?php echo $shipment['signature_driver_deliver'] ?>">
                 </div>
+                <?php elseif($shipment['status_driver_deliver'] == 3): ?>
+                  Consignee is not available
                 <?php else: ?>
                   <?php if(isset($driver_list[$shipment["driver_deliver"]]['name'])): ?>
                   <a href="<?php echo base_url() ?>driver/driver_take_out/<?php echo $shipment['id_shipment'] ?>/deliver" class="btn btn-danger" title="Take Out From This Driver"><i class="fas fa-times"></i> Take Out</a>
                   <?php endif; ?>
                 <?php endif; ?>
               </div>
+              <?php endif; ?>
             </div>
           </div>
         </div>

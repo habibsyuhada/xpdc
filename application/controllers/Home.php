@@ -24,6 +24,7 @@ class Home extends CI_Controller
 	{
 		parent::__construct();
 		$this->load->model('user_mod');
+		$this->load->model('home_mod');
 		$this->load->model('shipment_mod');
 		$this->load->model('commercial_mod');
 		$this->load->model('quotation_mod');
@@ -70,13 +71,15 @@ class Home extends CI_Controller
 		$this->load->view('home/landing_page', $data);
 	}
 
-	public function home()
-	{
+	public function home(){
 		if (!$this->session->userdata('id')) {
 			redirect('home/login');
 		}
 		if ($this->session->userdata('role') == "Commercial") {
 			redirect('home/home_commercial');
+		}
+		if ($this->session->userdata('role') == "Customer") {
+			redirect('home/home_customer');
 		}
 
 		$where['shipment.status_delete'] 	= 1;
@@ -115,13 +118,15 @@ class Home extends CI_Controller
 		$this->load->view('index', $data);
 	}
 
-	public function home_commercial()
-	{
+	public function home_commercial(){
 		if (!$this->session->userdata('id')) {
 			redirect('home/login');
 		}
 		if ($this->session->userdata('role') != "Commercial") {
 			redirect('home/home');
+		}
+		if ($this->session->userdata('role') == "Customer") {
+			redirect('home/home_customer');
 		}
 
 		$where = [
@@ -191,6 +196,60 @@ class Home extends CI_Controller
 		$data['total_quotation'] = count($quotation);
 
 		$data['subview'] 			= 'home/home_commercial';
+		$data['meta_title'] 	= 'Home';
+		$this->load->view('index', $data);
+	}
+	
+	public function home_customer(){
+		if (!$this->session->userdata('id')) {
+			redirect('home/login');
+		}
+		if ($this->session->userdata('role') == "Commercial") {
+			redirect('home/home_commercial');
+		}
+		if ($this->session->userdata('role') != "Customer") {
+			redirect('home/home');
+		}
+
+		$datadb 	= $this->home_mod->customer_list(array("status_delete" => 1, "email" => $this->session->userdata('email')));
+		if (count($datadb) == 0) {
+			$account_no = "0000000";
+		}
+		$account_no = $datadb[0]["account_no"];
+		$where['status_delete'] 	= 1;
+		$where["(shipment_detail.billing_account = '" . $account_no . "' OR created_by = '" . $this->session->userdata('id') . "')"] 	= NULL;
+		$where['MONTH(created_date)'] 	= date("n");
+		if($this->input->get('month')){
+			$where['MONTH(created_date)'] 	= $this->input->get('month');
+		}
+		$where['YEAR(created_date)'] 	= date("Y");
+		if($this->input->get('year')){
+			$where['YEAR(created_date)'] 	= $this->input->get('year');
+		}
+		$datadb = $this->shipment_mod->shipment_list_db($where);
+		$id_shipment = [];
+		foreach ($datadb as $key => $value) {
+			$id_shipment[] = $value['id_shipment'];
+		}
+
+		$where = [
+			"id_shipment IN ('" . join("', '", $id_shipment) . "')" => NULL,
+			"category" => "costumer",
+			"status_delete" => 1
+		];
+		$cost_list = $this->shipment_mod->shipment_cost_list_db($where);
+		$total_cost = 0;
+		foreach ($cost_list as $key => $value) {
+			$cost = $value['qty']*$value['unit_price']*$value['exchange_rate'];
+			if($value['uom'] == "%"){
+				$cost = $cost/100;
+			}
+			$total_cost += $cost;
+		}
+		$data['total_shipment'] = count($id_shipment);
+		$data['total_cost'] = $total_cost;
+
+		$data['subview'] 			= 'home/home_customer';
 		$data['meta_title'] 	= 'Home';
 		$this->load->view('index', $data);
 	}

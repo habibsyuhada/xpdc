@@ -610,6 +610,15 @@ $page_permission = array(
                   </div>
                 </div>
               </div>
+              <br>
+              <div class="form-inline">
+                <div class="form-check mx-sm-2">
+                  <label class="custom-control custom-checkbox">
+                    <input type="checkbox" class="custom-control-input" required>
+                    <span class="custom-control-label">&nbsp; <b class="text-primary">I agree to the terms dan condition</b></span>
+                  </label>
+                </div>
+              </div>
               <?php if (!isset($data_input['tracking_no'])) : ?>
                 <div class="mt-2 row">
                   <div class="text-left col-6">

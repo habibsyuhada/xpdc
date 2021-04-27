@@ -109,17 +109,11 @@ $side_permission = array(
 									</div>
 								<?php endif; ?>
 								<?php if ($side_permission[3] == 1) : ?>
-									<div class="nav-item has-sub">
-										<a href="javascript:void(0)"><i class="fas fa-cogs"></i><span>Operation</span></a>
-										<div class="submenu-content">
-											<a href="<?php echo base_url() ?>shipment/shipment_history_update" class="menu-item">Update History</a>
-											<a href="<?php echo base_url() ?>shipment/shipment_list?status=Picked up" class="menu-item">Reweight Shipment</a>
-											<!-- <a href="<?php echo base_url() ?>operation/service_center" class="menu-item">Service Center</a> -->
-											<!-- <a href="<?php echo base_url() ?>operation/departed" class="menu-item">Departed</a>
-									<a href="<?php echo base_url() ?>operation/arrived" class="menu-item">Arrived</a>
-									<a href="<?php echo base_url() ?>operation/with_courier" class="menu-item">With Courier</a>
-									<a href="<?php echo base_url() ?>operation/delivered" class="menu-item">Delivered</a> -->
-										</div>
+									<div class="nav-item">
+										<a href="<?php echo base_url() ?>shipment/shipment_history_update"><i class="fas fa-history"></i><span>Update History</span></a>
+									</div>
+									<div class="nav-item">
+										<a href="<?php echo base_url() ?>shipment/shipment_list?page=reweight&status=Picked up"><i class="fas fa-calculator"></i><span>Reweight Shipment</span></a>
 									</div>
 								<?php endif; ?>
 								<?php if ($side_permission[4] == 1) : ?>

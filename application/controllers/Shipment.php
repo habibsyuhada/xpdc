@@ -80,7 +80,11 @@ class Shipment extends CI_Controller
 			if ($value != "" || $value == "0") {
 				$exc_filter = array("status_driver", "created_date_from", "created_date_to");
 				if (!in_array($key, $exc_filter)) {
-					$where[$key . " LIKE '%" . $value . "%'"] 	= NULL;
+					if ($this->input->get('page')) {
+						$where["((status = 'Picked Up') OR (status = 'Booked' AND status_pickup = 'Dropoff'))"] 	= NULL;
+					} else {
+						$where[$key . " LIKE '%" . $value . "%'"] 	= NULL;
+					}
 				} elseif ($key == "created_date_from") {
 					$where["DATE(created_date) >= '" . $value . "'"] 	= NULL;
 				} elseif ($key == "created_date_to") {
@@ -451,7 +455,7 @@ class Shipment extends CI_Controller
 			];
 			$datadb 	= $this->home_mod->customer_list($where);
 			$customer = $datadb[0];
-			if(count($datadb) == 0){
+			if (count($datadb) == 0) {
 				$customer['payment_terms'] = "Cash In Advance";
 			}
 

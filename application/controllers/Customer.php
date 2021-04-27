@@ -141,7 +141,7 @@ class Customer extends CI_Controller
         if ($fix_rate->num_rows() > 0) {
           //if fix rate exists
           $result = $fix_rate->row_array();
-          $data['int_price'] = $weight_fix_airfreight * $result['price'];
+          $data['int_price'] = $result['price'];
           $data['result'] = $result;
           $data['status'] = "202";
           $data['type_of_shipment'] = $post['type_of_shipment'];
@@ -165,7 +165,7 @@ class Customer extends CI_Controller
             if ($branch->num_rows() > 0) {
               // if fix rate branch is exists
               $result = $branch->row_array();
-              $data['int_price'] = $weight_fix_airfreight * $result['price'];
+              $data['int_price'] = $result['price'];
               $data['result'] = $result;
               $data['status'] = "202";
               $data['type_of_shipment'] = $post['type_of_shipment'];
@@ -205,7 +205,7 @@ class Customer extends CI_Controller
           if ($fix_rate->num_rows() > 0) {
             // if fix rate exists
             $result = $fix_rate->row_array();
-            $data['int_price'] = $weight_fix_airfreight * $result['price'];
+            $data['int_price'] = $result['price'];
             $data['result'] = $result;
             $data['status'] = "202";
             $data['type_of_shipment'] = $post['type_of_shipment'];
@@ -228,7 +228,7 @@ class Customer extends CI_Controller
               if ($branch->num_rows() > 0) {
                 // if fix rate branch is exists
                 $result = $branch->row_array();
-                $data['int_price'] = $weight_fix_airfreight * $result['price'];
+                $data['int_price'] = $result['price'];
                 $data['result'] = $result;
                 $data['status'] = "202";
                 $data['type_of_shipment'] = $post['type_of_shipment'];

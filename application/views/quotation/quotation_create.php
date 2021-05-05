@@ -514,45 +514,9 @@
   $(".select2").select2({
     theme: "bootstrap4"
   });
-  
-  var term_condition_selection = {
-    AIRFREIGHT: {
-      0 : "Rate exclude fuel surcharges",
-      1 : "Rate exclude duties and taxes, cargo insurance, storage charge and any special arrangement (if any)",
-      2 : "Not applicable for DG Cargo / Odd Size Cargo / Heavy Weight Cargo / Non-Stackable Cargo",
-      3 : "Cargo must have proper packaging compliance with carrier valid rules and regulations.",
-      4 : "Both shipper and consignee must have required license for customs clearance purpose",
-      5 : "Rates quoted excluded bank charge and any other taxes on cargo or services rendered.",
-      6 : "Rate is based on FOT (Free On Truck) terms. Loading / Unloading at customer's premises will be at customer own cost",
-      7 : "Rate is subject to final chargeable weight defined as actual weight or volumetric weight whichever is greater",
-      8 : "Transit time 3 - 4 Days. Subject to space availability by the carrier, force majeure, customs inspection and any uncontrollable delay",
-      9 : "Once rates and terms & conditions have been confirmed, please kindly stamp and sign in the confirmation box below",
-    },
-    LCL: {
-      0 : "Exclude duties and taxes, cargo insurance, storage charge and any special arrangement (if any)",
-      1 : "Not applicable for DG Cargo / Odd Size Cargo / Heavy Weight Cargo / Non-Stackable Cargo",
-      2 : "Cargo must have proper packaging compliance with carrier valid rules and regulations.",
-      3 : "Both shipper and consignee must have required license for customs clearance purpose",
-      4 : "Rates quoted excluded bank charge and any other taxes on cargo or services rendered.",
-      5 : "Rate is based on FOT (Free On Truck) terms. Loading / Unloading at customer's premises will be at customer own cost",
-      6 : "Rate is subject to final chargeable weight. RT (Revenue Tons) is defined as 1 RT = 1,000kgs (Kilograms) or 1 CBM (Cubic Meters) whichever is greater",
-      7 : "Transit time 8 - 10 Days. Subject to space availability by the carrier, force majeure, customs inspection and any uncontrollable delay",
-      8 : "Once rates and terms & conditions have been confirmed, please kindly stamp and sign in the confirmation box below",
-    },
-    FCL : {
-      0 : "Exclude duties and taxes, cargo insurance, storage charge and any special arrangement (if any)",
-      1 : "Not applicable for DG Cargo / Odd Size Cargo / Heavy Weight Cargo / Non-Stackable Cargo",
-      2 : "Cargo must have proper packaging compliance with carrier valid rules and regulations.",
-      3 : "Both shipper and consignee must have required license for customs clearance purpose",
-      4 : "Rates quoted excluded bank charge and any other taxes on cargo or services rendered.",
-      5 : "Rate is based on FOT (Free On Truck) terms. Loading / unloading at customer's premises will be at customer own cost",
-      6 : "Chassis / Container free detention is 3 (Three) days for stuffing / unstuffing once container arrived at customer's premises ",
-      7 : "Exclude addtional charges such as : Chassis / Container reposition,  Demurrage / Detention Charge, Washing Fee, Repair Container Fee and others (if any)",
-      8 : "Rate is subject to final chargeable weight. RT (Revenue Tons) is defined as 1 RT = 1,000kgs (Kilograms) or 1 CBM (Cubic Meters) whichever is greater",
-      9 : "Transit time 8 - 10 Days. Subject to space availability by the carrier, force majeure, customs inspection and any uncontrollable delay",
-      10 : "Once rates and terms & conditions have been confirmed, please kindly stamp and sign in the confirmation box below",
-    }
-  }
+
+  var term_condition_selection = <?=$term_condition;?>
+
   $("select[name=type_of_mode]").on("change", function() {
     var value = $(this).val();
     $("select[name=sea]").closest('.form-group').slideUp();

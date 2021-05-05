@@ -26,6 +26,7 @@ class Shipment extends CI_Controller
 			if ($this->session->userdata('branch') != "NONE") {
 				if ($this->session->userdata('role') == 'Operator') {
 					$where["((assign_branch LIKE '%" . $this->session->userdata('branch') . "%' AND assign_branch IS NOT NULL) OR (assign_branch IS NULL AND branch LIKE '%" . $this->session->userdata('branch') . "%'))"] 	= NULL;
+				} else if ($this->session->userdata('role') == 'Driver') {
 				} else {
 					$customer = $this->shipment_mod->customer_list_db(["customer_id IN(SELECT id FROM user WHERE role = 'Customer' AND branch = '" . $this->session->userdata('branch') . "')" => null]);
 					$row_data = [];
@@ -33,7 +34,7 @@ class Shipment extends CI_Controller
 						$row_data[] = $row['account_no'];
 					}
 					$where_in = "'" . implode("','", $row_data) . "'";
-					$where["((assign_branch LIKE '%" . $this->session->userdata('branch') . "%' AND billing_account = '') OR (branch LIKE '%" . $this->session->userdata('branch') . "%' AND billing_account = '') OR billing_account IN(" . $where_in . "))"] 	= NULL;
+					$where["((assign_branch LIKE '%" . $this->session->userdata('branch') . "%' AND billing_account = '') OR (branch LIKE '%" . $this->session->userdata('branch') . "%' AND billing_account = '' AND assign_branch IS NULL) OR (billing_account IN(" . $where_in . ")))"] 	= NULL;
 				}
 			}
 		} else {
@@ -44,7 +45,7 @@ class Shipment extends CI_Controller
 			$where["(driver_pickup = " . $this->session->userdata('id') . " OR driver_deliver = " . $this->session->userdata('id') . ")"] 	= NULL;
 		} elseif ($this->session->userdata('role') == "Commercial") {
 			unset($where);
-			$datadb 	= $this->home_mod->customer_list(array("status_delete" => 1, "assign_to" => $this->session->userdata('id')));
+			$datadb 	= $this->home_mod->customer_list(array("status_delete" => 1, "create_by" => $this->session->userdata('id')));
 			$customer_list = [];
 			foreach ($datadb as $key => $value) {
 				if ($value['account_no'] != "") {
@@ -1893,24 +1894,31 @@ class Shipment extends CI_Controller
 
 		foreach ($id_arr as $key => $value) {
 			$where = [
-				"id_shipment" => $value
+				'id' => $value
 			];
-			$datadb = $this->shipment_mod->shipment_history_list_db($where);
-			$history = $datadb[0];
+			$shipment 				= $this->shipment_mod->shipment_list_db($where);
+			$billing_account = $shipment[0]['billing_account'];
+			if ($billing_account == '') {
+				$where = [
+					"id_shipment" => $value
+				];
+				$datadb = $this->shipment_mod->shipment_history_list_db($where);
+				$history = $datadb[0];
 
-			$form_data = array(
-				'id_shipment' 	=> $value,
-				'date' 					=> date("Y-m-d"),
-				'time' 					=> date("H:i:s"),
-				'location' 			=> $history['location'],
-				'status' 				=> "Service Center",
-				'remarks' 			=> "Shipment Bill is Paid.",
-			);
-			$id_history = $this->shipment_mod->shipment_history_create_process_db($form_data);
+				$form_data = array(
+					'id_shipment' 	=> $value,
+					'date' 					=> date("Y-m-d"),
+					'time' 					=> date("H:i:s"),
+					'location' 			=> $history['location'],
+					'status' 				=> "Service Center",
+					'remarks' 			=> "Shipment Bill is Paid.",
+				);
+				$id_history = $this->shipment_mod->shipment_history_create_process_db($form_data);
 
-			$form_data 	= ["status" => "Service Center"];
-			$where 			= ["id" => $value];
-			$this->shipment_mod->shipment_update_process_db($form_data, $where);
+				$form_data 	= ["status" => "Service Center"];
+				$where 			= ["id" => $value];
+				$this->shipment_mod->shipment_update_process_db($form_data, $where);
+			}
 		}
 
 		$this->session->set_flashdata('success', 'Your Shipment data has been Updated!');

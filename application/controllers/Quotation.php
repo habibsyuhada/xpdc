@@ -55,12 +55,19 @@ class Quotation extends CI_Controller
 		$data['country'] = json_decode(file_get_contents("./assets/country/country.json"), true);
 		$data['payment_terms_list'] = $this->home_mod->payment_terms_list();
 		$data['uom_list'] = $this->home_mod->uom_list();
-		if($this->session->userdata('role') == "Super Admin"){
+		if ($this->session->userdata('role') == "Super Admin") {
 			$where = ["status_approval" => 1];
-		}
-		else{
+		} else {
 			$where = ["status_approval" => 1, "assign_to" => $this->session->userdata('id')];
 		}
+
+		$term_condition = $this->quotation_mod->json_term_condition_list_db();
+		$term = [];
+		foreach($term_condition as $row){
+			$term[$row['term_type']][] = $row['term_condition'];
+		}
+		$data['term_condition'] = json_encode($term, JSON_FORCE_OBJECT);
+
 		$data['customer_list'] = $this->quotation_mod->customer_list_db($where);
 		$data['package_type'] = $this->quotation_mod->package_type_list_db();
 
@@ -206,10 +213,9 @@ class Quotation extends CI_Controller
 		$cargo_list 						= $this->quotation_mod->quotation_cargo_list_db($where);
 		$where['id_quotation'] 	= $id;
 		$charges_list 					= $this->quotation_mod->quotation_charges_list_db($where);
-		if($this->session->userdata('role') == "Super Admin"){
+		if ($this->session->userdata('role') == "Super Admin") {
 			$where = ["status_approval" => 1];
-		}
-		else{
+		} else {
 			$where = ["status_approval" => 1, "assign_to" => $this->session->userdata('id')];
 		}
 		$data['customer_list'] = $this->quotation_mod->customer_list_db($where);
@@ -548,7 +554,8 @@ class Quotation extends CI_Controller
 		$this->load->view('index', $data);
 	}
 
-	public function quotation_approval($id, $action){
+	public function quotation_approval($id, $action)
+	{
 		$where['id'] 						= $id;
 		$quotation_list 				= $this->quotation_mod->quotation_list_db($where);
 
@@ -563,5 +570,50 @@ class Quotation extends CI_Controller
 		$data['subview'] 			= 'quotation/quotation_reject';
 		$data['meta_title'] 	= 'Quotation Reject';
 		$this->load->view('index', $data);
+	}
+
+	public function term_condition()
+	{
+		$data['list']     = $this->quotation_mod->term_condition_list_db();
+
+		$data['subview']            = 'quotation/term_condition';
+		$data['meta_title']         = 'Term & Condition List';
+		$this->load->view('index', $data);
+	}
+
+	public function term_condition_update($id)
+	{
+		$where['a.id'] = $id;
+		$list     = $this->quotation_mod->term_condition_list_db($where);
+		$data['list'] = $list[0];
+
+		$detail = $this->quotation_mod->term_condition_detail_list_db(['id_term' => $id]);
+		if (isset($detail[0])) {
+			$data['detail'] = $detail;
+		} else {
+			$data['detail'] = [];
+		}
+
+		$data['subview']            = 'quotation/term_condition_update';
+		$data['meta_title']         = 'Term & Condition Update';
+		$this->load->view('index', $data);
+	}
+
+	public function term_condition_update_process($id)
+	{
+		$post = $this->input->post();
+		$where['id_term'] = $id;
+
+		$this->quotation_mod->term_condition_detail_delete_process_db($where);
+		foreach ($post['term_condition'] as $key => $value) {
+			$form_data = array(
+				'id_term'  => $id,
+				'term_condition'  => $value,
+			);
+			$id_uom = $this->quotation_mod->term_condition_detail_create_process_db($form_data);
+		}
+
+		$this->session->set_flashdata('success', 'Your Term Condition data has been Updated!');
+		redirect($_SERVER['HTTP_REFERER']);
 	}
 }

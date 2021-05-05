@@ -178,17 +178,18 @@
           if($value['uom'] == "%"){
             $persen = 100;
           }
-          $subtotal = $subtotal + (($value['qty'] / $persen)*$value['unit_price']*$value['exchange_rate']);
+          $qty = ceil($value['qty']);
+          $subtotal = $subtotal + (($qty / $persen)*$value['unit_price']*$value['exchange_rate']);
       ?>
       <tr>
         <td><?php echo $key+1 ?></td>
         <td><?php echo $value['description'] ?></td>
-        <td><?php echo $value['qty'] ?></td>
+        <td><?php echo $qty ?></td>
         <td><?php echo $value['uom'] ?></td>
         <td><?php echo $value['currency']." ".number_format($value['unit_price'], 2) ?></td>
-        <td><?php echo $value['currency']." ".number_format((($value['qty'] / $persen)*$value['unit_price']), 2) ?></td>
+        <td><?php echo $value['currency']." ".number_format((($qty / $persen)*$value['unit_price']), 2) ?></td>
         <td><?php echo $value['exchange_rate'] ?></td>
-        <td><?php echo "IDR ".number_format((($value['qty'] / $persen)*$value['unit_price']*$value['exchange_rate']), 0).".00" ?></td>
+        <td><?php echo "IDR ".number_format((($qty / $persen)*$value['unit_price']*$value['exchange_rate']), 0).".00" ?></td>
       </tr>
       <?php endforeach;  ?>
       <tr>

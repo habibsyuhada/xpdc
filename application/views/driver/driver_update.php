@@ -386,7 +386,7 @@
                 <hr>
                 <div class="form-group">
                   <label>Driver</label>
-                  <input type="text" class="form-control" name="driver_deliver" value="<?php echo (@$driver_list[$shipment["driver_deliver"]]['name'] == "" ? "Not Assigned" : @$driver_list[$shipment["driver_deliver"]]['name']) ?>" readonly>
+                  <input type="text" class="form-control" name="driver_deliver" value="<?php echo (@$deliver_list[$shipment["driver_deliver"]]['name'] == "" ? "Not Assigned" : @$deliver_list[$shipment["driver_deliver"]]['name']) ?>" readonly>
                 </div>
                 <?php if($shipment['status_driver_deliver'] == 2): ?>
                 <div class="form-group">
@@ -412,7 +412,7 @@
                 <?php elseif($shipment['status_driver_deliver'] == 3): ?>
                   Consignee is not available
                 <?php else: ?>
-                  <?php if(isset($driver_list[$shipment["driver_deliver"]]['name'])): ?>
+                  <?php if(isset($deliver_list[$shipment["driver_deliver"]]['name'])): ?>
                   <a href="<?php echo base_url() ?>driver/driver_take_out/<?php echo $shipment['id_shipment'] ?>/deliver" class="btn btn-danger" title="Take Out From This Driver"><i class="fas fa-times"></i> Take Out</a>
                   <?php endif; ?>
                 <?php endif; ?>

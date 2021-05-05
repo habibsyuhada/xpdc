@@ -102,7 +102,6 @@ class Driver extends CI_Controller
 				// $this->shipment_update_last_history($post['id']);
 			}
 		} elseif ($post['status'] == "pickup") {
-
 			$date_now = date("Y-m-d");
 			$time_now = date("H:i:s");
 			foreach ($shipment_list as $key => $value) {
@@ -145,7 +144,7 @@ class Driver extends CI_Controller
 		unset($where);
 		$where['role'] 					= "Driver";
 		$data['driver_list'] 		= user_data(array($data['shipment']['driver_pickup']));
-		$data['deliver_list'] 		= user_data(array($data['shipment']['driver_deliver']));
+		$data['driver_list_deliver'] = user_data(array($data['shipment']['driver_deliver']));
 
 		$data['subview'] 				= 'driver/driver_update';
 		$data['meta_title'] 		= 'Driver Detail';

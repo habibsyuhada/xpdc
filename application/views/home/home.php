@@ -501,14 +501,17 @@
 <script>
 	$('.widget.status').on('click', function() {
     var status = $(this).find('h6').attr("name");
-		window.location = "<?php echo base_url() ?>shipment/shipment_list?status="+status;
+    var branch = '<?=($this->input->get('branch') == '' || $this->input->get('branch') == null) ? '' : "&branch=".$this->input->get('branch')?>';
+		window.location = "<?php echo base_url() ?>shipment/shipment_list?status="+status+branch;
   });
   $('.widget.status-driver').on('click', function() {
     var status = $(this).find('h6').attr("name");
-		window.location = "<?php echo base_url() ?>shipment/shipment_list?status_driver="+status;
+    var branch = '<?=($this->input->get('branch') == '' || $this->input->get('branch') == null) ? '' : "&branch=".$this->input->get('branch')?>';
+		window.location = "<?php echo base_url() ?>shipment/shipment_list?status_driver="+status+branch;
   });
   $('.widget.status-bill').on('click', function() {
     var status = $(this).find('h6').attr("name");
-		window.location = "<?php echo base_url() ?>shipment/shipment_list?status_bill="+status;
+    var branch = '<?=($this->input->get('branch') == '' || $this->input->get('branch') == null) ? '' : "&branch=".$this->input->get('branch')?>';
+		window.location = "<?php echo base_url() ?>shipment/shipment_list?status_bill="+status+branch;
   });
 </script>

@@ -296,7 +296,7 @@
                 <hr>
                 <div class="form-group">
                   <label>Driver</label>
-                  <input type="text" class="form-control" name="driver_deliver" value="<?php echo (@$driver_list[$shipment["driver_deliver"]]['name'] == "" ? "Not Assigned" : @$driver_list[$shipment["driver_deliver"]]['name']) ?>" readonly>
+                  <input type="text" class="form-control" name="driver_deliver" value="<?php echo (@$driver_list_deliver[$shipment["driver_deliver"]]['name'] == "" ? "Not Assigned" : @$driver_list_deliver[$shipment["driver_deliver"]]['name']) ?>" readonly>
                 </div>
                 <form action="<?php echo base_url(); ?>driver/driver_update_process" method="POST" class="forms-sample signature2" enctype="multipart/form-data">
                   <input type="hidden" name="id" value="<?php echo $shipment['id'] ?>">
@@ -386,7 +386,7 @@
                 <hr>
                 <div class="form-group">
                   <label>Driver</label>
-                  <input type="text" class="form-control" name="driver_deliver" value="<?php echo (@$deliver_list[$shipment["driver_deliver"]]['name'] == "" ? "Not Assigned" : @$deliver_list[$shipment["driver_deliver"]]['name']) ?>" readonly>
+                  <input type="text" class="form-control" name="driver_deliver" value="<?php echo (@$driver_list_deliver[$shipment["driver_deliver"]]['name'] == "" ? "Not Assigned" : @$driver_list_deliver[$shipment["driver_deliver"]]['name']) ?>" readonly>
                 </div>
                 <?php if($shipment['status_driver_deliver'] == 2): ?>
                 <div class="form-group">

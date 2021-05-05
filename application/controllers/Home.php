@@ -98,7 +98,7 @@ class Home extends CI_Controller
 				}
 			} else {
 				if ($this->input->get("branch")) {
-					$where["(assign_branch LIKE '%" . $this->input->get("branch") . "%' OR branch LIKE '%" . $this->input->get("branch") . "%')"] 	= NULL;
+					$where["((assign_branch LIKE '%" . $this->input->get("branch") . "%' AND assign_branch IS NOT NULL) OR (assign_branch IS NULL AND branch LIKE '%" . $this->input->get("branch") . "%'))"] 	= NULL;
 				}
 			}
 		} else {

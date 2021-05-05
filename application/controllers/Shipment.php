@@ -25,6 +25,7 @@ class Shipment extends CI_Controller
 		if ($this->session->userdata('branch')) {
 			if ($this->session->userdata('branch') != "NONE") {
 				if ($this->session->userdata('role') == 'Operator') {
+					// $where["((assign_branch LIKE '%" . $this->session->userdata('branch') . "%' AND assign_branch IS NOT NULL) OR (assign_branch IS NULL AND branch LIKE '%" . $this->session->userdata('branch') . "%'))"] 	= NULL;
 					$where["((assign_branch LIKE '%" . $this->session->userdata('branch') . "%' AND assign_branch IS NOT NULL) OR (assign_branch IS NULL AND branch LIKE '%" . $this->session->userdata('branch') . "%'))"] 	= NULL;
 				} else if ($this->session->userdata('role') == 'Driver') {
 				} else {
@@ -83,6 +84,9 @@ class Shipment extends CI_Controller
 				if (!in_array($key, $exc_filter)) {
 					if ($this->input->get('page')) {
 						$where["((status = 'Picked Up') OR (status = 'Booked' AND status_pickup = 'Dropoff'))"] 	= NULL;
+					} else if ($key == 'branch') {
+						// $where["((branch LIKE '%" . $value . "%' AND assign_branch = '') OR (assign_branch LIKE '%".$value."%'))"] 	= NULL;
+						$where["((assign_branch LIKE '%" . $value . "%' AND assign_branch IS NOT NULL) OR (assign_branch IS NULL AND branch LIKE '%" . $value . "%'))"] 	= NULL;
 					} else {
 						$where[$key . " LIKE '%" . $value . "%'"] 	= NULL;
 					}
@@ -1255,19 +1259,22 @@ class Shipment extends CI_Controller
 					$datadb = $this->shipment_mod->shipment_history_list_db($where);
 					$history = $datadb[0];
 
-					$form_data = array(
-						'id_shipment' 	=> $post['id'],
-						'date' 					=> date("Y-m-d"),
-						'time' 					=> date("H:i:s"),
-						'location' 			=> $history['location'],
-						'status' 				=> "Service Center",
-						'remarks' 			=> "Shipment Bill is Paid.",
-					);
-					$id_history = $this->shipment_mod->shipment_history_create_process_db($form_data);
-
-					$form_data 	= ["status" => "Service Center"];
 					$where 			= ["id" => $post['id']];
-					$this->shipment_mod->shipment_update_process_db($form_data, $where);
+					$shipment = $this->shipment_mod->shipment_list_db($where);
+					if ($shipment[0]['billing_account'] == '' || $shipment[0]['billing_account'] == NULL) {
+						$form_data = array(
+							'id_shipment' 	=> $post['id'],
+							'date' 					=> date("Y-m-d"),
+							'time' 					=> date("H:i:s"),
+							'location' 			=> $history['location'],
+							'status' 				=> "Service Center",
+							'remarks' 			=> "Shipment Bill is Paid.",
+						);
+						$id_history = $this->shipment_mod->shipment_history_create_process_db($form_data);
+
+						$form_data 	= ["status" => "Service Center"];
+						$this->shipment_mod->shipment_update_process_db($form_data, $where);
+					}
 				}
 			}
 		}
@@ -1905,19 +1912,24 @@ class Shipment extends CI_Controller
 				$datadb = $this->shipment_mod->shipment_history_list_db($where);
 				$history = $datadb[0];
 
-				$form_data = array(
-					'id_shipment' 	=> $value,
-					'date' 					=> date("Y-m-d"),
-					'time' 					=> date("H:i:s"),
-					'location' 			=> $history['location'],
-					'status' 				=> "Service Center",
-					'remarks' 			=> "Shipment Bill is Paid.",
-				);
-				$id_history = $this->shipment_mod->shipment_history_create_process_db($form_data);
-
-				$form_data 	= ["status" => "Service Center"];
 				$where 			= ["id" => $value];
-				$this->shipment_mod->shipment_update_process_db($form_data, $where);
+				$shipment = $this->shipment_mod->shipment_list_db($where);
+
+				if ($shipment[0]['billing_account'] == '' || $shipment[0]['billing_account'] == NULL) {
+					$form_data = array(
+						'id_shipment' 	=> $value,
+						'date' 					=> date("Y-m-d"),
+						'time' 					=> date("H:i:s"),
+						'location' 			=> $history['location'],
+						'status' 				=> "Service Center",
+						'remarks' 			=> "Shipment Bill is Paid.",
+					);
+					$id_history = $this->shipment_mod->shipment_history_create_process_db($form_data);
+
+					$form_data 	= ["status" => "Service Center"];
+					$where 			= ["id" => $value];
+					$this->shipment_mod->shipment_update_process_db($form_data, $where);
+				}
 			}
 		}
 

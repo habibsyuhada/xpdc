@@ -360,7 +360,7 @@ $page_permission = array(
     $("#form_master_tracking input[name=id]").val(data_checkbox.join(", "));
   });
 
-  $('#form_assign_driver').submit(function() {
+  $('#form_assign_driver').submit(function(e) {
     $("#form_assign_driver input[name=id]").val(data_checkbox.join(", "));
   });
   $('#form_paid').submit(function() {

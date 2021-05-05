@@ -200,7 +200,7 @@ class Quotation extends CI_Controller
 		}
 
 		$this->session->set_flashdata('success', 'Your Quotation has been Created!');
-		redirect($_SERVER['HTTP_REFERER']);
+		// redirect($_SERVER['HTTP_REFERER']);
 	}
 
 	public function quotation_update($id)
@@ -489,7 +489,7 @@ class Quotation extends CI_Controller
 		if (count($quotation_list) <= 0) {
 			$this->session->set_flashdata('error', 'Quotation not Found!');
 			redirect("quotation/quotation_list");
-		}
+		} 
 		$data['quotation'] 			= $quotation_list[0];
 		$data['id_quotation'] 	= $id;
 		$datadb 	= $this->home_mod->branch_list(["name" => $data['quotation']['branch']]);
@@ -502,6 +502,7 @@ class Quotation extends CI_Controller
 
 		$data['country'] = $this->shipment_mod->country_list_db();
 		$data['customer'] = $this->shipment_mod->customer_list_db();
+		$data['package_type'] = $this->shipment_mod->package_type_list_db();
 		$this->load->view('index', $data);
 	}
 

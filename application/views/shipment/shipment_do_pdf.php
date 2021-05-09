@@ -198,17 +198,24 @@
                 <td colspan="2">Notes: <br><br><br><br><br></td>
             </tr>
             <tr>
-                <td>
-                <br><br><br>
-                <b>Driver</b><br><br><br><br><br>
-                <?=(isset($driver['name'])) ? $driver['name'] : 'Driver not assigned'; ?>
+                <td class="text-center">
+                    <br><br><br>
+                    <b>Driver</b><br><br><br><br><br><br><br><br>
+                    <br>
+                    <?= (@$driver_list_deliver[$shipment["driver_deliver"]]['name'] != '') ? @$driver_list_deliver[$shipment["driver_deliver"]]['name'] : 'Driver not assigned'; ?>
                 </td>
-                <td>
+                <td class="text-center">
                     Hereby agreed that goods described herein are accepted in<br>
                     apparent good order and condition (except as noted) as carriage<br>
-                    <?= $shipment['consignee_city'] ?>, <?=date('d M Y')?><br>
-                    <b>Consignee</b><br><br><br><br><br>
-                    <?=$shipment['consignee_contact_person']?>
+                    <?= $shipment['consignee_city'] ?>, <?= date('d M Y') ?><br>
+                    <b>Consignee</b><br><br><br>
+                    <?php if ($shipment['signature_driver_deliver'] != '') { ?>
+                        <img height="100px;" src="<?= $shipment['signature_driver_deliver'] ?>" alt="">
+                    <?php } else {  ?>
+                        <br><br><br><br><br>
+                    <?php } ?>
+                    <br>
+                    <?= $shipment['consignee_contact_person'] ?>
                 </td>
             </tr>
         </tbody>

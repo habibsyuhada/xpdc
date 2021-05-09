@@ -1384,6 +1384,8 @@ class Shipment extends CI_Controller
 		$where['id_shipment'] = $id;
 		$packages_list = $this->shipment_mod->shipment_packages_list_db($where);
 		$data['packages'] = $packages_list;
+		
+		$data['driver_list_deliver'] = user_data(array($data['shipment']['driver_deliver']));
 
 		$data['logo'] 	= base64_encode(file_get_contents("assets/img/logo-big-xpdc.png"));
 

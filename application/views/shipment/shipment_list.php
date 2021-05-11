@@ -70,6 +70,14 @@ $page_permission = array(
                       <option <?php echo ($this->input->get('status') == 'Cancelled' ? 'selected' : '') ?> value="Cancelled">Cancelled</option>
                     </select>
                   </div>
+                  <div class="form-group">
+                    <label>Tracking No.</label>
+                    <select name="tracking_no[]" class="form-control select2" multiple>
+                      <?php foreach ($shipment_list as $key => $value) : ?>
+                        <option value="<?= $value['tracking_no'] ?>"><?= $value['tracking_no'] ?></option>
+                      <?php endforeach; ?>
+                    </select>
+                  </div>
                 </div>
                 <div class="col-md-6">
                   <div class="form-group">
@@ -168,10 +176,23 @@ $page_permission = array(
           <div class="card-body overflow-auto">
             <div class="row">
               <div class="col-md-12">
+                <form id="form_export" method="POST" action="<?php echo base_url(); ?>shipment/shipment_export_excel" enctype="multipart/form-data">
+                  <div class="form-group mb-0">
+                    <label>You tick <b class="text-warning num_ticker">0</b> shipment to <b class="text-warning">export excel</b>.</label>
+                  </div>
+                  <div class="form-group">
+                    <input type="hidden" class="form-control" name="id">
+                    <button type="submit" class="btn btn-warning">Download Excel</button>
+                  </div>
+                </form>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-md-12">
                 <table class="table data_table">
                   <thead>
                     <tr class="bg-info">
-                      <th class="text-white font-weight-bold"></th>
+                      <th class="text-white font-weight-bold"><input type="checkbox" class="checkbox-20" id="selectAll" onclick="save_all_checkbox(this)"></th>
                       <th class="text-white font-weight-bold">Tracking Number</th>
                       <?php if ($page_permission[10] == 1) : ?>
                         <th class="text-white font-weight-bold">Master Tracking Number</th>
@@ -193,7 +214,7 @@ $page_permission = array(
                   <tbody>
                     <?php foreach ($shipment_list as $key => $value) : ?>
                       <tr class="<?php echo ((($value['main_agent_name'] != "" && $value['main_agent_invoice'] == "") || ($value['secondary_agent_name'] != "" && $value['secondary_agent_invoice'] == "")) && $value['status'] == "Delivered" && $page_permission[7] == 1 ? "alert-warning" : "") ?>">
-                        <td><input type="checkbox" class="checkbox-20" value="<?php echo $value['id'] ?>" onclick="save_checkbox(this)"></td>
+                        <td><input type="checkbox" class="checkbox-20" name="checkbox_value[]" value="<?php echo $value['id'] ?>" onclick="save_checkbox(this)"></td>
                         <td nowrap>
                           <a target="_blank" class="font-weight-bold" href="<?php echo base_url() ?>shipment/shipment_receipt/<?php echo $value['id'] ?>"><?php echo $value['tracking_no'] ?></a>
                           <?php if ($value['sea'] == "Express" && $value['status'] != "Delivered") : ?>
@@ -354,6 +375,32 @@ $page_permission = array(
       data_checkbox.splice($.inArray($(input).val(), data_checkbox), 1);
     }
     $(".num_ticker").html(data_checkbox.length)
+    console.log(data_checkbox);
+  }
+
+  function save_all_checkbox(input) {
+    var oTable = $('.data_table').dataTable();
+
+    var allPages = oTable.fnGetNodes();
+
+    $('body').on('click', '#selectAll', function() {
+      if ($(this).prop("checked") == true) {
+        $('input[name="checkbox_value[]"]', allPages).prop('checked', true);
+        $('input:checkbox[name="checkbox_value[]"]', allPages).each(function() {
+          data_checkbox.splice($.inArray($(this).val(), data_checkbox), 1);
+        });
+        $('input:checkbox[name="checkbox_value[]"]:checked', allPages).each(function() {
+          data_checkbox.push($(this).val());
+        });
+      } else {
+        $('input[name="checkbox_value[]"]', allPages).prop('checked', false);
+        $('input:checkbox[name="checkbox_value[]"]', allPages).each(function() {
+          data_checkbox.splice($.inArray($(this).val(), data_checkbox), 1);
+        });
+      }
+      $(".num_ticker").html(data_checkbox.length)
+      console.log(data_checkbox);
+    });
   }
 
   $('#form_master_tracking').submit(function() {
@@ -362,6 +409,10 @@ $page_permission = array(
 
   $('#form_assign_driver').submit(function(e) {
     $("#form_assign_driver input[name=id]").val(data_checkbox.join(", "));
+  });
+
+  $('#form_export').submit(function(e) {
+    $("#form_export input[name=id]").val(data_checkbox.join(", "));
   });
   $('#form_paid').submit(function() {
     $("#form_paid input[name=id]").val(data_checkbox.join(", "));
@@ -423,7 +474,7 @@ $page_permission = array(
             theme: "bootstrap4"
           });
         } else {
-          var html = '<input type="text" class="form-control" name="' + name_city + '" placeholder="City" value="'+val_default+'" ' + disable + '>';
+          var html = '<input type="text" class="form-control" name="' + name_city + '" placeholder="City" value="' + val_default + '" ' + disable + '>';
           $(content).append(html);
         }
       }

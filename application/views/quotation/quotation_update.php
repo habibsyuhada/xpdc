@@ -27,9 +27,9 @@
                   <div class="form-group">
                     <label>Account No.</label>
                     <select class="form-control select2" name="customer_account" onchange="check_custumer(this);">
-                      <option value="" <?php echo ($quotation['customer_account'] == '') ? 'selected' : '';?>>- Select One -</option>
+                      <option value="" <?php echo ($quotation['customer_account'] == '') ? 'selected' : ''; ?>>- Select One -</option>
                       <?php foreach ($customer_list as $customer) : ?>
-                        <option value="<?php echo $customer['account_no'] ?>" <?php echo ($quotation['customer_account'] == $customer['account_no']) ? 'selected' : '';?>><?php echo $customer['account_no'] . " - " . $customer['name'] ?></option>
+                        <option value="<?php echo $customer['account_no'] ?>" <?php echo ($quotation['customer_account'] == $customer['account_no']) ? 'selected' : ''; ?>><?php echo $customer['account_no'] . " - " . $customer['name'] ?></option>
                       <?php endforeach; ?>
                     </select>
                     <!-- <input type="text" class="form-control" name="customer_account" value="<?php echo $quotation['customer_account'] ?>" placeholder="Account No." oninput="check_custumer(this);" required> -->
@@ -101,19 +101,19 @@
                     <label>Type of Service</label>
                     <select class="form-control" name="type_of_service" required>
                       <option value="">-- Select One --</option>
-                      <option value="FH" <?php echo ($quotation['type_of_service'] == 'FH' ? 'selected' : '' ) ?>>Freight Handling</option>
-                      <option value="CH" <?php echo ($quotation['type_of_service'] == 'CH' ? 'selected' : '' ) ?>>Clearance Handling</option>
-                      <option value="WH" <?php echo ($quotation['type_of_service'] == 'WH' ? 'selected' : '' ) ?>>Warehousing</option>
+                      <?php foreach ($type_of_service as $row) { ?>
+                        <option value="<?= $row['tos_code'] ?>" data-isdelivery="<?= $row['is_delivery'] ?>" <?php echo ($quotation['type_of_service'] == $row['tos_code'] ? 'selected' : '') ?>><?= $row['tos_name'] ?></option>
+                      <?php } ?>
                     </select>
                   </div>
                 </div>
                 <div class="col-md-6">
                   <div class="form-group">
                     <label>Type of Shipment</label>
-                    <select class="form-control" name="type_of_shipment" required <?=($quotation['type_of_service'] == 'CH' || $quotation['type_of_service'] == 'WH') ? 'disabled' : ''?> onchange="change_typeshipment(this)">
+                    <select class="form-control" name="type_of_shipment" required <?= ($delivery == 0) ? 'disabled' : '' ?> onchange="change_typeshipment(this)">
                       <option value="">-- Select One --</option>
-                      <option value="International Shipping" <?php echo ($quotation['type_of_shipment'] == 'International Shipping' ? 'selected' : '' ) ?>>International Shipping</option>
-                      <option value="Domestic Shipping" <?php echo ($quotation['type_of_shipment'] == 'Domestic Shipping' ? 'selected' : '' ) ?>>Domestic Shipping</option>
+                      <option value="International Shipping" <?php echo ($quotation['type_of_shipment'] == 'International Shipping' ? 'selected' : '') ?>>International Shipping</option>
+                      <option value="Domestic Shipping" <?php echo ($quotation['type_of_shipment'] == 'Domestic Shipping' ? 'selected' : '') ?>>Domestic Shipping</option>
                     </select>
                   </div>
                 </div>
@@ -122,7 +122,7 @@
                 <div class="col-md-6">
                   <div class="form-group">
                     <label>Type of Mode</label>
-                    <select class="form-control" name="type_of_transport" onchange="get_vol_weight()" required <?=($quotation['type_of_transport'] == 'CH' || $quotation['type_of_transport'] == 'WH') ? 'disabled' : ''?>>
+                    <select class="form-control" name="type_of_transport" onchange="get_vol_weight()" required <?= ($delivery == 0) ? 'disabled' : '' ?>>
                       <option value="">- Select One -</option>
                       <option value="Sea Transport" <?php echo ($quotation['type_of_transport'] == 'Sea Transport' ? 'selected' : '') ?>>Sea Transport</option>
                       <option value="Land Shipping" <?php echo ($quotation['type_of_transport'] == 'Land Shipping' ? 'selected' : '') ?>>Land Shipping</option>
@@ -153,7 +153,7 @@
                 <div class="col-md-6">
                   <div class="form-group">
                     <label>Incoterms</label>
-                    <select class="form-control" name="incoterms" required <?=($quotation['type_of_service'] == 'CH' || $quotation['type_of_service'] == 'WH') ? 'disabled' : ''?>>
+                    <select class="form-control" name="incoterms" required <?= ($delivery == 0) ? 'disabled' : '' ?>>
                       <option value="">-- Select One --</option>
                       <option value="EXW (ExWorks)" <?php echo ($quotation['incoterms'] == "EXW (ExWorks)" ? 'selected' : '') ?>>EXW (ExWorks)</option>
                       <option value="FCA (Free Carrier)" <?php echo ($quotation['incoterms'] == "FCA (Free Carrier)" ? 'selected' : '') ?>>FCA (Free Carrier)</option>
@@ -175,7 +175,7 @@
                 </div>
               </div>
               <br>
-              <div class="row clearfix">
+              <div class="row clearfix" id="shipper_consignee_info" style="<?= ($delivery == 0) ? 'display: none;' : '' ?>">
                 <div class="col-md-6">
                   <h6 class="font-weight-bold">Shipper Information</h6>
                   <div class="form-group">
@@ -226,7 +226,7 @@
                     <select class="form-control select2" name="consignee_country" required onchange="select_country(this)">
                       <option value="">- Select One -</option>
                       <?php foreach ($country['data'] as $data) { ?>
-                        <option value="<?= $data['location'] ?>"  <?php echo ($quotation['consignee_country'] == $data['location'] ? 'selected' : '') ?>><?= $data['location'] ?></option>
+                        <option value="<?= $data['location'] ?>" <?php echo ($quotation['consignee_country'] == $data['location'] ? 'selected' : '') ?>><?= $data['location'] ?></option>
                       <?php } ?>
                     </select>
                   </div>
@@ -265,7 +265,7 @@
               </div>
             </div>
           </div>
-          <div class="card">
+          <div class="card" id="cargo_info" style="<?= ($delivery == 0) ? 'display: none;' : '' ?>">
             <div class="card-body overflow-auto">
               <h6 class="font-weight-bold border-bottom">Cargo Information</h6>
               <div class="row clearfix">
@@ -289,9 +289,9 @@
                       </tr>
                     </thead>
                     <tbody>
-                      <?php foreach ($cargo_list as $key => $value) : 
+                      <?php foreach ($cargo_list as $key => $value) :
                         $cargo_temp[] = $value['id'];
-                        ?>
+                      ?>
                         <tr>
                           <td>
                             <input type="number" class="form-control" oninput="get_vol_weight()" step="any" name="cargo_qty[]" value="<?php echo $value['qty'] ?>">
@@ -300,8 +300,8 @@
                           <td>
                             <select class="form-control" name="cargo_piece_type[]" title="NONFCL" value="<?php echo $value['piece_type'] ?>">
                               <option value="">-- Select One --</option>
-                              <?php foreach($package_type as $data) : ?>
-                              <option value="<?=$data['name']?>" <?php echo ($value['piece_type'] == $data['name'] ? 'selected' : '') ?>><?=$data['name']?></option>
+                              <?php foreach ($package_type as $data) : ?>
+                                <option value="<?= $data['name'] ?>" <?php echo ($value['piece_type'] == $data['name'] ? 'selected' : '') ?>><?= $data['name'] ?></option>
                               <?php endforeach; ?>
                             </select>
                             <select class="form-control d-none" name="cargo_piece_type[]" title="FCL" disabled>
@@ -312,7 +312,7 @@
                             </select>
                           </td>
                           <td>
-                            <input type="number" class="form-control" oninput="get_vol_weight()" step="any" name="cargo_length[]" title="NONFCL" value="<?php echo $value['length']+0 ?>">
+                            <input type="number" class="form-control" oninput="get_vol_weight()" step="any" name="cargo_length[]" title="NONFCL" value="<?php echo $value['length'] + 0 ?>">
                             <select class="form-control d-none" name="cargo_size[]" title="FCL">
                               <option value="">-- Select One --</option>
                               <option value="20 feet" <?php echo ($value['size'] == '20 feet' ? 'selected' : '') ?>>20 feet</option>
@@ -321,14 +321,14 @@
                             </select>
                           </td>
                           <td>
-                            <input type="number" class="form-control" oninput="get_vol_weight()" step="any" name="cargo_width[]" title="NONFCL" value="<?php echo $value['width']+0 ?>">
+                            <input type="number" class="form-control" oninput="get_vol_weight()" step="any" name="cargo_width[]" title="NONFCL" value="<?php echo $value['width'] + 0 ?>">
                             <input type="text" class="form-control d-none" step="any" name="cargo_container_no[]" title="FCL" value="<?php echo $value['container_no'] ?>">
                           </td>
                           <td>
-                            <input type="number" class="form-control" oninput="get_vol_weight()" step="any" name="cargo_height[]" title="NONFCL" value="<?php echo $value['height']+0 ?>">
+                            <input type="number" class="form-control" oninput="get_vol_weight()" step="any" name="cargo_height[]" title="NONFCL" value="<?php echo $value['height'] + 0 ?>">
                             <input type="text" class="form-control d-none" step="any" name="cargo_seal_no[]" title="FCL" value="<?php echo $value['seal_no'] ?>">
                           </td>
-                          <td><input type="number" class="form-control" oninput="get_vol_weight()" step="any" name="cargo_weight[]" value="<?php echo $value['weight']+0 ?>"></td>
+                          <td><input type="number" class="form-control" oninput="get_vol_weight()" step="any" name="cargo_weight[]" value="<?php echo $value['weight'] + 0 ?>"></td>
                           <td>
                             <?php if ($key == 0) : ?>
                               <button type="button" class="btn btn-primary" onclick="addrow(this)"><i class="fas fa-plus m-0"></i></button>
@@ -375,92 +375,92 @@
                       </tr>
                     </thead>
                     <tbody>
-                    <?php 
+                      <?php
                       $total_all = 0;
-                      foreach ($charges_list as $key => $value) : 
+                      foreach ($charges_list as $key => $value) :
                         $charges_temp[] = $value['id'];
                         $persen = 1;
-                        if($value['uom'] == "%"){
+                        if ($value['uom'] == "%") {
                           $persen = 100;
                         }
-                        $total_all += ($value['qty'] / $persen)*$value['unit_price']*$value['exchange_rate'];
-                    ?>
-                      <tr>
-                        <td>
-                          <input type="text" class="form-control" name="charges_description[]" value="<?php echo $value['description'] ?>" required>
-                          <input type="hidden" class="form-control" name="id_charges[]" value="<?php echo $value['id'] ?>">
-                        </td>
-                        <td><input type="number" step="any" class="form-control" value="<?php echo $value['qty'] ?>" oninput="get_total(this)" name="charges_qty[]"></td>
-                        <td>
-                          <select class="form-control" name="charges_uom[]" required onchange="get_total(this)">
-                            <option value="">-- Select One --</option>
-                            <!-- <option value="Kg" <?php echo ($value['uom'] == "Kg" ? 'selected' : '') ?>>Kg</option>
+                        $total_all += ($value['qty'] / $persen) * $value['unit_price'] * $value['exchange_rate'];
+                      ?>
+                        <tr>
+                          <td>
+                            <input type="text" class="form-control" name="charges_description[]" value="<?php echo $value['description'] ?>" required>
+                            <input type="hidden" class="form-control" name="id_charges[]" value="<?php echo $value['id'] ?>">
+                          </td>
+                          <td><input type="number" step="any" class="form-control" value="<?php echo $value['qty'] ?>" oninput="get_total(this)" name="charges_qty[]"></td>
+                          <td>
+                            <select class="form-control" name="charges_uom[]" required onchange="get_total(this)">
+                              <option value="">-- Select One --</option>
+                              <!-- <option value="Kg" <?php echo ($value['uom'] == "Kg" ? 'selected' : '') ?>>Kg</option>
                             <option value="M3" <?php echo ($value['uom'] == "M3" ? 'selected' : '') ?>>M3</option>
                             <option value="Set" <?php echo ($value['uom'] == "Set" ? 'selected' : '') ?>>Set</option>
                             <option value="Trip" <?php echo ($value['uom'] == "Trip" ? 'selected' : '') ?>>Trip</option>
                             <option value="Pallet" <?php echo ($value['uom'] == "Pallet" ? 'selected' : '') ?>>Pallet</option>
                             <option value="%" <?php echo ($value['uom'] == "%" ? 'selected' : '') ?>>%</option> -->
-                            <?php foreach ($uom_list as $no_uom => $uom) : ?>
-                              <option value="<?php echo $uom['name'] ?>" <?php echo ($value['uom'] == $uom['name'] ? 'selected' : '') ?>><?php echo $uom['name'] ?></option>
-                            <?php endforeach; ?>
-                          </select>
-                        </td>
-                        <td>
-                          <select class="form-control" name="charges_currency[]" required>
-                            <option value="">-- Select One --</option>
-                            <option value="AED" <?php echo ($value['currency'] == "AED" ? 'selected' : '') ?>>AED</option>
-                            <option value="AUD" <?php echo ($value['currency'] == "AUD" ? 'selected' : '') ?>>AUD</option>
-                            <option value="CNY" <?php echo ($value['currency'] == "CNY" ? 'selected' : '') ?>>CNY</option>
-                            <option value="EUR" <?php echo ($value['currency'] == "EUR" ? 'selected' : '') ?>>EUR</option>
-                            <option value="GBP" <?php echo ($value['currency'] == "GBP" ? 'selected' : '') ?>>GBP</option>
-                            <option value="HKD" <?php echo ($value['currency'] == "HKD" ? 'selected' : '') ?>>HKD</option>
-                            <option value="IDR" <?php echo ($value['currency'] == "IDR" ? 'selected' : '') ?>>IDR</option>
-                            <option value="INR" <?php echo ($value['currency'] == "INR" ? 'selected' : '') ?>>INR</option>
-                            <option value="JPY" <?php echo ($value['currency'] == "JPY" ? 'selected' : '') ?>>JPY</option>
-                            <option value="KRW" <?php echo ($value['currency'] == "KRW" ? 'selected' : '') ?>>KRW</option>
-                            <option value="MYR" <?php echo ($value['currency'] == "MYR" ? 'selected' : '') ?>>MYR</option>
-                            <option value="SGD" <?php echo ($value['currency'] == "SGD" ? 'selected' : '') ?>>SGD</option>
-                            <option value="THB" <?php echo ($value['currency'] == "THB" ? 'selected' : '') ?>>THB</option>
-                            <option value="TWD" <?php echo ($value['currency'] == "TWD" ? 'selected' : '') ?>>TWD</option>
-                            <option value="USD" <?php echo ($value['currency'] == "USD" ? 'selected' : '') ?>>USD</option>
-                          </select>
-                        </td>
-                        <td><input type="number" step="any" class="form-control" value="<?php echo $value['unit_price'] ?>" oninput="get_total(this)" name="charges_unit_price[]"></td>
-                        <td>
-                          <input type="text" step="any" class="form-control" value="<?php echo number_format((($value['qty'] / $persen)*$value['unit_price']), 2) ?>" name="charges_subtotal_view[]" readonly>
-                          <input type="hidden" step="any" class="form-control" value="<?php echo (($value['qty'] / $persen)*$value['unit_price']) ?>" name="charges_subtotal[]" readonly>
-                        </td>
-                        <td><input type="number" step="any" class="form-control" value="<?php echo $value['exchange_rate'] ?>" oninput="get_total(this)" name="charges_exchange_rate[]"></td>
-                        <td>
-                          <input type="text" step="any" class="form-control" value="<?php echo number_format((($value['qty'] / $persen)*$value['unit_price']*$value ['exchange_rate']), 0).".00" ?>" name="charges_total_view[]" readonly>
-                          <input type="hidden" step="any" class="form-control" value="<?php echo (($value['qty'] / $persen)*$value['unit_price']*$value['exchange_rate']) ?>" name="charges_total[]" readonly>
-                        </td>
-                        <td><textarea class="form-control" name="charges_remarks[]" placeholder="..."><?php echo $value['remarks'] ?></textarea></td>
-                        <td>
-                          <?php if ($key == 0) : ?>
-                            <button type="button" class="btn btn-primary" onclick="addrow(this)"><i class="fas fa-plus m-0"></i></button>
-                          <?php else : ?>
-                            <button type="button" onclick="deleterow(this)" class="btn btn-danger"><i class="fas fa-trash m-0"></i></button>
-                          <?php endif; ?>
-                        </td>
-                      </tr>
+                              <?php foreach ($uom_list as $no_uom => $uom) : ?>
+                                <option value="<?php echo $uom['name'] ?>" <?php echo ($value['uom'] == $uom['name'] ? 'selected' : '') ?>><?php echo $uom['name'] ?></option>
+                              <?php endforeach; ?>
+                            </select>
+                          </td>
+                          <td>
+                            <select class="form-control" name="charges_currency[]" required>
+                              <option value="">-- Select One --</option>
+                              <option value="AED" <?php echo ($value['currency'] == "AED" ? 'selected' : '') ?>>AED</option>
+                              <option value="AUD" <?php echo ($value['currency'] == "AUD" ? 'selected' : '') ?>>AUD</option>
+                              <option value="CNY" <?php echo ($value['currency'] == "CNY" ? 'selected' : '') ?>>CNY</option>
+                              <option value="EUR" <?php echo ($value['currency'] == "EUR" ? 'selected' : '') ?>>EUR</option>
+                              <option value="GBP" <?php echo ($value['currency'] == "GBP" ? 'selected' : '') ?>>GBP</option>
+                              <option value="HKD" <?php echo ($value['currency'] == "HKD" ? 'selected' : '') ?>>HKD</option>
+                              <option value="IDR" <?php echo ($value['currency'] == "IDR" ? 'selected' : '') ?>>IDR</option>
+                              <option value="INR" <?php echo ($value['currency'] == "INR" ? 'selected' : '') ?>>INR</option>
+                              <option value="JPY" <?php echo ($value['currency'] == "JPY" ? 'selected' : '') ?>>JPY</option>
+                              <option value="KRW" <?php echo ($value['currency'] == "KRW" ? 'selected' : '') ?>>KRW</option>
+                              <option value="MYR" <?php echo ($value['currency'] == "MYR" ? 'selected' : '') ?>>MYR</option>
+                              <option value="SGD" <?php echo ($value['currency'] == "SGD" ? 'selected' : '') ?>>SGD</option>
+                              <option value="THB" <?php echo ($value['currency'] == "THB" ? 'selected' : '') ?>>THB</option>
+                              <option value="TWD" <?php echo ($value['currency'] == "TWD" ? 'selected' : '') ?>>TWD</option>
+                              <option value="USD" <?php echo ($value['currency'] == "USD" ? 'selected' : '') ?>>USD</option>
+                            </select>
+                          </td>
+                          <td><input type="number" step="any" class="form-control" value="<?php echo $value['unit_price'] ?>" oninput="get_total(this)" name="charges_unit_price[]"></td>
+                          <td>
+                            <input type="text" step="any" class="form-control" value="<?php echo number_format((($value['qty'] / $persen) * $value['unit_price']), 2) ?>" name="charges_subtotal_view[]" readonly>
+                            <input type="hidden" step="any" class="form-control" value="<?php echo (($value['qty'] / $persen) * $value['unit_price']) ?>" name="charges_subtotal[]" readonly>
+                          </td>
+                          <td><input type="number" step="any" class="form-control" value="<?php echo $value['exchange_rate'] ?>" oninput="get_total(this)" name="charges_exchange_rate[]"></td>
+                          <td>
+                            <input type="text" step="any" class="form-control" value="<?php echo number_format((($value['qty'] / $persen) * $value['unit_price'] * $value['exchange_rate']), 0) . ".00" ?>" name="charges_total_view[]" readonly>
+                            <input type="hidden" step="any" class="form-control" value="<?php echo (($value['qty'] / $persen) * $value['unit_price'] * $value['exchange_rate']) ?>" name="charges_total[]" readonly>
+                          </td>
+                          <td><textarea class="form-control" name="charges_remarks[]" placeholder="..."><?php echo $value['remarks'] ?></textarea></td>
+                          <td>
+                            <?php if ($key == 0) : ?>
+                              <button type="button" class="btn btn-primary" onclick="addrow(this)"><i class="fas fa-plus m-0"></i></button>
+                            <?php else : ?>
+                              <button type="button" onclick="deleterow(this)" class="btn btn-danger"><i class="fas fa-trash m-0"></i></button>
+                            <?php endif; ?>
+                          </td>
+                        </tr>
                       <?php endforeach; ?>
                     </tbody>
                   </table>
                 </div>
-                <div class="row clearfix">
-                  <div class="col-md-auto">
-                    <div class="form-group">
-                      <label>Hide Estimation Total Charges on PDF</label>
-                      <select class="form-control" name="hide_estimete_total_pdf">
-                        <option value="0" <?php echo ($quotation['hide_estimete_total_pdf'] == "0" ? "selected" : "") ?>>No</option>
-                        <option value="1" <?php echo ($quotation['hide_estimete_total_pdf'] == "1" ? "selected" : "") ?>>Yes</option>
-                      </select>
-                    </div>
+              </div>
+              <div class="row clearfix">
+                <div class="col-md-auto">
+                  <div class="form-group">
+                    <label>Hide Estimation Total Charges on PDF</label>
+                    <select class="form-control" name="hide_estimete_total_pdf">
+                      <option value="0" <?php echo ($quotation['hide_estimete_total_pdf'] == "0" ? "selected" : "") ?>>No</option>
+                      <option value="1" <?php echo ($quotation['hide_estimete_total_pdf'] == "1" ? "selected" : "") ?>>Yes</option>
+                    </select>
                   </div>
-                  <div class="col-md">
-                    <h5 class="font-weight-bold text-right">Estimation Total Charges : IDR <span id="total_all" name="total_all"><?php echo number_format($total_all, 0).".00" ?></span></h5>
-                  </div>
+                </div>
+                <div class="col-md">
+                  <h5 class="font-weight-bold text-right">Estimation Total Charges : IDR <span id="total_all" name="total_all"><?php echo number_format($total_all, 0) . ".00" ?></span></h5>
                 </div>
               </div>
             </div>
@@ -468,8 +468,8 @@
           <div class="card">
             <div class="card-body overflow-auto">
               <h6 class="font-weight-bold border-bottom">Addtional</h6>
-              <input type="hidden" name="temp_cargo_id" value="<?=implode("|", $cargo_temp);?>" />
-              <input type="hidden" name="temp_charges_id" value="<?=implode("|", $charges_temp)?>" />
+              <input type="hidden" name="temp_cargo_id" value="<?= implode("|", $cargo_temp); ?>" />
+              <input type="hidden" name="temp_charges_id" value="<?= implode("|", $charges_temp) ?>" />
               <div class="row clearfix">
                 <div class="col-md-12">
                   <table class="table text-center">
@@ -480,20 +480,20 @@
                       </tr>
                     </thead>
                     <tbody>
-                      <?php 
-                        $term_condition = explode("\n", $quotation['term_condition']);
-                        foreach ($term_condition as $key => $value) : 
+                      <?php
+                      $term_condition = explode("\n", $quotation['term_condition']);
+                      foreach ($term_condition as $key => $value) :
                       ?>
-                      <tr>
-                        <td><input type="text" class="form-control" name="term_condition[]" value="<?php echo $value ?>"></td>
-                        <td>
-                          <?php if ($key == 0) : ?>
-                            <button type="button" class="btn btn-primary" onclick="addrow(this)"><i class="fas fa-plus m-0"></i></button>
-                          <?php else : ?>
-                            <button type="button" class="btn btn-danger" onclick="deleterow(this)"><i class="fas fa-trash m-0"></i></button>
-                          <?php endif; ?>
-                        </td>
-                      </tr>
+                        <tr>
+                          <td><input type="text" class="form-control" name="term_condition[]" value="<?php echo $value ?>"></td>
+                          <td>
+                            <?php if ($key == 0) : ?>
+                              <button type="button" class="btn btn-primary" onclick="addrow(this)"><i class="fas fa-plus m-0"></i></button>
+                            <?php else : ?>
+                              <button type="button" class="btn btn-danger" onclick="deleterow(this)"><i class="fas fa-trash m-0"></i></button>
+                            <?php endif; ?>
+                          </td>
+                        </tr>
                       <?php endforeach; ?>
                     </tbody>
                   </table>
@@ -543,12 +543,12 @@
   });
 
   function change_sea(text, delete_data = 1) {
-    if(delete_data == 1){
+    if (delete_data == 1) {
       $("#table_packages input[type=text]").val('');
       $("#table_packages input[type=number]").val(0);
       $("#table_packages select").val('').trigger('change');
     }
-    if(text == 'FCL'){
+    if (text == 'FCL') {
       $("#table_packages th:nth-child(2)").html('Container Type');
       $("#table_packages th:nth-child(3)").html('Container Size');
       $("#table_packages th:nth-child(4)").html('Container No.');
@@ -558,8 +558,7 @@
       $("#table_packages input[title=NONFCL], #table_packages select[title=NONFCL]").addClass('d-none');
       $("#table_packages select[name='piece_type[]'][title=FCL]").removeAttr("disabled");
       $("#table_packages select[name='piece_type[]'][title=NONFCL]").attr("disabled", "disabled");
-    }
-    else{
+    } else {
       $("#table_packages th:nth-child(2)").html('Package Type');
       $("#table_packages th:nth-child(3)").html('Length(cm)');
       $("#table_packages th:nth-child(4)").html('Width(cm)');
@@ -584,14 +583,14 @@
     $(btn).closest("tr").remove();
   }
 
-  $("select[name=type_of_service]").on("change", function(){
-    var value = $(this).val();
-    if(value == 'CH' || value == 'WH'){
+  $("select[name=type_of_service]").on("change", function() {
+    var value = $(this).find(":selected").data('isdelivery');
+    if (value == '0') {
       $("select[name=type_of_shipment]").val('').attr("disabled", true);
       $("select[name=incoterms]").val('').attr("disabled", true);
       $("[name=type_of_mode], [name=sea]").val('').attr("disabled", true);
       $("#shipper_consignee_info, #cargo_info").slideUp("slow");
-    }else{
+    } else {
       $("select[name=type_of_shipment]").removeAttr("disabled");
       $("select[name=incoterms]").removeAttr("disabled");
       $("[name=type_of_mode], [name=sea]").removeAttr("disabled");
@@ -627,16 +626,16 @@
     }
   }
 
-  $(document).ready(function (){
+  $(document).ready(function() {
     get_vol_weight();
     change_sea($("select[name=sea]").val(), 0);
-    <?php if($quotation['shipper_tba'] == 1): ?>
-    tba_data('shipper');
-    $('input[name=shipper_tba]').prop("checked", true);
+    <?php if ($quotation['shipper_tba'] == 1) : ?>
+      tba_data('shipper');
+      $('input[name=shipper_tba]').prop("checked", true);
     <?php endif; ?>
-    <?php if($quotation['consignee_tba'] == 1): ?>
-    tba_data('consignee');
-    $('input[name=consignee_tba]').prop("checked", true);
+    <?php if ($quotation['consignee_tba'] == 1) : ?>
+      tba_data('consignee');
+      $('input[name=consignee_tba]').prop("checked", true);
     <?php endif; ?>
 
     select_country($("select[name=shipper_country]"));
@@ -704,7 +703,7 @@
       var volume_weight = qty_array[index] * (length_array[index] * width_array[index] * height_array[index]) / per;
       var measurement = qty_array[index] * (length_array[index] * width_array[index] * height_array[index]) / 1000000;
 
-      console.log(volume_weight+ " = "+qty_array[index]+" * ("+length_array[index]+" * "+width_array[index]+" * "+height_array[index]+") / "+per);
+      console.log(volume_weight + " = " + qty_array[index] + " * (" + length_array[index] + " * " + width_array[index] + " * " + height_array[index] + ") / " + per);
 
       total_act_weight += actual_weight;
       total_vol_weight += volume_weight;
@@ -737,7 +736,10 @@
       }
       var subtotal = qty * unit_price;
       $(row).find("input[name='charges_subtotal[]']").val(subtotal);
-      $(row).find("input[name='charges_subtotal_view[]']").val(subtotal.toLocaleString('en-US', {maximumFractionDigits:2, minimumFractionDigits: 2}));
+      $(row).find("input[name='charges_subtotal_view[]']").val(subtotal.toLocaleString('en-US', {
+        maximumFractionDigits: 2,
+        minimumFractionDigits: 2
+      }));
 
       var exchange_rate = $(row).find("input[name='charges_exchange_rate[]']").val();
       var total = subtotal * exchange_rate;
@@ -767,72 +769,71 @@
   }
 
   function tba_data(data_tba) {
-    var ro = $("input[name="+data_tba+"_name]").prop('readonly');
-    var req = $("input[name="+data_tba+"_name]").prop('required');
-    $("input[name="+data_tba+"_postcode]").val('').prop('readonly', !ro);
-    $("input[name="+data_tba+"_name]").val('').prop('readonly', !ro).prop('required', !req);
-    $("textarea[name="+data_tba+"_address]").val('').prop('readonly', !ro).prop('required', !req);
-    $("input[name="+data_tba+"_contact_person]").val('').prop('readonly', !ro).prop('required', !req);
-    $("input[name="+data_tba+"_phone_number]").val('').prop('readonly', !ro).prop('required', !req);
-    $("input[name="+data_tba+"_email]").val('').prop('readonly', !ro);
+    var ro = $("input[name=" + data_tba + "_name]").prop('readonly');
+    var req = $("input[name=" + data_tba + "_name]").prop('required');
+    $("input[name=" + data_tba + "_postcode]").val('').prop('readonly', !ro);
+    $("input[name=" + data_tba + "_name]").val('').prop('readonly', !ro).prop('required', !req);
+    $("textarea[name=" + data_tba + "_address]").val('').prop('readonly', !ro).prop('required', !req);
+    $("input[name=" + data_tba + "_contact_person]").val('').prop('readonly', !ro).prop('required', !req);
+    $("input[name=" + data_tba + "_phone_number]").val('').prop('readonly', !ro).prop('required', !req);
+    $("input[name=" + data_tba + "_email]").val('').prop('readonly', !ro);
   }
 
   var first_shipper_city_load = true;
   var first_consignee_city_load = true;
+
   function select_country(input) {
     var select_city;
     var name_city
-    if($(input).attr("name") == "shipper_country"){
+    if ($(input).attr("name") == "shipper_country") {
       select_city = $("[name=shipper_city]");
       name_city = "shipper_city";
-    }
-    else if($(input).attr("name") == "consignee_country"){
+    } else if ($(input).attr("name") == "consignee_country") {
       select_city = $("[name=consignee_city ]");
       name_city = "consignee_city";
     }
-    $.ajax( {
+    $.ajax({
       url: "<?php echo base_url() ?>country/city_autocomplete",
       dataType: "json",
       data: {
         // term: request.term,
         country: $(input).val(),
       },
-      success: function( data ) {
+      success: function(data) {
         console.log(data);
         // data = JSON.parse(data);
         // console.log(data);
         var content = $(select_city).parent();
-        $("select[name="+name_city+"]").select2("destroy");
+        $("select[name=" + name_city + "]").select2("destroy");
         $(select_city).remove();
-        if(data.length > 0){
-          var html = '<select class="form-control select2" name="'+name_city+'" required>';
+        if (data.length > 0) {
+          var html = '<select class="form-control select2" name="' + name_city + '" required>';
           $.each(data, function(index, value) {
-            html += "<option value='"+value+"'>"+value+"</option>";
+            html += "<option value='" + value + "'>" + value + "</option>";
           });
           html += "</select>";
           $(content).append(html);
-          $("[name="+name_city+"]").select2({theme: "bootstrap4"});
-        }
-        else{
-          var html = '<input type="text" class="form-control" name="'+name_city+'" placeholder="City" required>';
+          $("[name=" + name_city + "]").select2({
+            theme: "bootstrap4"
+          });
+        } else {
+          var html = '<input type="text" class="form-control" name="' + name_city + '" placeholder="City" required>';
           $(content).append(html);
         }
 
-        if(first_shipper_city_load == true && name_city == "shipper_city"){
-          if($("select[name="+name_city+"]").length){
-            $("select[name="+name_city+"]").val('<?php echo $quotation['shipper_city'] ?>').trigger('change');
-          }
-          else{
-            $("input[name="+name_city+"]").val('<?php echo $quotation['shipper_city'] ?>')
+        if (first_shipper_city_load == true && name_city == "shipper_city") {
+          if ($("select[name=" + name_city + "]").length) {
+            $("select[name=" + name_city + "]").val('<?php echo $quotation['shipper_city'] ?>').trigger('change');
+          } else {
+            $("input[name=" + name_city + "]").val('<?php echo $quotation['shipper_city'] ?>')
           }
           first_shipper_city_load = false;
         }
-        if(first_consignee_city_load == true && name_city == "consignee_city"){
-          if($("select[name="+name_city+"]").length){
-            $("select[name="+name_city+"]").val('<?php echo $quotation['consignee_city'] ?>').trigger('change');
-          }
-          else{
-            $("input[name="+name_city+"]").val('<?php echo $quotation['consignee_city'] ?>')
+        if (first_consignee_city_load == true && name_city == "consignee_city") {
+          if ($("select[name=" + name_city + "]").length) {
+            $("select[name=" + name_city + "]").val('<?php echo $quotation['consignee_city'] ?>').trigger('change');
+          } else {
+            $("input[name=" + name_city + "]").val('<?php echo $quotation['consignee_city'] ?>')
           }
           first_consignee_city_load = false;
         }
@@ -840,14 +841,13 @@
     });
   }
 
-  function change_typeshipment(input){
-    if($(input).val() == "Domestic Shipping"){
+  function change_typeshipment(input) {
+    if ($(input).val() == "Domestic Shipping") {
       $('[name=shipper_country], [name=consignee_country]').val('Indonesia').trigger('change');
       $("[name=shipper_country], [name=consignee_country]").select2({
         'disabled': true
       });
-    }
-    else{
+    } else {
       $("[name=shipper_country], [name=consignee_country]").select2({
         'disabled': false
       });

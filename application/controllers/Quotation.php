@@ -63,13 +63,14 @@ class Quotation extends CI_Controller
 
 		$term_condition = $this->quotation_mod->json_term_condition_list_db();
 		$term = [];
-		foreach($term_condition as $row){
+		foreach ($term_condition as $row) {
 			$term[$row['term_type']][] = $row['term_condition'];
 		}
 		$data['term_condition'] = json_encode($term, JSON_FORCE_OBJECT);
 
 		$data['customer_list'] = $this->quotation_mod->customer_list_db($where);
 		$data['package_type'] = $this->quotation_mod->package_type_list_db();
+		$data['type_of_service'] = $this->quotation_mod->type_of_service_list_db();
 
 		$data['subview'] 			= 'quotation/quotation_create';
 		$data['meta_title'] 	= 'Create Quotation';
@@ -200,7 +201,7 @@ class Quotation extends CI_Controller
 		}
 
 		$this->session->set_flashdata('success', 'Your Quotation has been Created!');
-		// redirect($_SERVER['HTTP_REFERER']);
+		redirect($_SERVER['HTTP_REFERER']);
 	}
 
 	public function quotation_update($id)
@@ -241,6 +242,10 @@ class Quotation extends CI_Controller
 		$data['cargo_list'] 		= $cargo_list;
 		$data['charges_list'] 	= $charges_list;
 		$data['package_type'] = $this->quotation_mod->package_type_list_db();
+		$data['type_of_service'] = $this->quotation_mod->type_of_service_list_db();
+
+		$delivery = $this->quotation_mod->type_of_service_list_db(['tos_code' => $quotation_list[0]['type_of_service']]);
+		$data['delivery'] = $delivery[0]['is_delivery'];
 
 		$data['subview'] 			= 'quotation/quotation_update';
 		$data['meta_title'] 	= 'Quotation Detail Update';
@@ -489,7 +494,7 @@ class Quotation extends CI_Controller
 		if (count($quotation_list) <= 0) {
 			$this->session->set_flashdata('error', 'Quotation not Found!');
 			redirect("quotation/quotation_list");
-		} 
+		}
 		$data['quotation'] 			= $quotation_list[0];
 		$data['id_quotation'] 	= $id;
 		$datadb 	= $this->home_mod->branch_list(["name" => $data['quotation']['branch']]);
@@ -521,6 +526,9 @@ class Quotation extends CI_Controller
 		$cargo_list 						= $this->quotation_mod->quotation_cargo_list_db($where);
 		$where['id_quotation'] 	= $id;
 		$charges_list 					= $this->quotation_mod->quotation_charges_list_db($where);
+		$type_of_service = $this->quotation_mod->type_of_service_list_db(['tos_code' => $quotation_list[0]['type_of_service']]);
+		$data['type_of_service'] = $type_of_service[0]['tos_name'];
+		$data['isdelivery'] = $type_of_service[0]['is_delivery'];
 
 		unset($where);
 		$where["id"] 	= $quotation_list[0]['created_by'];
@@ -615,6 +623,84 @@ class Quotation extends CI_Controller
 		}
 
 		$this->session->set_flashdata('success', 'Your Term Condition data has been Updated!');
+		redirect($_SERVER['HTTP_REFERER']);
+	}
+
+	public function type_of_service_list()
+	{
+		$data['type_of_service_list']     = $this->quotation_mod->type_of_service_list_db();
+
+		$data['subview']                 = 'quotation/type_of_service_list';
+		$data['meta_title']         = 'Type of Service List';
+		$this->load->view('index', $data);
+	}
+
+	public function type_of_service_create()
+	{
+		$data['subview']                 = 'quotation/type_of_service_create';
+		$data['meta_title']         = 'Type of Service Create';
+		$this->load->view('index', $data);
+	}
+
+	public function type_of_service_create_process()
+	{
+		$post = $this->input->post();
+
+		$where["tos_code = '" . $post['tos_code'] . "'"]         = NULL;
+		$type_of_service_list             = $this->quotation_mod->type_of_service_list_db($where);
+		if (count($type_of_service_list) > 0) {
+			$this->session->set_flashdata('error', 'Duplicate Type of Service!');
+			redirect($_SERVER['HTTP_REFERER']);
+		}
+
+		$form_data = array(
+			'tos_code'               => $post['tos_code'],
+			'tos_name'               => $post['tos_name'],
+			'is_delivery'               => $post['is_delivery'],
+			'created_by'         => $this->session->userdata('id')
+		);
+		$id_tos = $this->quotation_mod->type_of_service_create_process_db($form_data);
+
+		$this->session->set_flashdata('success', 'Your Type of Service data has been Created!');
+		redirect($_SERVER['HTTP_REFERER']);
+	}
+
+	public function type_of_service_update($id)
+	{
+		$where['id']                 = $id;
+		$type_of_service_list        = $this->quotation_mod->type_of_service_list_db($where);
+		if (count($type_of_service_list) < 1) {
+			redirect($_SERVER['HTTP_REFERER']);
+		}
+		$data['type_of_service_list']     = $type_of_service_list[0];
+
+		$data['subview']                 = 'quotation/type_of_service_update';
+		$data['meta_title']         = 'Type of Service Update';
+		$this->load->view('index', $data);
+	}
+
+	public function type_of_service_update_process($id)
+	{
+		$post = $this->input->post();
+
+		$form_data = array(
+			'tos_code'               => $post['tos_code'],
+			'tos_name'               => $post['tos_name'],
+			'is_delivery'               => $post['is_delivery'],
+		);
+		$where['id'] = $id;
+		$id_tos = $this->quotation_mod->type_of_service_update_process_db($form_data, $where);
+
+		$this->session->set_flashdata('success', 'Your Type of Service data has been Updated!');
+		redirect($_SERVER['HTTP_REFERER']);
+	}
+
+	public function type_of_service_delete_process($id)
+	{
+		$where['id'] = $id;
+		$this->quotation_mod->type_of_service_delete_process_db($where);
+
+		$this->session->set_flashdata('success', 'Your Type of Service data has been Deleted!');
 		redirect($_SERVER['HTTP_REFERER']);
 	}
 }

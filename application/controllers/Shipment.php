@@ -35,7 +35,8 @@ class Shipment extends CI_Controller
 						$row_data[] = $row['account_no'];
 					}
 					$where_in = "'" . implode("','", $row_data) . "'";
-					$where["((assign_branch LIKE '%" . $this->session->userdata('branch') . "%' AND billing_account = '') OR (branch LIKE '%" . $this->session->userdata('branch') . "%' AND billing_account = '' AND assign_branch IS NULL) OR (billing_account IN(" . $where_in . ")))"] 	= NULL;
+					// $where["((assign_branch LIKE '%" . $this->session->userdata('branch') . "%' AND billing_account = '') OR (branch LIKE '%" . $this->session->userdata('branch') . "%' AND billing_account = '' AND assign_branch IS NULL) OR (billing_account IN(" . $where_in . ")))"] 	= NULL;
+					$where["(branch LIKE '%" . $this->session->userdata('branch') . "%' AND billing_account = '') OR (billing_account IN(" . $where_in . "))"] 	= NULL;
 				}
 			}
 		} else {
@@ -87,6 +88,11 @@ class Shipment extends CI_Controller
 					} else if ($key == 'branch') {
 						// $where["((branch LIKE '%" . $value . "%' AND assign_branch = '') OR (assign_branch LIKE '%".$value."%'))"] 	= NULL;
 						$where["((assign_branch LIKE '%" . $value . "%' AND assign_branch IS NOT NULL) OR (assign_branch IS NULL AND branch LIKE '%" . $value . "%'))"] 	= NULL;
+					} else if ($this->input->get('tracking_no')) {
+						if ($this->input->get('tracking_no') != '') {
+							$tracking_no = "'" . join("','", $this->input->get('tracking_no')) . "'";
+							$where["tracking_no IN($tracking_no) "] = NULL;
+						}
 					} else {
 						$where[$key . " LIKE '%" . $value . "%'"] 	= NULL;
 					}
@@ -1162,6 +1168,13 @@ class Shipment extends CI_Controller
 			$data['quotation'] = $quotation[0];
 		}
 
+		$payment_terms = '';
+		if($shipment_list[0]['billing_account'] != ''){
+			$customer = $this->shipment_mod->customer_list_db(['account_no' => $shipment_list[0]['billing_account']]);
+			$payment_terms = $customer[0]['payment_terms'];
+		}
+		$data['payment_terms'] = $payment_terms;
+
 		unset($where);
 		echo $id;
 		$where['id_shipment'] 	= $id;
@@ -1384,7 +1397,7 @@ class Shipment extends CI_Controller
 		$where['id_shipment'] = $id;
 		$packages_list = $this->shipment_mod->shipment_packages_list_db($where);
 		$data['packages'] = $packages_list;
-		
+
 		$data['driver_list_deliver'] = user_data(array($data['shipment']['driver_deliver']));
 
 		$data['logo'] 	= base64_encode(file_get_contents("assets/img/logo-big-xpdc.png"));
@@ -1469,7 +1482,6 @@ class Shipment extends CI_Controller
 		$where['id'] = $id;
 		$this->shipment_mod->shipment_update_process_db($form_data, $where);
 	}
-
 	public function shipment_tracking($id)
 	{
 		$where['id'] 						= $id;
@@ -1954,5 +1966,58 @@ class Shipment extends CI_Controller
 		}
 
 		redirect(base_url() . "file/invoice/" . $invoice['paid_attachment']);
+	}
+
+	public function shipment_export_excel()
+	{
+		$post = $this->input->post();
+		$id_arr = explode(", ", $post['id']);
+
+		$where['shipment.id IN (' . $post['id'] . ')'] = NULL;
+		$order_by = NULL;
+		if ($this->session->userdata('role') == "Driver") {
+			$order_by["assign_driver_date"] = "DESC";
+		}
+
+		$where['status_delete'] 	= 1;
+		$datadb 				= $this->shipment_mod->shipment_list_db($where, null, $order_by);
+		$shipment_list 	= [];
+		$express_list 	= [];
+		$created_by 	= [];
+		foreach ($datadb as $key => $value) {
+			if ($value['sea'] == "Express" && !in_array($value['status'], array("Delivered", "Canceled"))) {
+				$express_list[] = $value;
+			} else {
+				$shipment_list[] = $value;
+			}
+			if (!in_array($value['created_by'], $created_by)) {
+				$created_by[] = $value['created_by'];
+			}
+		}
+		$data['shipment_list'] 	= array_merge($express_list, $shipment_list);
+		// test_var($data['shipment_list']);
+
+		unset($where);
+		$where['role'] 				= "Driver";
+		if ($this->session->userdata('branch')) {
+			if ($this->session->userdata('branch') != "NONE") {
+				$where["branch"] 	= $this->session->userdata('branch');
+			}
+		}
+		$data['driver_list'] 	= $this->home_mod->user_list($where);
+
+		$created_by_list = [];
+		if (count($created_by) > 0 && $this->session->userdata('role') == "Super Admin") {
+			unset($where);
+			$where["id IN ('" . join("', '", $created_by) . "')"] 	= NULL;
+			$datadb 	= $this->home_mod->user_list($where);
+			foreach ($datadb as $key => $value) {
+				$created_by_list[$value['id']] = $value['name'];
+			}
+		}
+		$data['created_by_list'] = $created_by_list;
+
+		$data['country'] = $this->shipment_mod->country_list_db();
+		$this->load->view('shipment/shipment_export_excel', $data);
 	}
 }

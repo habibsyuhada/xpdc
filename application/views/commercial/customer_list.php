@@ -32,6 +32,7 @@ $page_permission = array(
                       <th class="text-white font-weight-bold">Contact Person</th>
                       <th class="text-white font-weight-bold">Phone Number</th>
                       <th class="text-white font-weight-bold">Status</th>
+                      <th class="text-white font-weight-bold">Created By</th>
                       <th class="text-white font-weight-bold"></th>
                     </tr>
                   </thead>
@@ -57,6 +58,7 @@ $page_permission = array(
                             Pending
                           <?php endif; ?>
                         </td>
+                        <td><?php echo (isset($user[$value['create_by']])) ? $user[$value['create_by']] : '-'; ?></td>
                         <td>
                           <div class="btn-group">
                             <a href="<?php echo base_url() ?>commercial/table_rate_list/<?php echo $value['id'] ?>" class="btn btn-info" title="Table Rate"><i class="fas fa-table m-0"></i></a>

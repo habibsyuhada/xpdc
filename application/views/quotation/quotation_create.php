@@ -100,9 +100,12 @@
                     <label>Type of Service</label>
                     <select class="form-control" name="type_of_service" required>
                       <option value="">-- Select One --</option>
-                      <option value="FH">Freight Handling</option>
+                      <?php foreach ($type_of_service as $row) { ?>
+                        <option value="<?= $row['tos_code'] ?>" data-isdelivery="<?=$row['is_delivery']?>"><?= $row['tos_name'] ?></option>
+                      <?php } ?>
+                      <!-- <option value="FH">Freight Handling</option>
                       <option value="CH">Clearance Handling</option>
-                      <option value="WH">Warehousing</option>
+                      <option value="WH">Warehousing</option> -->
                     </select>
                   </div>
                 </div>
@@ -293,8 +296,8 @@
                         <td>
                           <select class="form-control" name="cargo_piece_type[]" title="NONFCL">
                             <option value="">-- Select One --</option>
-                            <?php foreach($package_type as $data) : ?>
-                            <option value="<?=$data['name']?>"><?=$data['name']?></option>
+                            <?php foreach ($package_type as $data) : ?>
+                              <option value="<?= $data['name'] ?>"><?= $data['name'] ?></option>
                             <?php endforeach; ?>
                           </select>
                           <select class="form-control d-none" name="cargo_piece_type[]" title="FCL" disabled>
@@ -515,7 +518,7 @@
     theme: "bootstrap4"
   });
 
-  var term_condition_selection = <?=$term_condition;?>
+  var term_condition_selection = <?= $term_condition; ?>
 
   $("select[name=type_of_mode]").on("change", function() {
     var value = $(this).val();
@@ -530,21 +533,20 @@
     }
     $("select[name=sea]").val('');
 
-    if(value == 'Air Freight'){
+    if (value == 'Air Freight') {
       var term_content = "";
       var num = true;
-      $.each(term_condition_selection.AIRFREIGHT, function (key, val) {
-        if(num == 1){
-          term_content += '<tr>'+
-            '<td><input type="text" class="form-control" name="term_condition[]" value="'+val+'"></td>'+
-            '<td><button type="button" class="btn btn-primary" onclick="addrow(this)"><i class="fas fa-plus m-0"></i></button></td>'+
-          '</tr>';
-        }
-        else{
-          term_content += '<tr>'+
-            '<td><input type="text" class="form-control" name="term_condition[]" value="'+val+'"></td>'+
-            '<td><button type="button" class="btn btn-danger" onclick="deleterow(this)(this)"><i class="fas fa-trash m-0"></i></button></td>'+
-          '</tr>';
+      $.each(term_condition_selection.AIRFREIGHT, function(key, val) {
+        if (num == 1) {
+          term_content += '<tr>' +
+            '<td><input type="text" class="form-control" name="term_condition[]" value="' + val + '"></td>' +
+            '<td><button type="button" class="btn btn-primary" onclick="addrow(this)"><i class="fas fa-plus m-0"></i></button></td>' +
+            '</tr>';
+        } else {
+          term_content += '<tr>' +
+            '<td><input type="text" class="form-control" name="term_condition[]" value="' + val + '"></td>' +
+            '<td><button type="button" class="btn btn-danger" onclick="deleterow(this)(this)"><i class="fas fa-trash m-0"></i></button></td>' +
+            '</tr>';
         }
         num++;
         console.log(num)
@@ -561,12 +563,12 @@
   });
 
   function change_sea(text, delete_data = 1) {
-    if(delete_data == 1){
+    if (delete_data == 1) {
       $("#table_packages input[type=text]").val('');
       $("#table_packages input[type=number]").val(0);
       $("#table_packages select").val('').trigger('change');
     }
-    if(text == 'FCL'){
+    if (text == 'FCL') {
       $("#table_packages th:nth-child(2)").html('Container Type');
       $("#table_packages th:nth-child(3)").html('Container Size');
       $("#table_packages th:nth-child(4)").html('Container No.');
@@ -576,8 +578,7 @@
       $("#table_packages input[title=NONFCL], #table_packages select[title=NONFCL]").addClass('d-none');
       $("#table_packages select[name='cargo_piece_type[]'][title=FCL]").removeAttr("disabled");
       $("#table_packages select[name='cargo_piece_type[]'][title=NONFCL]").attr("disabled", "disabled");
-    }
-    else{
+    } else {
       $("#table_packages th:nth-child(2)").html('Package Type');
       $("#table_packages th:nth-child(3)").html('Length(cm)');
       $("#table_packages th:nth-child(4)").html('Width(cm)');
@@ -590,14 +591,14 @@
     }
   }
 
-  $("select[name=type_of_service]").on("change", function(){
-    var value = $(this).val();
-    if(value == 'CH' || value == 'WH'){
+  $("select[name=type_of_service]").on("change", function() {
+    var value = $(this).find(":selected").data('isdelivery');
+    if (value == '0') {
       $("select[name=type_of_shipment]").val('').attr("disabled", true);
       $("select[name=incoterms]").val('').attr("disabled", true);
       $("[name=type_of_mode], [name=sea]").val('').attr("disabled", true);
       $("#shipper_consignee_info, #cargo_info").slideUp("slow");
-    }else{
+    } else {
       $("select[name=type_of_shipment]").removeAttr("disabled");
       $("select[name=incoterms]").removeAttr("disabled");
       $("[name=type_of_mode], [name=sea]").removeAttr("disabled");
@@ -607,42 +608,39 @@
 
   $("select[name=sea]").on("change", function() {
     var value = $(this).val();
-    if(value == 'FCL'){
+    if (value == 'FCL') {
       var term_content = "";
       var num = true;
-      $.each(term_condition_selection.FCL, function (key, val) {
-        if(num == 1){
-          term_content += '<tr>'+
-            '<td><input type="text" class="form-control" name="term_condition[]" value="'+val+'"></td>'+
-            '<td><button type="button" class="btn btn-primary" onclick="addrow(this)"><i class="fas fa-plus m-0"></i></button></td>'+
-          '</tr>';
-        }
-        else{
-          term_content += '<tr>'+
-            '<td><input type="text" class="form-control" name="term_condition[]" value="'+val+'"></td>'+
-            '<td><button type="button" class="btn btn-danger" onclick="deleterow(this)(this)"><i class="fas fa-trash m-0"></i></button></td>'+
-          '</tr>';
+      $.each(term_condition_selection.FCL, function(key, val) {
+        if (num == 1) {
+          term_content += '<tr>' +
+            '<td><input type="text" class="form-control" name="term_condition[]" value="' + val + '"></td>' +
+            '<td><button type="button" class="btn btn-primary" onclick="addrow(this)"><i class="fas fa-plus m-0"></i></button></td>' +
+            '</tr>';
+        } else {
+          term_content += '<tr>' +
+            '<td><input type="text" class="form-control" name="term_condition[]" value="' + val + '"></td>' +
+            '<td><button type="button" class="btn btn-danger" onclick="deleterow(this)(this)"><i class="fas fa-trash m-0"></i></button></td>' +
+            '</tr>';
         }
         num++;
         console.log(num)
       });
       $(".term_type").html(term_content);
-    }
-    else if(value == 'LCL'){
+    } else if (value == 'LCL') {
       var term_content = "";
       var num = true;
-      $.each(term_condition_selection.LCL, function (key, val) {
-        if(num == 1){
-          term_content += '<tr>'+
-            '<td><input type="text" class="form-control" name="term_condition[]" value="'+val+'"></td>'+
-            '<td><button type="button" class="btn btn-primary" onclick="addrow(this)"><i class="fas fa-plus m-0"></i></button></td>'+
-          '</tr>';
-        }
-        else{
-          term_content += '<tr>'+
-            '<td><input type="text" class="form-control" name="term_condition[]" value="'+val+'"></td>'+
-            '<td><button type="button" class="btn btn-danger" onclick="deleterow(this)(this)"><i class="fas fa-trash m-0"></i></button></td>'+
-          '</tr>';
+      $.each(term_condition_selection.LCL, function(key, val) {
+        if (num == 1) {
+          term_content += '<tr>' +
+            '<td><input type="text" class="form-control" name="term_condition[]" value="' + val + '"></td>' +
+            '<td><button type="button" class="btn btn-primary" onclick="addrow(this)"><i class="fas fa-plus m-0"></i></button></td>' +
+            '</tr>';
+        } else {
+          term_content += '<tr>' +
+            '<td><input type="text" class="form-control" name="term_condition[]" value="' + val + '"></td>' +
+            '<td><button type="button" class="btn btn-danger" onclick="deleterow(this)(this)"><i class="fas fa-trash m-0"></i></button></td>' +
+            '</tr>';
         }
         num++;
         console.log(num)
@@ -797,7 +795,10 @@
       }
       var subtotal = qty * unit_price;
       $(row).find("input[name='charges_subtotal[]']").val(subtotal);
-      $(row).find("input[name='charges_subtotal_view[]']").val(subtotal.toLocaleString('en-US', {maximumFractionDigits:2, minimumFractionDigits: 2}));
+      $(row).find("input[name='charges_subtotal_view[]']").val(subtotal.toLocaleString('en-US', {
+        maximumFractionDigits: 2,
+        minimumFractionDigits: 2
+      }));
 
       var exchange_rate = $(row).find("input[name='charges_exchange_rate[]']").val();
       var total = subtotal * exchange_rate;
@@ -827,66 +828,65 @@
   }
 
   function tba_data(data_tba) {
-    var ro = $("input[name="+data_tba+"_name]").prop('readonly');
-    var req = $("input[name="+data_tba+"_name]").prop('required');
-    $("input[name="+data_tba+"_postcode]").val('').prop('readonly', !ro);
-    $("input[name="+data_tba+"_name]").val('').prop('readonly', !ro).prop('required', !req);
-    $("textarea[name="+data_tba+"_address]").val('').prop('readonly', !ro).prop('required', !req);
-    $("input[name="+data_tba+"_contact_person]").val('').prop('readonly', !ro).prop('required', !req);
-    $("input[name="+data_tba+"_phone_number]").val('').prop('readonly', !ro).prop('required', !req);
-    $("input[name="+data_tba+"_email]").val('').prop('readonly', !ro);
+    var ro = $("input[name=" + data_tba + "_name]").prop('readonly');
+    var req = $("input[name=" + data_tba + "_name]").prop('required');
+    $("input[name=" + data_tba + "_postcode]").val('').prop('readonly', !ro);
+    $("input[name=" + data_tba + "_name]").val('').prop('readonly', !ro).prop('required', !req);
+    $("textarea[name=" + data_tba + "_address]").val('').prop('readonly', !ro).prop('required', !req);
+    $("input[name=" + data_tba + "_contact_person]").val('').prop('readonly', !ro).prop('required', !req);
+    $("input[name=" + data_tba + "_phone_number]").val('').prop('readonly', !ro).prop('required', !req);
+    $("input[name=" + data_tba + "_email]").val('').prop('readonly', !ro);
   }
 
   function select_country(input) {
     var select_city;
     var name_city
-    if($(input).attr("name") == "shipper_country"){
+    if ($(input).attr("name") == "shipper_country") {
       select_city = $("[name=shipper_city]");
       name_city = "shipper_city";
-    }
-    else if($(input).attr("name") == "consignee_country"){
+    } else if ($(input).attr("name") == "consignee_country") {
       select_city = $("[name=consignee_city ]");
       name_city = "consignee_city";
     }
-    $.ajax( {
+    $.ajax({
       url: "<?php echo base_url() ?>country/city_autocomplete",
       dataType: "json",
       data: {
         // term: request.term,
         country: $(input).val(),
       },
-      success: function( data ) {
+      success: function(data) {
         console.log(data);
         // data = JSON.parse(data);
         // console.log(data);
         var content = $(select_city).parent();
-        $("select[name="+name_city+"]").select2("destroy");
+        $("select[name=" + name_city + "]").select2("destroy");
         $(select_city).remove();
-        if(data.length > 0){
-          var html = '<select class="form-control select2" name="'+name_city+'" required>';
+        if (data.length > 0) {
+          var html = '<select class="form-control select2" name="' + name_city + '" required>';
           $.each(data, function(index, value) {
-            html += "<option value='"+value+"'>"+value+"</option>";
+            html += "<option value='" + value + "'>" + value + "</option>";
           });
           html += "</select>";
           $(content).append(html);
-          $("[name="+name_city+"]").select2({theme: "bootstrap4"});
-        }
-        else{
-          var html = '<input type="text" class="form-control" name="'+name_city+'" placeholder="City" required>';
+          $("[name=" + name_city + "]").select2({
+            theme: "bootstrap4"
+          });
+        } else {
+          var html = '<input type="text" class="form-control" name="' + name_city + '" placeholder="City" required>';
           $(content).append(html);
         }
       }
     });
   }
 
-  function change_typeshipment(input){
-    if($(input).val() == "Domestic Shipping"){
+  function change_typeshipment(input) {
+    if ($(input).val() == "Domestic Shipping") {
       $('[name=shipper_country], [name=consignee_country]').val('Indonesia').trigger('change');
       $("[name=shipper_country], [name=consignee_country]").select2({
         'disabled': true
       });
-    }
-    else{
+    } else {
       $("[name=shipper_country], [name=consignee_country]").select2({
         'disabled': false
       });

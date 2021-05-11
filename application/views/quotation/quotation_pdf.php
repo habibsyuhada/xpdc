@@ -106,11 +106,11 @@
 
 <body>
   <?php
-  $type_of_service = [
-    "FH" => "Freight Handling",
-    "CH" => "Clearance Handling",
-    "WH" => "Warehousing",
-  ];
+  // $type_of_service = [
+  //   "FH" => "Freight Handling",
+  //   "CH" => "Clearance Handling",
+  //   "WH" => "Warehousing",
+  // ];
   ?>
   <header>
     <img src="<?php echo base_url(); ?>assets/img/logo-fix.png" height="75%">
@@ -142,7 +142,7 @@
         <td class="auto-fit border"><?php echo $user_list ?></td>
       </tr>
       <tr>
-        <td>Subject &nbsp;: Quotation for <?php echo $type_of_service[$quotation['type_of_service']] ?></td>
+        <td>Subject &nbsp;: Quotation for <?php echo $type_of_service; ?></td>
         <td class="auto-fit border">Payment Terms</td>
         <td class="auto-fit border"><?php echo $quotation['payment_terms'] ?></td>
       </tr>
@@ -158,7 +158,7 @@
         <td colspan="2" class="header bg-orange"><b>Service Information</b></td>
       </tr>
       <tr>
-        <td style="width: 50%"><b>Type of Service &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;:</b> <?php echo $type_of_service[$quotation['type_of_service']] ?></td>
+        <td style="width: 50%"><b>Type of Service &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;:</b> <?php echo $type_of_service; ?></td>
         <td style="width: 50%"><b>Incoterms &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;:</b> <?php echo $quotation['incoterms'] ?></td>
       </tr>
       <tr>
@@ -172,22 +172,20 @@
       <tr>
         <td>
           <?php
-            if($quotation['shipper_tba'] == 0){
-              echo "<b>Shipper : </b>".$quotation['shipper_name']."<br>".$quotation['shipper_address'];
-            }
-            else{
-              echo "<b>Shipper &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;:</b> TBA";
-            }
+          if ($quotation['shipper_tba'] == 0) {
+            echo "<b>Shipper : </b>" . $quotation['shipper_name'] . "<br>" . $quotation['shipper_address'];
+          } else {
+            echo "<b>Shipper &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;:</b> TBA";
+          }
           ?>
         </td>
         <td>
           <?php
-            if($quotation['consignee_tba'] == 0){
-              echo "<b>Consignee : </b>".$quotation['consignee_name']."<br>".$quotation['consignee_address'];
-            }
-            else{
-              echo "<b>Consignee &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;:</b> TBA";
-            }
+          if ($quotation['consignee_tba'] == 0) {
+            echo "<b>Consignee : </b>" . $quotation['consignee_name'] . "<br>" . $quotation['consignee_address'];
+          } else {
+            echo "<b>Consignee &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;:</b> TBA";
+          }
           ?>
         </td>
       </tr>
@@ -245,29 +243,31 @@
     </tbody>
   </table> -->
   <br>
-  <table class="td-valign-top text-center" border="1" width="100%" cellspacing="0" cellpadding="2">
-    <tbody>
-      <tr>
-        <td colspan="6" class="header bg-orange"><b>Cargo Information</b></td>
-      </tr>
-      <tr>
-        <th class="header">Description of Goods</th>
-        <th class="header">Quantity</th>
-        <th class="header">Package</th>
-        <th class="header">Act. Weight</th>
-        <th class="header">Vol. Weight</th>
-        <th class="header">Measurement</th>
-      </tr>
-      <tr>
-        <td><?php echo @$quotation['description_of_goods'] ?></td>
-        <td><?php echo number_format($total_qty) ?> </td>
-        <td><?php echo (count($array_unit) == 1) ? $array_unit[0] : 'nmp' ?> </td>
-        <td><?php echo number_format($total_act_weight, 2) ?> Kg</td>
-        <td><?php echo number_format($total_vol_weight, 2) ?> Kg</td>
-        <td><?php echo number_format($total_measurement, 2) ?> M<sup>3</sup></td>
-      </tr>
-    </tbody>
-  </table>
+  <?php if ($isdelivery == 1) { ?>
+    <table class="td-valign-top text-center" border="1" width="100%" cellspacing="0" cellpadding="2">
+      <tbody>
+        <tr>
+          <td colspan="6" class="header bg-orange"><b>Cargo Information</b></td>
+        </tr>
+        <tr>
+          <th class="header">Description of Goods</th>
+          <th class="header">Quantity</th>
+          <th class="header">Package</th>
+          <th class="header">Act. Weight</th>
+          <th class="header">Vol. Weight</th>
+          <th class="header">Measurement</th>
+        </tr>
+        <tr>
+          <td><?php echo @$quotation['description_of_goods'] ?></td>
+          <td><?php echo number_format($total_qty) ?> </td>
+          <td><?php echo (count($array_unit) == 1) ? $array_unit[0] : 'nmp' ?> </td>
+          <td><?php echo number_format($total_act_weight, 2) ?> Kg</td>
+          <td><?php echo number_format($total_vol_weight, 2) ?> Kg</td>
+          <td><?php echo number_format($total_measurement, 2) ?> M<sup>3</sup></td>
+        </tr>
+      </tbody>
+    </table>
+  <?php } ?>
 
   <br>
 
@@ -309,9 +309,9 @@
     </tbody>
   </table>
   <div style="text-align: right">
-  <?php if($quotation['hide_estimete_total_pdf'] == 0): ?>
-    <p><b>Estimate Total Charges : <?php echo "IDR " . number_format(($subtotal), 0) . ".00" ?></b></p>
-  <?php endif; ?>
+    <?php if ($quotation['hide_estimete_total_pdf'] == 0) : ?>
+      <p><b>Estimate Total Charges : <?php echo "IDR " . number_format(($subtotal), 0) . ".00" ?></b></p>
+    <?php endif; ?>
     <!-- <tr>
         <td colspan="5" style="border-style: none;">
         </td>

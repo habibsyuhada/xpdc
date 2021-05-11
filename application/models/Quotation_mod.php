@@ -203,4 +203,34 @@ class Quotation_mod extends CI_Model
     $this->db->where($where);
     $this->db->delete('mst_term_condition_detail');
   }
+
+  public function type_of_service_list_db($where = null)
+  {
+    if (isset($where)) {
+      if (count($where) > 0) {
+        $this->db->where($where);
+      }
+    }
+    $query = $this->db->get("type_of_service");
+    return $query->result_array();
+  }
+
+  public function type_of_service_create_process_db($data)
+  {
+    $this->db->insert('type_of_service', $data);
+    $insert_id = $this->db->insert_id();
+    return $insert_id;
+  }
+
+  public function type_of_service_update_process_db($data, $where)
+  {
+    $this->db->where($where);
+    $this->db->update('type_of_service', $data);
+  }
+
+  public function type_of_service_delete_process_db($where)
+  {
+    $this->db->where($where);
+    $this->db->delete('type_of_service');
+  }
 }

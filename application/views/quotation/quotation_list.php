@@ -1,15 +1,15 @@
 <?php
-  $role = $this->session->userdata('role');
-  $page_permission = array(
-    0 => (in_array($role, array("Super Admin")) ? 1 : 0), //Delete Quotation
-    1 => (in_array($role, array("Super Admin", "Commercial")) ? 1 : 0), //Approval Quotation
-    2 => (in_array($role, array("Super Admin", "Commercial")) ? 1 : 0), //Add Tracking
-    3 => (in_array($role, array("Super Admin", "Commercial")) ? 1 : 0), //Edit Quotation
-    4 => (in_array($role, array("Super Admin", "Commercial")) ? 1 : 0), //Create Quotation
-  );
+$role = $this->session->userdata('role');
+$page_permission = array(
+  0 => (in_array($role, array("Super Admin")) ? 1 : 0), //Delete Quotation
+  1 => (in_array($role, array("Super Admin", "Commercial")) ? 1 : 0), //Approval Quotation
+  2 => (in_array($role, array("Super Admin", "Commercial")) ? 1 : 0), //Add Tracking
+  3 => (in_array($role, array("Super Admin", "Commercial")) ? 1 : 0), //Edit Quotation
+  4 => (in_array($role, array("Super Admin", "Commercial")) ? 1 : 0), //Create Quotation
+);
 ?>
 <div class="main-content">
-	<div class="container-fluid">
+  <div class="container-fluid">
     <div class="row clearfix">
       <div class="col-md-12">
         <!-- <div class="card">
@@ -67,7 +67,7 @@
             <div class="row">
               <div class="col-md-12">
                 <?php if ($page_permission[4] == 1) : ?>
-                <a href="<?= base_url() ?>quotation/quotation_create" class="btn btn-success"><i class="fa fa-plus"></i> Add New Quotation</a><br><br>
+                  <a href="<?= base_url() ?>quotation/quotation_create" class="btn btn-success"><i class="fa fa-plus"></i> Add New Quotation</a><br><br>
                 <?php endif; ?>
                 <table class="table data_table">
                   <thead>
@@ -85,46 +85,44 @@
                     </tr>
                   </thead>
                   <tbody>
-                    <?php foreach ($quotation_list as $key => $value): ?>
-                    <tr>
-                      <td><?php echo $value['quotation_no'] ?></td>
-                      <td><?php echo $value['date'] ?></td>
-                      <td><?php echo $value['exp_date'] ?></td>
-                      <td><?php echo $value['customer_name'] ?></td>
-                      <td><?php echo $value['type_of_shipment'] ?></td>
-                      <td><?php echo $value['type_of_transport'] ?></td>
-                      <td class='font-weight-bold'>
-                      <?php 
-                        if($value['status'] == 0){
-                          echo "<span class='text-dark'>Quoted</span>";
-                        }
-                        elseif($value['status'] == 1){
-                          echo "<span class='text-success'>Approved</span>";
-                        }
-                        elseif($value['status'] == 2){
-                          echo "<span class='text-danger'>Rejected</span>";
-                        }
-                      ?>
-                      </td>
-                      <td><?php echo $value['tracking_no'] ?></td>
-                      <td><?php echo $value['remarks'] ?></td>
-                      <td>
-                        <?php if($page_permission[3] == 1): ?>
-                        <a href="<?php echo base_url() ?>quotation/quotation_update/<?php echo $value['id'] ?>" class="btn btn-primary" title="Update"><i class="fas fa-edit m-0"></i></a>
-                        <?php endif; ?>
-                        <a target="_blank" href="<?php echo base_url() ?>quotation/quotation_pdf/<?php echo $value['id'] ?>" class="btn btn-warning" title="PDF"><i class="fas fa-print m-0"></i></a>
-                        <?php if($page_permission[0] == 1): ?>
-                        <a href="<?php echo base_url() ?>quotation/quotation_delete_process/<?php echo $value['id'] ?>" class="btn btn-danger" title="Delete" onclick="return confirm('Are You Sure?')"><i class="fas fa-trash m-0"></i></a>
-                        <?php endif; ?>
-                        <?php if($value['status'] == 0 && $page_permission[1] == 1): ?>
-                        <a href="<?php echo base_url() ?>quotation/quotation_approval/<?php echo $value['id'] ?>/1" class="btn btn-success" title="Approve"><i class="fas fa-check m-0"></i></a>
-                        <a href="<?php echo base_url() ?>quotation/quotation_approval/<?php echo $value['id'] ?>/2" class="btn btn-danger" title="Reject"><i class="fas fa-times m-0"></i></a>
-                        <?php endif; ?>
-                        <?php if($value['status'] == 1 && $value['tracking_no'] == "" && $page_permission[2] == 1): ?>
-                        <a href="<?php echo base_url() ?>quotation/shipment_create/<?php echo $value['id'] ?>" class="btn btn-success" title="Create Shipment" onclick="return confirm('Are You Sure to Approve this?')"><i class="fas fa-plus m-0"></i></a>
-                        <?php endif; ?>
-                      </td>
-                    </tr>
+                    <?php foreach ($quotation_list as $key => $value) : ?>
+                      <tr>
+                        <td><?php echo $value['quotation_no'] ?></td>
+                        <td><?php echo $value['date'] ?></td>
+                        <td><?php echo $value['exp_date'] ?></td>
+                        <td><?php echo $value['customer_name'] ?></td>
+                        <td><?php echo $value['type_of_shipment'] ?></td>
+                        <td><?php echo $value['type_of_transport'] ?></td>
+                        <td class='font-weight-bold'>
+                          <?php
+                          if ($value['status'] == 0) {
+                            echo "<span class='text-dark'>Quoted</span>";
+                          } elseif ($value['status'] == 1) {
+                            echo "<span class='text-success'>Approved</span>";
+                          } elseif ($value['status'] == 2) {
+                            echo "<span class='text-danger'>Rejected</span>";
+                          }
+                          ?>
+                        </td>
+                        <td><?php echo $value['tracking_no'] ?></td>
+                        <td><?php echo $value['remarks'] ?></td>
+                        <td>
+                          <?php if ($page_permission[3] == 1) : ?>
+                            <a href="<?php echo base_url() ?>quotation/quotation_update/<?php echo $value['id'] ?>" class="btn btn-primary" title="Update"><i class="fas fa-edit m-0"></i></a>
+                          <?php endif; ?>
+                          <a target="_blank" href="<?php echo base_url() ?>quotation/quotation_pdf/<?php echo $value['id'] ?>" class="btn btn-warning" title="PDF"><i class="fas fa-print m-0"></i></a>
+                          <?php if ($page_permission[0] == 1) : ?>
+                            <a href="<?php echo base_url() ?>quotation/quotation_delete_process/<?php echo $value['id'] ?>" class="btn btn-danger" title="Delete" onclick="return confirm('Are You Sure?')"><i class="fas fa-trash m-0"></i></a>
+                          <?php endif; ?>
+                          <?php if ($value['status'] == 0 && $page_permission[1] == 1) : ?>
+                            <a href="<?php echo base_url() ?>quotation/quotation_approval/<?php echo $value['id'] ?>/1" class="btn btn-success" title="Approve"><i class="fas fa-check m-0"></i></a>
+                            <a href="<?php echo base_url() ?>quotation/quotation_approval/<?php echo $value['id'] ?>/2" class="btn btn-danger" title="Reject"><i class="fas fa-times m-0"></i></a>
+                          <?php endif; ?>
+                          <?php if ($value['status'] == 1 && $value['tracking_no'] == "" && $page_permission[2] == 1) : ?>
+                            <a href="<?php echo base_url() ?>quotation/shipment_create/<?php echo $value['id'] ?>" class="btn btn-success" title="Create Shipment" onclick="return confirm('Are You Sure to Approve this?')"><i class="fas fa-plus m-0"></i></a>
+                          <?php endif; ?>
+                        </td>
+                      </tr>
                     <?php endforeach; ?>
                   </tbody>
                 </table>
@@ -134,7 +132,7 @@
         </div>
       </div>
     </div>
-	</div>
+  </div>
 </div>
 <script type="text/javascript">
 </script>

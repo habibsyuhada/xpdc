@@ -94,7 +94,7 @@ class Home extends CI_Controller
 						$row_data[] = $row['account_no'];
 					}
 					$where_in = "'" . implode("','", $row_data) . "'";
-					$where["((assign_branch LIKE '%" . $this->session->userdata('branch') . "%' AND billing_account = '') OR (branch LIKE '%" . $this->session->userdata('branch') . "%' AND billing_account = '' AND assign_branch IS NULL) OR (billing_account IN(" . $where_in . ")))"] 	= NULL;	
+					$where["(branch LIKE '%" . $this->session->userdata('branch') . "%' AND billing_account = '' AND assign_branch IS NULL) OR (billing_account IN(" . $where_in . "))"] 	= NULL;	
 				}
 			} else {
 				if ($this->input->get("branch")) {

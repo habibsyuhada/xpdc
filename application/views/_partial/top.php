@@ -154,6 +154,9 @@ $side_permission = array(
 												<a href="<?php echo base_url() ?>quotation/term_condition" class="menu-item"><i class="fas fa-question-circle"></i><span>T&C Quotation</span></a>
 											</div>
 											<div class="nav-item">
+												<a href="<?php echo base_url() ?>quotation/type_of_service_list" class="menu-item"><i class="fas fa-dolly"></i><span>Type of Service</span></a>
+											</div>
+											<div class="nav-item">
 												<a href="<?php echo base_url() ?>user/user_list" class="menu-item"><i class="fas fa-user"></i><span>User</span></a>
 											</div>
 											<div class="nav-item">

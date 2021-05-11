@@ -38,12 +38,12 @@ $page_permission = array(
                 <div class="col-6">
                   <h6 class="font-weight-bold">Invoice Detail</h6>
                 </div>
-                <?php if(isset($quotation)){ ?>
-                <div class="col-6 text-right">
-                  
-                  <a href="<?=base_url()?>quotation/quotation_view/<?=$quotation['id']?>" target="_blank" class="btn btn-warning btn-sm"><i class="fa fa-eye"></i> Quotation View</a>
-                  <a href="<?=base_url()?>quotation/quotation_pdf/<?=$quotation['id']?>" target="_blank" class="btn btn-primary btn-sm"><i class="fa fa-print"></i> Quotation PDF</a>
-                </div>
+                <?php if (isset($quotation)) { ?>
+                  <div class="col-6 text-right">
+
+                    <a href="<?= base_url() ?>quotation/quotation_view/<?= $quotation['id'] ?>" target="_blank" class="btn btn-warning btn-sm"><i class="fa fa-eye"></i> Quotation View</a>
+                    <a href="<?= base_url() ?>quotation/quotation_pdf/<?= $quotation['id'] ?>" target="_blank" class="btn btn-primary btn-sm"><i class="fa fa-print"></i> Quotation PDF</a>
+                  </div>
                 <?php } ?>
               </div>
               <input type="hidden" name="id_invoice" value="<?php echo @$invoice['id']; ?>">
@@ -78,7 +78,14 @@ $page_permission = array(
                       <option value="45 Days" <?= (@$invoice['payment_terms'] == '45 Days') ? 'selected' : ''; ?>>45 Days</option>
                       <option value="60 Days" <?= (@$invoice['payment_terms'] == '60 Days') ? 'selected' : ''; ?>>60 Days</option> -->
                       <?php foreach ($payment_terms_list as $key => $value) : ?>
-                        <option value="<?php echo $value['name'] ?>" <?= (@$invoice['payment_terms'] == $value['name']) ? 'selected' : ''; ?>><?php echo $value['name'] ?></option>
+                        <!-- <option value="<?php echo $value['name'] ?>" <?= (@$invoice['payment_terms'] == $value['name']) ? 'selected' : ''; ?>><?php echo $value['name'] ?></option> -->
+                        <option value="<?php echo $value['name'] ?>" <?php if (@$invoice['payment_terms'] == $value['name']) {
+                                                                        echo 'selected';
+                                                                      } else if ($value['name'] == $payment_terms) {
+                                                                        echo 'selected';
+                                                                      } else {
+                                                                        echo '';
+                                                                      }; ?>><?php echo $value['name'] ?></option>
                       <?php endforeach; ?>
                     </select>
                   </div>
@@ -91,21 +98,21 @@ $page_permission = array(
                 </div>
                 <?php if (@$invoice['invoice_no'] != "") : ?>
                   <?php if ($page_permission[0] == 1) : ?>
-                  <div class="col-md-6">
-                    <div class="form-group">
-                      <label>Status</label>
-                      <select class="form-control" name="status_bill" required>
-                        <option value="1" <?= (@$shipment_list['status_bill'] == '1') ? 'selected' : ''; ?>>Billed</option>
-                        <option value="2" <?= (@$shipment_list['status_bill'] == '2') ? 'selected' : ''; ?>>Paid</option>
-                      </select>
+                    <div class="col-md-6">
+                      <div class="form-group">
+                        <label>Status</label>
+                        <select class="form-control" name="status_bill" required>
+                          <option value="1" <?= (@$shipment_list['status_bill'] == '1') ? 'selected' : ''; ?>>Billed</option>
+                          <option value="2" <?= (@$shipment_list['status_bill'] == '2') ? 'selected' : ''; ?>>Paid</option>
+                        </select>
+                      </div>
                     </div>
-                  </div>
-                  <div class="col-md-6">
-                    <div class="form-group">
-                      <label>Date Paid</label>
-                      <input type="date" class="form-control" name="date_paid" value="<?php echo @$shipment_list['date_paid'] ?>" required>
+                    <div class="col-md-6">
+                      <div class="form-group">
+                        <label>Date Paid</label>
+                        <input type="date" class="form-control" name="date_paid" value="<?php echo @$shipment_list['date_paid'] ?>" required>
+                      </div>
                     </div>
-                  </div>
                   <?php endif; ?>
                 <?php endif; ?>
               </div>
@@ -416,7 +423,10 @@ $page_permission = array(
       }
       var subtotal = qty * unit_price;
       $(row).find("input[name='subtotal[]']").val(subtotal);
-      $(row).find("input[name='subtotal_view[]']").val(subtotal.toLocaleString('en-US', {maximumFractionDigits:2, minimumFractionDigits: 2}));
+      $(row).find("input[name='subtotal_view[]']").val(subtotal.toLocaleString('en-US', {
+        maximumFractionDigits: 2,
+        minimumFractionDigits: 2
+      }));
 
       var exchange_rate = $(row).find("input[name='exchange_rate[]']").val();
       var total = subtotal * exchange_rate;

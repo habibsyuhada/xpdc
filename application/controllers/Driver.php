@@ -191,9 +191,9 @@ class Driver extends CI_Controller
 
 		$text_add_note = "";
 		if ($post['status'] == 'pickup') {
-			$text_add_note = "Handovered by ";
-		} elseif ($post['status'] == 'deliver') {
-			$text_add_note = "Received by ";
+			$text_add_note = "Handovered by ".$post['by_driver_pickup'];
+		} elseif ($post['status'] == 'deliver') { 
+			$text_add_note = "Received by ".$post['by_driver_deliver'];
 		}
 		$form_data = array(
 			'photo_driver_' . $post['status'] 	=> $this->upload->data('file_name'),

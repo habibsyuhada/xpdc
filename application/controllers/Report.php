@@ -43,9 +43,9 @@ class Report extends CI_Controller
   {
     $post = $this->input->post();
     if ($this->session->userdata('branch') != "NONE") {
-      // $where["(assign_branch LIKE '%" . $this->session->userdata('branch') . "%' OR branch LIKE '%" . $this->session->userdata('branch') . "%')"] 	= NULL;
       if ($this->session->userdata('role') == 'Operator') {
-        $where["((assign_branch LIKE '%" . $this->session->userdata('branch') . "%' AND assign_branch IS NOT NULL) OR (assign_branch IS NULL AND branch LIKE '%" . $this->session->userdata('branch') . "%'))"]   = NULL;
+        // $where["((assign_branch LIKE '%" . $this->session->userdata('branch') . "%' AND assign_branch IS NOT NULL) OR (assign_branch IS NULL AND branch LIKE '%" . $this->session->userdata('branch') . "%'))"] 	= NULL;
+        $where["((assign_branch LIKE '%" . $this->session->userdata('branch') . "%' AND assign_branch IS NOT NULL) OR (assign_branch IS NULL AND branch LIKE '%" . $this->session->userdata('branch') . "%'))"] 	= NULL;
       } else if ($this->session->userdata('role') == 'Driver') {
       } else {
         $customer = $this->shipment_mod->customer_list_db(["customer_id IN(SELECT id FROM user WHERE role = 'Customer' AND branch = '" . $this->session->userdata('branch') . "')" => null]);
@@ -54,13 +54,14 @@ class Report extends CI_Controller
           $row_data[] = $row['account_no'];
         }
         $where_in = "'" . implode("','", $row_data) . "'";
-        $where["((assign_branch LIKE '%" . $this->session->userdata('branch') . "%' AND billing_account = '') OR (branch LIKE '%" . $this->session->userdata('branch') . "%' AND billing_account = '' AND assign_branch IS NULL) OR (billing_account IN(" . $where_in . ")))"]   = NULL;
+        // $where["((assign_branch LIKE '%" . $this->session->userdata('branch') . "%' AND billing_account = '') OR (branch LIKE '%" . $this->session->userdata('branch') . "%' AND billing_account = '' AND assign_branch IS NULL) OR (billing_account IN(" . $where_in . ")))"] 	= NULL;
+        $where["(branch LIKE '%" . $this->session->userdata('branch') . "%' AND billing_account = '') OR (billing_account IN(" . $where_in . "))"] 	= NULL;
       }
     }
 
     if ($this->session->userdata('role') == "Commercial") {
       unset($where);
-			$datadb 	= $this->home_mod->customer_list(array("status_delete" => 1, "created_by" => $this->session->userdata('id')));
+			$datadb 	= $this->home_mod->customer_list(array("status_delete" => 1, "create_by" => $this->session->userdata('id')));
 			$customer_list = [];
 			foreach ($datadb as $key => $value) {
 				if ($value['account_no'] != "") {
@@ -72,7 +73,7 @@ class Report extends CI_Controller
 			}
 			$where['status_delete'] 	= 1;
 			$where["(shipment_detail.billing_account IN ('" . join("', '", $customer_list) . "') OR created_by = '" . $this->session->userdata('id') . "')"] 	= NULL;
-      // $where["created_by"] 	= $this->session->userdata('id');
+			// $where["created_by"] 	= $this->session->userdata('id');
     }
 
     $where['created_date >=']  = $post['date_from'];
@@ -81,10 +82,25 @@ class Report extends CI_Controller
 
     $shipment_list             = $this->shipment_mod->shipment_list_db($where);
     $data['shipment_list']     = $shipment_list;
+    $created_by   = [];
     $id_shipment              = array();
     foreach ($shipment_list as $key => $value) {
       $id_shipment[] = $value['id'];
+      if (!in_array($value['created_by'], $created_by)) {
+        $created_by[] = $value['created_by'];
+      }
     }
+
+    $created_by_list = [];
+    if (count($created_by) > 0) {
+      unset($where);
+      $where["id IN ('" . join("', '", $created_by) . "')"]   = NULL;
+      $datadb   = $this->home_mod->user_list($where);
+      foreach ($datadb as $key => $value) {
+        $created_by_list[$value['id']] = $value['name'];
+      }
+    }
+    $data['created_by_list'] = $created_by_list;
 
     if (count($id_shipment) > 0) {
       unset($where);

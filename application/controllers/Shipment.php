@@ -11,6 +11,7 @@ class Shipment extends CI_Controller
 		$this->load->model('home_mod');
 		$this->load->model('shipment_mod');
 		$this->load->model('quotation_mod');
+		$this->load->model('payment_mod');
 	}
 
 	public function index()
@@ -480,6 +481,13 @@ class Shipment extends CI_Controller
 			$where["SUBSTRING_INDEX(SUBSTRING_INDEX(invoice_no,'-',1), '/', -1) = '" . $branch['code'] . "'"] = NULL;
 			$invoice_no = $this->shipment_mod->shipment_generate_invoice_no_db($where);
 			unset($where);
+			$where = [
+				'branch' => $branch['name'],
+				'default_value' => '1'
+			];
+			$payment = $this->payment_mod->payment_list_db($where);
+
+			unset($where);
 			$invoice_no = $invoice_no . "/" . $branch['code'] . "-FH" . "/" . date("Y");
 			$form_data = array(
 				'id_shipment' 		=> $id_shipment,
@@ -491,9 +499,9 @@ class Shipment extends CI_Controller
 				'vat' 							=> 0,
 				'discount' 					=> 0,
 				'notes' 						=> "",
-				'beneficiary_name'	=> "PT. XENA PRANADIPA DHIA CAKRA",
-				'acc_no'						=> "1090089892020",
-				'bank_name'					=> "BANK MANDIRI",
+				'beneficiary_name'	=>  $payment[0]['beneficiary_name'],
+				'acc_no'						=> $payment[0]['account_no'],
+				'bank_name'					=> $payment[0]['bank_name'],
 			);
 			$id_bill = $this->shipment_mod->shipment_invoice_create_process_db($form_data);
 
@@ -1018,11 +1026,13 @@ class Shipment extends CI_Controller
 	public function shipment_assign_process()
 	{
 		$post = $this->input->post();
-		$form_data = array(
-			'assign_branch'					=> $post['assign_branch'],
-		);
-		$where['id'] = $post['id'];
-		$this->shipment_mod->shipment_update_process_db($form_data, $where);
+		if ($post['assign_branch'] != '') {
+			$form_data = array(
+				'assign_branch'					=> $post['assign_branch'],
+			);
+			$where['id'] = $post['id'];
+			$this->shipment_mod->shipment_update_process_db($form_data, $where);
+		}
 
 		$this->session->set_flashdata('success', 'Your Shipment data has been Updated!');
 		redirect($_SERVER['HTTP_REFERER']);
@@ -1169,7 +1179,7 @@ class Shipment extends CI_Controller
 		}
 
 		$payment_terms = '';
-		if($shipment_list[0]['billing_account'] != ''){
+		if ($shipment_list[0]['billing_account'] != '') {
 			$customer = $this->shipment_mod->customer_list_db(['account_no' => $shipment_list[0]['billing_account']]);
 			$payment_terms = $customer[0]['payment_terms'];
 		}
@@ -1187,6 +1197,13 @@ class Shipment extends CI_Controller
 				$costumer[] = $value;
 			}
 		}
+
+		unset($where);
+		$where = null;
+		if ($this->session->userdata('branch') != 'NONE') {
+			$where['branch'] = $this->session->userdata('branch');
+		}
+		$data['payment_info'] = $this->payment_mod->payment_list_db($where);
 		$data['main_agent'] 			= $main_agent;
 		$data['secondary_agent'] 	= $secondary_agent;
 		$data['costumer'] 				= $costumer;
@@ -1197,6 +1214,19 @@ class Shipment extends CI_Controller
 		$data['subview'] 				= 'shipment/shipment_bill';
 		$data['meta_title'] 		= 'Shipment Bill';
 		$this->load->view('index', $data);
+	}
+
+	public function get_payment_information()
+	{
+		if ($this->input->post()) {
+			$id = $this->input->post('id');
+
+			$where['id'] = $id;
+			$payment = $this->payment_mod->payment_list_db($where);
+			echo json_encode($payment[0]);
+		} else {
+			echo "error";
+		}
 	}
 
 	public function shipment_bill_process()
@@ -1233,6 +1263,8 @@ class Shipment extends CI_Controller
 				'beneficiary_name'	=> $post['beneficiary_name'],
 				'acc_no'						=> $post['acc_no'],
 				'bank_name'					=> $post['bank_name'],
+				'swift_code'						=> $post['swift_code'],
+				'bank_name'					=> $post['bank_name'],
 			);
 			$id_shipment = $this->shipment_mod->shipment_invoice_create_process_db($form_data);
 
@@ -1251,6 +1283,8 @@ class Shipment extends CI_Controller
 				'notes' 						=> $post['notes'],
 				'beneficiary_name'	=> $post['beneficiary_name'],
 				'acc_no'						=> $post['acc_no'],
+				'bank_address'						=> $post['bank_address'],
+				'swift_code'						=> $post['swift_code'],
 				'bank_name'					=> $post['bank_name'],
 			);
 			$where['id'] = $post['id_invoice'];
@@ -1377,6 +1411,8 @@ class Shipment extends CI_Controller
 		$branch 					= $branch_list[0];
 		// test_var($branch);
 		$data['branch'] 	= $branch;
+		$payment_info = $this->payment_mod->payment_list_db(['branch' => $branch['name']]);
+		$data['payment_info'] = $payment_info[0];
 
 		$data['logo'] 	= base64_encode(file_get_contents("assets/img/logo-big-xpdc.png"));
 
@@ -1554,6 +1590,7 @@ class Shipment extends CI_Controller
 		$history_location = $post['city_history_location'] . ", " . $post['country_history_location'];
 		$where['tracking_no'] 	= $post['tracking_no'];
 		$shipment_list 					= $this->shipment_mod->shipment_list_db($where);
+		$type_of_shipment = 1;
 		if (count($shipment_list) == 0) {
 			$where = [
 				"master_tracking"  => $post['tracking_no'],
@@ -1563,16 +1600,26 @@ class Shipment extends CI_Controller
 				echo "Error : Tracking Number Not Found!";
 				return false;
 			}
+			$type_of_shipment = 2;
 		} elseif ($post['history_date'] > date("Y-m-d") || ($post['history_date'] == date("Y-m-d") && $post['history_time'] > date("H:i"))) {
 			echo "Error : You cannot submit for a future date!<br>Current time : " . date("Y-m-d H:i");
 			return false;
 		}
 
 		foreach ($shipment_list as $key => $value) {
-			if ($post['history_status'] == "Departed" && $value['main_agent_name'] == "") {
-				echo "Error : You cannot depart shipment before fill up Shipping Information (" . $value['tracking_no'] . ")";
-				return false;
-				exit;
+			// if ($post['history_status'] == "Departed" && $value['main_agent_name'] == "") {
+			if ($post['history_status'] == "Departed") {
+				if ($type_of_shipment == 1) {
+					echo "OK|" . $value['id'];
+					return false;
+					exit;
+				} else if ($type_of_shipment == 2) {
+					if ($value['main_agent_name'] == "") {
+						echo "Error : You cannot depart shipment before fill up Shipping Information (" . $value['tracking_no'] . ")";
+						return false;
+						exit;
+					}
+				}
 			} elseif ($post['history_status'] == "Service Center" && $value['status'] == "Picked up" && $value['has_updated_packages'] != 1) {
 				echo "Error : You need to edit shipment information / packages first to change status Service Center from Picked up (" . $value['tracking_no'] . ")";
 				return false;
@@ -1597,6 +1644,151 @@ class Shipment extends CI_Controller
 			$id_history = $this->shipment_mod->shipment_history_create_process_db($form_data);
 			$this->shipment_update_last_history($value['id']);
 		}
+
+		$output = $form_data;
+		$output['tracking_no'] = $post['tracking_no'];
+		$output['id'] = $id_history;
+
+		echo json_encode($output);
+	}
+
+	public function shipment_shipping_information()
+	{
+		$id = $this->input->post('id');
+		$where['id'] 						= $id;
+		$shipment_list 					= $this->shipment_mod->shipment_list_db($where);
+		unset($where);
+
+		if (count($shipment_list) <= 0) {
+			$this->session->set_flashdata('error', 'Shipment not Found!');
+			redirect("shipment/shipment_list");
+		}
+
+		$datadb 	= $this->home_mod->agent_list();
+		$agent_list = [];
+		foreach ($datadb as $key => $value) {
+			$agent_list[$value['name']] = $value;
+		}
+		$data['agent_list'] 	= $agent_list;
+
+		$datadb 	= $this->home_mod->branch_list();
+		$branch_list = [];
+		foreach ($datadb as $key => $value) {
+			$branch_list[$value['name']] = $value;
+		}
+		$data['branch_list'] 	= $branch_list;
+
+		$data['country'] = $this->shipment_mod->country_list_db();
+
+		$data['shipment'] 			= $shipment_list[0];
+		$data['t'] 							= 'g';
+		$data['pages'] = $this->input->post('page');
+		// $data['subview'] 				= 'shipment/shipment_shipping_information';
+		// $data['meta_title'] 		= 'Shipment Edit Shipping Info?rmation';
+		$this->load->view('shipment/shipment_shipping_information', $data);
+	}
+
+	public function shipment_shipping_information_process()
+	{
+		$post = $this->input->post();
+
+		$form_data = array(
+			'main_agent_name'												=> $post['main_agent_name'],
+			'main_agent_mawb_mbl'										=> $post['main_agent_mawb_mbl'],
+			'main_agent_carrier'										=> $post['main_agent_carrier'],
+			'main_agent_voyage_flight_no'						=> $post['main_agent_voyage_flight_no'],
+			'main_agent_voyage_flight_date'					=> $post['main_agent_voyage_flight_date'],
+			'main_agent_port_of_loading'						=> $post['main_agent_port_of_loading'],
+			'main_agent_port_of_discharge'					=> $post['main_agent_port_of_discharge'],
+			// 'main_agent_cost'												=> $post['main_agent_cost'],
+			'secondary_agent_name'									=> $post['secondary_agent_name'],
+			'secondary_agent_mawb_mbl'							=> $post['secondary_agent_mawb_mbl'],
+			'secondary_agent_carrier'								=> $post['secondary_agent_carrier'],
+			'secondary_agent_voyage_flight_no'			=> $post['secondary_agent_voyage_flight_no'],
+			'secondary_agent_voyage_flight_date'		=> $post['secondary_agent_voyage_flight_date'],
+			'secondary_agent_port_of_loading'				=> $post['secondary_agent_port_of_loading'],
+			'secondary_agent_port_of_discharge'			=> $post['secondary_agent_port_of_discharge'],
+			// 'secondary_agent_cost'									=> $post['secondary_agent_cost'],
+			// 'port_of_loading'												=> $post['port_of_loading'],
+			// 'port_of_discharge'											=> $post['port_of_discharge'],
+		);
+		$this->load->library('upload');
+		// $this->load->library('image_lib');
+		if (!empty($_FILES['main_agent_mawb_mbl_atc']['name'])) {
+			$upload_path = 'file/agent/';
+			$config = [
+				'upload_path' 		=> $upload_path,
+				'file_name' 			=> 'img_main_agent_mawb_mbl_atc_' . $post['id'] . '_' . date('YmsHis'),
+				'allowed_types' 	=> '*',
+				// 'max_size'				=> 500,
+				'overwrite' 			=> TRUE,
+			];
+			$this->upload->initialize($config);
+
+			if (!$this->upload->do_upload('main_agent_mawb_mbl_atc')) {
+				$this->session->set_flashdata('error', $this->upload->display_errors());
+				redirect($_SERVER['HTTP_REFERER']);
+				return false;
+			}
+
+			$gbr = $this->upload->data();
+			$form_data['main_agent_mawb_mbl_atc'] = $gbr['file_name'];
+		}
+		if (!empty($_FILES['secondary_agent_mawb_mbl_atc']['name'])) {
+			$upload_path = 'file/agent/';
+			$config = [
+				'upload_path' 		=> $upload_path,
+				'file_name' 			=> 'img_secondary_agent_mawb_mbl_atc_' . $post['id'] . '_' . date('YmsHis'),
+				'allowed_types' 	=> '*',
+				// 'max_size'				=> 500,
+				'overwrite' 			=> TRUE,
+			];
+			$this->upload->initialize($config);
+
+			if (!$this->upload->do_upload('secondary_agent_mawb_mbl_atc')) {
+				$this->session->set_flashdata('error', $this->upload->display_errors());
+				redirect($_SERVER['HTTP_REFERER']);
+				return false;
+			}
+
+			$gbr = $this->upload->data();
+			$form_data['secondary_agent_mawb_mbl_atc'] = $gbr['file_name'];
+		}
+
+		$where2['id_shipment'] = $post['id'];
+		$this->shipment_mod->shipment_detail_update_process_db($form_data, $where2);
+
+		unset($form_data);
+		unset($where);
+
+		if ($post['assign_branch'] != '') {
+			$form_data = array(
+				'assign_branch'					=> $post['assign_branch'],
+			);
+			$where['id'] = $post['id'];
+			$this->shipment_mod->shipment_update_process_db($form_data, $where);
+		}
+
+		unset($form_data);
+		unset($where);
+
+		$history_location = $post['city_history_location'] . ", " . $post['country_history_location'];
+		$where['tracking_no'] 	= $post['tracking_no'];
+		if ($post['history_date'] > date("Y-m-d") || ($post['history_date'] == date("Y-m-d") && $post['history_time'] > date("H:i"))) {
+			echo "Error : You cannot submit for a future date!<br>Current time : " . date("Y-m-d H:i");
+			return false;
+		}
+
+		$form_data = array(
+			'id_shipment' 	=> $post['id'],
+			'date' 					=> $post['history_date'],
+			'time' 					=> $post['history_time'],
+			'location' 			=> $history_location,
+			'status' 				=> $post['history_status'],
+			'remarks' 			=> $post['history_remarks'],
+		);
+		$id_history = $this->shipment_mod->shipment_history_create_process_db($form_data);
+		$this->shipment_update_last_history($post['id']);
 
 		$output = $form_data;
 		$output['tracking_no'] = $post['tracking_no'];
@@ -2019,5 +2211,63 @@ class Shipment extends CI_Controller
 
 		$data['country'] = $this->shipment_mod->country_list_db();
 		$this->load->view('shipment/shipment_export_excel', $data);
+	}
+
+	public function shipment_export_pdf()
+	{
+		$post = $this->input->post();
+		$id_arr = explode(", ", $post['id']);
+
+		$where['shipment.id IN (' . $post['id'] . ')'] = NULL;
+		$order_by = NULL;
+		if ($this->session->userdata('role') == "Driver") {
+			$order_by["assign_driver_date"] = "DESC";
+		}
+
+		$where['status_delete'] 	= 1;
+		$datadb 				= $this->shipment_mod->shipment_list_db($where, null, $order_by);
+		$shipment_list 	= [];
+		$express_list 	= [];
+		$created_by 	= [];
+		foreach ($datadb as $key => $value) {
+			if ($value['sea'] == "Express" && !in_array($value['status'], array("Delivered", "Canceled"))) {
+				$express_list[] = $value;
+			} else {
+				$shipment_list[] = $value;
+			}
+			if (!in_array($value['created_by'], $created_by)) {
+				$created_by[] = $value['created_by'];
+			}
+		}
+		$data['shipment_list'] 	= array_merge($express_list, $shipment_list);
+		// test_var($data['shipment_list']);
+
+		unset($where);
+		$where['role'] 				= "Driver";
+		if ($this->session->userdata('branch')) {
+			if ($this->session->userdata('branch') != "NONE") {
+				$where["branch"] 	= $this->session->userdata('branch');
+			}
+		}
+		$data['driver_list'] 	= $this->home_mod->user_list($where);
+
+		$created_by_list = [];
+		if (count($created_by) > 0 && $this->session->userdata('role') == "Super Admin") {
+			unset($where);
+			$where["id IN ('" . join("', '", $created_by) . "')"] 	= NULL;
+			$datadb 	= $this->home_mod->user_list($where);
+			foreach ($datadb as $key => $value) {
+				$created_by_list[$value['id']] = $value['name'];
+			}
+		}
+		$data['created_by_list'] = $created_by_list;
+		$data['master_tracking'] = $post['master_tracking'];
+
+		$data['country'] = $this->shipment_mod->country_list_db();
+
+		$this->load->library('pdf');
+		$this->pdf->setPaper('A4', 'potrait');
+		$this->pdf->filename = "Master-tracking-detail-" . date('Y-m-d H:i:s') . ".pdf";
+		$this->pdf->load_view('master_tracking/master_tracking_detail_pdf', $data);
 	}
 }

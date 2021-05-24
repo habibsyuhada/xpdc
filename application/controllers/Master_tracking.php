@@ -2,9 +2,10 @@
 
 use Sabberworm\CSS\Value\Value;
 
-defined('BASEPATH') OR exit('No direct script access allowed');
+defined('BASEPATH') or exit('No direct script access allowed');
 
-class Master_tracking extends CI_Controller {
+class Master_tracking extends CI_Controller
+{
 
 	/**
 	 * Index Page for this controller.
@@ -22,7 +23,8 @@ class Master_tracking extends CI_Controller {
 	 * @see https://codeigniter.com/user_guide/general/urls.html
 	 */
 
-	public function __construct() {
+	public function __construct()
+	{
 		parent::__construct();
 		cek_login();
 		$this->load->model('master_tracking_mod');
@@ -31,11 +33,13 @@ class Master_tracking extends CI_Controller {
 		$this->load->model('country_mod');
 	}
 
-	public function index(){
+	public function index()
+	{
 		redirect('home/home');
 	}
 
-	public function master_tracking_list(){
+	public function master_tracking_list()
+	{
 		$data['master_list'] 		= $this->master_tracking_mod->master_tracking_list_db();
 
 		$where['(master_tracking IS NOT NULL OR master_tracking != "")'] = NULL;
@@ -44,7 +48,7 @@ class Master_tracking extends CI_Controller {
 		$id_shipment 						= [];
 		$master_per_shipment 		= [];
 		foreach ($shipment_list as $key => $value) {
-			if($value['master_tracking'] != ""){
+			if ($value['master_tracking'] != "") {
 				@$shipment[$value['master_tracking']] += 1;
 				$id_shipment[] = $value['id'];
 				$master_per_shipment[$value['id']] = $value['master_tracking'];
@@ -53,7 +57,7 @@ class Master_tracking extends CI_Controller {
 		$data['shipment'] 			= $shipment;
 
 		unset($where);
-		$where['id_shipment IN ('.join(", ", $id_shipment).')'] 	= NULL;
+		$where['id_shipment IN (' . join(", ", $id_shipment) . ')'] 	= NULL;
 		$packages_list 					= $this->shipment_mod->shipment_packages_list_db($where);
 		$packages 							= [];
 		foreach ($packages_list as $key => $value) {
@@ -65,14 +69,16 @@ class Master_tracking extends CI_Controller {
 		$data['meta_title'] 		= 'Master Tracking List';
 		$this->load->view('index', $data);
 	}
-	
-	public function master_tracking_create_deleted(){
+
+	public function master_tracking_create_deleted()
+	{
 		$data['subview'] 			= 'master_tracking/master_tracking_create';
 		$data['meta_title'] 	= 'Create Master Tracking';
 		$this->load->view('index', $data);
 	}
 
-	public function master_tracking_create_process(){
+	public function master_tracking_create_process()
+	{
 		$post = $this->input->post();
 		$form_data = array(
 			'master_tracking' 	=> $post['master_tracking'],
@@ -83,14 +89,15 @@ class Master_tracking extends CI_Controller {
 		redirect('master_tracking/master_tracking_list');
 	}
 
-	public function master_tracking_multi_create_process(){
+	public function master_tracking_multi_create_process()
+	{
 		$post = $this->input->post();
-		if(count($post['id']) < 1){
+		if (count($post['id']) < 1) {
 			$this->session->set_flashdata('error', 'Please tick shipment first to create new master tracking!');
 			redirect('shipment/shipment_list');
 		}
 
-		$where['shipment.id IN ('.$post['id'].')'] = NULL;
+		$where['shipment.id IN (' . $post['id'] . ')'] = NULL;
 		$shipment_list 					= $this->shipment_mod->shipment_list_db($where);
 		$shipment = [];
 		$city_origin = [];
@@ -98,58 +105,56 @@ class Master_tracking extends CI_Controller {
 		$country = [];
 		$city = [];
 		foreach ($shipment_list as $key => $value) {
-			if($value['master_tracking'] != ''){
+			if ($value['master_tracking'] != '') {
 				$shipment[] = $value['tracking_no'];
-				if(!in_array($value['shipper_country'].";".$value['shipper_city'], $city_origin)){
-					$city_origin[] = $value['shipper_country'].";".$value['shipper_city'];
+				if (!in_array($value['shipper_country'] . ";" . $value['shipper_city'], $city_origin)) {
+					$city_origin[] = $value['shipper_country'] . ";" . $value['shipper_city'];
 					$country[] = $value['shipper_country'];
 					$city[] = $value['shipper_city'];
 				}
-				if(!in_array($value['consignee_country'].";".$value['consignee_city'], $city_destiny)){
-					$city_destiny[] = $value['consignee_country'].";".$value['consignee_city'];
+				if (!in_array($value['consignee_country'] . ";" . $value['consignee_city'], $city_destiny)) {
+					$city_destiny[] = $value['consignee_country'] . ";" . $value['consignee_city'];
 					$country[] = $value['consignee_country'];
 					$city[] = $value['consignee_city'];
 				}
 			}
 		}
-		if(count($shipment) > 0){
-			$this->session->set_flashdata('error', 'All Documents above already have master tracking!<br>'.join('<br>', $shipment));
+		if (count($shipment) > 0) {
+			$this->session->set_flashdata('error', 'All Documents above already have master tracking!<br>' . join('<br>', $shipment));
 			redirect($_SERVER['HTTP_REFERER']);
-		}
-		elseif(count($city_origin) > 1){
-			$this->session->set_flashdata('error', 'Origin must same for each shipment!<br>'.join('<br>', $city_origin));
+		} elseif (count($city_origin) > 1) {
+			$this->session->set_flashdata('error', 'Origin must same for each shipment!<br>' . join('<br>', $city_origin));
 			redirect($_SERVER['HTTP_REFERER']);
-		}
-		elseif(count($city_destiny) > 1){
-			$this->session->set_flashdata('error', 'Destination must same for each shipment!<br>'.join('<br>', $city_destiny));
+		} elseif (count($city_destiny) > 1) {
+			$this->session->set_flashdata('error', 'Destination must same for each shipment!<br>' . join('<br>', $city_destiny));
 			redirect($_SERVER['HTTP_REFERER']);
 		}
 
-		$datadb = $this->country_mod->country_list_db(["country IN (".join(", ", $country).")"]);
+		$datadb = $this->country_mod->country_list_db(["country IN (" . join(", ", $country) . ")"]);
 		$id_country = [];
 		$country_code = [];
 		foreach ($datadb as $key => $value) {
 			$id_country = $value['id'];
 			$country_code[$value['country']] = $value['country_code'];
 		}
-		if(count($id_country) == 0){
+		if (count($id_country) == 0) {
 			$this->session->set_flashdata('error', 'Country Not Found for some shipment!');
 			redirect($_SERVER['HTTP_REFERER']);
 		}
 
-		$datadb = $this->country_mod->city_list_db(["id_country IN (".join(", ", $id_country).")"]);
+		$datadb = $this->country_mod->city_list_db(["id_country IN (" . join(", ", $id_country) . ")"]);
 		$city_code = [];
 		foreach ($datadb as $key => $value) {
 			$city_code[$value['city']] = $value['city_code'];
 		}
-		if(count($city_code) == 0){
+		if (count($city_code) == 0) {
 			$this->session->set_flashdata('error', 'City Not Found for some shipment!');
 			redirect($_SERVER['HTTP_REFERER']);
 		}
 
-		$master_tracking = $country_code[$shipment_list[0]['shipper_country']].$city_code[$shipment_list[0]['shipper_city']]."-".$country_code[$shipment_list[0]['consignee_country']].$city_code[$shipment_list[0]['consignee_city']]."-";
+		$master_tracking = $country_code[$shipment_list[0]['shipper_country']] . $city_code[$shipment_list[0]['shipper_city']] . "-" . $country_code[$shipment_list[0]['consignee_country']] . $city_code[$shipment_list[0]['consignee_city']] . "-";
 		$master_tracking	.= $this->master_tracking_mod->generate_master_tracking($master_tracking);
-		
+
 		$form_data = array(
 			'master_tracking' 	=> $master_tracking,
 			'remarks' 					=> $post['remarks'],
@@ -159,15 +164,16 @@ class Master_tracking extends CI_Controller {
 		$form_data = array(
 			'master_tracking' 	=> $master_tracking,
 		);
-		$where['id IN ('.$post['id'].')'] = NULL;
+		$where['id IN (' . $post['id'] . ')'] = NULL;
 		$this->shipment_mod->shipment_update_process_db($form_data, $where);
 
 		$this->session->set_flashdata('success', 'Your Shipment data has been Updated!');
 		redirect('shipment/shipment_list');
-  }
-  
-  public function master_tracking_detail($master_tracking){
-    $where['master_tracking'] = $master_tracking;
+	}
+
+	public function master_tracking_detail($master_tracking)
+	{
+		$where['master_tracking'] = $master_tracking;
 		$data['shipment_list'] 	  = $this->shipment_mod->shipment_list_db($where);
 		unset($where);
 		$id_shipment = array();
@@ -183,13 +189,12 @@ class Master_tracking extends CI_Controller {
 			$id_shipment[] = $value['id'];
 			if ($value['type_of_mode'] == 'Air Freight') {
 				$per = 6000;
-			}
-			elseif ($value['type_of_mode'] == 'Land Shipping') {
+			} elseif ($value['type_of_mode'] == 'Land Shipping') {
 				$per = 4000;
 			}
 		}
-		if(count($id_shipment) > 0){
-			$where["id_shipment IN ('".join("', '", $id_shipment)."')"] 	= NULL;
+		if (count($id_shipment) > 0) {
+			$where["id_shipment IN ('" . join("', '", $id_shipment) . "')"] 	= NULL;
 			$packages_list 					= $this->shipment_mod->shipment_packages_list_db($where);
 			foreach ($packages_list as $key => $value) {
 				$actual_weight = $value['qty'] * $value['weight'];
@@ -201,9 +206,9 @@ class Master_tracking extends CI_Controller {
 				$total_measurement += $measurement;
 			}
 		}
-		
+
 		$data['summary_total'] 		= array(
-			"total_value" => $currency." ".number_format($total_value, 2),
+			"total_value" => $currency . " " . number_format($total_value, 2),
 			"total_act_weight" => number_format($total_act_weight, 2),
 			"total_vol_weight" => number_format($total_vol_weight, 2),
 			"total_measurement" => number_format($total_measurement, 2),
@@ -214,29 +219,30 @@ class Master_tracking extends CI_Controller {
 		$this->load->view('index', $data);
 	}
 
-	public function submit_new_tracking_no(){
+	public function submit_new_tracking_no()
+	{
 		$where['tracking_no'] 				= $this->input->post('tracking_no');
 		$shipment_list 	  						= $this->shipment_mod->shipment_list_db($where);
-		if(count($shipment_list)<1){
+		if (count($shipment_list) < 1) {
 			echo "Error: Tracking Number Is Not Found!";
 			exit;
-		}
-		elseif($shipment_list[0]['master_tracking'] != ""){
-			echo "Error: Already in Container !".$shipment_list[0]['master_tracking'];
+		} elseif ($shipment_list[0]['master_tracking'] != "") {
+			echo "Error: Already in Container !" . $shipment_list[0]['master_tracking'];
 			exit;
 		}
 		$shipment			 	  						= $shipment_list[0];
 		$form_data = array(
 			'master_tracking' 	=> $this->input->post('master_tracking'),
 		);
-		$where['id IN ('.$shipment['id'].')'] = NULL;
+		$where['id IN (' . $shipment['id'] . ')'] = NULL;
 		$this->shipment_mod->shipment_update_process_db($form_data, $where);
-		
+
 		echo json_encode($shipment);
 		// test_var($this->input->post());
 	}
 
-	public function master_tracking_edit($master_tracking){
+	public function master_tracking_edit($master_tracking)
+	{
 		$where['master_tracking'] 	= $master_tracking;
 		$shipment_list 							= $this->shipment_mod->shipment_list_db($where);
 
@@ -246,28 +252,28 @@ class Master_tracking extends CI_Controller {
 		}
 
 		$all_same = true;
-		$first = $shipment_list[0]['main_agent_name'].$shipment_list[0]['main_agent_mawb_mbl'].$shipment_list[0]['main_agent_carrier'].$shipment_list[0]['main_agent_voyage_flight_no'].$shipment_list[0]['main_agent_voyage_flight_date'].$shipment_list[0]['secondary_agent_name'].$shipment_list[0]['secondary_agent_mawb_mbl'].$shipment_list[0]['secondary_agent_carrier'].$shipment_list[0]['secondary_agent_voyage_flight_no'].$shipment_list[0]['secondary_agent_voyage_flight_date'].$shipment_list[0]['main_agent_port_of_loading'].$shipment_list[0]['main_agent_port_of_discharge'].$shipment_list[0]['secondary_agent_port_of_loading'].$shipment_list[0]['secondary_agent_port_of_discharge'].$shipment_list[0]['container_no'].$shipment_list[0]['seal_no'].$shipment_list[0]['cipl_no'].$shipment_list[0]['permit_no'];
+		$first = $shipment_list[0]['main_agent_name'] . $shipment_list[0]['main_agent_mawb_mbl'] . $shipment_list[0]['main_agent_carrier'] . $shipment_list[0]['main_agent_voyage_flight_no'] . $shipment_list[0]['main_agent_voyage_flight_date'] . $shipment_list[0]['secondary_agent_name'] . $shipment_list[0]['secondary_agent_mawb_mbl'] . $shipment_list[0]['secondary_agent_carrier'] . $shipment_list[0]['secondary_agent_voyage_flight_no'] . $shipment_list[0]['secondary_agent_voyage_flight_date'] . $shipment_list[0]['main_agent_port_of_loading'] . $shipment_list[0]['main_agent_port_of_discharge'] . $shipment_list[0]['secondary_agent_port_of_loading'] . $shipment_list[0]['secondary_agent_port_of_discharge'] . $shipment_list[0]['container_no'] . $shipment_list[0]['seal_no'] . $shipment_list[0]['cipl_no'] . $shipment_list[0]['permit_no'];
 		foreach ($shipment_list as $key => $value) {
-			$new = $value['main_agent_name'].$value['main_agent_mawb_mbl'].$value['main_agent_carrier'].$value['main_agent_voyage_flight_no'].$value['main_agent_voyage_flight_date'].$value['secondary_agent_name'].$value['secondary_agent_mawb_mbl'].$value['secondary_agent_carrier'].$value['secondary_agent_voyage_flight_no'].$value['secondary_agent_voyage_flight_date'].$value['main_agent_port_of_loading'].$value['main_agent_port_of_discharge'].$value['secondary_agent_port_of_loading'].$value['secondary_agent_port_of_discharge'].$value['container_no'].$value['seal_no'].$value['cipl_no'].$value['permit_no'];
-			if($first != $new){
+			$new = $value['main_agent_name'] . $value['main_agent_mawb_mbl'] . $value['main_agent_carrier'] . $value['main_agent_voyage_flight_no'] . $value['main_agent_voyage_flight_date'] . $value['secondary_agent_name'] . $value['secondary_agent_mawb_mbl'] . $value['secondary_agent_carrier'] . $value['secondary_agent_voyage_flight_no'] . $value['secondary_agent_voyage_flight_date'] . $value['main_agent_port_of_loading'] . $value['main_agent_port_of_discharge'] . $value['secondary_agent_port_of_loading'] . $value['secondary_agent_port_of_discharge'] . $value['container_no'] . $value['seal_no'] . $value['cipl_no'] . $value['permit_no'];
+			if ($first != $new) {
 				$all_same = false;
 			}
 		}
-		if($all_same == true){
+		if ($all_same == true) {
 			$shipment = $shipment_list[0];
-		}
-		else{
+		} else {
 			$shipment = array();
 		}
-		
+
 		$data['shipment'] 			= $shipment;
-		$data['master_tracking']= $master_tracking;
+		$data['master_tracking'] = $master_tracking;
 		$data['subview'] 				= 'master_tracking/master_tracking_edit';
 		$data['meta_title'] 		= 'Master Tracking Shipping Information';
 		$this->load->view('index', $data);
 	}
 
-	public function master_tracking_edit_process(){
+	public function master_tracking_edit_process()
+	{
 		$post = $this->input->post();
 
 		$form_data = array(
@@ -304,14 +310,15 @@ class Master_tracking extends CI_Controller {
 			'cipl_no'																=> $post['cipl_no'],
 			'permit_no'															=> $post['permit_no']
 		);
-		$where2["id_shipment IN ('".join("', '", $id_shipment)."')"] = NULL;
+		$where2["id_shipment IN ('" . join("', '", $id_shipment) . "')"] = NULL;
 		$this->shipment_mod->shipment_detail_update_process_db($form_data, $where2);
 
 		$this->session->set_flashdata('success', 'Your Shipment data has been Updated!');
 		redirect($_SERVER['HTTP_REFERER']);
 	}
 
-	public function master_tracking_assign($master_tracking){
+	public function master_tracking_assign($master_tracking)
+	{
 		$where['master_tracking'] 	= $master_tracking;
 		$shipment_list 							= $this->shipment_mod->shipment_list_db($where);
 
@@ -324,32 +331,32 @@ class Master_tracking extends CI_Controller {
 		$first = $shipment_list[0]['assign_branch'];
 		foreach ($shipment_list as $key => $value) {
 			$new = $value['assign_branch'];
-			if($first != $new){
+			if ($first != $new) {
 				$all_same = false;
 			}
 		}
-		if($all_same == true){
+		if ($all_same == true) {
 			$shipment = $shipment_list[0];
-		}
-		else{
+		} else {
 			$shipment = array();
 		}
-		
+
 		$datadb 	= $this->home_mod->branch_list();
 		$branch_list = [];
 		foreach ($datadb as $key => $value) {
 			$branch_list[$value['name']] = $value;
 		}
 		$data['branch_list'] 	= $branch_list;
-		
+
 		$data['shipment'] 			= $shipment;
-		$data['master_tracking']= $master_tracking;
+		$data['master_tracking'] = $master_tracking;
 		$data['subview'] 				= 'master_tracking/master_tracking_assign';
 		$data['meta_title'] 		= 'Master Tracking Assign';
 		$this->load->view('index', $data);
 	}
 
-	public function master_tracking_assign_process(){
+	public function master_tracking_assign_process()
+	{
 		$post = $this->input->post();
 
 		$form_data = array(
@@ -362,14 +369,31 @@ class Master_tracking extends CI_Controller {
 		redirect($_SERVER['HTTP_REFERER']);
 	}
 
-	public function shipment_takeout_process($master_tracking, $id){
+	public function shipment_takeout_process($master_tracking, $id)
+	{
 		$form_data = array(
 			'master_tracking' 	=> NULL,
 		);
 		$where['id'] = $id;
 		$this->shipment_mod->shipment_update_process_db($form_data, $where);
+
+		$this->session->set_flashdata('success', 'Your Master Tracking data has been Updated!');
+		redirect('master_tracking/master_tracking_detail/' . $master_tracking);
+	}
+
+	public function shipment_takeout_multi()
+	{
+		$post = $this->input->post();
+		$master_tracking = $post['master_tracking'];
+		$form_data = array(
+			'master_tracking' 	=> NULL,
+		);
+		$id_arr = explode(", ", $post['id']);
+
+		$where['shipment.id IN (' . $post['id'] . ')'] = NULL;
+		$this->shipment_mod->shipment_update_process_db($form_data, $where);
 		
 		$this->session->set_flashdata('success', 'Your Master Tracking data has been Updated!');
-		redirect('master_tracking/master_tracking_detail/'.$master_tracking);
+		redirect('master_tracking/master_tracking_detail/' . $master_tracking);
 	}
 }

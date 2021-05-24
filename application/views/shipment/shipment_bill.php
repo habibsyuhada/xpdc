@@ -358,20 +358,44 @@ $page_permission = array(
               <br>
               <h6 class="font-weight-bold border-bottom">Pay Information</h6>
               <div class="row clearfix">
+                <div class="col-md-12">
+                  <div class="form-group">
+                    <label>Payment Information</label>
+                    <select class="form-control" name="payment_info" onchange="change_payment_info(this)" required>
+                      <option value="">-- Select One --</option>
+                      <?php
+                      $default_value = '';
+                      foreach ($payment_info as $row) {
+                        if ($row['default_value'] == 1) {
+                          $default_value = $row['id'];
+                        } ?>
+                        <option value="<?= $row['id'] ?>"><?= $row['account_no'] . " - " . $row['bank_name'] ?></option>
+                      <?php } ?>
+                    </select>
+                  </div>
+                </div>
                 <div class="col-md-6">
                   <div class="form-group">
                     <label>Beneficiary Name</label>
-                    <input type="text" class="form-control" name="beneficiary_name" value="<?php echo @$invoice['beneficiary_name'] ?>" placeholder="Beneficiary Name" required>
+                    <input type="text" class="form-control" name="beneficiary_name" value="<?php echo @$invoice['beneficiary_name'] ?>" placeholder="Beneficiary Name" readonly required>
                   </div>
                   <div class="form-group">
                     <label>Bank Name</label>
-                    <input type="text" class="form-control" name="bank_name" value="<?php echo @$invoice['bank_name'] ?>" placeholder="Bank Name" required>
+                    <input type="text" class="form-control" name="bank_name" value="<?php echo @$invoice['bank_name'] ?>" placeholder="Bank Name" readonly required>
+                  </div>
+                  <div class="form-group">
+                    <label>Bank Address</label>
+                    <textarea class="form-control" name="bank_address" placeholder="Bank Address" readonly><?php echo @$invoice['bank_address'] ?></textarea>
                   </div>
                 </div>
                 <div class="col-md-6">
                   <div class="form-group">
                     <label>Acc. No.</label>
-                    <input type="text" class="form-control" name="acc_no" value="<?php echo @$invoice['acc_no'] ?>" placeholder="Acc. No." required>
+                    <input type="text" class="form-control" name="acc_no" value="<?php echo @$invoice['acc_no'] ?>" placeholder="Acc. No." readonly required>
+                  </div>
+                  <div class="form-group">
+                    <label>Swift Code</label>
+                    <input type="text" class="form-control" name="swift_code" value="<?php echo @$invoice['swift_code'] ?>" placeholder="Swift Code" readonly>
                   </div>
                   <div class="form-group">
                     <label>Notes</label>
@@ -453,6 +477,29 @@ $page_permission = array(
     $("#total_all").text(total_all.toLocaleString('en-US', {
       maximumFractionDigits: 0
     }) + ".00");
+  }
+
+  <?php if ($invoice['invoice_no'] == '') { ?>
+    $("select[name=payment_info]").val('<?= $default_value ?>').trigger('change');
+  <?php } ?>
+
+  function change_payment_info(input) {
+    var id = $(input).val();
+    $.ajax({
+      type: "POST",
+      url: "<?= base_url() ?>shipment/get_payment_information",
+      data: {
+        id: id
+      }
+    }).done(function(data) {
+      var res = JSON.parse(data);
+      console.log(res);
+      $("input[name=beneficiary_name]").val(res['beneficiary_name']);
+      $("input[name=bank_name]").val(res['bank_name']);
+      $("textarea[name=bank_address]").val(res['bank_address']);
+      $("input[name=acc_no]").val(res['account_no']);
+      $("input[name=swift_code]").val(res['swift_code']);
+    });
   }
 
   function deletecost(id, btn) {

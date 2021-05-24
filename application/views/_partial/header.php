@@ -9,6 +9,9 @@
   <meta name="keywords" content="">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta property="og:image" content="<?php echo base_url(); ?>assets/img/just_logo_xpdc.jpeg">
+  <meta property="og:site_name" content="XENA PRANADIPA DHIA CAKRA">
+  <meta property="og:title" content="Book Shipment - Share Link">
+  <meta property="og:description" content="Create your shipment here">
 
   <link rel="icon" href="favicon.ico" type="image/x-icon" />
 
@@ -70,7 +73,8 @@
     .overflow-auto {
       overflow: auto;
     }
-    body{
+
+    body {
       font-family: helvetica;
     }
   </style>

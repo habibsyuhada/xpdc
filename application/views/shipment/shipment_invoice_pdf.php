@@ -249,6 +249,22 @@
                   : <?php echo $invoice['bank_name'] ?>
                 </td>
               </tr>
+              <tr>
+                <td class="">
+                  Bank Address
+                </td>
+                <td>
+                  : <?php echo $invoice['bank_address'] ?>
+                </td>
+              </tr>
+              <tr>
+                <td class="">
+                  Swift Code
+                </td>
+                <td>
+                  : <?php echo $invoice['swift_code'] ?>
+                </td>
+              </tr>
             </tbody>
           </table>
         </td>

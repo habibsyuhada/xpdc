@@ -71,7 +71,8 @@ class Home extends CI_Controller
 		$this->load->view('home/landing_page', $data);
 	}
 
-	public function home(){
+	public function home()
+	{
 		if (!$this->session->userdata('id')) {
 			redirect('home/login');
 		}
@@ -87,6 +88,7 @@ class Home extends CI_Controller
 			if ($this->session->userdata('branch') != "NONE") {
 				if ($this->session->userdata('role') == 'Operator') {
 					$where["((assign_branch LIKE '%" . $this->session->userdata('branch') . "%' AND assign_branch IS NOT NULL) OR (assign_branch IS NULL AND branch LIKE '%" . $this->session->userdata('branch') . "%'))"] 	= NULL;
+				} else if ($this->session->userdata('role') == 'Driver') {
 				} else {
 					$customer = $this->shipment_mod->customer_list_db(["customer_id IN(SELECT id FROM user WHERE role = 'Customer' AND branch = '" . $this->session->userdata('branch') . "')" => null]);
 					$row_data = [];
@@ -94,7 +96,7 @@ class Home extends CI_Controller
 						$row_data[] = $row['account_no'];
 					}
 					$where_in = "'" . implode("','", $row_data) . "'";
-					$where["(branch LIKE '%" . $this->session->userdata('branch') . "%' AND billing_account = '' AND assign_branch IS NULL) OR (billing_account IN(" . $where_in . "))"] 	= NULL;	
+					$where["(branch LIKE '%" . $this->session->userdata('branch') . "%' AND billing_account = '' AND assign_branch IS NULL) OR (billing_account IN(" . $where_in . "))"] 	= NULL;
 				}
 			} else {
 				if ($this->input->get("branch")) {
@@ -106,19 +108,98 @@ class Home extends CI_Controller
 		}
 
 		if ($this->session->userdata('role') == "Driver") {
-			$where["(shipment.driver_pickup = " . $this->session->userdata('id') . " OR shipment.driver_deliver = " . $this->session->userdata('id') . ")"] 	= NULL;
+			// $where["(shipment.driver_pickup = " . $this->session->userdata('id') . " OR shipment.driver_deliver = " . $this->session->userdata('id') . ")"] 	= NULL;
+			$where["(driver_pickup = " . $this->session->userdata('id') . " OR driver_deliver = " . $this->session->userdata('id') . ")"] 	= NULL;
 		}
 
 		$data['branch_list'] = $this->shipment_mod->branch_list_db(array("name != 'NONE'" => null));
 		$summary_list 					= $this->shipment_mod->summary_per_status($where);
 		$data['summary_list'] 	= $summary_list[0];
 
+		if ($this->session->userdata('role') == "Super Admin") {
+			$branch = NULL;
+			if ($this->input->get("branch")) {
+				if ($this->input->get('branch') != '') {
+					$branch = $this->input->get('branch');
+				}
+			}
+
+			$where = [
+				"MONTH(created_date)" => date("n"),
+				"YEAR(created_date)" => date("Y"),
+			];
+			if($branch != '' && $branch != NULL){
+				$where['branch'] = $branch;
+			}
+			$quotation = $this->quotation_mod->quotation_list_db($where);
+
+			$where = [
+				"status_delete" => 1
+			];
+			$customer = $this->commercial_mod->customer_list_db($where);
+			$account_no = [];
+			foreach ($customer as $key => $value) {
+				$account_no[] = $value['account_no'];
+			}
+
+			$where = [
+				"status_bill > 0" => NULL,
+				"MONTH(created_date)" => date("n"),
+				"YEAR(created_date)" => date("Y"),
+				"status_delete" => 1,
+			];
+			if($branch != '' && $branch != NULL){
+				$where['branch'] = $branch;
+			}
+			$datadb = $this->shipment_mod->shipment_list_db($where);
+			$id_shipment = [];
+			$shipment = [];
+			foreach ($datadb as $key => $value) {
+				$id_shipment[] = $value['id_shipment'];
+				$shipment[$value['id_shipment']] = $value;
+			}
+
+			$where = [
+				"id_shipment IN ('" . join("', '", $id_shipment) . "')" => NULL,
+				"category" => "costumer",
+				"status_delete" => 1
+			];
+			$cost_list = $this->shipment_mod->shipment_cost_list_db($where);
+			$summary = [];
+			foreach ($cost_list as $key => $value) {
+				$persen = 1;
+				if ($value['uom'] == '%') {
+					$persen = 100;
+				}
+				$type_of_shipment = $shipment[$value['id_shipment']]['type_of_shipment'];
+				$type_of_mode = $shipment[$value['id_shipment']]['type_of_mode'];
+				$summary[$type_of_shipment][$type_of_mode] = @$summary[$type_of_shipment][$type_of_mode] + ($value['qty'] / $persen) * $value['unit_price'] * $value['exchange_rate'] + 0;
+			}
+
+			$where = [
+				"month" => date("n"),
+				"year" => date("Y"),
+			];
+			$datadb = $this->user_mod->target_list_db($where);
+			$target = [];
+			foreach ($datadb as $key => $value) {
+				$target[$value['type_of_shipment']][$value['type_of_mode']] = $value['target'] + 0;
+			}
+
+			$data['summary'] = $summary;
+			$data['target'] = $target;
+			$data['total_shipment'] = count($shipment);
+			$data['total_customer'] = count($customer);
+			$data['total_quotation'] = count($quotation);
+		}
+
 		$data['subview'] 			= 'home/home';
 		$data['meta_title'] 	= 'Home';
 		$this->load->view('index', $data);
 	}
 
-	public function home_commercial(){
+	public function home_commercial()
+	{
 		if (!$this->session->userdata('id')) {
 			redirect('home/login');
 		}
@@ -199,8 +280,9 @@ class Home extends CI_Controller
 		$data['meta_title'] 	= 'Home';
 		$this->load->view('index', $data);
 	}
-	
-	public function home_customer(){
+
+	public function home_customer()
+	{
 		if (!$this->session->userdata('id')) {
 			redirect('home/login');
 		}
@@ -219,11 +301,11 @@ class Home extends CI_Controller
 		$where['status_delete'] 	= 1;
 		$where["(shipment_detail.billing_account = '" . $account_no . "' OR created_by = '" . $this->session->userdata('id') . "')"] 	= NULL;
 		$where['MONTH(created_date)'] 	= date("n");
-		if($this->input->get('month')){
+		if ($this->input->get('month')) {
 			$where['MONTH(created_date)'] 	= $this->input->get('month');
 		}
 		$where['YEAR(created_date)'] 	= date("Y");
-		if($this->input->get('year')){
+		if ($this->input->get('year')) {
 			$where['YEAR(created_date)'] 	= $this->input->get('year');
 		}
 		$datadb = $this->shipment_mod->shipment_list_db($where);
@@ -240,9 +322,9 @@ class Home extends CI_Controller
 		$cost_list = $this->shipment_mod->shipment_cost_list_db($where);
 		$total_cost = 0;
 		foreach ($cost_list as $key => $value) {
-			$cost = $value['qty']*$value['unit_price']*$value['exchange_rate'];
-			if($value['uom'] == "%"){
-				$cost = $cost/100;
+			$cost = $value['qty'] * $value['unit_price'] * $value['exchange_rate'];
+			if ($value['uom'] == "%") {
+				$cost = $cost / 100;
 			}
 			$total_cost += $cost;
 		}

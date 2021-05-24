@@ -104,6 +104,21 @@
     </div>
   </div>
 </div>
+
+<!-- Modal -->
+<div class="modal fade" id="shipInfoModal" tabindex="-1" role="dialog" aria-labelledby="shipInfoModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="shipInfoModalLabel">Shipping Information</h5>
+        <!-- <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button> -->
+      </div>
+      <div id="fetch_ship_info"></div>
+    </div>
+  </div>
+</div>
 <script type="text/javascript">
   var num_scanned = 0;
   $("#form_history").submit(function(e) {
@@ -119,6 +134,19 @@
         $('input[name=tracking_no]').val('');
         if (data.includes('Error') == true) {
           showDangerToast(data);
+        } else if (data.includes("OK") == true) {
+          var return_data = data.split("|");
+          $.ajax({
+            type: "POST",
+            url: "<?=base_url()?>shipment/shipment_shipping_information",
+            data: {
+              id: return_data[1],
+              page: "shipment_history_update"
+            }
+          }).done(function(response){
+            $("#shipInfoModal").modal('show');
+            $("#fetch_ship_info").html(response);
+          });
         } else {
           data = JSON.parse(data);
           num_scanned++;

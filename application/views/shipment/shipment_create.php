@@ -815,20 +815,20 @@ if (!isset($cargo_list)) {
     }
 
     var pickup_same_as = $('select[name=pickup_same_as]').val();
-    <?php if($this->session->userdata('role') != "Customer"): ?>
-    pickup_same_as = pickup_same_as.toLowerCase();
-    console.log(pickup_same_as);
-    if (pickup_same_as != 'none') {
-      $("input[name=pickup_name]").val($("input[name=" + pickup_same_as + "_name]").val());
-      $("textarea[name=pickup_address]").val($("textarea[name=" + pickup_same_as + "_address]").val());
-      $("[name=pickup_city]").val($("[name=" + pickup_same_as + "_city]").val());
-      var select_country = $("select[name=" + pickup_same_as + "_country]").val()
-      $("select[name=pickup_country_view]").val(select_country).trigger('change');
-      $("input[name=pickup_country]").val(select_country);
-      $("input[name=pickup_postcode]").val($("input[name=" + pickup_same_as + "_postcode]").val());
-      $("input[name=pickup_contact_person]").val($("input[name=" + pickup_same_as + "_contact_person]").val());
-      $("input[name=pickup_phone_number]").val($("input[name=" + pickup_same_as + "_phone_number]").val());
-      $("input[name=pickup_email]").val($("input[name=" + pickup_same_as + "_email]").val());
+    <?php if ($this->session->userdata('role') != "Customer") : ?>
+      pickup_same_as = pickup_same_as.toLowerCase();
+      console.log(pickup_same_as);
+      if (pickup_same_as != 'none') {
+        $("input[name=pickup_name]").val($("input[name=" + pickup_same_as + "_name]").val());
+        $("textarea[name=pickup_address]").val($("textarea[name=" + pickup_same_as + "_address]").val());
+        $("[name=pickup_city]").val($("[name=" + pickup_same_as + "_city]").val());
+        var select_country = $("select[name=" + pickup_same_as + "_country]").val()
+        $("select[name=pickup_country_view]").val(select_country).trigger('change');
+        $("input[name=pickup_country]").val(select_country);
+        $("input[name=pickup_postcode]").val($("input[name=" + pickup_same_as + "_postcode]").val());
+        $("input[name=pickup_contact_person]").val($("input[name=" + pickup_same_as + "_contact_person]").val());
+        $("input[name=pickup_phone_number]").val($("input[name=" + pickup_same_as + "_phone_number]").val());
+        $("input[name=pickup_email]").val($("input[name=" + pickup_same_as + "_email]").val());
 
         // $("input[name=pickup_date]").val("");
         // $("input[name=pickup_date_to]").val("");
@@ -1193,9 +1193,21 @@ if (!isset($cargo_list)) {
           $("[name=" + name_city + "]").select2({
             theme: "bootstrap4"
           });
+          <?php if (isset($id_quotation)) { ?>
+            var shipper_city = "<?= @$quotation['shipper_city'] ?>";
+            var consignee_city = "<?= @$quotation['consignee_city'] ?>";
+            $("select[name=shipper_city]").val(shipper_city).trigger('change');
+            $("select[name=consignee_city]").val(consignee_city).trigger('change');
+          <?php } ?>
         } else {
           var html = '<input type="text" class="form-control" name="' + name_city + '" placeholder="City" value="' + val_default + '" ' + disable + '>';
           $(content).append(html);
+          <?php if (isset($id_quotation)) { ?>
+            var shipper_city = "<?= @$quotation['shipper_city'] ?>";
+            var consignee_city = "<?= @$quotation['consignee_city'] ?>";
+            $("input[name=shipper_city]").val(shipper_city);
+            $("input[name=consignee_city]").val(consignee_city);
+          <?php } ?>
         }
       }
     });

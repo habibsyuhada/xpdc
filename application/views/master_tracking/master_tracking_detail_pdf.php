@@ -10,7 +10,7 @@
 
         body {
             margin: 20px;
-            font-size: 14px;
+            font-size: 12px;
         }
 
         .text-center {
@@ -94,32 +94,147 @@ $page_permission = array(
         </tbody>
     </table>
     <br>
+    <?php
+    $packages = [];
+    $total_qty = 0;
+    $total_actual_weight = 0;
+    foreach ($packages_list as $key => $value) {
+        $packages[$value['id_shipment']] = ['qty' => $value['qty'], 'actual_weight' => $value['actual_weight']];
+        $total_qty += $value['qty'];
+        $total_actual_weight += $value['actual_weight'];
+    }
+    ?>
+    <br>
+    <table class="table table-borderless" style="width: 100%">
+        <tr>
+            <td>
+                <h3>Main Agent</h3>
+            </td>
+            <td></td>
+            <td>
+                <h3>Shipper Information Detail</h3>
+            </td>
+        </tr>
+        <tr>
+            <td style="width: 45%">
+                <table class="table table-borderless" style="width: 100%">
+                    <tr>
+                        <td>Agent Name</td>
+                        <td>:</td>
+                        <td><?= $shipment_list[0]['main_agent_name'] ?></td>
+                    </tr>
+                    <tr>
+                        <td>MAWB / MBL</td>
+                        <td>:</td>
+                        <td><?= $shipment_list[0]['main_agent_mawb_mbl'] ?></td>
+                    </tr>
+                    <tr>
+                        <td>Carrier</td>
+                        <td>:</td>
+                        <td><?= $shipment_list[0]['main_agent_carrier'] ?></td>
+                    </tr>
+                    <tr>
+                        <td>Voyage/Flight No.</td>
+                        <td>:</td>
+                        <td><?= $shipment_list[0]['main_agent_voyage_flight_no'] ?></td>
+                    </tr>
+                    <tr>
+                        <td>Voyage/Flight Date</td>
+                        <td>:</td>
+                        <td><?= $shipment_list[0]['main_agent_voyage_flight_date'] ?></td>
+                    </tr>
+                    <tr>
+                        <td>Port of Loading</td>
+                        <td>:</td>
+                        <td><?= $shipment_list[0]['main_agent_port_of_loading'] ?></td>
+                    </tr>
+                    <tr>
+                        <td>Port of Discharge</td>
+                        <td>:</td>
+                        <td><?= $shipment_list[0]['main_agent_port_of_discharge'] ?></td>
+                    </tr>
+                </table>
+            </td>
+            <td style="width: 10%"></td>
+            <td style="width: 45%; vertical-align: text-top;" >
+                <table class="table table-borderless" style="width: 100%">
+                    <tr>
+                        <td>Container No</td>
+                        <td>:</td>
+                        <td><?= $shipment_list[0]['container_no'] ?></td>
+                    </tr>
+                    <tr>
+                        <td>Seal No.</td>
+                        <td>:</td>
+                        <td><?= $shipment_list[0]['seal_no'] ?></td>
+                    </tr>
+                    <tr>
+                        <td>CIPL No.</td>
+                        <td>:</td>
+                        <td><?= $shipment_list[0]['cipl_no'] ?></td>
+                    </tr>
+                    <tr>
+                        <td>Permit No.</td>
+                        <td>:</td>
+                        <td><?= $shipment_list[0]['permit_no'] ?></td>
+                    </tr>
+                </table>
+            </td>
+        </tr>
+    </table>
+    <br>
     <table class="table" width="100%" border="1" cellspacing="0" cellpadding="6">
         <thead>
             <tr class="bg-info">
                 <th class="text-white font-weight-bold">No.</th>
                 <th class="text-white font-weight-bold">Tracking Number</th>
-                <th class="text-white font-weight-bold">Shipment Type</th>
-                <th class="text-white font-weight-bold">Type of Mode</th>
                 <th class="text-white font-weight-bold">Shipper Name</th>
                 <th class="text-white font-weight-bold">Receiver Name</th>
+                <th class="text-white font-weight-bold">Description of Goods</th>
+                <th class="text-white font-weight-bold">Quantity</th>
+                <th class="text-white font-weight-bold">Actual Weight</th>
             </tr>
         </thead>
         <tbody>
             <?php $no = 1;
             foreach ($shipment_list as $key => $value) : ?>
-                <tr class="<?php echo ((($value['main_agent_name'] != "" && $value['main_agent_invoice'] == "") || ($value['secondary_agent_name'] != "" && $value['secondary_agent_invoice'] == "")) && $value['status'] == "Delivered" && $page_permission[7] == 1 ? "alert-warning" : "") ?>">
+                <tr>
                     <td><?= $no++; ?></td>
                     <td nowrap>
                         <b><?php echo $value['tracking_no'] ?></b>
                     </td>
-                    <td><?php echo $value['type_of_shipment'] ?></td>
-                    <td><?php echo $value['type_of_mode'] ?></td>
                     <td><?php echo $value['shipper_name'] ?></td>
                     <td><?php echo $value['consignee_name'] ?></td>
+                    <td><?php echo $value['description_of_goods'] ?></td>
+                    <td><?= number_format($packages[$value['id']]['qty']) ?></td>
+                    <td><?= number_format($packages[$value['id']]['actual_weight'], 2) ?></td>
                 </tr>
             <?php endforeach; ?>
+            <tr>
+                <td style="border: 0px;" colspan="4"></td>
+                <td><b>TOTAL</b></td>
+                <td><b><?= number_format($total_qty) ?></b></td>
+                <td><b><?= number_format($total_actual_weight, 2) ?></b></td>
+            </tr>
         </tbody>
+    </table>
+    <br>
+    <table class="table table-borderless" style="width: 100%">
+        <tr>
+            <td class="text-center" style="width: 33%">Pengirim</td>
+            <td class="text-center" style="width: 33%">Driver/Agent</td>
+            <td class="text-center" style="width: 33%">Penerima</td>
+        </tr>
+        <tr>
+            <td style="height: 90px;"></td>
+            <td></td>
+            <td></td>
+        </tr>
+        <tr>
+            <td></td>
+            <td></td>
+            <td></td>
+        </tr>
     </table>
 </body>
 

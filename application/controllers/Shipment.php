@@ -2220,50 +2220,22 @@ class Shipment extends CI_Controller
 
 		$where['shipment.id IN (' . $post['id'] . ')'] = NULL;
 		$order_by = NULL;
-		if ($this->session->userdata('role') == "Driver") {
-			$order_by["assign_driver_date"] = "DESC";
-		}
 
 		$where['status_delete'] 	= 1;
 		$datadb 				= $this->shipment_mod->shipment_list_db($where, null, $order_by);
-		$shipment_list 	= [];
-		$express_list 	= [];
-		$created_by 	= [];
-		foreach ($datadb as $key => $value) {
-			if ($value['sea'] == "Express" && !in_array($value['status'], array("Delivered", "Canceled"))) {
-				$express_list[] = $value;
-			} else {
-				$shipment_list[] = $value;
-			}
-			if (!in_array($value['created_by'], $created_by)) {
-				$created_by[] = $value['created_by'];
-			}
+		
+		$data['type_of_mode'] = [];
+		foreach($datadb as $row){
+			$data['type_of_mode'][$row['id']] = $row['type_of_mode'];
 		}
-		$data['shipment_list'] 	= array_merge($express_list, $shipment_list);
-		// test_var($data['shipment_list']);
-
+		
+		$data['shipment_list'] = $datadb;
+		
 		unset($where);
-		$where['role'] 				= "Driver";
-		if ($this->session->userdata('branch')) {
-			if ($this->session->userdata('branch') != "NONE") {
-				$where["branch"] 	= $this->session->userdata('branch');
-			}
-		}
-		$data['driver_list'] 	= $this->home_mod->user_list($where);
+		$where['id_shipment IN (' . $post['id'] . ')'] = NULL;
+		$data['packages_list'] 					= $this->shipment_mod->master_tracking_packages_list_db($where);
 
-		$created_by_list = [];
-		if (count($created_by) > 0 && $this->session->userdata('role') == "Super Admin") {
-			unset($where);
-			$where["id IN ('" . join("', '", $created_by) . "')"] 	= NULL;
-			$datadb 	= $this->home_mod->user_list($where);
-			foreach ($datadb as $key => $value) {
-				$created_by_list[$value['id']] = $value['name'];
-			}
-		}
-		$data['created_by_list'] = $created_by_list;
 		$data['master_tracking'] = $post['master_tracking'];
-
-		$data['country'] = $this->shipment_mod->country_list_db();
 
 		$this->load->library('pdf');
 		$this->pdf->setPaper('A4', 'potrait');

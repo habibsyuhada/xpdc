@@ -351,4 +351,16 @@ class Shipment_mod extends CI_Model
     $this->db->where($where);
     $this->db->update('shipment_invoice', $data);
   }
+
+  function master_tracking_packages_list_db($where = null)
+  {
+    if (isset($where)) {
+      $this->db->where($where);
+    }
+    $this->db->select("id_shipment, SUM(qty) as qty, SUM(weight * qty) as actual_weight");
+    $this->db->from("shipment_packages");
+    $this->db->group_by('id_shipment');
+    $query = $this->db->get();
+    return $query->result_array();
+  }
 }

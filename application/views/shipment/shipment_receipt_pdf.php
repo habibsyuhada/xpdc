@@ -57,7 +57,7 @@
 $total_act_weight = 0;
 $total_vol_weight = 0;
 $total_measurement = 0;
-$per = 5000;
+$per = 4000;
 if ($post['type_of_mode'] == 'Air Freight') {
   $per = 6000;
 } elseif ($post['type_of_mode'] == 'Land Shipping') {
@@ -72,7 +72,7 @@ foreach ($post['qty'] as $key => $value) {
   $total_vol_weight += $volume_weight;
   $total_measurement += $measurement;
 }
-?>
+?> 
 
 <body>
   <table class="table" width="100%" border="1" cellspacing="0" cellpadding="6">

@@ -30,10 +30,9 @@
                       <td><?php echo $value['remarks'] ?></td>
                       <td>
                         <a href="<?php echo base_url() ?>master_tracking/master_tracking_detail/<?php echo $value['master_tracking'] ?>" class="btn btn-secondary" title="View"><i class="fas fa-eye m-0"></i></a>
-                        <!-- <a href="<?php echo base_url() ?>master_tracking/master_tracking_update/<?php echo $value['master_tracking'] ?>" class="btn btn-primary" title="Update"><i class="fas fa-edit m-0"></i></a> -->
-
                         <a href="<?php echo base_url() ?>master_tracking/master_tracking_edit/<?php echo $value['master_tracking'] ?>" class="btn btn-dark" title="Edit Shipping Information"><i class="fas fa-pen"></i></a>
                         <a href="<?php echo base_url() ?>master_tracking/master_tracking_assign/<?php echo $value['master_tracking'] ?>" class="btn btn-success" title="Assign Shipment"><i class="fas fa-sign-in-alt"></i></a>
+                        <a href="<?php echo base_url() ?>master_tracking/shipment_export_pdf/<?php echo $value['master_tracking'] ?>" class="btn btn-danger" title="Print PDF"><i class="fas fa-print m-0"></i></a>
                       </td>
                     </tr>
                     <?php endforeach; ?>

@@ -396,4 +396,33 @@ class Master_tracking extends CI_Controller
 		$this->session->set_flashdata('success', 'Your Master Tracking data has been Updated!');
 		redirect('master_tracking/master_tracking_detail/' . $master_tracking);
 	}
+
+	public function shipment_export_pdf($master_tracking)
+	{
+		$where['shipment.master_tracking'] = $master_tracking;
+		$order_by = NULL;
+
+		$where['status_delete'] 	= 1;
+		$datadb 				= $this->shipment_mod->shipment_list_db($where, null, $order_by);
+		
+		$data['type_of_mode'] = [];
+		$shipment_id = [];
+		foreach($datadb as $row){
+			$data['type_of_mode'][$row['id']] = $row['type_of_mode'];
+			$shipment_id[] = $row['id'];
+		}
+		
+		$data['shipment_list'] = $datadb;
+		
+		unset($where);
+		$where['id_shipment IN (' . implode(",",$shipment_id) . ')'] = NULL;
+		$data['packages_list'] 					= $this->shipment_mod->master_tracking_packages_list_db($where);
+
+		$data['master_tracking'] = $master_tracking;
+
+		$this->load->library('pdf');
+		$this->pdf->setPaper('A4', 'potrait');
+		$this->pdf->filename = "Master-tracking-detail-" . date('Y-m-d H:i:s') . ".pdf";
+		$this->pdf->load_view('master_tracking/master_tracking_detail_pdf', $data);
+	}
 }

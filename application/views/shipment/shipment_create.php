@@ -2,6 +2,11 @@
 if (!isset($cargo_list)) {
   $cargo_list = [];
 }
+
+$role_check_price = '';
+if ($this->session->userdata('role') == "Customer" || isset($commercial_create)) {
+  $role_check_price = "Customer";
+}
 ?>
 <div class="main-content">
   <div class="container-fluid">
@@ -19,7 +24,7 @@ if (!isset($cargo_list)) {
           <div class="card">
             <div class="card-body">
               <ul class="nav nav-tabs" id="myTab" role="tablist">
-                <?php if ($this->session->userdata('role') == "Customer") : ?>
+                <?php if ($role_check_price == "Customer") : ?>
                   <li class="nav-item">
                     <a class="nav-link active" id="shipper-consignee-tab" data-toggle="tab" href="#shipper-consignee" role="tab" aria-controls="shipper-consignee" aria-selected="true">Shipper & Consignee Information</a>
                   </li>
@@ -54,7 +59,7 @@ if (!isset($cargo_list)) {
                 <?php endif; ?>
               </ul>
               <div class="tab-content" id="myTabContent">
-                <div class="tab-pane fade <?php echo ($this->session->userdata('role') != "Customer" ? 'show active' : '') ?>" id="service" role="tabpanel" aria-labelledby="service-tab">
+                <div class="tab-pane fade <?php echo ($role_check_price != "Customer" ? 'show active' : '') ?>" id="service" role="tabpanel" aria-labelledby="service-tab">
                   <br>
                   <div class="row clearfix">
                     <div class="col-md-12">
@@ -63,7 +68,7 @@ if (!isset($cargo_list)) {
                     <div class="col-md-6">
                       <div class="form-group">
                         <label>Type of Shipment</label>
-                        <?php if ($this->session->userdata('role') != "Customer") { ?>
+                        <?php if ($role_check_price != "Customer") { ?>
                           <select class="form-control" name="type_of_shipment" required onchange="change_typeshipment(this);">
                             <option value="">-- Select One --</option>
                             <option value="International Shipping" <?php echo (@$quotation['type_of_shipment'] == "International Shipping" ? "selected" : "") ?>>International Shipping</option>
@@ -81,7 +86,7 @@ if (!isset($cargo_list)) {
                     <div class="col-md-6">
                       <div class="form-group">
                         <label>Type of Mode</label>
-                        <?php if ($this->session->userdata('role') != "Customer") { ?>
+                        <?php if ($role_check_price != "Customer") { ?>
                           <select class="form-control" name="type_of_mode" onchange="get_vol_weight()" required>
                             <option value="">- Select One -</option>
                             <option value="Sea Transport" <?php echo (@$quotation['type_of_transport'] == "Sea Transport" ? "selected" : "") ?>>Sea Transport</option>
@@ -96,7 +101,7 @@ if (!isset($cargo_list)) {
                     <div class="col-md-6">
                       <div class="form-group" style="<?php echo (@$quotation['type_of_transport'] == 'Sea Transport' ? '' : 'display: none;') ?>">
                         <label>Sea</label>
-                        <?php if ($this->session->userdata('role') != "Customer") { ?>
+                        <?php if ($role_check_price != "Customer") { ?>
                           <select class="form-control" name="sea" title="sea" required <?php echo (@$quotation['type_of_transport'] == 'Sea Transport' ? '' : 'disabled') ?>>
                             <option value="">- Select Sea -</option>
                             <option value="LCL" <?php echo (@$quotation['sea'] == "LCL" ? "selected" : "") ?>>LCL</option>
@@ -108,7 +113,7 @@ if (!isset($cargo_list)) {
                       </div>
                       <div class="form-group" style="<?php echo (@$quotation['type_of_transport'] == 'Air Freight' ? '' : 'display: none;') ?>">
                         <label>Type</label>
-                        <?php if ($this->session->userdata('role') != "Customer") { ?>
+                        <?php if ($role_check_price != "Customer") { ?>
                           <select class="form-control" name="sea" title="air" required <?php echo (@$quotation['type_of_transport'] == 'Air Freight' ? '' : 'disabled') ?>>
                             <option value="">- Select Type -</option>
                             <option value="Express" <?php echo (@$quotation['sea'] == "Express" ? "selected" : "") ?>>Express</option>
@@ -129,51 +134,58 @@ if (!isset($cargo_list)) {
                     </div>
                   </div>
                 </div>
-                <div class="tab-pane fade <?php echo ($this->session->userdata('role') == "Customer" ? 'show active' : '') ?>" id="shipper-consignee" role="tabpanel" aria-labelledby="shipper-consignee-tab">
+                <div class="tab-pane fade <?php echo ($role_check_price == "Customer" ? 'show active' : '') ?>" id="shipper-consignee" role="tabpanel" aria-labelledby="shipper-consignee-tab">
                   <br>
                   <div class="row clearfix">
                     <div class="col-md-6">
                       <h6 class="font-weight-bold">Shipper Information</h6>
                       <div class="form-group">
                         <label>Shipper Name</label>
-                        <input type="text" class="form-control" name="shipper_name" value="<?php echo @$quotation['shipper_name'] ?>" placeholder="Shipper Name" <?= ($this->session->userdata('role') == "Customer" && $this->session->userdata('id') != "Guest") ? 'readonly' : '' ?> oninput="$('[name=shipper_contact_person]').val(this.value)" required>
+                        <input type="text" class="form-control" name="shipper_name" value="<?php echo @$quotation['shipper_name'] ?>" placeholder="Shipper Name" <?= ($role_check_price == "Customer" && $this->session->userdata('id') != "Guest" && $this->session->userdata('role') != 'Commercial') ? 'readonly' : '' ?> oninput="$('[name=shipper_contact_person]').val(this.value)" required>
                       </div>
                       <div class="form-group">
                         <label>Address</label>
-                        <textarea class="form-control" name="shipper_address" placeholder="Address" <?= ($this->session->userdata('role') == "Customer" && $this->session->userdata('id') != "Guest") ? 'readonly' : '' ?> required><?php echo @$quotation['shipper_address'] ?></textarea>
+                        <textarea class="form-control" name="shipper_address" placeholder="Address" <?= ($role_check_price == "Customer" && $this->session->userdata('id') != "Guest" && $this->session->userdata('role') != 'Commercial') ? 'readonly' : '' ?> required><?php echo @$quotation['shipper_address'] ?></textarea>
                       </div>
                       <div class="form-group">
                         <label>Country</label>
-                        <?php if ($this->session->userdata('role') != "Customer" || $this->session->userdata('id') == "Guest") { ?>
+                        <?php if ($role_check_price != "Customer" || $this->session->userdata('id') == "Guest") { ?>
                           <select class="form-control select2" name="shipper_country" required onchange="select_country(this)">
                             <option value="">- Select One -</option>
                             <?php foreach ($country as $data) { ?>
                               <option value="<?= $data['country'] ?>" <?php echo (@$quotation['shipper_country'] == $data['country'] ? 'selected' : '') ?>><?= $data['country'] ?></option>
                             <?php } ?>
                           </select>
+                        <?php } else if ($role_check_price == "Customer" && $this->session->userdata('id') != "Guest" && $this->session->userdata('role') == 'Commercial') { ?>
+                          <select class="form-control select2" name="shipper_country" required onchange="select_country(this)">
+                            <option value="">- Select One -</option>
+                            <?php foreach ($country as $data) { ?>
+                              <option value="<?= $data['country'] ?>"><?= $data['country'] ?></option>
+                            <?php } ?>
+                          </select>
                         <?php } else { ?>
-                          <input type="text" class="form-control" name="shipper_country" value="<?php echo @$quotation['shipper_country'] ?>" placeholder="Shipper Country" <?= ($this->session->userdata('role') == "Customer" && $this->session->userdata('id') != "Guest") ? 'readonly' : '' ?> required>
+                          <input type="text" class="form-control" name="shipper_country" value="<?php echo @$quotation['shipper_country'] ?>" placeholder="Shipper Country" <?= ($role_check_price == "Customer" && $this->session->userdata('id') != "Guest" && $this->session->userdata('role') != 'Commercial') ? 'readonly' : '' ?> required>
                         <?php } ?>
                       </div>
                       <div class="form-group">
                         <label>City</label>
-                        <input type="text" class="form-control" name="shipper_city" value="<?php echo @$quotation['shipper_city'] ?>" placeholder="City" <?= ($this->session->userdata('role') == "Customer" && $this->session->userdata('id') != "Guest") ? 'readonly' : '' ?>>
+                        <input type="text" class="form-control" name="shipper_city" value="<?php echo @$quotation['shipper_city'] ?>" placeholder="City" <?= ($role_check_price == "Customer" && $this->session->userdata('id') != "Guest" && $this->session->userdata('role') != 'Commercial') ? 'readonly' : '' ?>>
                       </div>
                       <div class="form-group">
                         <label>Postcode</label>
-                        <input type="text" class="form-control" name="shipper_postcode" value="<?php echo @$quotation['shipper_postcode'] ?>" placeholder="Postcode" <?= ($this->session->userdata('role') == "Customer" && $this->session->userdata('id') != "Guest") ? 'readonly' : '' ?>>
+                        <input type="text" class="form-control" name="shipper_postcode" value="<?php echo @$quotation['shipper_postcode'] ?>" placeholder="Postcode" <?= ($role_check_price == "Customer" && $this->session->userdata('id') != "Guest" && $this->session->userdata('role') != 'Commercial') ? 'readonly' : '' ?>>
                       </div>
                       <div class="form-group">
                         <label>Contact Person</label>
-                        <input type="text" class="form-control" name="shipper_contact_person" value="<?php echo @$quotation['shipper_contact_person'] ?>" placeholder="Contact Person" <?= ($this->session->userdata('role') == "Customer" && $this->session->userdata('id') != "Guest") ? 'readonly' : '' ?> required>
+                        <input type="text" class="form-control" name="shipper_contact_person" value="<?php echo @$quotation['shipper_contact_person'] ?>" placeholder="Contact Person" <?= ($role_check_price == "Customer" && $this->session->userdata('id') != "Guest" && $this->session->userdata('role') != 'Commercial') ? 'readonly' : '' ?> required>
                       </div>
                       <div class="form-group">
                         <label>Phone Number</label>
-                        <input type="text" class="form-control" name="shipper_phone_number" value="<?php echo @$quotation['shipper_phone_number'] ?>" placeholder="Phone Number" <?= ($this->session->userdata('role') == "Customer" && $this->session->userdata('id') != "Guest") ? 'readonly' : '' ?> required>
+                        <input type="text" class="form-control" name="shipper_phone_number" value="<?php echo @$quotation['shipper_phone_number'] ?>" placeholder="Phone Number" <?= ($role_check_price == "Customer" && $this->session->userdata('id') != "Guest" && $this->session->userdata('role') != 'Commercial') ? 'readonly' : '' ?> required>
                       </div>
                       <div class="form-group">
                         <label>Email</label>
-                        <input type="email" class="form-control" name="shipper_email" value="<?php echo @$quotation['shipper_email'] ?>" placeholder="Email" <?= ($this->session->userdata('role') == "Customer" && $this->session->userdata('id') != "Guest") ? 'readonly' : '' ?>>
+                        <input type="email" class="form-control" name="shipper_email" value="<?php echo @$quotation['shipper_email'] ?>" placeholder="Email" <?= ($role_check_price == "Customer" && $this->session->userdata('id') != "Guest" && $this->session->userdata('role') != 'Commercial') ? 'readonly' : '' ?>>
                       </div>
                     </div>
                     <div class="col-md-6">
@@ -188,7 +200,7 @@ if (!isset($cargo_list)) {
                       </div>
                       <div class="form-group">
                         <label>Country</label>
-                        <?php if ($this->session->userdata('role') != "Customer") { ?>
+                        <?php if ($role_check_price != "Customer") { ?>
                           <select class="form-control select2" name="consignee_country" required onchange="select_country(this)">
                             <option value="">- Select One -</option>
                             <?php foreach ($country as $data) { ?>
@@ -196,12 +208,12 @@ if (!isset($cargo_list)) {
                             <?php } ?>
                           </select>
                         <?php } else { ?>
-                          <input type="text" class="form-control" name="consignee_country" value="<?php echo @$quotation['consignee_country'] ?>" placeholder="Consignee Country" <?= ($this->session->userdata('role') == "Customer") ? 'readonly' : '' ?> required>
+                          <input type="text" class="form-control" name="consignee_country" value="<?php echo @$quotation['consignee_country'] ?>" placeholder="Consignee Country" <?= ($role_check_price == "Customer") ? 'readonly' : '' ?> required>
                         <?php } ?>
                       </div>
                       <div class="form-group">
                         <label>City</label>
-                        <input type="text" class="form-control" name="consignee_city" value="<?php echo @$quotation['consignee_city'] ?>" placeholder="City" <?= ($this->session->userdata('role') == "Customer") ? 'readonly' : '' ?>>
+                        <input type="text" class="form-control" name="consignee_city" value="<?php echo @$quotation['consignee_city'] ?>" placeholder="City" <?= ($role_check_price == "Customer") ? 'readonly' : '' ?>>
                       </div>
                       <div class="form-group">
                         <label>Postcode</label>
@@ -234,7 +246,7 @@ if (!isset($cargo_list)) {
                       <h6 class="font-weight-bold">Shipment Information</h6>
                     </div>
 
-                    <?php if ($this->session->userdata('role') == 'Customer') : ?>
+                    <?php if ($role_check_price == 'Customer') : ?>
                       <input type="hidden" name="incoterms" value="">
                     <?php else : ?>
                       <div class="col-md-6">
@@ -284,7 +296,7 @@ if (!isset($cargo_list)) {
                       </div>
                     </div>
 
-                    <?php if ($this->session->userdata('role') == 'Customer') : ?>
+                    <?php if ($role_check_price == 'Customer') : ?>
                       <input type="hidden" name="hscode" value="0000.00.00">
                     <?php else : ?>
                       <div class="col-md-6">
@@ -299,8 +311,8 @@ if (!isset($cargo_list)) {
                     <div class="col-md-6">
                       <div class="form-group">
                         <label>Currency</label>
-                        <?php if ($this->session->userdata('role') == 'Customer') : ?>
-                          <input type="text" class="form-control" name="coo" value="IDR" readonly>
+                        <?php if ($role_check_price == 'Customer') : ?>
+                          <input type="text" class="form-control" name="currency" value="IDR" readonly>
                         <?php else : ?>
                           <select class="form-control" name="currency" <?php echo (@$quotation['type_of_shipment'] == 'Domestic Shipping' ? 'disabled' : '') ?> required>
                             <option value="">-- Select One --</option>
@@ -324,7 +336,7 @@ if (!isset($cargo_list)) {
                       </div>
                     </div>
 
-                    <?php if ($this->session->userdata('role') == 'Customer') : ?>
+                    <?php if ($role_check_price == 'Customer') : ?>
                       <input type="hidden" name="coo" value="">
                     <?php else : ?>
                       <div class="col-md-6">
@@ -357,7 +369,7 @@ if (!isset($cargo_list)) {
                             <th class="text-white font-weight-bold">Width(cm)</th>
                             <th class="text-white font-weight-bold">Height(cm)</th>
                             <th class="text-white font-weight-bold">Weight(kg)</th>
-                            <?php if ($this->session->userdata('role') != 'Customer') { ?>
+                            <?php if ($role_check_price != 'Customer') { ?>
                               <th class="text-white font-weight-bold"></th>
                             <?php } ?>
                           </tr>
@@ -367,17 +379,17 @@ if (!isset($cargo_list)) {
                             <?php foreach ($cargo_list as $key => $value) : ?>
                               <tr>
                                 <td>
-                                  <input type="number" class="form-control" oninput="get_vol_weight()" step="any" name="qty[]" value="<?php echo $value['qty'] ?>" <?= ($this->session->userdata('role') == 'Customer') ? 'readonly' : ''; ?>>
-                                  <?php if ($this->session->userdata('role') != 'Customer') { ?>
+                                  <input type="number" class="form-control" oninput="get_vol_weight()" step="any" name="qty[]" value="<?php echo $value['qty'] ?>" <?= ($role_check_price == 'Customer') ? 'readonly' : ''; ?>>
+                                  <?php if ($role_check_price != 'Customer') { ?>
                                     <input type="hidden" class="form-control" name="id_detail[]" value="<?php echo @$value['id'] ?>">
                                   <?php } ?>
                                 </td>
                                 <td>
 
-                                  <?php if ($this->session->userdata('role') == 'Customer') : ?>
+                                  <?php if ($role_check_price == 'Customer') : ?>
                                     <input type="input" class="form-control" name="piece_type[]" title="NONFCL" value="<?php echo $value['piece_type'] ?>" readonly />
                                   <?php else : ?>
-                                    <select class="form-control" name="piece_type[]" title="NONFCL" value="<?php echo $value['piece_type'] ?>" <?= ($this->session->userdata('role') == 'Customer') ? 'disabled' : ''; ?>>
+                                    <select class="form-control" name="piece_type[]" title="NONFCL" value="<?php echo $value['piece_type'] ?>" <?= ($role_check_price == 'Customer') ? 'disabled' : ''; ?>>
                                       <option value="">-- Select One --</option>
                                       <?php foreach ($package_type as $data) : ?>
                                         <option value="<?= $data['name'] ?>" <?php echo ($value['piece_type'] == $data['name'] ? 'selected' : '') ?>><?= $data['name'] ?></option>
@@ -393,7 +405,7 @@ if (!isset($cargo_list)) {
                                   </select>
                                 </td>
                                 <td>
-                                  <input type="number" class="form-control" oninput="get_vol_weight()" step="any" name="length[]" title="NONFCL" value="<?php echo $value['length'] + 0 ?>" <?= ($this->session->userdata('role') == 'Customer') ? 'readonly' : ''; ?>>
+                                  <input type="number" class="form-control" oninput="get_vol_weight()" step="any" name="length[]" title="NONFCL" value="<?php echo $value['length'] + 0 ?>" <?= ($role_check_price == 'Customer') ? 'readonly' : ''; ?>>
                                   <select class="form-control d-none" name="size[]" title="FCL">
                                     <option value="">-- Select One --</option>
                                     <option value="20 feet" <?php echo ($value['size'] == '20 feet' ? 'selected' : '') ?>>20 feet</option>
@@ -402,15 +414,15 @@ if (!isset($cargo_list)) {
                                   </select>
                                 </td>
                                 <td>
-                                  <input type="number" class="form-control" oninput="get_vol_weight()" step="any" name="width[]" title="NONFCL" value="<?php echo $value['width'] + 0 ?>" <?= ($this->session->userdata('role') == 'Customer') ? 'readonly' : ''; ?>>
+                                  <input type="number" class="form-control" oninput="get_vol_weight()" step="any" name="width[]" title="NONFCL" value="<?php echo $value['width'] + 0 ?>" <?= ($role_check_price == 'Customer') ? 'readonly' : ''; ?>>
                                   <input type="text" class="form-control d-none" step="any" name="container_no[]" title="FCL" value="<?php echo $value['container_no'] ?>">
                                 </td>
                                 <td>
-                                  <input type="number" class="form-control" oninput="get_vol_weight()" step="any" name="height[]" title="NONFCL" value="<?php echo $value['height'] + 0 ?>" <?= ($this->session->userdata('role') == 'Customer') ? 'readonly' : ''; ?>>
+                                  <input type="number" class="form-control" oninput="get_vol_weight()" step="any" name="height[]" title="NONFCL" value="<?php echo $value['height'] + 0 ?>" <?= ($role_check_price == 'Customer') ? 'readonly' : ''; ?>>
                                   <input type="text" class="form-control d-none" step="any" name="seal_no[]" title="FCL" value="<?php echo $value['seal_no'] ?>">
                                 </td>
-                                <td><input type="number" class="form-control" oninput="get_vol_weight()" step="any" name="weight[]" value="<?php echo $value['weight'] + 0 ?>" <?= ($this->session->userdata('role') == 'Customer') ? 'readonly' : ''; ?>></td>
-                                <?php if ($this->session->userdata('role') != 'Customer') { ?>
+                                <td><input type="number" class="form-control" oninput="get_vol_weight()" step="any" name="weight[]" value="<?php echo $value['weight'] + 0 ?>" <?= ($role_check_price == 'Customer') ? 'readonly' : ''; ?>></td>
+                                <?php if ($role_check_price != 'Customer') { ?>
                                   <td>
                                     <?php if ($key == 0) : ?>
                                       <button type="button" class="btn btn-primary" onclick="addrow(this)"><i class="fas fa-plus m-0"></i></button>
@@ -425,7 +437,7 @@ if (!isset($cargo_list)) {
                             <tr>
                               <td><input type="number" class="form-control" step="any" name="qty[]" oninput="get_vol_weight()"></td>
                               <td>
-                                <select class="form-control" name="piece_type[]" title="NONFCL" <?= ($this->session->userdata('role') == 'Customer') ? 'disabled' : '' ?>>
+                                <select class="form-control" name="piece_type[]" title="NONFCL" <?= ($role_check_price == 'Customer') ? 'disabled' : '' ?>>
                                   <option value="">-- Select One --</option>
                                   <?php foreach ($package_type as $data) : ?>
                                     <option value="<?= $data['name'] ?>"><?= $data['name'] ?></option>
@@ -510,7 +522,7 @@ if (!isset($cargo_list)) {
                           </div>
                         </div>
                       </div>
-                      <?php if ($this->session->userdata('role') != "Customer") : ?>
+                      <?php if ($role_check_price != "Customer") : ?>
                         <div class="form-group">
                           <label>Same as</label>
                           <select class="form-control" name="pickup_same_as" onchange="pickup_same(this)" disabled required>
@@ -562,7 +574,7 @@ if (!isset($cargo_list)) {
                         <div class="col-md-6">
                           <div class="form-group">
                             <label>Pick Up Date From</label>
-                            <input type="date" class="form-control" name="pickup_date" <?php echo ($this->session->userdata('role') == "Customer" ? "min='" . date("Y-m-d") . "'" : "") ?> placeholder="Pick Up Date" value="<?= date('Y-m-d') ?>" readonly required>
+                            <input type="date" class="form-control" name="pickup_date" <?php echo ($role_check_price == "Customer" ? "min='" . date("Y-m-d") . "'" : "") ?> placeholder="Pick Up Date" value="<?= date('Y-m-d') ?>" readonly required>
                           </div>
                           <div class="form-group">
                             <label>Pick Up Time From</label>
@@ -572,7 +584,7 @@ if (!isset($cargo_list)) {
                         <div class="col-md-6">
                           <div class="form-group">
                             <label>Pick Up Date To</label>
-                            <input type="date" class="form-control" name="pickup_date_to" <?php echo ($this->session->userdata('role') == "Customer" ? "min='" . date("Y-m-d") . "'" : "") ?> placeholder="Pick Up Date" value="<?= date('Y-m-d') ?>" readonly required>
+                            <input type="date" class="form-control" name="pickup_date_to" <?php echo ($role_check_price == "Customer" ? "min='" . date("Y-m-d") . "'" : "") ?> placeholder="Pick Up Date" value="<?= date('Y-m-d') ?>" readonly required>
                           </div>
                           <div class="form-group">
                             <label>Pick Up Time To</label>
@@ -595,9 +607,9 @@ if (!isset($cargo_list)) {
                       <span class="btn btn-danger previous-tab">Back</span>
                     </div>
                     <div class="text-right col-6">
-                      <?php if ($this->session->userdata('id') == "Guest") : ?>
+                      <?php if ($this->session->userdata('id') == "Guest" || ($role_check_price == "Customer" && $this->session->userdata('role') == 'Commercial')) : ?>
                         <button type="submit" class="btn btn-success" onclick="$('[name=billing_same_as]').val('Shipper').trigger('change');$('input, select, textarea').removeClass('is-invalid'); return confirm('Apakah Anda Yakin?')">Submit</button>
-                      <?php elseif ($this->session->userdata('role') == "Customer") : ?>
+                      <?php elseif ($role_check_price == "Customer" && $this->session->userdata('role') != 'Commercial') : ?>
                         <button type="submit" class="btn btn-success" onclick="$('input, select, textarea').removeClass('is-invalid'); return confirm('Apakah Anda Yakin?')">Submit</button>
                       <?php else : ?>
                         <span class="btn btn-info next-tab">Next</span>
@@ -618,7 +630,7 @@ if (!isset($cargo_list)) {
                         <select class="form-control select2" name="billing_account" onchange="check_custumer(this)">
                           <option value="">XPDC Account No. (if any)</option>
                           <?php foreach ($customer as $data) : ?>
-                            <?php if ($this->session->userdata('role') == "Customer" && $this->session->userdata('id') != "Guest") : ?>
+                            <?php if ($role_check_price == "Customer" && $this->session->userdata('id') != "Guest" && $this->session->userdata('role') != 'Commercial') : ?>
                               <option value="<?= $data['account_no'] ?>" selected><?= $data['account_no'] . " - " . $data['name'] ?></option>
                             <?php elseif (@$quotation['customer_account'] == $data['account_no']) : ?>
                               <option value="<?= $data['account_no'] ?>" selected><?= $data['account_no'] . " - " . $data['name'] ?></option>
@@ -815,7 +827,7 @@ if (!isset($cargo_list)) {
     }
 
     var pickup_same_as = $('select[name=pickup_same_as]').val();
-    <?php if ($this->session->userdata('role') != "Customer") : ?>
+    <?php if ($role_check_price != "Customer") : ?>
       pickup_same_as = pickup_same_as.toLowerCase();
       console.log(pickup_same_as);
       if (pickup_same_as != 'none') {
@@ -1125,7 +1137,7 @@ if (!isset($cargo_list)) {
           $("input[name=billing_phone_number]").val(data.phone_number);
           $("input[name=billing_email]").val(data.email);
 
-          <?php if ($this->session->userdata('role') == "Customer") : ?>
+          <?php if ($role_check_price == "Customer") : ?>
             $("#billing input, #billing textarea").attr("readonly", "readonly");
             // $("#billing select[name=billing_account], #billing select[name=billing_country_view]").select2('destroy')
             // $("#billing select").attr("readonly", "readonly").css({'-moz-appearance': 'none','-webkit-appearance': 'none'});

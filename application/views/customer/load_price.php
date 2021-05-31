@@ -50,15 +50,15 @@
         <td>Estimate Chargeable Weight : <?= $weight_fix_landfreight ?> Kg</td>
         <td>Estimate Chargeable Weight : <?= $weight_fix_seafreight ?> Kg</td>
       </tr>
-      <?php if ($this->session->userdata('role') == 'Customer') { ?>
+      <?php if (in_array($this->session->userdata('role'), ['Customer','Commercial'])) { ?>
         <tr>
           <td>
             <?php if ($airfreight_weight != 0) { ?>
               <form method="POST" action="<?php echo base_url() ?>customer/shipment_create">
                 <input type="hidden" name="type_of_shipment" value="<?= $type_of_shipment ?>">
                 <input type="hidden" name="type_of_mode" value="Air Freight">
-                <input type="hidden" name="shipper_city" value="<?= $customer['city'] ?>">
-                <input type="hidden" name="shipper_country" value="<?= $customer['country'] ?>">
+                <input type="hidden" name="shipper_city" value="<?= @$customer['city'] ?>">
+                <input type="hidden" name="shipper_country" value="<?= @$customer['country'] ?>">
                 <input type="hidden" name="consignee_city" value="<?= $city_post ?>">
                 <input type="hidden" name="consignee_country" value="<?= $country_post ?>">
                 <input type="hidden" name="act_weight" value="<?= $weight_post ?>">
@@ -91,8 +91,8 @@
               <form method="POST" action="<?php echo base_url() ?>customer/shipment_create">
                 <input type="hidden" name="type_of_shipment" value="<?= $type_of_shipment ?>">
                 <input type="hidden" name="type_of_mode" value="Land Shipping">
-                <input type="hidden" name="shipper_city" value="<?= $customer['city'] ?>">
-                <input type="hidden" name="shipper_country" value="<?= $customer['country'] ?>">
+                <input type="hidden" name="shipper_city" value="<?= @$customer['city'] ?>">
+                <input type="hidden" name="shipper_country" value="<?= @$customer['country'] ?>">
                 <input type="hidden" name="consignee_city" value="<?= $city_post ?>">
                 <input type="hidden" name="consignee_country" value="<?= $country_post ?>">
                 <input type="hidden" name="act_weight" value="<?= $weight_post ?>">
@@ -125,8 +125,8 @@
               <form method="POST" action="<?php echo base_url() ?>customer/shipment_create">
                 <input type="hidden" name="type_of_shipment" value="<?= $type_of_shipment ?>">
                 <input type="hidden" name="type_of_mode" value="Sea Transport">
-                <input type="hidden" name="shipper_city" value="<?= $customer['city'] ?>">
-                <input type="hidden" name="shipper_country" value="<?= $customer['country'] ?>">
+                <input type="hidden" name="shipper_city" value="<?= @$customer['city'] ?>">
+                <input type="hidden" name="shipper_country" value="<?= @$customer['country'] ?>">
                 <input type="hidden" name="consignee_city" value="<?= $city_post ?>">
                 <input type="hidden" name="consignee_country" value="<?= $country_post ?>">
                 <input type="hidden" name="act_weight" value="<?= $weight_post ?>">
@@ -164,7 +164,7 @@
   </table>
 <?php } else if ($type_of_shipment == 'International Shipping') { ?>
   <table class="table table-bordered">
-    <?php if ($this->session->userdata('role') == 'Customer') { ?>
+    <?php if (in_array($this->session->userdata('role'),['Customer','Commercial'])) { ?>
       <tr>
         <td>Type of Mode</td>
         <td>:</td>

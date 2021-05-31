@@ -31,7 +31,7 @@ $page_permission = array(
             <hr class="mb-0">
           </div>
         </div>
-        <form action="<?php echo base_url() ?>shipment/shipment_bill_process" method="POST">
+        <form action="<?php echo base_url() ?>shipment/shipment_bill_process" method="POST" enctype="multipart/form-data">
           <div class="card">
             <div class="card-body overflow-auto">
               <div class="row pb-2 border-bottom">
@@ -97,23 +97,33 @@ $page_permission = array(
                   <?php endif; ?>
                 </div>
                 <?php if (@$invoice['invoice_no'] != "") : ?>
-                  <?php if ($page_permission[0] == 1) : ?>
-                    <div class="col-md-6">
-                      <div class="form-group">
-                        <label>Status</label>
-                        <select class="form-control" name="status_bill" required>
-                          <option value="1" <?= (@$shipment_list['status_bill'] == '1') ? 'selected' : ''; ?>>Billed</option>
-                          <option value="2" <?= (@$shipment_list['status_bill'] == '2') ? 'selected' : ''; ?>>Paid</option>
-                        </select>
+                  <div class="col-md-4">
+                    <div class="form-group">
+                      <label>Status</label>
+                      <select class="form-control" name="status_bill" onchange="change_status_bill()" required>
+                        <option value="1" <?= (@$shipment_list['status_bill'] == '1') ? 'selected' : ''; ?>>Billed</option>
+                        <option value="2" <?= (@$shipment_list['status_bill'] == '2') ? 'selected' : ''; ?>>Paid</option>
+                      </select>
+                    </div>
+                  </div>
+                  <div class="col-md-4" id="div_datepaid" <?= (@$shipment_list['status_bill'] == '1') ? 'style="display: none"' : ''; ?>>
+                    <div class="form-group">
+                      <label>Date Paid</label>
+                      <input type="date" class="form-control" name="date_paid" value="<?php echo @$shipment_list['date_paid'] ?>" required>
+                    </div>
+                  </div>
+                  <div class="col-md-4" id="div_uploadpaid" <?= (@$shipment_list['status_bill'] == '1') ? 'style="display: none"' : ''; ?>>
+                    <div class="form-group">
+                      <label>Upload Paid Attachment</label>
+                      <input type="file" name="file" class="file-upload-default">
+                      <div class="input-group col-xs-12">
+                        <input type="text" class="form-control file-upload-info" disabled value="<?=@$invoice['paid_attachment']?>" placeholder="Upload Paid Attachment">
+                        <span class="input-group-append">
+                          <button class="file-upload-browse btn btn-warning" type="button">Upload</button>
+                        </span>
                       </div>
                     </div>
-                    <div class="col-md-6">
-                      <div class="form-group">
-                        <label>Date Paid</label>
-                        <input type="date" class="form-control" name="date_paid" value="<?php echo @$shipment_list['date_paid'] ?>" required>
-                      </div>
-                    </div>
-                  <?php endif; ?>
+                  </div>
                 <?php endif; ?>
               </div>
               <?php
@@ -369,7 +379,7 @@ $page_permission = array(
                         if ($row['default_value'] == 1) {
                           $default_value = $row['id'];
                         } ?>
-                        <option value="<?= $row['id'] ?>"><?= $row['account_no'] . " - " . $row['bank_name'] ?></option>
+                        <option value="<?= $row['id'] ?>" <?=($row['id'] == @$invoice['payment_info']) ? 'selected' : '';?>><?= $row['account_no'] . " - " . $row['bank_name'] ?></option>
                       <?php } ?>
                     </select>
                   </div>
@@ -406,6 +416,7 @@ $page_permission = array(
               <div class="row clearfix">
                 <div class="col-md text-right">
                   <?php if (isset($invoice['invoice_no'])) : ?>
+                    <a href="<?php echo base_url() ?>shipment/shipment_pending_payment/<?php echo @$invoice['id_shipment'] ?>" onclick="return confirm('Apakah anda yakin?')" class="btn btn-warning">Pending Payment</a>
                     <a href="<?php echo base_url() ?>shipment/shipment_invoice_pdf/<?php echo @$invoice['id_shipment'] ?>" target="_blank" class="btn btn-danger" title="Export Invoice">PDF</a>
                   <?php endif; ?>
                   <button type="submit" class="btn btn-success">Submit</button>
@@ -513,6 +524,18 @@ $page_permission = array(
           showSuccessToast('Your Shipment Cost data has been Delete!');
         }
       });
+    }
+  }
+
+  function change_status_bill()
+  {
+    var status_bill = $("select[name=status_bill]").val();
+    if(status_bill == '1'){
+      $("#div_datepaid").slideUp();
+      $("#div_uploadpaid").slideUp();
+    }else if(status_bill == '2'){
+      $("#div_datepaid").slideDown();
+      $("#div_uploadpaid").slideDown();
     }
   }
 </script>

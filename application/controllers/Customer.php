@@ -306,6 +306,10 @@ class Customer extends CI_Controller
       ];
     }
 
+    if($this->session->userdata('role') == 'Commercial'){
+      $data['commercial_create'] = '';
+    }
+
     $data['is_customer'] = 1;
 
 

@@ -6,6 +6,7 @@
   <style type="text/css">
     @page {
       margin: 0cm 0cm;
+      size: 90mm 330mm landscape;
     }
 
     body {

@@ -56,6 +56,12 @@ class Home extends CI_Controller
 		$this->load->view('home/landing_page', $data);
 	}
 
+	public function notification()
+	{
+		$data['history'] = $this->shipment_mod->shipment_result_history_list_db();
+		$this->load->view("_partial/notification", $data);
+	}
+
 	public function tracking_xpdc($id)
 	{
 		$where['id'] 						= $id;
@@ -95,12 +101,27 @@ class Home extends CI_Controller
 					foreach ($customer as $row) {
 						$row_data[] = $row['account_no'];
 					}
-					$where_in = "'" . implode("','", $row_data) . "'";
-					$where["(branch LIKE '%" . $this->session->userdata('branch') . "%' AND billing_account = '' AND assign_branch IS NULL) OR (billing_account IN(" . $where_in . "))"] 	= NULL;
+					$where_in = '';
+					if(count($row_data) > 0){
+						$where_in = " OR (billing_account IN('" . implode("','", $row_data) . "'))";
+					}
+					// $where_in = "'" . implode("','", $row_data) . "'";
+					$where["((branch LIKE '%" . $this->session->userdata('branch') . "%' AND billing_account = '') $where_in)"] 	= NULL;
 				}
 			} else {
 				if ($this->input->get("branch")) {
-					$where["((assign_branch LIKE '%" . $this->input->get("branch") . "%' AND assign_branch IS NOT NULL) OR (assign_branch IS NULL AND branch LIKE '%" . $this->input->get("branch") . "%'))"] 	= NULL;
+					$customer = $this->shipment_mod->customer_list_db(["customer_id IN(SELECT id FROM user WHERE role = 'Customer' AND branch = '" . $this->session->userdata('branch') . "')" => null]);
+					$row_data = [];
+					foreach ($customer as $row) {
+						$row_data[] = $row['account_no'];
+					}
+					// $where_in = "'" . implode("','", $row_data) . "'";
+					
+					$where_in = '';
+					if(count($row_data) > 0){
+						$where_in = " OR (billing_account IN('" . implode("','", $row_data) . "'))";
+					}
+					$where["((branch LIKE '%" . $this->input->get("branch") . "%' AND billing_account = '') $where_in)"] 	= NULL;
 				}
 			}
 		} else {
@@ -128,7 +149,7 @@ class Home extends CI_Controller
 				"MONTH(created_date)" => date("n"),
 				"YEAR(created_date)" => date("Y"),
 			];
-			if($branch != '' && $branch != NULL){
+			if ($branch != '' && $branch != NULL) {
 				$where['branch'] = $branch;
 			}
 			$quotation = $this->quotation_mod->quotation_list_db($where);
@@ -148,7 +169,7 @@ class Home extends CI_Controller
 				"YEAR(created_date)" => date("Y"),
 				"status_delete" => 1,
 			];
-			if($branch != '' && $branch != NULL){
+			if ($branch != '' && $branch != NULL) {
 				$where['branch'] = $branch;
 			}
 			$datadb = $this->shipment_mod->shipment_list_db($where);
@@ -192,6 +213,49 @@ class Home extends CI_Controller
 			$data['total_customer'] = count($customer);
 			$data['total_quotation'] = count($quotation);
 		}
+		
+		$where = [
+			"status_bill" => 1,
+			"payment_terms LIKE '%Days'" => NULL,
+			"substr(shipment_invoice.payment_terms, 1, 2) < DATEDIFF(NOW(), invoice_date)" => NULL,
+			"shipment.status_delete" => 1
+		];
+		if ($this->session->userdata('branch')) {
+			if ($this->session->userdata('branch') != "NONE") {
+				if ($this->session->userdata('role') == 'Operator') {
+					$where["((assign_branch LIKE '%" . $this->session->userdata('branch') . "%' AND assign_branch IS NOT NULL) OR (assign_branch IS NULL AND branch LIKE '%" . $this->session->userdata('branch') . "%'))"] 	= NULL;
+				} else if ($this->session->userdata('role') == 'Driver') {
+				} else {
+					$customer = $this->shipment_mod->customer_list_db(["customer_id IN(SELECT id FROM user WHERE role = 'Customer' AND branch = '" . $this->session->userdata('branch') . "')" => null]);
+					$row_data = [];
+					foreach ($customer as $row) {
+						$row_data[] = $row['account_no'];
+					}
+					$where_in = '';
+					if(count($row_data) > 0){
+						$where_in = " OR (billing_account IN('" . implode("','", $row_data) . "'))";
+					}
+					// $where_in = "'" . implode("','", $row_data) . "'";
+					$where["((branch LIKE '%" . $this->session->userdata('branch') . "%' AND billing_account = '') $where_in)"] 	= NULL;
+				}
+			} else {
+				if ($this->input->get("branch")) {
+					$customer = $this->shipment_mod->customer_list_db(["customer_id IN(SELECT id FROM user WHERE role = 'Customer' AND branch = '" . $this->input->get('branch') . "')" => null]);
+					$row_data = [];
+					foreach ($customer as $row) {
+						$row_data[] = $row['account_no'];
+					}
+					$where_in = '';
+					if(count($row_data) > 0){
+						$where_in = " OR (billing_account IN('" . implode("','", $row_data) . "'))";
+					}
+					// $where_in = "'" . implode("','", $row_data) . "'";
+					$where["((branch LIKE '%" . $this->input->get("branch") . "%' AND billing_account = '') $where_in)"] 	= NULL;
+				}
+			}
+		}
+		$invoice = $this->shipment_mod->shipment_with_invoice_list_db($where);
+		$data['invoice_count'] = count($invoice);
 
 		$data['subview'] 			= 'home/home';
 		$data['meta_title'] 	= 'Home';

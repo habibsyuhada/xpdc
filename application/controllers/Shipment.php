@@ -26,7 +26,6 @@ class Shipment extends CI_Controller
 		if ($this->session->userdata('branch')) {
 			if ($this->session->userdata('branch') != "NONE") {
 				if ($this->session->userdata('role') == 'Operator') {
-					// $where["((assign_branch LIKE '%" . $this->session->userdata('branch') . "%' AND assign_branch IS NOT NULL) OR (assign_branch IS NULL AND branch LIKE '%" . $this->session->userdata('branch') . "%'))"] 	= NULL;
 					$where["((assign_branch LIKE '%" . $this->session->userdata('branch') . "%' AND assign_branch IS NOT NULL) OR (assign_branch IS NULL AND branch LIKE '%" . $this->session->userdata('branch') . "%'))"] 	= NULL;
 				} else if ($this->session->userdata('role') == 'Driver') {
 				} else {
@@ -35,9 +34,12 @@ class Shipment extends CI_Controller
 					foreach ($customer as $row) {
 						$row_data[] = $row['account_no'];
 					}
-					$where_in = "'" . implode("','", $row_data) . "'";
-					// $where["((assign_branch LIKE '%" . $this->session->userdata('branch') . "%' AND billing_account = '') OR (branch LIKE '%" . $this->session->userdata('branch') . "%' AND billing_account = '' AND assign_branch IS NULL) OR (billing_account IN(" . $where_in . ")))"] 	= NULL;
-					$where["(branch LIKE '%" . $this->session->userdata('branch') . "%' AND billing_account = '') OR (billing_account IN(" . $where_in . "))"] 	= NULL;
+					$where_in = '';
+					if(count($row_data) > 0){
+						$where_in = " OR (billing_account IN('" . implode("','", $row_data) . "'))";
+					}
+					// $where_in = "'" . implode("','", $row_data) . "'";
+					$where["((branch LIKE '%" . $this->session->userdata('branch') . "%' AND billing_account = '') $where_in)"] 	= NULL;
 				}
 			}
 		} else {
@@ -82,13 +84,22 @@ class Shipment extends CI_Controller
 		}
 		foreach ($this->input->get() as $key => $value) {
 			if ($value != "" || $value == "0") {
-				$exc_filter = array("status_driver", "created_date_from", "created_date_to");
+				$exc_filter = array("status_driver", "created_date_from", "created_date_to", "invoice_overdue");
 				if (!in_array($key, $exc_filter)) {
 					if ($this->input->get('page')) {
 						$where["((status = 'Picked Up') OR (status = 'Booked' AND status_pickup = 'Dropoff'))"] 	= NULL;
 					} else if ($key == 'branch') {
-						// $where["((branch LIKE '%" . $value . "%' AND assign_branch = '') OR (assign_branch LIKE '%".$value."%'))"] 	= NULL;
-						$where["((assign_branch LIKE '%" . $value . "%' AND assign_branch IS NOT NULL) OR (assign_branch IS NULL AND branch LIKE '%" . $value . "%'))"] 	= NULL;
+						if ($this->session->userdata('role') == 'Operator') {
+							$where["((assign_branch LIKE '%" . $value . "%' AND assign_branch IS NOT NULL) OR (assign_branch IS NULL AND branch LIKE '%" . $value . "%'))"] 	= NULL;
+						} else {
+							$customer = $this->shipment_mod->customer_list_db(["customer_id IN(SELECT id FROM user WHERE role = 'Customer' AND branch = '" . $value . "')" => null]);
+							$row_data = [];
+							foreach ($customer as $row) {
+								$row_data[] = $row['account_no'];
+							}
+							$where_in = "'" . implode("','", $row_data) . "'";
+							$where["((branch LIKE '%" . $value . "%' AND billing_account = '') OR (billing_account IN(" . $where_in . ")))"] 	= NULL;
+						}
 					} else if ($this->input->get('tracking_no')) {
 						if ($this->input->get('tracking_no') != '') {
 							$tracking_no = "'" . join("','", $this->input->get('tracking_no')) . "'";
@@ -101,6 +112,53 @@ class Shipment extends CI_Controller
 					$where["DATE(created_date) >= '" . $value . "'"] 	= NULL;
 				} elseif ($key == "created_date_to") {
 					$where["DATE(created_date) <= '" . $value . "'"] 	= NULL;
+				} elseif ($key == 'invoice_overdue') {
+					$sub_where = [
+						"status_bill" => 1,
+						"payment_terms LIKE '%Days'" => NULL,
+						"substr(shipment_invoice.payment_terms, 1, 2) < DATEDIFF(NOW(), invoice_date)" => NULL,
+						"shipment.status_delete" => 1
+					];
+					if ($this->session->userdata('branch')) {
+						if ($this->session->userdata('branch') != "NONE") {
+							if ($this->session->userdata('role') == 'Operator') {
+								$sub_where["((assign_branch LIKE '%" . $this->session->userdata('branch') . "%' AND assign_branch IS NOT NULL) OR (assign_branch IS NULL AND branch LIKE '%" . $this->session->userdata('branch') . "%'))"] 	= NULL;
+							} else if ($this->session->userdata('role') == 'Driver') {
+							} else {
+								$customer = $this->shipment_mod->customer_list_db(["customer_id IN(SELECT id FROM user WHERE role = 'Customer' AND branch = '" . $this->session->userdata('branch') . "')" => null]);
+								$row_data = [];
+								foreach ($customer as $row) {
+									$row_data[] = $row['account_no'];
+								}
+								$where_in = '';
+								if(count($row_data) > 0){
+									$where_in = " OR (billing_account IN('" . implode("','", $row_data) . "'))";
+								}
+								// $where_in = "'" . implode("','", $row_data) . "'";
+								$sub_where["((branch LIKE '%" . $this->session->userdata('branch') . "%' AND billing_account = '') $where_in)"] 	= NULL;
+							}
+						} else {
+							if ($this->input->get("branch")) {
+								$customer = $this->shipment_mod->customer_list_db(["customer_id IN(SELECT id FROM user WHERE role = 'Customer' AND branch = '" . $this->input->get('branch') . "')" => null]);
+								$row_data = [];
+								foreach ($customer as $row) {
+									$row_data[] = $row['account_no'];
+								}
+								$where_in = '';
+								if(count($row_data) > 0){
+									$where_in = " OR (billing_account IN('" . implode("','", $row_data) . "'))";
+								}
+								// $where_in = "'" . implode("','", $row_data) . "'";
+								$sub_where["((branch LIKE '%" . $this->input->get("branch") . "%' AND billing_account = '') $where_in)"] 	= NULL;
+							}
+						}
+					}
+					$invoice = $this->shipment_mod->shipment_with_invoice_list_db($sub_where);
+					$shipment_id = [];
+					foreach ($invoice as $rows) {
+						$shipment_id[] = $rows['id_shipment'];
+					}
+					$where["shipment.id IN ('" . join("','", $shipment_id) . "')"] = NULL;
 				}
 			}
 		}
@@ -1265,6 +1323,7 @@ class Shipment extends CI_Controller
 				'bank_name'					=> $post['bank_name'],
 				'swift_code'						=> $post['swift_code'],
 				'bank_name'					=> $post['bank_name'],
+				'payment_info'				=> $post['payment_info']
 			);
 			$id_shipment = $this->shipment_mod->shipment_invoice_create_process_db($form_data);
 
@@ -1286,6 +1345,7 @@ class Shipment extends CI_Controller
 				'bank_address'						=> $post['bank_address'],
 				'swift_code'						=> $post['swift_code'],
 				'bank_name'					=> $post['bank_name'],
+				'payment_info'				=> $post['payment_info']
 			);
 			$where['id'] = $post['id_invoice'];
 			$this->shipment_mod->shipment_invoice_update_process_db($form_data, $where);
@@ -1300,6 +1360,36 @@ class Shipment extends CI_Controller
 				$this->shipment_mod->shipment_detail_update_process_db($form_data, $where);
 
 				if ($post['status_bill'] == 2) {
+					if (!empty($_FILES['file']['name'])) {
+						$config['upload_path']          = 'file/invoice/';
+						$config['file_name']            = 'invoice_customer_' . $this->session->userdata('id') . '_' . date('YmsHis');
+						$config['allowed_types']        = '*';
+						$config['overwrite'] 			= TRUE;
+
+						$this->load->library('upload');
+						$this->upload->initialize($config);
+
+						if (!$this->upload->do_upload('file')) {
+							$this->session->set_flashdata('error', $this->upload->display_errors());
+							redirect($_SERVER['HTTP_REFERER']);
+							return false;
+						}
+
+						$where['shipment.id'] = $post['id'];
+						$shipment_list 					= $this->shipment_mod->shipment_list_db($where);
+
+						$form_data = [
+							"paid_attachment" => $this->upload->data("file_name"),
+						];
+						$where = ['id_shipment' => $post['id']];
+						$this->shipment_mod->shipment_invoice_update_process_db($form_data, $where);
+					} else {
+						$this->session->set_flashdata('error', "Must Upload Attachment!");
+						redirect($_SERVER['HTTP_REFERER']);
+						return false;
+					}
+
+					unset($where);
 					$where = [
 						"id_shipment" => $post['id']
 					];
@@ -1326,8 +1416,8 @@ class Shipment extends CI_Controller
 			}
 		}
 
-		foreach ($post['unit_price'] as $key => $value) {
-			if ($value != "" && $value != "0") {
+		foreach ($post['description'] as $key => $value) {
+			if ($value != "") {
 				unset($where);
 				if ($post['id_cost'][$key] == "") {
 					$form_data = array(
@@ -2223,14 +2313,14 @@ class Shipment extends CI_Controller
 
 		$where['status_delete'] 	= 1;
 		$datadb 				= $this->shipment_mod->shipment_list_db($where, null, $order_by);
-		
+
 		$data['type_of_mode'] = [];
-		foreach($datadb as $row){
+		foreach ($datadb as $row) {
 			$data['type_of_mode'][$row['id']] = $row['type_of_mode'];
 		}
-		
+
 		$data['shipment_list'] = $datadb;
-		
+
 		unset($where);
 		$where['id_shipment IN (' . $post['id'] . ')'] = NULL;
 		$data['packages_list'] 					= $this->shipment_mod->master_tracking_packages_list_db($where);
@@ -2241,5 +2331,35 @@ class Shipment extends CI_Controller
 		$this->pdf->setPaper('A4', 'potrait');
 		$this->pdf->filename = "Master-tracking-detail-" . date('Y-m-d H:i:s') . ".pdf";
 		$this->pdf->load_view('master_tracking/master_tracking_detail_pdf', $data);
+	}
+
+	public function shipment_pending_payment($id_shipment)
+	{
+
+		$form_data = array(
+			'status' 		=> "Pending Payment",
+		);
+		$where['id'] = $id_shipment;
+		$this->shipment_mod->shipment_update_process_db($form_data, $where);
+
+		unset($where);
+		$where = [
+			"id_shipment" => $id_shipment
+		];
+		$datadb = $this->shipment_mod->shipment_history_list_db($where);
+		$history = $datadb[0];
+
+		$form_data = array(
+			'id_shipment' 	=> $id_shipment,
+			'date' 					=> date("Y-m-d"),
+			'time' 					=> date("H:i:s"),
+			'location' 			=> $history['location'],
+			'status' 				=> "Pending Payment",
+			'remarks' 			=> "",
+		);
+		$id_history = $this->shipment_mod->shipment_history_create_process_db($form_data);
+
+		$this->session->set_flashdata('success', 'Your Shipment status has changed to Pending Payment!');
+		redirect($_SERVER['HTTP_REFERER']);
 	}
 }

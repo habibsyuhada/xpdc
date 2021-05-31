@@ -40,6 +40,7 @@ $side_permission = array(
 						<button type="button" id="navbar-fullscreen" class="nav-link"><i class="ik ik-maximize"></i></button>
 					</div>
 					<div class="top-menu d-flex align-items-center">
+						<div id="div_notification"></div>
 						<div class="dropdown">
 							<a class="dropdown-toggle" href="#" id="userDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><img class="avatar" src="<?php echo base_url(); ?>assets/img/just_logo_xpdc.jpeg" alt=""><span style="position: relative; bottom: 3px; left: 5px;"><b><?php echo $this->session->userdata('name') ?></b></span></a>
 							<div class="dropdown-menu dropdown-menu-right" aria-labelledby="userDropdown">
@@ -128,7 +129,7 @@ $side_permission = array(
 								<?php endif; ?>
 								<?php if ($side_permission[13] == 1) : ?>
 									<div class="nav-item">
-										<a href="<?php echo base_url() ?>customer/check_price"><i class="fas fa-ship"></i> <span><?= ($this->session->userdata('role') == 'Customer') ? 'Book Shipment' : 'Price Check' ?></span></a>
+										<a href="<?php echo base_url() ?>customer/check_price"><i class="fas fa-ship"></i> <span><?= ($this->session->userdata('role') == 'Customer' || $this->session->userdata('role') == 'Commercial') ? 'Book Shipment' : 'Price Check' ?></span></a>
 									</div>
 								<?php endif; ?>
 								<?php if ($side_permission[9] == 1) : ?>
@@ -203,3 +204,15 @@ $side_permission = array(
 					</div>
 				</div>
 			</div>
+			<script>
+				function load_notification() {
+					$.ajax({
+						url: "<?=base_url()?>home/notification"
+					}).done(function(response){
+						$("#div_notification").html(response);
+					})
+				}
+				<?php if($this->session->userdata('id') != 'Guest'){ ?>
+					load_notification();
+				<?php } ?>
+			</script>

@@ -30,7 +30,7 @@ $page_permission = array(
     <?php endif; ?>
     <?php if ($this->session->userdata('role') == 'Super Admin') : ?>
       <div class="row justify-content-center clearfix">
-        <div class="col-xl-6 col-lg-6 col-md-6 col-sm-12">
+        <div class="col-xl-4 col-lg-4 col-md-4 col-sm-12">
           <div class="widget" data-link="<?php echo base_url() ?>shipment/shipment_list?type_of_shipment=Domestic+Shipping&type_of_mode=Air+Freight&created_date_from=<?php echo date("Y-m-"); ?>01&created_date_to=<?php echo date("Y-m-t"); ?>">
             <div class="widget-body">
               <div class="d-flex justify-content-between align-items-center">
@@ -46,7 +46,7 @@ $page_permission = array(
             </div>
           </div>
         </div>
-        <div class="col-xl-6 col-lg-6 col-md-6 col-sm-12">
+        <div class="col-xl-4 col-lg-4 col-md-4 col-sm-12">
           <div class="widget" data-link="<?php echo base_url() ?>shipment/shipment_list?type_of_shipment=Domestic+Shipping&type_of_mode=Air+Freight&created_date_from=<?php echo date("Y-m-"); ?>01&created_date_to=<?php echo date("Y-m-t"); ?>">
             <div class="widget-body">
               <div class="d-flex justify-content-between align-items-center">
@@ -64,6 +64,22 @@ $page_permission = array(
                 </div>
                 <div class="icon">
                   <i class="fas fa-plane-departure"></i>
+                </div>
+              </div>
+              <!-- <small class="text-small mt-10 d-block">6% higher than last month</small> -->
+            </div>
+          </div>
+        </div>
+        <div class="col-xl-4 col-lg-4 col-md-4 col-sm-12">
+          <div class="widget invoice_overdue" data-link="<?php echo base_url() ?>shipment/shipment_list?invoice_overdue">
+            <div class="widget-body">
+              <div class="d-flex justify-content-between align-items-center">
+                <div class="state">
+                  <h6>Invoice Overdue</h6>
+                  <h4 class="m-0 font-weight-bold"><?php echo number_format($invoice_count); ?> Invoice</h4>
+                </div>
+                <div class="icon">
+                  <i class="fas fa-clock"></i>
                 </div>
               </div>
               <!-- <small class="text-small mt-10 d-block">6% higher than last month</small> -->
@@ -762,8 +778,40 @@ $page_permission = array(
         </div>
       </div>
     <?php endif; ?>
-    <?php if ($page_permission[2] == 1) : ?>
+    <?php if ($this->session->userdata('role') == 'Finance') : ?>
       <div class="row justify-content-center clearfix">
+        <div class="col-xl-6 col-lg-6 col-md-6 col-sm-12">
+          <div class="widget" data-link="#!">
+            <div class="widget-body">
+              <div class="d-flex justify-content-between align-items-center">
+                <div class="state">
+                  <h6>Name</h6>
+                  <h4 class="m-0 font-weight-bold"><?php echo $this->session->userdata('name'); ?></h4>
+                </div>
+                <div class="icon">
+                  <i class="fas fa-user"></i>
+                </div>
+              </div>
+              <!-- <small class="text-small mt-10 d-block">6% higher than last month</small> -->
+            </div>
+          </div>
+        </div>
+        <div class="col-xl-6 col-lg-6 col-md-6 col-sm-12">
+          <div class="widget invoice_overdue" data-link="<?php echo base_url() ?>shipment/shipment_list?invoice_overdue">
+            <div class="widget-body">
+              <div class="d-flex justify-content-between align-items-center">
+                <div class="state">
+                  <h6>Invoice Overdue</h6>
+                  <h4 class="m-0 font-weight-bold"><?php echo number_format($invoice_count); ?> Invoice</h4>
+                </div>
+                <div class="icon">
+                  <i class="fas fa-clock"></i>
+                </div>
+              </div>
+              <!-- <small class="text-small mt-10 d-block">6% higher than last month</small> -->
+            </div>
+          </div>
+        </div>
         <div class="col-xl-4 col-lg-4 col-md-4 col-sm-12">
           <div class="widget status-bill">
             <div class="widget-body">
@@ -840,5 +888,9 @@ $page_permission = array(
     var status = $(this).find('h6').attr("name");
     var branch = '<?= ($this->input->get('branch') == '' || $this->input->get('branch') == null) ? '' : "&branch=" . $this->input->get('branch') ?>';
     window.location = "<?php echo base_url() ?>shipment/shipment_list?status_bill=" + status + branch;
+  });
+  $('.widget.invoice_overdue').on('click', function() {
+    var branch = '<?= ($this->input->get('branch') == '' || $this->input->get('branch') == null) ? '' : "&branch=" . $this->input->get('branch') ?>';
+    window.location = "<?php echo base_url() ?>shipment/shipment_list?invoice_overdue=1" + branch;
   });
 </script>

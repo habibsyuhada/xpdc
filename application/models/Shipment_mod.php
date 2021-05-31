@@ -57,6 +57,18 @@ class Shipment_mod extends CI_Model
     return $query->result_array();
   }
 
+  function shipment_result_history_list_db()
+  {
+    $execute = "WITH shipment_last_history AS (
+      SELECT m.*, ROW_NUMBER() OVER (PARTITION BY id_shipment ORDER BY CONCAT(date, ' ',time) DESC) AS rn
+      FROM shipment_history AS m
+    )
+    SELECT a.*, datediff(NOW(), a.date) as remain_day, b.tracking_no FROM shipment_last_history a LEFT OUTER JOIN shipment b ON a.id_shipment = b.id WHERE a.rn = 1 AND a.date < NOW() - INTERVAL 1 DAY AND b.status NOT IN ('Delivered','Cancelled') AND b.status_delete = 1 ORDER BY remain_day DESC";
+
+    $query = $this->db->query($execute);
+    return $query->result_array();
+  }
+
   public function quotation_list_db($where = null)
   {
 
@@ -336,6 +348,19 @@ class Shipment_mod extends CI_Model
       $this->db->where($where);
     }
     $query = $this->db->get('shipment_invoice');
+    return $query->result_array();
+  }
+
+  function shipment_with_invoice_list_db($where = null)
+  {
+    if (isset($where)) {
+      $this->db->where($where);
+    }
+    $this->db->select("*");
+    $this->db->from('shipment');
+    $this->db->join('shipment_detail', 'shipment.id = shipment_detail.id_shipment');
+    $this->db->join('shipment_invoice', 'shipment.id = shipment_invoice.id_shipment', 'left outer');
+    $query = $this->db->get();
     return $query->result_array();
   }
 

@@ -40,11 +40,17 @@ class Master_tracking extends CI_Controller
 
 	public function master_tracking_list()
 	{
-		$data['master_list'] 		= $this->master_tracking_mod->master_tracking_list_db();
-
 		$where['(master_tracking IS NOT NULL OR master_tracking != "")'] = NULL;
+		foreach ($this->input->get() as $key => $value) {
+			$filter = array("branch", "assign_branch");
+			if (in_array($key, $filter)) {
+				if ($value != '') {
+					$where[$key] 	= $value;
+				}
+			}
+		}
 		$shipment_list 					= $this->shipment_mod->shipment_list_db($where);
-		$shipment 							= array();
+		$shipment 							= [];
 		$id_shipment 						= [];
 		$master_per_shipment 		= [];
 		foreach ($shipment_list as $key => $value) {
@@ -55,15 +61,26 @@ class Master_tracking extends CI_Controller
 			}
 		}
 		$data['shipment'] 			= $shipment;
+		$data['branch'] 			= $this->shipment_mod->branch_list_db();
 
 		unset($where);
-		$where['id_shipment IN (' . join(", ", $id_shipment) . ')'] 	= NULL;
-		$packages_list 					= $this->shipment_mod->shipment_packages_list_db($where);
-		$packages 							= [];
-		foreach ($packages_list as $key => $value) {
-			@$packages[$master_per_shipment[$value['id_shipment']]] += $value['qty'];
+		if ($this->input->get()) {
+			$where["master_tracking IN('" . join("','", $master_per_shipment) . "')"] = NULL;
+		} else {
+			$where = NULL;
 		}
-		$data['packages'] 			= $packages;
+		$data['master_list'] 		= $this->master_tracking_mod->master_tracking_list_db($where);
+		unset($where);
+
+		if (!empty($id_shipment)) {
+			$where['id_shipment IN (' . join(", ", $id_shipment) . ')'] 	= NULL;
+			$packages_list 					= $this->shipment_mod->shipment_packages_list_db($where);
+			$packages 							= [];
+			foreach ($packages_list as $key => $value) {
+				@$packages[$master_per_shipment[$value['id_shipment']]] += $value['qty'];
+			}
+			$data['packages'] 			= $packages;
+		}
 
 		$data['subview'] 				= 'master_tracking/master_tracking_list';
 		$data['meta_title'] 		= 'Master Tracking List';
@@ -392,7 +409,7 @@ class Master_tracking extends CI_Controller
 
 		$where['shipment.id IN (' . $post['id'] . ')'] = NULL;
 		$this->shipment_mod->shipment_update_process_db($form_data, $where);
-		
+
 		$this->session->set_flashdata('success', 'Your Master Tracking data has been Updated!');
 		redirect('master_tracking/master_tracking_detail/' . $master_tracking);
 	}
@@ -404,18 +421,18 @@ class Master_tracking extends CI_Controller
 
 		$where['status_delete'] 	= 1;
 		$datadb 				= $this->shipment_mod->shipment_list_db($where, null, $order_by);
-		
+
 		$data['type_of_mode'] = [];
 		$shipment_id = [];
-		foreach($datadb as $row){
+		foreach ($datadb as $row) {
 			$data['type_of_mode'][$row['id']] = $row['type_of_mode'];
 			$shipment_id[] = $row['id'];
 		}
-		
+
 		$data['shipment_list'] = $datadb;
-		
+
 		unset($where);
-		$where['id_shipment IN (' . implode(",",$shipment_id) . ')'] = NULL;
+		$where['id_shipment IN (' . implode(",", $shipment_id) . ')'] = NULL;
 		$data['packages_list'] 					= $this->shipment_mod->master_tracking_packages_list_db($where);
 
 		$data['master_tracking'] = $master_tracking;

@@ -109,7 +109,7 @@ $page_permission = array(
                   <div class="col-md-4" id="div_datepaid" <?= (@$shipment_list['status_bill'] == '1') ? 'style="display: none"' : ''; ?>>
                     <div class="form-group">
                       <label>Date Paid</label>
-                      <input type="date" class="form-control" name="date_paid" value="<?php echo @$shipment_list['date_paid'] ?>" required>
+                      <input type="date" class="form-control" name="date_paid" value="<?php echo @$shipment_list['date_paid'] ?>">
                     </div>
                   </div>
                   <div class="col-md-4" id="div_uploadpaid" <?= (@$shipment_list['status_bill'] == '1') ? 'style="display: none"' : ''; ?>>
@@ -416,6 +416,7 @@ $page_permission = array(
               <div class="row clearfix">
                 <div class="col-md text-right">
                   <?php if (isset($invoice['invoice_no'])) : ?>
+                    <a href="<?php echo base_url() ?>shipment/shipment_invoice_pdf/<?php echo @$invoice['id_shipment'] ?>" class="btn btn-info">Download Shipment Bill</a>
                     <a href="<?php echo base_url() ?>shipment/shipment_pending_payment/<?php echo @$invoice['id_shipment'] ?>" onclick="return confirm('Apakah anda yakin?')" class="btn btn-warning">Pending Payment</a>
                     <a href="<?php echo base_url() ?>shipment/shipment_invoice_pdf/<?php echo @$invoice['id_shipment'] ?>" target="_blank" class="btn btn-danger" title="Export Invoice">PDF</a>
                   <?php endif; ?>

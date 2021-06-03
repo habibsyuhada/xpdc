@@ -7,12 +7,12 @@
     @page {
       margin: 0px;
       padding: 0px;
-      size: 480px 2003px landscape;
+      size: 276.37px 2003px landscape;
     }
 
     body {
       margin: 0px;
-      font-size: 23px;
+      font-size: 14px;
     }
 
     .text-center {
@@ -50,12 +50,6 @@ foreach ($packages_list as $key => $value) {
   $total_weight += $value['weight'] * $value['qty'];
   $total_vol_weight = $total_vol_weight + ($value['qty'] * ($value['length'] * $value['width'] * $value['height']) / $per);
 }
-$total_cost = 0;
-$currency = '';
-foreach ($cost as $key => $value) {
-  $total_cost += ($value['qty'] * $value['unit_price'] * $value['exchange_rate']);
-  $currency = $value['currency'];
-}
 ?>
 
 <body>
@@ -63,44 +57,44 @@ foreach ($cost as $key => $value) {
     <tbody>
       <tr>
         <td rowspan="3" style="width:20%" class="text-center">
-          <img src="<?php echo base_url(); ?>assets/img/logo-default.png" width="300px"><br>
+          <img src="<?php echo base_url(); ?>assets/img/logo-fix.png" width="150px"><br>
         </td>
         <td rowspan="3" style="width:20%" class="text-center">
-          <img width="240px" src="<?php echo site_url(); ?>home/barcode_generator/<?php echo $shipment['tracking_no'] ?>"><br>
+          <img height="100%" src="<?php echo site_url(); ?>home/barcode_generator/<?php echo $shipment['tracking_no'] ?>"><br>
           <b style="margin-top: 5px;"><?php echo $shipment['tracking_no'] ?></b>
         </td>
         <td style="width:20%">
           Shipment Date: <?php echo date("d-m-Y", strtotime($shipment['created_date'])) ?>
         </td>
         <td style="width:20%">
-          Insurance: <?php echo $shipment['insurance'] ?>
+          Content: <?php echo $shipment['description_of_goods'] ?>
         </td>
         <td style="width:20%">
-          Type of Shipment: <?php echo $shipment['type_of_shipment'] ?>
+          HS Code: <?php echo $shipment['hscode'] ?>
         </td>
       </tr>
       <tr>
         <td>
-          Content: <?php echo $shipment['description_of_goods'] ?>
-        </td>
-        <td>
-          Quantity: <?php echo $total_qty ?> <?php echo $shipment['piece_type'] ?>
+          Type of Shipment: <?php echo $shipment['type_of_shipment'] ?>
         </td>
         <td>
           Type of Mode: <?php echo $shipment['type_of_mode'] ?>
         </td>
+        <td>
+          Incoterms: <?php echo $shipment['incoterms'] ?>
+        </td>
       </tr>
       <tr>
         <td>
-          Declared Value: <?php echo $shipment['currency'] ?> <?php echo number_format($shipment['declared_value'], 2); ?>
+          Quantity: <?php echo $total_qty ?> <?php echo $shipment['piece_type'] ?>
           <!--  1 Pallet -->
         </td>
         <td>
-          Chargeable Weight: <?php echo ($total_weight >= $total_vol_weight) ? number_format($total_weight, 2) : number_format($total_vol_weight, 2) ?> Kg
+          Weight: <?php echo number_format($total_weight, 2) ?> Kg
           <!--  100 Kg -->
         </td>
         <td>
-          Shipment Bill: <?php echo $currency . " " . number_format($total_cost, 2) ?>
+          Declared Value: <?php echo $shipment['currency'] ?> <?php echo number_format($shipment['declared_value'], 2); ?>
           <!--  100 Kg -->
         </td>
       </tr>

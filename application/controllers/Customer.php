@@ -101,12 +101,33 @@ class Customer extends CI_Controller
       $qry = "SELECT * FROM table_rate_domestic WHERE (('" . $weight_fix_airfreight . "' BETWEEN airfreight_min_kg AND airfreight_max_kg) OR ('" . $weight_fix_landfreight . "' BETWEEN landfreight_min_kg AND landfreight_max_kg) OR ('" . $weight_fix_seafreight . "' BETWEEN seafreight_min_kg AND seafreight_max_kg)) AND city = '" . $post['city'] . "' AND id_customer = '" . $id_customer . "' AND id_branch = 0 ";
       $query = $this->customer_mod->select_manual_query($qry);
       if ($query->num_rows() > 0) {
-        // if customer table rate exists
-        $row = $query->row_array();
-        $data['airfreight_weight'] = $weight_fix_airfreight * $row['airfreight_price_kg'];
-        $data['landfreight_weight'] = $weight_fix_landfreight * $row['landfreight_price_kg'];
-        $data['seafreight_weight'] = $weight_fix_seafreight * $row['seafreight_price_kg'];
-        $data['result'] = $row;
+        $row = $query->result_array();
+        $data_airfreight = [];
+        $data_landfreight = [];
+        $data_seafreight = [];
+        $airfreight_price = 0;
+        $landfreight_price = 0;
+        $seafreight_price = 0;
+        foreach ($row as $values) {
+          if ($values['airfreight_min_kg'] <= $weight_fix_airfreight && $values['airfreight_max_kg'] >= $weight_fix_airfreight) {
+            $data_airfreight = $values;
+            $airfreight_price = $values['airfreight_price_kg'];
+          }
+          if ($values['landfreight_min_kg'] <= $weight_fix_landfreight && $values['landfreight_max_kg'] >= $weight_fix_landfreight) {
+            $data_landfreight = $values;
+            $landfreight_price = $values['landfreight_price_kg'];
+          }
+          if ($values['seafreight_min_kg'] <= $weight_fix_seafreight && $values['seafreight_max_kg'] >= $weight_fix_seafreight) {
+            $data_seafreight = $values;
+            $seafreight_price = $values['seafreight_price_kg'];
+          }
+        }
+        $data['airfreight_weight'] = $weight_fix_airfreight * $airfreight_price;
+        $data['landfreight_weight'] = $weight_fix_landfreight * $landfreight_price;
+        $data['seafreight_weight'] = $weight_fix_seafreight * $seafreight_price;
+        $data['result_airfreight'] = $data_airfreight;
+        $data['result_landfreight'] = $data_landfreight;
+        $data['result_seafreight'] = $data_seafreight;
         $data['status'] = "202";
         $data['type_of_shipment'] = $post['type_of_shipment'];
       } else {
@@ -114,11 +135,33 @@ class Customer extends CI_Controller
         $qry = "SELECT * FROM table_rate_domestic WHERE (('" . $weight_fix_airfreight . "' BETWEEN airfreight_min_kg AND airfreight_max_kg) OR ('" . $weight_fix_landfreight . "' BETWEEN landfreight_min_kg AND landfreight_max_kg) OR ('" . $weight_fix_seafreight . "' BETWEEN seafreight_min_kg AND seafreight_max_kg)) AND city = '" . $post['city'] . "' AND id_branch = '" . $id_branch . "' AND id_customer = 0 ";
         $query = $this->customer_mod->select_manual_query($qry);
         if ($query->num_rows() > 0) {
-          $row = $query->row_array();
-          $data['airfreight_weight'] = $weight_fix_airfreight * $row['airfreight_price_kg'];
-          $data['landfreight_weight'] = $weight_fix_landfreight * $row['landfreight_price_kg'];
-          $data['seafreight_weight'] = $weight_fix_seafreight * $row['seafreight_price_kg'];
-          $data['result'] = $row;
+          $row = $query->result_array();
+          $data_airfreight = [];
+          $data_landfreight = [];
+          $data_seafreight = [];
+          $airfreight_price = 0;
+          $landfreight_price = 0;
+          $seafreight_price = 0;
+          foreach ($row as $values) {
+            if ($values['airfreight_min_kg'] <= $weight_fix_airfreight && $values['airfreight_max_kg'] >= $weight_fix_airfreight) {
+              $data_airfreight = $values;
+              $airfreight_price = $values['airfreight_price_kg'];
+            }
+            if ($values['landfreight_min_kg'] <= $weight_fix_landfreight && $values['landfreight_max_kg'] >= $weight_fix_landfreight) {
+              $data_landfreight = $values;
+              $landfreight_price = $values['landfreight_price_kg'];
+            }
+            if ($values['seafreight_min_kg'] <= $weight_fix_seafreight && $values['seafreight_max_kg'] >= $weight_fix_seafreight) {
+              $data_seafreight = $values;
+              $seafreight_price = $values['seafreight_price_kg'];
+            }
+          }
+          $data['airfreight_weight'] = $weight_fix_airfreight * $airfreight_price;
+          $data['landfreight_weight'] = $weight_fix_landfreight * $landfreight_price;
+          $data['seafreight_weight'] = $weight_fix_seafreight * $seafreight_price;
+          $data['result_airfreight'] = $data_airfreight;
+          $data['result_landfreight'] = $data_landfreight;
+          $data['result_seafreight'] = $data_seafreight;
           $data['status'] = "202";
           $data['type_of_shipment'] = $post['type_of_shipment'];
         } else {
@@ -306,7 +349,7 @@ class Customer extends CI_Controller
       ];
     }
 
-    if($this->session->userdata('role') == 'Commercial'){
+    if ($this->session->userdata('role') == 'Commercial') {
       $data['commercial_create'] = '';
     }
 

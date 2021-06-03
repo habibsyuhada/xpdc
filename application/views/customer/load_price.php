@@ -34,16 +34,16 @@
     </tr>
   </table>
   <table class="table table-bordered text-center">
-    <?php if ($result != null) { ?>
+    <?php if (!empty($result_airfreight) || !empty($result_landfreight) || !empty($result_seafreight)) { ?>
       <tr>
         <td>Estimate Price Airfreight (Rp.)</td>
         <td>Price Landfreight (Rp.)</td>
         <td>Price Seafreight (Rp.)</td>
       </tr>
       <tr>
-        <td><?= ($airfreight_weight != 0) ? "Rp. " . number_format($airfreight_weight, 2) . " (" . $result['airfreight_term'] . ")" : '<button type="button" class=" btn btn-danger btn-sm btn-block">Not Available</button>'; ?></td>
-        <td><?= ($landfreight_weight != 0) ? "Rp. " . number_format($landfreight_weight, 2) . " (" . $result['landfreight_term'] . ")" : '<button type="button" class=" btn btn-danger btn-sm btn-block">Not Available</button>'; ?></td>
-        <td><?= ($seafreight_weight != 0) ? "Rp. " . number_format($seafreight_weight, 2) . " (" . $result['seafreight_term'] . ")" : '<button type="button" class=" btn btn-danger btn-sm btn-block">Not Available</button>'; ?></td>
+        <td><?= ($airfreight_weight != 0) ? "Rp. " . number_format($airfreight_weight, 2) . " (" . $result_airfreight['airfreight_term'] . ")" : '<button type="button" class=" btn btn-danger btn-sm btn-block">Not Available</button>'; ?></td>
+        <td><?= ($landfreight_weight != 0) ? "Rp. " . number_format($landfreight_weight, 2) . " (" . $result_landfreight['landfreight_term'] . ")" : '<button type="button" class=" btn btn-danger btn-sm btn-block">Not Available</button>'; ?></td>
+        <td><?= ($seafreight_weight != 0) ? "Rp. " . number_format($seafreight_weight, 2) . " (" . $result_seafreight['seafreight_term'] . ")" : '<button type="button" class=" btn btn-danger btn-sm btn-block">Not Available</button>'; ?></td>
       </tr>
       <tr>
         <td>Estimate Chargeable Weight : <?= $weight_fix_airfreight ?> Kg</td>
@@ -66,7 +66,7 @@
                 <input type="hidden" name="measurement" value="<?= $measurement_post ?>">
                 <input type="hidden" name="check_price_weight" value="<?= $airfreight_weight ?>">
                 <input type="hidden" name="check_price_weight_fix" value="<?= $weight_fix_airfreight ?>">
-                <input type="hidden" name="check_price_term" value="<?= $result['airfreight_term'] ?>">
+                <input type="hidden" name="check_price_term" value="<?= $result_airfreight['airfreight_term'] ?>">
 
                 <?php foreach ($post['qty'] as $key => $value) : ?>
                   <input type="hidden" name="qty[]" value="<?= $post['qty'][$key] ?>">
@@ -100,7 +100,7 @@
                 <input type="hidden" name="measurement" value="<?= $measurement_post ?>">
                 <input type="hidden" name="check_price_weight" value="<?= $landfreight_weight ?>">
                 <input type="hidden" name="check_price_weight_fix" value="<?= $weight_fix_landfreight ?>">
-                <input type="hidden" name="check_price_term" value="<?= $result['landfreight_term'] ?>">
+                <input type="hidden" name="check_price_term" value="<?= $result_landfreight['landfreight_term'] ?>">
 
                 <?php foreach ($post['qty'] as $key => $value) : ?>
                   <input type="hidden" name="qty[]" value="<?= $post['qty'][$key] ?>">
@@ -134,7 +134,7 @@
                 <input type="hidden" name="measurement" value="<?= $measurement_post ?>">
                 <input type="hidden" name="check_price_weight" value="<?= $seafreight_weight ?>">
                 <input type="hidden" name="check_price_weight_fix" value="<?= $weight_fix_seafreight ?>">
-                <input type="hidden" name="check_price_term" value="<?= $result['seafreight_term'] ?>">
+                <input type="hidden" name="check_price_term" value="<?= $result_seafreight['seafreight_term'] ?>">
 
                 <?php foreach ($post['qty'] as $key => $value) : ?>
                   <input type="hidden" name="qty[]" value="<?= $post['qty'][$key] ?>">

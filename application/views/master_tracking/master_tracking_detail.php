@@ -202,6 +202,13 @@
     $("#form_takeout input[name=id]").val(data_checkbox.join(", "));
   });
 
+  $("input[name=tracking_no]").keyup(function(e) {
+    var tracking_no = $(this).val();
+    if(tracking_no.length == 14){
+      submit_new_tracking_no();
+    }
+  });
+
   function submit_new_tracking_no() {
     var tracking_no = $('input[name=tracking_no]').val();
     $.ajax({

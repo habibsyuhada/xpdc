@@ -1659,9 +1659,12 @@ class Shipment extends CI_Controller
 		$shipment_list 					= $this->shipment_mod->shipment_label_list_db($where);
 		$data['shipment'] 			= $shipment_list[0];
 		$data['packages_list'] 	= $shipment_list;
+		unset($where);
+		$where['id_shipment'] = $id;
+		$data['cost'] = $this->shipment_mod->shipment_cost_list_db($where);
 
 		$this->load->library('pdf');
-		$this->pdf->setPaper('A4', 'landscape');
+		// $this->pdf->setPaper('A4', 'landscape');
 		$this->pdf->filename = "AWB-" . $data['shipment']['tracking_no'] . ".pdf";
 		$this->pdf->load_view('shipment/shipment_awb_pdf', $data);
 	}

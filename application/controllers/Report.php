@@ -44,8 +44,7 @@ class Report extends CI_Controller
     $post = $this->input->post();
     if ($this->session->userdata('branch') != "NONE") {
       if ($this->session->userdata('role') == 'Operator') {
-        // $where["((assign_branch LIKE '%" . $this->session->userdata('branch') . "%' AND assign_branch IS NOT NULL) OR (assign_branch IS NULL AND branch LIKE '%" . $this->session->userdata('branch') . "%'))"] 	= NULL;
-        $where["((assign_branch LIKE '%" . $this->session->userdata('branch') . "%' AND assign_branch IS NOT NULL) OR (assign_branch IS NULL AND branch LIKE '%" . $this->session->userdata('branch') . "%'))"] 	= NULL;
+        $where["((assign_branch LIKE '%" . $this->session->userdata('branch') . "%' AND assign_branch IS NOT NULL) OR (assign_branch IS NULL AND branch LIKE '%" . $this->session->userdata('branch') . "%'))"]   = NULL;
       } else if ($this->session->userdata('role') == 'Driver') {
       } else {
         $customer = $this->shipment_mod->customer_list_db(["customer_id IN(SELECT id FROM user WHERE role = 'Customer' AND branch = '" . $this->session->userdata('branch') . "')" => null]);
@@ -53,31 +52,34 @@ class Report extends CI_Controller
         foreach ($customer as $row) {
           $row_data[] = $row['account_no'];
         }
-        $where_in = "'" . implode("','", $row_data) . "'";
-        // $where["((assign_branch LIKE '%" . $this->session->userdata('branch') . "%' AND billing_account = '') OR (branch LIKE '%" . $this->session->userdata('branch') . "%' AND billing_account = '' AND assign_branch IS NULL) OR (billing_account IN(" . $where_in . ")))"] 	= NULL;
-        $where["(branch LIKE '%" . $this->session->userdata('branch') . "%' AND billing_account = '') OR (billing_account IN(" . $where_in . "))"] 	= NULL;
+        $where_in = '';
+        if (count($row_data) > 0) {
+          $where_in = " OR (billing_account IN('" . implode("','", $row_data) . "'))";
+        }
+        // $where_in = "'" . implode("','", $row_data) . "'";
+        $where["((branch LIKE '%" . $this->session->userdata('branch') . "%' AND billing_account = '') $where_in)"]   = NULL;
       }
     }
 
     if ($this->session->userdata('role') == "Commercial") {
       unset($where);
-			$datadb 	= $this->home_mod->customer_list(array("status_delete" => 1, "create_by" => $this->session->userdata('id')));
-			$customer_list = [];
-			foreach ($datadb as $key => $value) {
-				if ($value['account_no'] != "") {
-					$customer_list[] = $value['account_no'];
-				}
-			}
-			if (count($customer_list) == 0) {
-				$customer_list[] = "0";
-			}
-			$where['status_delete'] 	= 1;
-			$where["(shipment_detail.billing_account IN ('" . join("', '", $customer_list) . "') OR created_by = '" . $this->session->userdata('id') . "')"] 	= NULL;
-			// $where["created_by"] 	= $this->session->userdata('id');
+      $datadb   = $this->home_mod->customer_list(array("status_delete" => 1, "create_by" => $this->session->userdata('id')));
+      $customer_list = [];
+      foreach ($datadb as $key => $value) {
+        if ($value['account_no'] != "") {
+          $customer_list[] = $value['account_no'];
+        }
+      }
+      if (count($customer_list) == 0) {
+        $customer_list[] = "0";
+      }
+      $where['status_delete']   = 1;
+      $where["(shipment_detail.billing_account IN ('" . join("', '", $customer_list) . "') OR created_by = '" . $this->session->userdata('id') . "')"]   = NULL;
+      // $where["created_by"] 	= $this->session->userdata('id');
     }
 
-    $where['created_date >=']  = $post['date_from'];
-    $where['created_date <=']  = $post['date_to'];
+    $where["created_date BETWEEN '" . $post['date_from'] . " 00:00:00' AND '" . $post['date_to'] . " 23:59:59'"]  = NULL;
+    // $where['created_date <=']  = ;
     $where['status_delete']    = 1;
 
     $shipment_list             = $this->shipment_mod->shipment_list_db($where);

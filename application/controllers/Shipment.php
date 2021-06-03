@@ -782,25 +782,25 @@ class Shipment extends CI_Controller
 				];
 				$this->shipment_mod->shipment_cost_update_process_db($form_data, ["id" => $cost['id']]);
 
-				$form_data = ["status" => "Pending Payment"];
-				$where = ["id" => $post['id']];
-				$this->shipment_mod->shipment_update_process_db($form_data, $where);
+				// $form_data = ["status" => "Pending Payment"];
+				// $where = ["id" => $post['id']];
+				// $this->shipment_mod->shipment_update_process_db($form_data, $where);
 
-				$where = [
-					"id_shipment" => $post['id']
-				];
-				$datadb = $this->shipment_mod->shipment_history_list_db($where);
-				$history = $datadb[0];
+				// $where = [
+				// 	"id_shipment" => $post['id']
+				// ];
+				// $datadb = $this->shipment_mod->shipment_history_list_db($where);
+				// $history = $datadb[0];
 
-				$form_data = array(
-					'id_shipment' 	=> $post['id'],
-					'date' 					=> date("Y-m-d"),
-					'time' 					=> date("H:i:s"),
-					'location' 			=> $history['location'],
-					'status' 				=> "Pending Payment",
-					'remarks' 			=> "Shipment information updated.",
-				);
-				$id_history = $this->shipment_mod->shipment_history_create_process_db($form_data);
+				// $form_data = array(
+				// 	'id_shipment' 	=> $post['id'],
+				// 	'date' 					=> date("Y-m-d"),
+				// 	'time' 					=> date("H:i:s"),
+				// 	'location' 			=> $history['location'],
+				// 	'status' 				=> "Pending Payment",
+				// 	'remarks' 			=> "Shipment information updated.",
+				// );
+				// $id_history = $this->shipment_mod->shipment_history_create_process_db($form_data);
 			}
 		}
 
